@@ -1,6 +1,6 @@
 #' @export
-add_recipe <- function(x, recipe) {
-  action <- new_action_recipe(recipe)
+add_recipe <- function(x, recipe, reprep = TRUE) {
+  action <- new_action_recipe(recipe, reprep)
   add_action(x, action)
 }
 
@@ -18,12 +18,14 @@ check_conflicts.action_recipe <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_recipe <- function(recipe) {
+new_action_recipe <- function(recipe, reprep) {
   if (!is_recipe(recipe)) {
     abort("`recipe` must be a recipe.")
   }
 
-  new_action_pre(recipe = recipe, subclass = "action_recipe")
+  vec_assert(reprep, ptype = logical(), size = 1L)
+
+  new_action_pre(recipe = recipe, reprep = reprep, subclass = "action_recipe")
 }
 
 is_recipe <- function(x) {

@@ -19,7 +19,7 @@
 #' @export
 add_model <- function(x, model, formula = NULL) {
   action <- new_action_model(model, formula)
-  add_action(x, action)
+  add_action(x, action, "model")
 }
 
 # ------------------------------------------------------------------------------

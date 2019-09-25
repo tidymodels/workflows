@@ -6,5 +6,15 @@
 ## usethis namespace: start
 #' @import rlang
 #' @import vctrs
+#'
+#' @importFrom generics fit
+#' @importFrom generics evaluate
+#'
+#' @importFrom parsnip fit_control
 ## usethis namespace: end
 NULL
+
+# Reexport parsnip::fit_control() since it is a default argument
+
+#' @export
+parsnip::fit_control

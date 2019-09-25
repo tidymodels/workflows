@@ -17,6 +17,9 @@ Imports:
     vctrs,
     parsnip,
     recipes,
-    hardhat
+    hardhat,
+    glue,
+    ellipsis,
+    generics
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1

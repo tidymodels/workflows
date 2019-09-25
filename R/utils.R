@@ -5,3 +5,7 @@ is_uniquely_named <- function(x) {
     TRUE
   }
 }
+
+glubort <- function (..., .sep = "", .envir = parent.frame()) {
+  abort(glue::glue(..., .sep = .sep, .envir = .envir))
+}

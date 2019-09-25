@@ -1,21 +1,64 @@
+add_action <- function(x, action) {
+  if (!is_workflow(x)) {
+    abort("`x` must be a workflow.")
+  }
+
+  check_conflicts(action, x)
+
+  if (is_action_pre(action)) {
+    x$pre <- add_action_to_stage(x$pre, action)
+  } else if (is_action_fit(action)) {
+    x$fit <- add_action_to_stage(x$fit, action)
+  } else if (is_action_post(action)) {
+    x$post <- add_action_to_stage(x$post, action)
+  }
+
+  x
+}
+
+add_action_to_stage <- function(stage, action) {
+  stage$actions <- c(stage$actions, action)
+  stage
+}
+
 # ------------------------------------------------------------------------------
 
-new_action_recipe <- function() {
-  new_action(subclass = "action_recipe")
+# `check_conflicts()` allows us to to check that no other action interferes
+# with the current action. For instance, we can't have a formula action with
+# a recipe action
+
+check_conflicts <- function(action, x) {
+  UseMethod("check_conflicts")
 }
 
-new_action_formula <- function() {
-  new_action(subclass = "action_formula")
+check_conflicts.default <- function(action, x) {
+  invisible(action)
 }
 
 # ------------------------------------------------------------------------------
 
-new_action_model <- function() {
-  new_action(subclass = "action_model")
+new_action_pre <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_pre"))
 }
 
-new_action_terms <- function() {
-  new_action(subclass = "action_terms")
+new_action_fit <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_fit"))
+}
+
+new_action_post <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_post"))
+}
+
+is_action_pre <- function(x) {
+  inherits(x, "action_pre")
+}
+
+is_action_fit <- function(x) {
+  inherits(x, "action_fit")
+}
+
+is_action_post <- function(x) {
+  inherits(x, "action_post")
 }
 
 # ------------------------------------------------------------------------------
@@ -33,8 +76,14 @@ new_action <- function(..., subclass = character()) {
   structure(data, class = c(subclass, "action"))
 }
 
-# ------------------------------------------------------------------------------
-
 is_action <- function(x) {
   inherits(x, "action")
+}
+
+# ------------------------------------------------------------------------------
+
+is_list_of_actions <- function(x) {
+  x <- compact(x)
+
+  all(map_lgl(x, is_action))
 }

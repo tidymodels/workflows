@@ -28,13 +28,17 @@ new_stage <- function(actions = list(), subclass = character()) {
     abort("`actions` must be uniquely named.")
   }
 
-  structure(actions, class = c(subclass, "stage"))
+  structure(list(actions = actions), class = c(subclass, "stage"))
 }
 
 # ------------------------------------------------------------------------------
 
-is_list_of_actions <- function(x) {
-  x <- compact(x)
-
-  all(map_lgl(x, is_action))
+is_stage <- function(x) {
+  inherits(x, "stage")
 }
+
+has_action <- function(stage, name) {
+  name %in% names(stage$actions)
+}
+
+# ------------------------------------------------------------------------------

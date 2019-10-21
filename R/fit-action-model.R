@@ -24,9 +24,54 @@ add_model <- function(x, model, formula = NULL) {
 
 # ------------------------------------------------------------------------------
 
+fit.action_model <- function(object, workflow, data, ctrl) {
+  ctrl_parsnip <- ctrl$parsnip
+
+  model <- object$model
+  formula <- object$formula
+
+  mold <- pull_mold(workflow)
+
+  if (is.null(formula)) {
+    fit_model <- fit_from_xy(model, mold, ctrl_parsnip)
+  } else {
+    fit_model <- fit_from_formula(model, mold, ctrl_parsnip, formula)
+  }
+
+  new_action <- new_action_model(fit_model, formula)
+
+  workflow$fit$actions$model <- new_action
+
+  # TODO - does `data` need to be returned?
+  list(workflow = workflow, data = data)
+}
+
+fit_from_xy <- function(model, mold, ctrl_parsnip) {
+  fit_xy(model, x = mold$predictors, y = mold$outcomes, control = ctrl_parsnip)
+}
+
+fit_from_formula <- function(model, mold, ctrl_parsnip, formula) {
+  data <- vec_cbind(mold$outcomes, mold$predictors)
+  fit(model, formula = formula, data = data, control = ctrl_parsnip)
+}
+
+pull_mold <- function(workflow) {
+  pre <- workflow$pre
+
+  if (has_action(pre, "formula")) {
+    pre$actions$formula$mold
+  } else if (has_action(pre, "recipe")) {
+    pre$actions$recipe$mold
+  } else {
+    abort("Internal error: No mold exists. `workflow` pre stage has not been run.")
+  }
+}
+
+# ------------------------------------------------------------------------------
+
 new_action_model <- function(model, formula) {
-  if (!is_model_spec(model)) {
-    abort("`model` must be a model_spec.")
+  if (!is_model_spec_or_fit(model)) {
+    abort("`model` must be a `model_spec` or `model_fit`.")
   }
 
   if (!is.null(formula) && !is_formula(formula)) {
@@ -36,6 +81,6 @@ new_action_model <- function(model, formula) {
   new_action_fit(model = model, formula = formula, subclass = "action_model")
 }
 
-is_model_spec <- function(x) {
-  inherits(x, "model_spec")
+is_model_spec_or_fit <- function(x) {
+  inherits(x, "model_spec") || inherits(x, "model_fit")
 }

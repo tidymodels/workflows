@@ -23,7 +23,7 @@ fit.action_recipe <- function(object, director) {
 
   new_action <- new_action_recipe(recipe = recipe, reprep = TRUE, mold = mold, done = TRUE)
 
-  director$pre$actions$recipe <- new_action
+  director$workflow$pre$actions$recipe <- new_action
 
   director
 }

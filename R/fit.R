@@ -39,16 +39,10 @@ fit_pre <- function(workflow, data) {
   list(workflow = workflow, data = data)
 }
 
-# Just one?
+# Just one action to do?
 fit_model <- function(workflow, data, ctrl) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
-
-  result <- fit(action_model, workflow = workflow, data = data, ctrl = ctrl)
-
-  workflow <- result$workflow
-  data <- result$data
-
-  list(workflow = workflow, data = data)
+  fit(action_model, workflow = workflow, data = data, ctrl = ctrl)
 }
 
 # ------------------------------------------------------------------------------

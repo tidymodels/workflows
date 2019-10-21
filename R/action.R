@@ -37,16 +37,16 @@ check_conflicts.default <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_pre <- function(done = FALSE, ..., subclass = character()) {
-  new_action(done = done, ..., subclass = c(subclass, "action_pre"))
+new_action_pre <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_pre"))
 }
 
-new_action_fit <- function(done = FALSE, ..., subclass = character()) {
-  new_action(done = done, ..., subclass = c(subclass, "action_fit"))
+new_action_fit <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_fit"))
 }
 
-new_action_post <- function(done = FALSE, ..., subclass = character()) {
-  new_action(done = done, ..., subclass = c(subclass, "action_post"))
+new_action_post <- function(..., subclass = character()) {
+  new_action(..., subclass = c(subclass, "action_post"))
 }
 
 is_action_pre <- function(x) {
@@ -66,10 +66,8 @@ is_action_post <- function(x) {
 # An `action` is a list of objects that define how to perform a specific action,
 # such as working with a recipe, or formula terms, or a model
 
-new_action <- function(done = FALSE, ..., subclass = character()) {
-  vec_assert(done, ptype = logical(), size = 1L)
-
-  data <- list2(done = done, ...)
+new_action <- function(..., subclass = character()) {
+  data <- list2(...)
 
   if (!is_uniquely_named(data)) {
     abort("All elements of `...` must be uniquely named.")

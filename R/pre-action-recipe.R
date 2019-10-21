@@ -6,17 +6,17 @@ add_recipe <- function(x, recipe) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_recipe <- function(object, director) {
+fit.action_recipe <- function(object, workflow, data) {
   recipe <- object$recipe
-  data <- director$data
 
   mold <- hardhat::mold(recipe, data)
 
   new_action <- new_action_recipe(recipe = recipe, mold = mold)
 
-  director$workflow$pre$actions$recipe <- new_action
+  workflow$pre$actions$recipe <- new_action
 
-  director
+  # TODO - does `data` need to be returned?
+  list(workflow = workflow, data = data)
 }
 
 # ------------------------------------------------------------------------------

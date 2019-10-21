@@ -1,5 +1,7 @@
 #' @export
 fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
+  workflow <- object
+
   if (is_missing(data)) {
     abort("`data` must be provided to fit a workflow.")
   }
@@ -7,26 +9,46 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
   ellipsis::check_dots_empty()
   validate_has_minimal_components(object)
 
-  director <- new_fit_director(object, data, ctrl)
+  result <- fit_pre(workflow, data)
+  workflow <- result$workflow
+  data <- result$data
 
-  director <- fit_stage(director, "pre")
-  director <- fit_stage(director, "fit")
-  director <- fit_stage(director, "post")
+  result <- fit_model(workflow, data, ctrl)
+  workflow <- result$workflow
 
-  director$workflow
+  # Eh? Predictions during the fit?
+  # pred <- result$pred
+  # result <- fit_post(workflow, pred)
+
+  workflow
 }
 
 # ------------------------------------------------------------------------------
 
-fit_stage <- function(director, stage) {
-  n <- vec_size(director$workflow[[stage]]$actions)
+fit_pre <- function(workflow, data) {
+  n <- vec_size(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
-    action <- director$workflow[[stage]]$actions[[i]]
-    director <- fit(action, director)
+    action <- workflow[["pre"]]$actions[[i]]
+
+    result <- fit(action, workflow = workflow, data = data)
+    workflow <- result$workflow
+    data <- result$data
   }
 
-  director
+  list(workflow = workflow, data = data)
+}
+
+# Just one?
+fit_model <- function(workflow, data, ctrl) {
+  action_model <- workflow[["fit"]][["actions"]][["model"]]
+
+  result <- fit(action_model, workflow = workflow, data = data, ctrl = ctrl)
+
+  workflow <- result$workflow
+  data <- result$data
+
+  list(workflow = workflow, data = data)
 }
 
 # ------------------------------------------------------------------------------

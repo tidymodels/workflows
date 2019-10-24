@@ -24,7 +24,7 @@ add_model <- function(x, spec, formula = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_model <- function(object, workflow, data, ctrl) {
+fit.action_model <- function(object, workflow, ctrl) {
   ctrl_parsnip <- ctrl$parsnip
 
   spec <- object$spec
@@ -42,8 +42,8 @@ fit.action_model <- function(object, workflow, data, ctrl) {
 
   workflow$fit$actions$model <- new_action
 
-  # TODO - does `data` need to be returned?
-  list(workflow = workflow, data = data)
+  # Only the workflow is returned
+  workflow
 }
 
 fit_from_xy <- function(spec, mold, ctrl_parsnip) {

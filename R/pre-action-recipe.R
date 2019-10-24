@@ -15,7 +15,7 @@ fit.action_recipe <- function(object, workflow, data) {
 
   workflow$pre$actions$recipe <- new_action
 
-  # TODO - does `data` need to be returned?
+  # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)
 }
 

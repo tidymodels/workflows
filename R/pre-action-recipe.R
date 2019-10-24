@@ -1,3 +1,15 @@
+#' Add a recipe to a workflow
+#'
+#' `add_recipe()` specifies the terms of the model and any preprocessing that
+#' is required through the usage of a recipe.
+#'
+#' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
+#' specified, but not both.
+#'
+#' @param x A workflow.
+#'
+#' @param recipe A recipe created using [recipes::recipe()].
+#'
 #' @export
 add_recipe <- function(x, recipe) {
   action <- new_action_recipe(recipe)

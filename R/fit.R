@@ -21,6 +21,7 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 .fit_pre <- function(workflow, data) {
   n <- vec_size(workflow[["pre"]]$actions)
 
@@ -37,7 +38,7 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
   workflow
 }
 
-# Just one action to do?
+#' @export
 .fit_model <- function(workflow, ctrl) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
   fit(action_model, workflow = workflow, ctrl = ctrl)

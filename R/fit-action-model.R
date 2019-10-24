@@ -6,7 +6,7 @@
 #'
 #' @param x A workflow.
 #'
-#' @param model A parsnip model.
+#' @param spec A parsnip model specification.
 #'
 #' @param formula An optional formula override to specify the terms of the
 #'   model. Typically, the terms are extracted from the formula or recipe
@@ -17,8 +17,8 @@
 #'   used for those purposes.
 #'
 #' @export
-add_model <- function(x, model, formula = NULL) {
-  action <- new_action_model(model, formula)
+add_model <- function(x, spec, formula = NULL) {
+  action <- new_action_model(spec, formula)
   add_action(x, action, "model")
 }
 
@@ -27,18 +27,18 @@ add_model <- function(x, model, formula = NULL) {
 fit.action_model <- function(object, workflow, data, ctrl) {
   ctrl_parsnip <- ctrl$parsnip
 
-  model <- object$model
+  spec <- object$spec
   formula <- object$formula
 
   mold <- pull_mold(workflow)
 
   if (is.null(formula)) {
-    fit_model <- fit_from_xy(model, mold, ctrl_parsnip)
+    fit <- fit_from_xy(spec, mold, ctrl_parsnip)
   } else {
-    fit_model <- fit_from_formula(model, mold, ctrl_parsnip, formula)
+    fit <- fit_from_formula(spec, mold, ctrl_parsnip, formula)
   }
 
-  new_action <- new_action_model(fit_model, formula)
+  new_action <- new_action_model(spec = spec, formula = formula, fit = fit)
 
   workflow$fit$actions$model <- new_action
 
@@ -46,13 +46,13 @@ fit.action_model <- function(object, workflow, data, ctrl) {
   list(workflow = workflow, data = data)
 }
 
-fit_from_xy <- function(model, mold, ctrl_parsnip) {
-  fit_xy(model, x = mold$predictors, y = mold$outcomes, control = ctrl_parsnip)
+fit_from_xy <- function(spec, mold, ctrl_parsnip) {
+  fit_xy(spec, x = mold$predictors, y = mold$outcomes, control = ctrl_parsnip)
 }
 
-fit_from_formula <- function(model, mold, ctrl_parsnip, formula) {
+fit_from_formula <- function(spec, mold, ctrl_parsnip, formula) {
   data <- vec_cbind(mold$outcomes, mold$predictors)
-  fit(model, formula = formula, data = data, control = ctrl_parsnip)
+  fit(spec, formula = formula, data = data, control = ctrl_parsnip)
 }
 
 pull_mold <- function(workflow) {
@@ -69,18 +69,26 @@ pull_mold <- function(workflow) {
 
 # ------------------------------------------------------------------------------
 
-new_action_model <- function(model, formula) {
-  if (!is_model_spec_or_fit(model)) {
-    abort("`model` must be a `model_spec` or `model_fit`.")
+new_action_model <- function(spec, formula, fit = NULL) {
+  if (!is_model_spec(spec)) {
+    abort("`spec` must be a `model_spec`.")
   }
 
   if (!is.null(formula) && !is_formula(formula)) {
     abort("`formula` must be a formula, or `NULL`.")
   }
 
-  new_action_fit(model = model, formula = formula, subclass = "action_model")
+  if (!is.null(fit) && !is_model_fit(fit)) {
+    abort("`fit` must be a `model_fit`.")
+  }
+
+  new_action_fit(spec = spec, formula = formula, fit = fit, subclass = "action_model")
 }
 
-is_model_spec_or_fit <- function(x) {
-  inherits(x, "model_spec") || inherits(x, "model_fit")
+is_model_spec <- function(x) {
+  inherits(x, "model_spec")
+}
+
+is_model_fit <- function(x) {
+  inherits(x, "model_fit")
 }

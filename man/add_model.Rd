@@ -4,12 +4,12 @@
 \alias{add_model}
 \title{Add a model to a workflow}
 \usage{
-add_model(x, model, formula = NULL)
+add_model(x, spec, formula = NULL)
 }
 \arguments{
 \item{x}{A workflow.}
 
-\item{model}{A parsnip model.}
+\item{spec}{A parsnip model specification.}
 
 \item{formula}{An optional formula override to specify the terms of the
 model. Typically, the terms are extracted from the formula or recipe

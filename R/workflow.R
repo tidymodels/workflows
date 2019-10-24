@@ -1,3 +1,19 @@
+#' Create a workflow
+#'
+#' A `workflow` is a container object that aggregates information required to
+#' fit and predict from a model. This information might be a recipe used in
+#' preprocessing, specified through [add_recipe()], or the model specification
+#' to fit, specified through [add_model()].
+#'
+#' @examples
+#' library(recipes)
+#'
+#' rec <- recipe(mpg ~ cyl, mtcars)
+#' rec <- step_log(rec, cyl)
+#'
+#' wrk <- workflow()
+#' wrk <- add_recipe(wrk, rec)
+#'
 #' @export
 workflow <- function() {
   new_workflow()

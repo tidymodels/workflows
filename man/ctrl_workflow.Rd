@@ -4,10 +4,10 @@
 \alias{ctrl_workflow}
 \title{Control object for a workflow}
 \usage{
-ctrl_workflow(parsnip = fit_control())
+ctrl_workflow(ctrl_parsnip = fit_control())
 }
 \arguments{
-\item{parsnip}{A parsnip control object.}
+\item{ctrl_parsnip}{A parsnip control object.}
 }
 \description{
 \code{ctrl_workflow()} holds the control parameters for a workflow.

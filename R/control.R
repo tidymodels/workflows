@@ -4,12 +4,12 @@
 #'
 #' `ctrl_workflow()` holds the control parameters for a workflow.
 #'
-#' @param parsnip A parsnip control object.
+#' @param ctrl_parsnip A parsnip control object.
 #'
 #' @export
-ctrl_workflow <- function(parsnip = fit_control()) {
+ctrl_workflow <- function(ctrl_parsnip = fit_control()) {
   data <- list(
-    parsnip = parsnip
+    ctrl_parsnip = ctrl_parsnip
   )
 
   structure(data, class = "ctrl_workflow")

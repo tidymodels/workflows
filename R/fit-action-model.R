@@ -25,7 +25,7 @@ add_model <- function(x, spec, formula = NULL) {
 # ------------------------------------------------------------------------------
 
 fit.action_model <- function(object, workflow, ctrl) {
-  ctrl_parsnip <- ctrl$parsnip
+  ctrl_parsnip <- ctrl$ctrl_parsnip
 
   spec <- object$spec
   formula <- object$formula

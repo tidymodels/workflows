@@ -9,11 +9,11 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
   ellipsis::check_dots_empty()
   validate_has_minimal_components(object)
 
-  result <- fit_pre(workflow, data)
+  result <- .fit_pre(workflow, data)
   workflow <- result$workflow
   data <- result$data
 
-  result <- fit_model(workflow, data, ctrl)
+  result <- .fit_model(workflow, data, ctrl)
   workflow <- result$workflow
 
   # Eh? Predictions during the fit?
@@ -25,7 +25,7 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-fit_pre <- function(workflow, data) {
+.fit_pre <- function(workflow, data) {
   n <- vec_size(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
@@ -40,7 +40,7 @@ fit_pre <- function(workflow, data) {
 }
 
 # Just one action to do?
-fit_model <- function(workflow, data, ctrl) {
+.fit_model <- function(workflow, data, ctrl) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
   fit(action_model, workflow = workflow, data = data, ctrl = ctrl)
 }

@@ -11,6 +11,7 @@
 #' @importFrom generics evaluate
 #'
 #' @importFrom parsnip fit_control
+#' @importFrom parsnip fit_xy
 ## usethis namespace: end
 NULL
 

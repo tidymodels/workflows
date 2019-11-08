@@ -3,28 +3,28 @@ Title: Workflows
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Davis",
-           family = "Vaughan",
-           role = c("aut", "cre"),
-           email = "davis@rstudio.com"),
+             family = "Vaughan",
+             role = c("aut", "cre"),
+             email = "davis@rstudio.com"),
       person(given = "RStudio",
              role = "cph"))
-Description: Bundle a 'parsnip' model specification with a preprocessing formula
-    or recipe for streamlined model fitting.
+Description: Bundle a 'parsnip' model specification with a
+    preprocessing formula or recipe for streamlined model fitting.
 License: GPL-3 + file LICENSE
-Encoding: UTF-8
-LazyData: true
 URL: https://github.com/DavisVaughan/workflows
 BugReports: https://github.com/DavisVaughan/workflows/issues
 Imports: 
-    rlang,
-    vctrs,
+    ellipsis,
+    generics,
+    glue,
+    hardhat,
     parsnip,
     recipes,
-    hardhat,
-    glue,
-    ellipsis,
-    generics
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.99.9001
+    rlang,
+    vctrs
 Remotes:
     tidymodels/hardhat
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.99.9001

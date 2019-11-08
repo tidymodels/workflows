@@ -6,7 +6,8 @@
 \alias{workflows-package}
 \title{workflows: Workflows}
 \description{
-What the package does (one paragraph).
+Bundle a 'parsnip' model specification with a
+    preprocessing formula or recipe for streamlined model fitting.
 }
 \seealso{
 Useful links:
@@ -18,6 +19,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Davis Vaughan \email{davis@rstudio.com}
+
+Other contributors:
+\itemize{
+  \item RStudio [copyright holder]
+}
 
 }
 \keyword{internal}

@@ -2,11 +2,14 @@ Package: workflows
 Title: Workflows
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Davis",
+    c(person(given = "Davis",
            family = "Vaughan",
            role = c("aut", "cre"),
-           email = "davis@rstudio.com")
-Description: What the package does (one paragraph).
+           email = "davis@rstudio.com"),
+      person(given = "RStudio",
+             role = "cph"))
+Description: Bundle a 'parsnip' model specification with a preprocessing formula
+    or recipe for streamlined model fitting.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true

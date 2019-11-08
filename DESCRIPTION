@@ -28,3 +28,5 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.99.9001
+Suggests: 
+    testthat

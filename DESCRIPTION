@@ -23,3 +23,5 @@ Imports:
     generics
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.99.9001
+Remotes:
+    tidymodels/hardhat

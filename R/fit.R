@@ -1,5 +1,5 @@
 #' @export
-fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
+fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
 
   if (is_missing(data)) {
@@ -10,7 +10,7 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
   validate_has_minimal_components(object)
 
   workflow <- .fit_pre(workflow, data)
-  workflow <- .fit_model(workflow, ctrl)
+  workflow <- .fit_model(workflow, control)
 
   # Eh? Predictions during the fit?
   # pred <- result$pred
@@ -39,9 +39,9 @@ fit.workflow <- function(object, data, ..., ctrl = ctrl_workflow()) {
 }
 
 #' @export
-.fit_model <- function(workflow, ctrl) {
+.fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
-  fit(action_model, workflow = workflow, ctrl = ctrl)
+  fit(action_model, workflow = workflow, control = control)
 }
 
 # ------------------------------------------------------------------------------

@@ -24,8 +24,8 @@ add_model <- function(x, spec, formula = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_model <- function(object, workflow, ctrl) {
-  ctrl_parsnip <- ctrl$ctrl_parsnip
+fit.action_model <- function(object, workflow, control) {
+  control_parsnip <- control$control_parsnip
 
   spec <- object$spec
   formula <- object$formula
@@ -33,9 +33,9 @@ fit.action_model <- function(object, workflow, ctrl) {
   mold <- pull_mold(workflow)
 
   if (is.null(formula)) {
-    fit <- fit_from_xy(spec, mold, ctrl_parsnip)
+    fit <- fit_from_xy(spec, mold, control_parsnip)
   } else {
-    fit <- fit_from_formula(spec, mold, ctrl_parsnip, formula)
+    fit <- fit_from_formula(spec, mold, control_parsnip, formula)
   }
 
   new_action <- new_action_model(spec = spec, formula = formula, fit = fit)
@@ -46,13 +46,13 @@ fit.action_model <- function(object, workflow, ctrl) {
   workflow
 }
 
-fit_from_xy <- function(spec, mold, ctrl_parsnip) {
-  fit_xy(spec, x = mold$predictors, y = mold$outcomes, control = ctrl_parsnip)
+fit_from_xy <- function(spec, mold, control_parsnip) {
+  fit_xy(spec, x = mold$predictors, y = mold$outcomes, control = control_parsnip)
 }
 
-fit_from_formula <- function(spec, mold, ctrl_parsnip, formula) {
+fit_from_formula <- function(spec, mold, control_parsnip, formula) {
   data <- vec_cbind(mold$outcomes, mold$predictors)
-  fit(spec, formula = formula, data = data, control = ctrl_parsnip)
+  fit(spec, formula = formula, data = data, control = control_parsnip)
 }
 
 pull_mold <- function(workflow) {

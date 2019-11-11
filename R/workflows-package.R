@@ -8,7 +8,6 @@
 #' @import vctrs
 #'
 #' @importFrom generics fit
-#' @importFrom generics evaluate
 #'
 #' @importFrom parsnip fit_xy
 #'

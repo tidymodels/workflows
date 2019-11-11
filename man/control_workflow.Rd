@@ -4,10 +4,11 @@
 \alias{control_workflow}
 \title{Control object for a workflow}
 \usage{
-control_workflow(control_parsnip = control_parsnip())
+control_workflow(control_parsnip = NULL)
 }
 \arguments{
-\item{control_parsnip}{A parsnip control object.}
+\item{control_parsnip}{A parsnip control object. If \code{NULL}, a default control
+argument is constructed from \code{\link[parsnip:control_parsnip]{parsnip::control_parsnip()}}.}
 }
 \description{
 \code{control_workflow()} holds the control parameters for a workflow.

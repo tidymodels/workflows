@@ -5,16 +5,34 @@ add_action <- function(x, action, name) {
 
   check_conflicts(action, x)
 
-  if (is_action_pre(action)) {
-    x$pre <- add_action_to_stage(x$pre, action, name)
-  } else if (is_action_fit(action)) {
-    x$fit <- add_action_to_stage(x$fit, action, name)
-  } else if (is_action_post(action)) {
-    x$post <- add_action_to_stage(x$post, action, name)
-  }
+  add_action_impl(x, action, name)
+}
 
+# ------------------------------------------------------------------------------
+
+add_action_impl <- function(x, action, name) {
+  UseMethod("add_action_impl", action)
+}
+
+add_action_impl.action_pre <- function(x, action, name) {
+  check_singleton(x$pre$actions, name)
+  x$pre <- add_action_to_stage(x$pre, action, name)
   x
 }
+
+add_action_impl.action_fit <- function(x, action, name) {
+  check_singleton(x$fit$actions, name)
+  x$fit <- add_action_to_stage(x$fit, action, name)
+  x
+}
+
+add_action_impl.action_post <- function(x, action, name) {
+  check_singleton(x$post$actions, name)
+  x$post <- add_action_to_stage(x$post, action, name)
+  x
+}
+
+# ------------------------------------------------------------------------------
 
 add_action_to_stage <- function(stage, action, name) {
   stage$actions <- c(stage$actions, list2(!!name := action))
@@ -33,6 +51,15 @@ check_conflicts <- function(action, x) {
 
 check_conflicts.default <- function(action, x) {
   invisible(action)
+}
+
+# ------------------------------------------------------------------------------
+
+check_singleton <- function(actions, name) {
+  if (name %in% names(actions)) {
+    glubort("A `{name}` action has already been added to this workflow.")
+  }
+  invisible(actions)
 }
 
 # ------------------------------------------------------------------------------

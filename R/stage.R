@@ -1,5 +1,5 @@
-new_stage_pre <- function(actions = list()) {
-  new_stage(actions, subclass = "stage_pre")
+new_stage_pre <- function(actions = list(), mold = NULL) {
+  new_stage(actions = actions, mold = mold, subclass = "stage_pre")
 }
 
 new_stage_fit <- function(actions = list()) {
@@ -19,7 +19,7 @@ new_stage_post <- function(actions = list()) {
 # - fit
 # - post
 
-new_stage <- function(actions = list(), subclass = character()) {
+new_stage <- function(actions = list(), ..., subclass = character()) {
   if (!is_list_of_actions(actions)) {
     abort("`actions` must be a list of actions.")
   }
@@ -28,7 +28,15 @@ new_stage <- function(actions = list(), subclass = character()) {
     abort("`actions` must be uniquely named.")
   }
 
-  structure(list(actions = actions), class = c(subclass, "stage"))
+  fields <- list2(...)
+
+  if (!is_uniquely_named(fields)) {
+    abort("`...` must be uniquely named.")
+  }
+
+  fields <- list2(actions = actions, !!! fields)
+
+  structure(fields, class = c(subclass, "stage"))
 }
 
 # ------------------------------------------------------------------------------

@@ -30,7 +30,11 @@ fit.action_model <- function(object, workflow, control) {
   spec <- object$spec
   formula <- object$formula
 
-  mold <- pull_mold(workflow)
+  mold <- workflow$pre$mold
+
+  if (is.null(mold)) {
+    abort("Internal error: No mold exists. `workflow` pre stage has not been run.")
+  }
 
   if (is.null(formula)) {
     fit <- fit_from_xy(spec, mold, control_parsnip)
@@ -53,18 +57,6 @@ fit_from_xy <- function(spec, mold, control_parsnip) {
 fit_from_formula <- function(spec, mold, control_parsnip, formula) {
   data <- vec_cbind(mold$outcomes, mold$predictors)
   fit(spec, formula = formula, data = data, control = control_parsnip)
-}
-
-pull_mold <- function(workflow) {
-  pre <- workflow$pre
-
-  if (has_action(pre, "formula")) {
-    pre$actions$formula$mold
-  } else if (has_action(pre, "recipe")) {
-    pre$actions$recipe$mold
-  } else {
-    abort("Internal error: No mold exists. `workflow` pre stage has not been run.")
-  }
 }
 
 # ------------------------------------------------------------------------------

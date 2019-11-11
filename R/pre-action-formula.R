@@ -23,12 +23,8 @@ add_formula <- function(x, formula) {
 fit.action_formula <- function(object, workflow, data) {
   formula <- object$formula
 
-  mold <- hardhat::mold(formula, data)
-
-  # TODO - Strip out formula environment at some point?
-  new_action <- new_action_formula(formula = formula, mold = mold)
-
-  workflow$pre$actions$formula <- new_action
+  # TODO - Strip out the formula environment at some time?
+  workflow$pre$mold <- hardhat::mold(formula, data)
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)
@@ -48,10 +44,10 @@ check_conflicts.action_formula <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_formula <- function(formula, mold = NULL) {
+new_action_formula <- function(formula) {
   if (!is_formula(formula)) {
     abort("`formula` must be a formula.")
   }
 
-  new_action_pre(formula = formula, mold = mold, subclass = "action_formula")
+  new_action_pre(formula = formula, subclass = "action_formula")
 }

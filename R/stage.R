@@ -1,4 +1,8 @@
 new_stage_pre <- function(actions = list(), mold = NULL) {
+  if (!is.null(mold) && !is.list(mold)) {
+    abort("`mold` must be a result of calling `hardhat::mold()`.")
+  }
+
   new_stage(actions = actions, mold = mold, subclass = "stage_pre")
 }
 

@@ -18,24 +18,6 @@ test_that("workflow must have been `fit()` before prediction can be done", {
   expect_error(predict(workflow(), mtcars), "Workflow has not yet been fit")
 })
 
-test_that("can pass `type` through to parsnip", {
-  mod <- parsnip::multinom_reg(penalty = 0.01)
-  mod <- parsnip::set_engine(mod, "glmnet")
-
-  workflow <- workflow()
-  workflow <- add_formula(workflow, Species ~ Sepal.Length + Sepal.Width)
-  workflow <- add_model(workflow, mod)
-
-  fit_workflow <- fit(workflow, iris)
-
-  result <- predict(fit_workflow, iris)
-  expect_equal(names(result), ".pred_class")
-
-  # TODO https://github.com/tidymodels/parsnip/issues/234
-  # result <- predict(fit_workflow, iris, type = "prob")
-  # expect_equal(names(result), ".pred_...)
-})
-
 test_that("formula preprocessing is done to the `new_data`", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

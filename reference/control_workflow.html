@@ -114,14 +114,15 @@
     <p><code>control_workflow()</code> holds the control parameters for a workflow.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>control_workflow</span>(<span class='kw'>control_parsnip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/control_parsnip.html'>control_parsnip</a></span>())</pre>
+    <pre class="usage"><span class='fu'>control_workflow</span>(<span class='kw'>control_parsnip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>control_parsnip</th>
-      <td><p>A parsnip control object.</p></td>
+      <td><p>A parsnip control object. If <code>NULL</code>, a default control
+argument is constructed from <code><a href='https://rdrr.io/pkg/parsnip/man/control_parsnip.html'>parsnip::control_parsnip()</a></code>.</p></td>
     </tr>
     </table>
 

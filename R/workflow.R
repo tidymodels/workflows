@@ -19,7 +19,10 @@ workflow <- function() {
   new_workflow()
 }
 
-new_workflow <- function(pre = new_stage_pre(), fit = new_stage_fit(), post = new_stage_post()) {
+new_workflow <- function(pre = new_stage_pre(),
+                         fit = new_stage_fit(),
+                         post = new_stage_post(),
+                         run = FALSE) {
   if (!is_stage(pre)) {
     abort("`pre` must be a `stage`.")
   }
@@ -32,10 +35,15 @@ new_workflow <- function(pre = new_stage_pre(), fit = new_stage_fit(), post = ne
     abort("`post` must be a `stage`.")
   }
 
+  if (!is_scalar_logical(run)) {
+    abort("`run` must be a single logical value.")
+  }
+
   data <- list(
     pre = pre,
     fit = fit,
-    post = post
+    post = post,
+    run = run
   )
 
   structure(data, class = "workflow")

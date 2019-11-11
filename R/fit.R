@@ -16,6 +16,8 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   # pred <- result$pred
   # result <- fit_post(workflow, pred)
 
+  workflow$run <- TRUE
+
   workflow
 }
 

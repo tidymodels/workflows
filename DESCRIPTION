@@ -19,7 +19,6 @@ Imports:
     glue,
     hardhat,
     parsnip (>= 0.0.4),
-    recipes,
     rlang,
     vctrs
 Remotes:
@@ -30,6 +29,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.99.9001
 Suggests: 
     testthat (>= 2.3.0),
-    covr
+    covr,
+    recipes
 Depends: 
     R (>= 3.2)

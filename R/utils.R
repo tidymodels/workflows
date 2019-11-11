@@ -17,3 +17,12 @@ is_model_fit <- function(x) {
 is_model_spec <- function(x) {
   inherits(x, "model_spec")
 }
+
+validate_recipes_available <- function() {
+  if (!requireNamespace("recipes", quietly = TRUE)) {
+    abort(
+      "The `recipes` package must be available to add a recipe."
+    )
+  }
+  invisible()
+}

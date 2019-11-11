@@ -12,6 +12,7 @@
 #'
 #' @export
 add_recipe <- function(x, recipe) {
+  validate_recipes_available()
   action <- new_action_recipe(recipe)
   add_action(x, action, "recipe")
 }

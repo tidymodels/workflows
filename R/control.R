@@ -7,7 +7,7 @@
 #' @param control_parsnip A parsnip control object.
 #'
 #' @export
-control_workflow <- function(control_parsnip = fit_control()) {
+control_workflow <- function(control_parsnip = control_parsnip()) {
   data <- list(
     control_parsnip = control_parsnip
   )

@@ -4,7 +4,7 @@
 \alias{control_workflow}
 \title{Control object for a workflow}
 \usage{
-control_workflow(control_parsnip = fit_control())
+control_workflow(control_parsnip = control_parsnip())
 }
 \arguments{
 \item{control_parsnip}{A parsnip control object.}

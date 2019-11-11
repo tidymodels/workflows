@@ -3,7 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{fit_control}
+\alias{control_parsnip}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{parsnip}{\code{\link[parsnip]{fit_control}}}
+  \item{parsnip}{\code{\link[parsnip]{control_parsnip}}}
 }}
 

@@ -18,7 +18,7 @@ Imports:
     generics,
     glue,
     hardhat,
-    parsnip,
+    parsnip (>= 0.0.4),
     recipes,
     rlang,
     vctrs

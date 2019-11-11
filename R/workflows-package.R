@@ -10,12 +10,12 @@
 #' @importFrom generics fit
 #' @importFrom generics evaluate
 #'
-#' @importFrom parsnip fit_control
+#' @importFrom parsnip control_parsnip
 #' @importFrom parsnip fit_xy
 ## usethis namespace: end
 NULL
 
-# Reexport parsnip::fit_control() since it is a default argument
+# Reexport parsnip::control_parsnip() since it is a default argument
 
 #' @export
-parsnip::fit_control
+parsnip::control_parsnip

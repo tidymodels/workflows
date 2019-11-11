@@ -9,13 +9,23 @@
 #'
 #' @export
 control_workflow <- function(control_parsnip = NULL) {
-  if (is.null(control_parsnip)) {
-    control_parsnip <- parsnip::control_parsnip()
-  }
+  control_parsnip <- check_control_parsnip(control_parsnip)
 
   data <- list(
     control_parsnip = control_parsnip
   )
 
   structure(data, class = "control_workflow")
+}
+
+check_control_parsnip <- function(x) {
+  if (is.null(x)) {
+    x <- parsnip::control_parsnip()
+  }
+
+  if (!inherits(x, "control_parsnip")) {
+    abort("`control_parsnip` must be a 'control_parsnip' object.")
+  }
+
+  x
 }

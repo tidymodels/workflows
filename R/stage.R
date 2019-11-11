@@ -2,8 +2,12 @@ new_stage_pre <- function(actions = list(), mold = NULL) {
   new_stage(actions = actions, mold = mold, subclass = "stage_pre")
 }
 
-new_stage_fit <- function(actions = list()) {
-  new_stage(actions, subclass = "stage_fit")
+new_stage_fit <- function(actions = list(), fit = NULL) {
+  if (!is.null(fit) && !is_model_fit(fit)) {
+    abort("`fit` must be a `model_fit`.")
+  }
+
+  new_stage(actions = actions, fit = fit, subclass = "stage_fit")
 }
 
 new_stage_post <- function(actions = list()) {

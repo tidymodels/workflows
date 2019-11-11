@@ -42,9 +42,7 @@ fit.action_model <- function(object, workflow, control) {
     fit <- fit_from_formula(spec, mold, control_parsnip, formula)
   }
 
-  new_action <- new_action_model(spec = spec, formula = formula, fit = fit)
-
-  workflow$fit$actions$model <- new_action
+  workflow$fit$fit <- fit
 
   # Only the workflow is returned
   workflow
@@ -61,7 +59,7 @@ fit_from_formula <- function(spec, mold, control_parsnip, formula) {
 
 # ------------------------------------------------------------------------------
 
-new_action_model <- function(spec, formula, fit = NULL) {
+new_action_model <- function(spec, formula) {
   if (!is_model_spec(spec)) {
     abort("`spec` must be a `model_spec`.")
   }
@@ -70,17 +68,5 @@ new_action_model <- function(spec, formula, fit = NULL) {
     abort("`formula` must be a formula, or `NULL`.")
   }
 
-  if (!is.null(fit) && !is_model_fit(fit)) {
-    abort("`fit` must be a `model_fit`.")
-  }
-
-  new_action_fit(spec = spec, formula = formula, fit = fit, subclass = "action_model")
-}
-
-is_model_spec <- function(x) {
-  inherits(x, "model_spec")
-}
-
-is_model_fit <- function(x) {
-  inherits(x, "model_fit")
+  new_action_fit(spec = spec, formula = formula, subclass = "action_model")
 }

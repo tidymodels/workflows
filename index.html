@@ -72,13 +72,48 @@
 <a href="#workflows" class="anchor"></a>workflows</h1></div>
 <!-- badges: start -->
 
-<p>The goal of workflows is to bundle a parsnip model specification with a preprocessing formula or recipe.</p>
+<div id="whats-a-workflow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#whats-a-workflow" class="anchor"></a>What’s a workflow?</h2>
+<p>It is an object that can bundle together your pre-processing, modeling, and post-processing values. For example, if you have a <code>recipe</code> and <code>parsnip</code> model, these can be combined into a workflow. The advantages are:</p>
+<ul>
+<li><p>You don’t have to keep track of separate objects in your workspace.</p></li>
+<li><p>The recipe prepping and model fitting can be executed using a single call to <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit()</a></code>.</p></li>
+<li><p>If you have custom tuning parameter settings, these can be defined using a simpler interface when combined with <a href="https://github.com/tidymodels/tune">tune</a>.</p></li>
+<li><p>Workflows will be able to add post-processing operations, such as modifying the probability cutoff for two-class models. These will be added in upcoming versions.</p></li>
+</ul>
+<p>Suppose you were modeling data on cars. Say…the fuel efficiency of 32 cars. You know that the relationship between engine displacement and miles-per-gallon is nonlinear, and you would like to model that as a spline before adding it to a Bayesian linear regression models. You might have a recipe to specify the spline:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(recipes)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(parsnip)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(workflows)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">spline_cars &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/recipes/man/recipe.html">recipe</a></span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> mtcars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/recipes/man/step_ns.html">step_ns</a></span>(disp, <span class="dt">deg_free =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p>and a model object:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Bayes_lm &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/parsnip/man/linear_reg.html">linear_reg</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/parsnip/man/set_engine.html">set_engine</a></span>(<span class="st">"stan"</span>)</a></code></pre></div>
+<p>To use these, you would run <code>spline_cars_prepped &lt;- prep(spline_cars)</code> and then</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">Bayes_lm_fit &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span>Bayes_lm <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/pkg/recipes/man/juice.html">juice</a></span>(spline_cars_prepped))</a></code></pre></div>
+<p>You can’t predict on new samples using <code>Bayes_lm_fit</code> without the prepped version of <code>spline_cars</code> around. You might have other models and recipes in your workspace. This might lead to getting them mixed-up or forgetting to save the model/recipe pair that you are most interested in.</p>
+<p><code>workflows</code> makes this easier by combining these objects together:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">car_wflow &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="reference/workflow.html">workflow</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="reference/add_recipe.html">add_recipe</a></span>(spline_cars) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/add_model.html">add_model</a></span>(Bayes_lm)</a></code></pre></div>
+<p>Now, you can prepare the recipe and estimate the model via a single call to <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit()</a></code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">car_wflow_fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(car_wflow, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<p>You can create alternate workflows using <code>update_recipe()</code> or <code>remove_recipe()</code> (and similarly for models).</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"DavisVaughan/workflows"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"DavisVaughan/workflows"</span>)</a></code></pre></div>
 </div>
 </div>
   </div>

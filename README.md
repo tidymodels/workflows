@@ -6,9 +6,9 @@
 <!-- badges: start -->
 
 [![Travis build
-status](https://travis-ci.org/DavisVaughan/workflows.svg?branch=master)](https://travis-ci.org/DavisVaughan/workflows)
+status](https://travis-ci.org/tidymodels/workflows.svg?branch=master)](https://travis-ci.org/tidymodels/workflows)
 [![Codecov test
-coverage](https://codecov.io/gh/DavisVaughan/workflows/branch/master/graph/badge.svg)](https://codecov.io/gh/DavisVaughan/workflows?branch=master)
+coverage](https://codecov.io/gh/tidymodels/workflows/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflows?branch=master)
 <!-- badges: end -->
 
 The goal of workflows is to bundle a parsnip model specification with a

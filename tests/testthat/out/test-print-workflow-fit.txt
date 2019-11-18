@@ -1,0 +1,11 @@
+> fit(workflow, mtcars)
+<workflow [fit]>
+  <preprocessor>
+    Formula
+
+  <model>
+    Linear Regression Model Specification (regression)
+    
+    Computational engine: lm 
+    
+

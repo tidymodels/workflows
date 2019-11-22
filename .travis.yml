@@ -5,7 +5,7 @@ cache: packages
 
 # used for pkgdown vignettes:
 
-r_binary_packages:
+r_packages:
   - mda
   - earth
   - yardstick

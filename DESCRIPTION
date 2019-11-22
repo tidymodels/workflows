@@ -14,20 +14,20 @@ License: GPL-3 + file LICENSE
 URL: https://github.com/tidymodels/workflows
 BugReports: https://github.com/tidymodels/workflows/issues
 Imports: 
-    ellipsis,
+    ellipsis (>= 0.2.0),
     generics,
     glue,
     hardhat,
     parsnip (>= 0.0.4),
-    rlang,
-    vctrs,
     utils
+    rlang (>= 0.4.1),
+    vctrs (>= 0.2.0)
 Remotes:
     tidymodels/hardhat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.99.9001
+RoxygenNote: 7.0.0
 Suggests: 
     testthat (>= 2.3.0),
     covr,

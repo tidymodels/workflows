@@ -26,3 +26,33 @@ validate_recipes_available <- function() {
   }
   invisible()
 }
+
+validate_is_workflow <- function(x, arg = "`x`") {
+  if (!is_workflow(x)) {
+    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")
+  }
+
+  invisible(x)
+}
+
+# ------------------------------------------------------------------------------
+
+has_preprocessor_recipe <- function(x) {
+  "recipe" %in% names(x$pre$actions)
+}
+
+has_preprocessor_formula <- function(x) {
+  "formula" %in% names(x$pre$actions)
+}
+
+has_mold <- function(x) {
+  !is.null(x$pre$mold)
+}
+
+has_spec <- function(x) {
+  "model" %in% names(x$fit$actions)
+}
+
+has_fit <- function(x) {
+  !is.null(x$fit$fit)
+}

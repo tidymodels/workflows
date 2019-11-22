@@ -6,13 +6,17 @@
 #' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
 #' specified, but not both.
 #'
-#' @param x A workflow.
+#' @param x A workflow
 #'
 #' @param formula A formula specifying the terms of the model. It is advised to
 #' not do preprocessing in the formula, and instead use a recipe if that is
 #' required.
 #'
 #' @export
+#' @examples
+#' workflow <- workflow()
+#' workflow <- add_formula(workflow, mpg ~ cyl)
+#' workflow
 add_formula <- function(x, formula) {
   action <- new_action_formula(formula)
   add_action(x, action, "formula")

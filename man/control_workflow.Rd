@@ -13,3 +13,6 @@ argument is constructed from \code{\link[parsnip:control_parsnip]{parsnip::contr
 \description{
 \code{control_workflow()} holds the control parameters for a workflow.
 }
+\examples{
+control_workflow()
+}

@@ -17,6 +17,14 @@
 #'   used for those purposes.
 #'
 #' @export
+#' @examples
+#' library(parsnip)
+#'
+#' model <- linear_reg()
+#' model <- set_engine(model, "lm")
+#'
+#' workflow <- workflow()
+#' workflow <- add_model(workflow, model)
 add_model <- function(x, spec, formula = NULL) {
   action <- new_action_model(spec, formula)
   add_action(x, action, "model")

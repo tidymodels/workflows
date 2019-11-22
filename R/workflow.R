@@ -130,7 +130,6 @@ tab <- function(x, times = 1L) {
   paste0(space, x)
 }
 
-cat_line <- function (..., file = stdout()) {
-  out <- paste0(..., collapse = "\n")
-  cat(out, "\n", sep = "", file = file, append = TRUE)
+cat_line <- function (...) {
+  cat(paste0(..., collapse = "\n"), "\n", sep = "")
 }

@@ -10,7 +10,7 @@ Authors@R:
              role = "cph"))
 Description: Bundle a 'parsnip' model specification with a
     preprocessing formula or recipe for streamlined model fitting.
-License: GPL-3 + file LICENSE
+License: MIT + file LICENSE
 URL: https://github.com/tidymodels/workflows
 BugReports: https://github.com/tidymodels/workflows/issues
 Imports: 

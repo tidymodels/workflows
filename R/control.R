@@ -8,6 +8,8 @@
 #'   argument is constructed from [parsnip::control_parsnip()].
 #'
 #' @export
+#' @examples
+#' control_workflow()
 control_workflow <- function(control_parsnip = NULL) {
   control_parsnip <- check_control_parsnip(control_parsnip)
 
@@ -16,6 +18,12 @@ control_workflow <- function(control_parsnip = NULL) {
   )
 
   structure(data, class = "control_workflow")
+}
+
+#' @export
+print.control_workflow <- function(x, ...) {
+  cat("<control_workflow>")
+  invisible()
 }
 
 check_control_parsnip <- function(x) {

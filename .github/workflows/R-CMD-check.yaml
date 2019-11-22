@@ -58,6 +58,15 @@ jobs:
       - name: Install dependencies
         run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
 
+      - name: Install pkgdown dependencies
+        - run: Rscript -e "install.packages('mda')"
+        - run: Rscript -e "install.packages('earth')"
+        - run: Rscript -e "install.packages('yardstick')"
+        - run: Rscript -e "install.packages('ggplot2')"
+        - run: Rscript -e "install.packages('discrim')"
+        - run: Rscript -e "install.packages('dplyr')"
+        - run: Rscript -e "install.packages('tidyr')"
+
       - name: Check
         run: Rscript -e "rcmdcheck::rcmdcheck(args = '${{ matrix.config.args }}', error_on = 'warning', check_dir = 'check')"
 

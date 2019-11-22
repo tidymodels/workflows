@@ -21,11 +21,5 @@ one for training (n = 1009), validation (n = 300), and testing (n = 710).
 }
 \examples{
 data(bivariate)
-
-library(ggplot2)
-theme_set(theme_bw() + theme(legend.position = "top"))
-
-ggplot(bivariate_train, aes(x = A, y = B, col = Class)) +
-  geom_point(alpha = .3)
 }
 \keyword{datasets}

@@ -13,10 +13,4 @@
 #' @keywords datasets
 #' @examples
 #' data(bivariate)
-#'
-#' library(ggplot2)
-#' theme_set(theme_bw() + theme(legend.position = "top"))
-#'
-#' ggplot(bivariate_train, aes(x = A, y = B, col = Class)) +
-#'   geom_point(alpha = .3)
 NULL

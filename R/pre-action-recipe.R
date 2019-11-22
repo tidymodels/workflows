@@ -6,11 +6,20 @@
 #' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
 #' specified, but not both.
 #'
-#' @param x A workflow.
+#' @param x A workflow
 #'
-#' @param recipe A recipe created using [recipes::recipe()].
+#' @param recipe A recipe created using [recipes::recipe()]
 #'
 #' @export
+#' @examples
+#' library(recipes)
+#'
+#' recipe <- recipe(mpg ~ cyl, mtcars)
+#' recipe <- step_log(recipe, cyl)
+#'
+#' workflow <- workflow()
+#' workflow <- add_recipe(workflow, recipe)
+#' workflow
 add_recipe <- function(x, recipe) {
   validate_recipes_available()
   action <- new_action_recipe(recipe)

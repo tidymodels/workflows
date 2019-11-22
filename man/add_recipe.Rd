@@ -7,9 +7,9 @@
 add_recipe(x, recipe)
 }
 \arguments{
-\item{x}{A workflow.}
+\item{x}{A workflow}
 
-\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}.}
+\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
 }
 \description{
 \code{add_recipe()} specifies the terms of the model and any preprocessing that
@@ -18,4 +18,14 @@ is required through the usage of a recipe.
 \details{
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
 specified, but not both.
+}
+\examples{
+library(recipes)
+
+recipe <- recipe(mpg ~ cyl, mtcars)
+recipe <- step_log(recipe, cyl)
+
+workflow <- workflow()
+workflow <- add_recipe(workflow, recipe)
+workflow
 }

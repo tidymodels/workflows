@@ -1,4 +1,48 @@
+#' Fit a workflow object
+#'
+#' @description
+#' Fitting a workflow currently involves two main steps:
+#'
+#' - Preprocessing the data using a formula preprocessor, or by calling
+#'   [recipes::prep()] on a recipe.
+#'
+#' - Fitting the underlying parsnip model using [parsnip::fit.model_spec()].
+#'
+#' @details
+#' In the future, there will also be _postprocessing_ steps that can be added
+#' after the model has been fit.
+#'
+#' @param object A workflow
+#'
+#' @param data A data frame of predictors and outcomes to use when fitting the
+#'   workflow
+#'
+#' @param ... Not used
+#'
+#' @param control A [control_workflow()] object
+#'
+#' @name fit-workflow
 #' @export
+#' @examples
+#' library(parsnip)
+#' library(recipes)
+#'
+#' model <- linear_reg()
+#' model <- set_engine(model, "lm")
+#'
+#' base_workflow <- workflow()
+#' base_workflow <- add_model(base_workflow, model)
+#'
+#' formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
+#'
+#' fit(formula_workflow, mtcars)
+#'
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars)
+#' recipe <- step_log(recipe, disp)
+#'
+#' recipe_workflow <- add_recipe(base_workflow, recipe)
+#'
+#' fit(recipe_workflow, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
 
@@ -23,7 +67,42 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
+#' Internal workflow functions
+#'
+#' `.fit_pre()` and `.fit_model()` are internal workflow functions for
+#' _partially_ fitting a workflow object. They are only exported for usage by
+#' the tuning package, [tune](https://github.com/tidymodels/tune), and the
+#' general user should never need to worry about them.
+#'
+#' @param workflow A workflow
+#'
+#'   For `.fit_pre()`, this should be a fresh workflow.
+#'
+#'   For `.fit_model()`, this should be a workflow that has already been run
+#'   through `.fit_pre()`.
+#'
+#' @param data A data frame of predictors and outcomes to use when fitting the
+#'   workflow
+#'
+#' @param control A [control_workflow()] object
+#'
+#' @name workflows-internals
+#' @keywords internal
 #' @export
+#' @examples
+#' library(parsnip)
+#' library(recipes)
+#'
+#' model <- linear_reg()
+#' model <- set_engine(model, "lm")
+#'
+#' base_workflow <- workflow()
+#' base_workflow <- add_model(base_workflow, model)
+#'
+#' formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
+#'
+#' partially_fit_workflow <- .fit_pre(formula_workflow, mtcars)
+#' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
 .fit_pre <- function(workflow, data) {
   n <- vec_size(workflow[["pre"]]$actions)
 
@@ -40,6 +119,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow
 }
 
+#' @rdname workflows-internals
 #' @export
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]

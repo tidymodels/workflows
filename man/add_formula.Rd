@@ -7,7 +7,7 @@
 add_formula(x, formula)
 }
 \arguments{
-\item{x}{A workflow.}
+\item{x}{A workflow}
 
 \item{formula}{A formula specifying the terms of the model. It is advised to
 not do preprocessing in the formula, and instead use a recipe if that is
@@ -20,4 +20,9 @@ formula.
 \details{
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
 specified, but not both.
+}
+\examples{
+workflow <- workflow()
+workflow <- add_formula(workflow, mpg ~ cyl)
+workflow
 }

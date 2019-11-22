@@ -25,3 +25,12 @@ used for those purposes.}
 \details{
 \code{add_model()} is a required step to construct a minimal workflow.
 }
+\examples{
+library(parsnip)
+
+model <- linear_reg()
+model <- set_engine(model, "lm")
+
+workflow <- workflow()
+workflow <- add_model(workflow, model)
+}

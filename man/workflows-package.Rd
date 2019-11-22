@@ -12,8 +12,8 @@ Bundle a 'parsnip' model specification with a
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/DavisVaughan/workflows}
-  \item Report bugs at \url{https://github.com/DavisVaughan/workflows/issues}
+  \item \url{https://github.com/tidymodels/workflows}
+  \item Report bugs at \url{https://github.com/tidymodels/workflows/issues}
 }
 
 }

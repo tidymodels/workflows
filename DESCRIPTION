@@ -30,6 +30,15 @@ RoxygenNote: 6.1.99.9001
 Suggests: 
     testthat (>= 2.3.0),
     covr,
-    recipes
+    recipes,
+    ggplot2,
+    yardstick,
+    discrim,
+    dplyr,
+    tidyr,
+    earth,
+    klaR,
+    knitr
 Depends: 
     R (>= 3.2)
+VignetteBuilder: knitr

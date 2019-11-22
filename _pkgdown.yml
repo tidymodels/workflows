@@ -1,1 +1,24 @@
-destination: docs
+template:
+  package: tidytemplate
+  params:
+    part_of: <a href="https://github.com/tidymodels">tidymodels</a>
+    footer: <code>workflows</code> is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
+
+# https://github.com/tidyverse/tidytemplate for css
+
+development:
+  mode: auto
+
+figures:
+  fig.width: 8
+  fig.height: 5.75
+
+navbar:
+  left:
+  - text: Getting Started
+    href: articles/getting-started.html
+  - text: News
+    href: news/index.html
+  - text: Reference
+    href: reference/index.html
+

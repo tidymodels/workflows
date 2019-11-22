@@ -38,7 +38,9 @@ Suggests:
     tidyr,
     earth,
     klaR,
-    knitr
+    knitr,
+    rmarkdown,
+    mda
 Depends: 
     R (>= 3.2)
 VignetteBuilder: knitr

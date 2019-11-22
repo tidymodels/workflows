@@ -19,7 +19,7 @@ Imports:
     glue,
     hardhat,
     parsnip (>= 0.0.4),
-    utils
+    utils,
     rlang (>= 0.4.1),
     vctrs (>= 0.2.0)
 Remotes:

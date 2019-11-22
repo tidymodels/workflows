@@ -20,7 +20,8 @@ Imports:
     hardhat,
     parsnip (>= 0.0.4),
     rlang,
-    vctrs
+    vctrs,
+    utils
 Remotes:
     tidymodels/hardhat
 Encoding: UTF-8

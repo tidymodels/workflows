@@ -12,5 +12,7 @@
 #' @importFrom parsnip fit_xy
 #'
 #' @importFrom stats predict
+#'
+#' @importFrom utils capture.output
 ## usethis namespace: end
 NULL

@@ -127,9 +127,8 @@ ratio_glm_roc <-
 ratio_glm_probs %>% roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
-  geom_step(data = ratio_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "darkred")
+  geom_path(data = ratio_glm_roc, 
+            aes(x = 1 - specificity, y = sensitivity), col = "#FDE725FF")
 ```
 
 The original analysis shows a slight edge but the two models are probably within the experimental noise of one another. 
@@ -175,12 +174,10 @@ trans_glm_roc <-
 trans_glm_probs %>% roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
-  geom_step(data = ratio_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "darkred") + 
-  geom_line(data = trans_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "darkblue")
+  geom_path(data = ratio_glm_roc, 
+            aes(x = 1 - specificity, y = sensitivity), col = "#FDE725FF") + 
+  geom_path(data = trans_glm_roc, 
+            aes(x = 1 - specificity, y = sensitivity), col = "#21908CFF")
 ```
 
 That is a potential, if not slight, improvmement. 
@@ -217,22 +214,13 @@ pca_glm_roc <-
   roc_curve(Class, .pred_One)
 
 pca_glm_probs %>% roc_auc(Class, .pred_One)
-
-autoplot(simple_glm_roc) + 
-  geom_step(data = ratio_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "darkred") + 
-  geom_line(data = trans_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "darkblue") + 
-  geom_line(data = pca_glm_roc %>% arrange(specificity), 
-            aes(x = 1 - specificity, y = sensitivity),
-              col = "green")
 ```
 
-These predictions are almost identical to the transformed model. 
+These results are almost identical to the transformed model. 
 
 ## A different model
+
+Let's try a flexible discriminant analysis model (with MARS functions) using the `discrim` package. Would a different model work better? 
 
 ```{r fda}
 library(discrim)
@@ -258,6 +246,8 @@ discrim_roc <-
 
 discrim_probs %>% roc_auc(Class, .pred_One)
 ```
+
+Not this one, at least. 
 
 
 ## The test set

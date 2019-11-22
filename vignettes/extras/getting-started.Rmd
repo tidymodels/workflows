@@ -1,8 +1,8 @@
 ---
 title: "Getting Started"
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
 output:
   knitr:::html_vignette:
     toc: yes
@@ -21,13 +21,13 @@ library(ggplot2)
 theme_set(theme_bw() + theme(legend.position = "top"))
 ```
 
-This is an example of a fairly realistic interactive data analysis project and how workflows can be used. 
+This is an example of a fairly realistic interactive data analysis project to demonstrate how workflows can be used.
 
 ## Introduction
 
-The data are simple: there are two predictors that should be used to differentiate two classes in the data. 
+The data are simple: there are two predictors that should be used to differentiate two classes in the outcome. 
 
-There are three partitions of the original data: one for training (n = 1009), validation (n = 300), and testing (n = 710). We will work with the training set the most and use the validation set to compare models during the development process and then use the test set once we think that we have a good algorithm for making predictions.  
+There are three partitions of the original data: training (n = 1009), validation (n = 300), and testing (n = 710). We will work with the training set the most and use the validation set to compare models during the development process and then use the test set once we think that we have a good algorithm for making predictions.
 
 Here is the training set:
 
@@ -56,19 +56,19 @@ bivariate_train %>%
   scale_y_log10()
 ```
 
-In the first plot above, the separation appears to happen linearly and a straight, diagonal boundary might do well. We could use `glm()` directly to create a logistic regression but we will use the `tidymodels` infrastructure and start by making a `parsnip` model object:
+In the first plot above, the separation appears to happen linearly, and a straight, diagonal boundary might do well. We could use `glm()` directly to create a logistic regression, but we will use the `tidymodels` infrastructure and start by making a `parsnip` model object.
 
 ```{r glm-mod}
 library(parsnip)
+
 logit_mod <-
   logistic_reg() %>%
   set_engine("glm")
 ```
 
-This data analysis will involve looking at a few different approaches of representing the two predictors so that we have a high-quality model. We'll walk though the thought process of this analysis as we go. This will emulate how most data analysis projects happen: an initial approach is taken and then potential steps are attempted to make improvements. There is no pre-defined blueprint to this process and the R4DS diagram summarizes the process nicely.  
+This data analysis will involve looking at a few different approaches of representing the two predictors so that we have a high-quality model. We'll walk though the thought process of this analysis as we go. This will emulate how most data analysis projects happen: an initial approach is taken and then potential steps are attempted to make improvements. There is no pre-defined blueprint to this process and the R4DS diagram summarizes the process nicely.
 
-Since we are going to try different combinations of feature engineering and models, `workflows` are really useful since you can have one object that contains all of this operations. It helps organize your work instead of having different objects in your workspace that, at some point, have been used in pairs. 
-
+Since we are going to try different combinations of feature engineering and models, `workflows` are really useful since you can have one object that contains all of these operations. It helps organize your work instead of having different objects in your workspace that, at some point, have been used in pairs.
 
 ## A first set of models
 
@@ -88,7 +88,7 @@ simple_glm <-
   fit(data = bivariate_train)
 ```
 
-To evaluate this model, the ROC curve will be computed along with its corresponding AUC. 
+To evaluate this model, the ROC curve will be computed along with its corresponding AUC.
 
 ```{r simple-roc}
 library(yardstick)
@@ -106,9 +106,9 @@ simple_glm_probs %>% roc_auc(Class, .pred_One)
 autoplot(simple_glm_roc)
 ```
 
-This seems reasonable. One potential issue is that the two predictors have a high degree of correlation `r round(cor(bivariate_train$A, bivariate_train$B), 3)` and this might cause some instability in the model. 
+This seems reasonable. One potential issue is that the two predictors have a high degree of correlation `r round(cor(bivariate_train$A, bivariate_train$B), 3)`, and this might cause some instability in the model.
 
-Since there are two correlated predictors with skewed distributions and strictly positive values, it might be intuitive to use their ratio instead of the pair. We'll try that next but recycling the initial workflow and just adding a different formula:
+Since there are two correlated predictors with skewed distributions and strictly positive values, it might be intuitive to use their ratio instead of the pair. We'll try that next by recycling the initial workflow and just adding a different formula:
 
 ```{r ratios}
 ratio_glm <-
@@ -127,20 +127,24 @@ ratio_glm_roc <-
 ratio_glm_probs %>% roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
-  geom_path(data = ratio_glm_roc, 
-            aes(x = 1 - specificity, y = sensitivity), col = "#FDE725FF")
+  geom_path(
+    data = ratio_glm_roc, 
+    aes(x = 1 - specificity, y = sensitivity), 
+    col = "#FDE725FF"
+  )
 ```
 
-The original analysis shows a slight edge but the two models are probably within the experimental noise of one another. 
+The original analysis shows a slight edge, but the two models are probably within the experimental noise of one another.
 
 ## More complex feature engineering
 
-Instead of combining the two predictors, would it help the model if we were to resolve the skewness of the variables? To test this theory, one option would be to use the Box-Cox transformation on each predictor individually to see if it recommends a nonlinear transformation. The transformation can encode a variety of different functions including the log transform, square root, inverse, and fractional transformations in-between these. 
+Instead of combining the two predictors, would it help the model if we were to resolve the skewness of the variables? To test this theory, one option would be to use the Box-Cox transformation on each predictor individually to see if it recommends a nonlinear transformation. The transformation can encode a variety of different functions including the log transform, square root, inverse, and fractional transformations in-between these.
 
-This can be easily done via the formula interface, so a recipe is used. A recipe is a list of sequential data processing steps that are conducted before the data are used in a model. For example, to use the Box-Cox method, a simple recipe would be:
+This cannot be easily done via the formula interface, so a recipe is used. A recipe is a list of sequential data processing steps that are conducted before the data are used in a model. For example, to use the Box-Cox method, a simple recipe would be:
 
 ```{r bc-rec, message = FALSE}
 library(recipes)
+
 trans_recipe <- 
   recipe(Class ~ ., data = bivariate_train) %>% 
   step_BoxCox(all_predictors())
@@ -153,9 +157,9 @@ Creating the recipe only makes an object with the instructions; it does not carr
 updated_rec <- prep(trans_recipe)
 ```
 
-Now we have all of the ingerdient to execute the data pre-processing. To get the pre-processed version of the training set, the `juice()` function can be used to return a data frame with the transformed predictors, and these can be given to the `fit()` function. 
+Now we have all of the ingredients to execute the data pre-processing. To get the pre-processed version of the training set, `juice()` can be used to return a data frame with the transformed predictors, and these can be passed on to `fit()`.
 
-`workflows` eliminates the multiple steps between creating the recipe and getting the fitted model. Internally, it prepares the recipe so that you don't have to: 
+`workflows` eliminates the multiple steps between creating the recipe and getting the fitted model. Internally, it prepares the recipe so that you don't have to:
 
 ```{r rec-trans}
 trans_glm <-
@@ -174,15 +178,21 @@ trans_glm_roc <-
 trans_glm_probs %>% roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
-  geom_path(data = ratio_glm_roc, 
-            aes(x = 1 - specificity, y = sensitivity), col = "#FDE725FF") + 
-  geom_path(data = trans_glm_roc, 
-            aes(x = 1 - specificity, y = sensitivity), col = "#21908CFF")
+  geom_path(
+    data = ratio_glm_roc, 
+    aes(x = 1 - specificity, y = sensitivity), 
+    col = "#FDE725FF"
+  ) + 
+  geom_path(
+    data = trans_glm_roc, 
+    aes(x = 1 - specificity, y = sensitivity), 
+    col = "#21908CFF"
+  )
 ```
 
-That is a potential, if not slight, improvmement. 
+That is a potential, if not slight, improvmement.
 
-The Box-Cox procedure recommended transfomrations that are pretty close to the inverse (TODO have a way to access the `tidy` method on these objects).
+The Box-Cox procedure recommended transformations that are pretty close to the inverse.
 
 The model above creates a class boundary for these data:
 
@@ -192,7 +202,7 @@ ggplot(bivariate_train, aes(x = 1/A, y = 1/B, col = Class)) +
   coord_equal(ratio = 1/12)
 ```
 
-The correlation between these is about the same as the in the original data. It might help the model to decor related them and the standard technique for this is principal component analysis. A recipe step can be added that will conduct PCA and return the score values. The scores, instead of the original predictors, can then be used in the model. PCA chases variability so it is important to normalize the two predictors so that they have the same units. Traditionally, each column could be centered and scaled. For this reason, a step is used prior to PCA that normalizes the two predictors. 
+The correlation between these is about the same as in the original data. It might help the model to de-correlate them, and the standard technique for this is principal component analysis. A recipe step can be added that will conduct PCA and return the score values. The scores, instead of the original predictors, can then be used in the model. PCA chases variability, so it is important to normalize the two predictors so that they have the same units. Traditionally, each column could be centered and scaled. For this reason, a step is used prior to PCA that normalizes the two predictors.
 
 ```{r rec-pca}
 pca_recipe <- 
@@ -216,7 +226,7 @@ pca_glm_roc <-
 pca_glm_probs %>% roc_auc(Class, .pred_One)
 ```
 
-These results are almost identical to the transformed model. 
+These results are almost identical to the transformed model.
 
 ## A different model
 
@@ -247,12 +257,11 @@ discrim_roc <-
 discrim_probs %>% roc_auc(Class, .pred_One)
 ```
 
-Not this one, at least. 
-
+Not this one, at least.
 
 ## The test set
 
-Based on these results, the model with the logitic regression model with inverse terms is probably our best bet. Using the test set: 
+Based on these results, the model with the logitic regression model with inverse terms is probably our best bet. Using the test set:
 
 ```{r test-set}
 test_probs <- 
@@ -263,8 +272,8 @@ test_roc <-
   test_probs %>% 
   roc_curve(Class, .pred_One)
 
-test_probs %>% roc_auc(Class, .pred_One)
 # A little more optimistic than the validation set
+test_probs %>% roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) 
 ```

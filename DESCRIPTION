@@ -19,8 +19,8 @@ Imports:
     glue,
     hardhat,
     parsnip (>= 0.0.4),
-    rlang,
-    vctrs
+    rlang (>= 0.4.1),
+    vctrs (>= 0.2.0)
 Remotes:
     tidymodels/hardhat
 Encoding: UTF-8

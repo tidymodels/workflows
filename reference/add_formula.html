@@ -123,7 +123,7 @@ formula.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A workflow.</p></td>
+      <td><p>A workflow</p></td>
     </tr>
     <tr>
       <th>formula</th>
@@ -138,12 +138,22 @@ required.</p></td>
     <p>To fit a workflow, one of <code>add_formula()</code> or <code><a href='add_recipe.html'>add_recipe()</a></code> <em>must</em> be
 specified, but not both.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_formula</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span>)
+<span class='no'>workflow</span></div><div class='output co'>#&gt; &lt;workflow&gt;
+#&gt;   &lt;preprocessor&gt;
+#&gt;     Formula
+#&gt; 
+#&gt;   &lt;model&gt;
+#&gt;     None</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

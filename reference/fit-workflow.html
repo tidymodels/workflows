@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a recipe to a workflow — add_recipe • workflows</title>
+<title>Fit a workflow object — fit-workflow • workflows</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,13 @@
 
 
 
-<meta property="og:title" content="Add a recipe to a workflow — add_recipe" />
-<meta property="og:description" content="add_recipe() specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe." />
+<meta property="og:title" content="Fit a workflow object — fit-workflow" />
+<meta property="og:description" content="Fitting a workflow currently involves two main steps:
+Preprocessing the data using a formula preprocessor, or by calling
+recipes::prep() on a recipe.
+Fitting the underlying parsnip model using parsnip::fit.model_spec().
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,57 +110,85 @@ is required through the usage of a recipe." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a recipe to a workflow</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/pre-action-recipe.R'><code>R/pre-action-recipe.R</code></a></small>
-    <div class="hidden name"><code>add_recipe.Rd</code></div>
+    <h1>Fit a workflow object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/fit.R'><code>R/fit.R</code></a></small>
+    <div class="hidden name"><code>fit-workflow.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>add_recipe()</code> specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe.</p>
+    <p>Fitting a workflow currently involves two main steps:</p><ul>
+<li><p>Preprocessing the data using a formula preprocessor, or by calling
+<code><a href='https://rdrr.io/pkg/recipes/man/prep.html'>recipes::prep()</a></code> on a recipe.</p></li>
+<li><p>Fitting the underlying parsnip model using <code><a href='https://rdrr.io/pkg/parsnip/man/fit.html'>parsnip::fit.model_spec()</a></code>.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for workflow</span>
+<span class='fu'>fit</span>(<span class='no'>object</span>, <span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='control_workflow.html'>control_workflow</a></span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
+      <th>object</th>
       <td><p>A workflow</p></td>
     </tr>
     <tr>
-      <th>recipe</th>
-      <td><p>A recipe created using <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipes::recipe()</a></code></p></td>
+      <th>data</th>
+      <td><p>A data frame of predictors and outcomes to use when fitting the
+workflow</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used</p></td>
+    </tr>
+    <tr>
+      <th>control</th>
+      <td><p>A <code><a href='control_workflow.html'>control_workflow()</a></code> object</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To fit a workflow, one of <code><a href='add_formula.html'>add_formula()</a></code> or <code>add_recipe()</code> <em>must</em> be
-specified, but not both.</p>
+    <p>In the future, there will also be <em>postprocessing</em> steps that can be added
+after the model has been fit.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘recipes’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    step</span></div><div class='input'>
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>)
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>cyl</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
 
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_recipe</span>(<span class='no'>workflow</span>, <span class='no'>recipe</span>)
-<span class='no'>workflow</span></div><div class='output co'>#&gt; &lt;workflow&gt;
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
+
+<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>base_workflow</span>, <span class='no'>model</span>)
+
+<span class='no'>formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
+
+<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; &lt;workflow [fit]&gt;
+#&gt;   &lt;preprocessor&gt;
+#&gt;     Formula
+#&gt; 
+#&gt;   &lt;model&gt;
+#&gt;     Linear Regression Model Specification (regression)
+#&gt;     
+#&gt;     Computational engine: lm 
+#&gt;     </div><div class='input'>
+<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
+<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>disp</span>)
+
+<span class='no'>recipe_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>base_workflow</span>, <span class='no'>recipe</span>)
+
+<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>recipe_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; &lt;workflow [fit]&gt;
 #&gt;   &lt;preprocessor&gt;
 #&gt;     Recipe
 #&gt; 
 #&gt;   &lt;model&gt;
-#&gt;     None</div></pre>
+#&gt;     Linear Regression Model Specification (regression)
+#&gt;     
+#&gt;     Computational engine: lm 
+#&gt;     </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a workflow — workflow • workflows</title>
+<title>Internal workflow functions — workflows-internals • workflows</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,11 @@
 
 
 
-<meta property="og:title" content="Create a workflow — workflow" />
-<meta property="og:description" content="A workflow is a container object that aggregates information required to
-fit and predict from a model. This information might be a recipe used in
-preprocessing, specified through add_recipe(), or the model specification
-to fit, specified through add_model()." />
+<meta property="og:title" content="Internal workflow functions — workflows-internals" />
+<meta property="og:description" content=".fit_pre() and .fit_model() are internal workflow functions for
+partially fitting a workflow object. They are only exported for usage by
+the tuning package, tune, and the
+general user should never need to worry about them." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,34 +108,63 @@ to fit, specified through add_model()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a workflow</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/workflow.R'><code>R/workflow.R</code></a></small>
-    <div class="hidden name"><code>workflow.Rd</code></div>
+    <h1>Internal workflow functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/fit.R'><code>R/fit.R</code></a></small>
+    <div class="hidden name"><code>workflows-internals.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A <code>workflow</code> is a container object that aggregates information required to
-fit and predict from a model. This information might be a recipe used in
-preprocessing, specified through <code><a href='add_recipe.html'>add_recipe()</a></code>, or the model specification
-to fit, specified through <code><a href='add_model.html'>add_model()</a></code>.</p>
+    <p><code>.fit_pre()</code> and <code>.fit_model()</code> are internal workflow functions for
+<em>partially</em> fitting a workflow object. They are only exported for usage by
+the tuning package, <a href='https://github.com/tidymodels/tune'>tune</a>, and the
+general user should never need to worry about them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>workflow</span>()</pre>
+    <pre class="usage"><span class='fu'>.fit_pre</span>(<span class='no'>workflow</span>, <span class='no'>data</span>)
 
+<span class='fu'>.fit_model</span>(<span class='no'>workflow</span>, <span class='no'>control</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>workflow</th>
+      <td><p>A workflow</p>
+<p>For <code>.fit_pre()</code>, this should be a fresh workflow.</p>
+<p>For <code>.fit_model()</code>, this should be a workflow that has already been run
+through <code>.fit_pre()</code>.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>A data frame of predictors and outcomes to use when fitting the
+workflow</p></td>
+    </tr>
+    <tr>
+      <th>control</th>
+      <td><p>A <code><a href='control_workflow.html'>control_workflow()</a></code> object</p></td>
+    </tr>
+    </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>rec</span>, <span class='no'>cyl</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
 
-<span class='no'>wrk</span> <span class='kw'>&lt;-</span> <span class='fu'>workflow</span>()
-<span class='no'>wrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>wrk</span>, <span class='no'>rec</span>)</div></pre>
+<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>base_workflow</span>, <span class='no'>model</span>)
+
+<span class='no'>formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
+
+<span class='no'>partially_fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_pre</span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)
+<span class='no'>fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_model</span>(<span class='no'>partially_fit_workflow</span>, <span class='fu'><a href='control_workflow.html'>control_workflow</a></span>())</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

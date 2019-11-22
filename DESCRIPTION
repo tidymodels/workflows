@@ -31,16 +31,8 @@ Suggests:
     testthat (>= 2.3.0),
     covr,
     recipes,
-    ggplot2,
-    yardstick,
-    discrim,
-    dplyr,
-    tidyr,
-    earth,
-    klaR,
     knitr,
-    rmarkdown,
-    mda
+    rmarkdown
 Depends: 
     R (>= 3.2)
 VignetteBuilder: knitr

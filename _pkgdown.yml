@@ -16,7 +16,7 @@ figures:
 navbar:
   left:
   - text: Getting Started
-    href: articles/getting-started.html
+    href: articles/extras/getting-started.html
   - text: News
     href: news/index.html
   - text: Reference

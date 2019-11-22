@@ -2,6 +2,7 @@
 
 S3method(fit,workflow)
 S3method(predict,workflow)
+S3method(print,workflow)
 export(.fit_model)
 export(.fit_pre)
 export(add_formula)

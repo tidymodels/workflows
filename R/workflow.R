@@ -111,7 +111,7 @@ print_model <- function(x) {
 
   # capture.output() is ugly but it works
   spec <- x$fit$actions$model$spec
-  spec_format <- capture.output(spec)
+  spec_format <- utils::capture.output(spec)
   spec_format <- tab(spec_format, 2L)
 
   model <- c(model, spec_format)

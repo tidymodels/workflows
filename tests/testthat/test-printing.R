@@ -122,7 +122,7 @@ test_that("printing a workflow containing an unfit model", {
   )
   expect_output(
     print(wflow),
-    "\nComputational engine: lm",
+    "\nComputational engine: lm"
   )
 })
 
@@ -156,7 +156,7 @@ test_that("printing a workflow containing a fit model", {
   )
   expect_output(
     print(wflow),
-    "24.97234",
+    "24.97234"
   )
 })
 

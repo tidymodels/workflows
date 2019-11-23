@@ -117,7 +117,8 @@ test_that("printing a workflow containing an unfit model", {
   )
   expect_output(
     print(wflow),
-    "\nLinear Regression Model Specification \\(regression\\)",
+    "\nLinear Regression Model Specification (regression)",
+    fixed = TRUE
   )
   expect_output(
     print(wflow),
@@ -150,7 +151,8 @@ test_that("printing a workflow containing a fit model", {
   )
   expect_output(
     print(wflow),
-    "\nstats::lm\\(formula = formula, data = data\\)",
+    "\nstats::lm(formula = formula, data = data)",
+    fixed = TRUE
   )
   expect_output(
     print(wflow),

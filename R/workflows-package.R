@@ -12,5 +12,7 @@
 #' @importFrom parsnip fit_xy
 #'
 #' @importFrom stats predict
+#'
+#' @importFrom cli cli_rule
 ## usethis namespace: end
 NULL

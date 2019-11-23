@@ -1,8 +1,0 @@
-> add_recipe(workflow(), rec)
-<workflow>
-  <preprocessor>
-    Recipe
-
-  <model>
-    None
-

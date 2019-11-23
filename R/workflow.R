@@ -69,54 +69,56 @@ print.workflow <- function(x, ...) {
 
 print_header <- function(x) {
   if (x$run) {
-    fit <- " [fit]"
+    fit <- " [trained]"
   } else {
     fit <- ""
   }
 
-  cat_line(glue::glue("<workflow{fit}>"))
+  cli::cli_rule(glue::glue("model workflow {fit}"))
 
   invisible(x)
 }
 
 print_preprocessor <- function(x) {
   actions <- names(x$pre$actions)
-  preprocessor <- tab("<preprocessor>")
 
   if ("formula" %in% actions) {
-    type <- tab("Formula", 2L)
+    cat_line(cli::style_bold("\nformula\n"))
+    chr_f <- rlang::expr_text(x$pre$actions$formula$formula)
+    cat_line(glue::glue_collapse(chr_f, width = options()$width - 4))
   } else if ("recipe" %in% actions) {
-    type <- tab("Recipe", 2L)
+    opers <- x$pre$actions$recipe$recipe$steps
+    if (length(opers) > 0) {
+      opers <- vapply(opers, function(x) class(x)[1], character(1))
+    } else {
+      opers <- ("no steps\n")
+    }
+    cat_line(cli::style_bold("\nrecipe\n"))
+    cat_line(glue::glue_collapse(opers, sep = ", ", last = ", and ", width = options()$width - 4))
   } else {
-    type <- tab("None", 2L)
+    cat("\nno pre-processors\n")
   }
 
-  preprocessor <- c(preprocessor, type)
-
-  cat_line(preprocessor)
   invisible(x)
 }
 
 print_model <- function(x) {
+  cat_line(cli::style_bold("model\n"))
+
   actions <- names(x$fit$actions)
-  model <- tab("<model>")
 
   has_model <- "model" %in% actions
 
   if (!has_model) {
-    model <- c(model, tab("None", 2L))
-    cat_line(model)
+    cat_line("no model object")
     return(invisible(x))
   }
 
-  # capture.output() is ugly but it works
-  spec <- x$fit$actions$model$spec
-  spec_format <- utils::capture.output(spec)
-  spec_format <- tab(spec_format, 2L)
-
-  model <- c(model, spec_format)
-
-  cat_line(model)
+  if (!is.null(x$fit$fit)) {
+    print(x$fit$fit$fit)
+  } else {
+    print(x$fit$actions$model$spec)
+  }
   invisible(x)
 }
 
@@ -125,11 +127,6 @@ print_postprocessor <- function(x) {
   invisible(x)
 }
 
-tab <- function(x, times = 1L) {
-  space <- paste0(rep("  ", times = times), collapse = "")
-  paste0(space, x)
-}
-
-cat_line <- function (...) {
+cat_line <- function(...) {
   cat(paste0(..., collapse = "\n"), "\n", sep = "")
 }

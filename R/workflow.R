@@ -74,7 +74,7 @@ print_header <- function(x) {
     fit <- ""
   }
 
-  cli::cli_rule(glue::glue("model workflow {fit}"))
+  cat(cli::rule(glue::glue("model workflow {fit}")))
 
   invisible(x)
 }

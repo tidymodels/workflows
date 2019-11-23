@@ -13,6 +13,5 @@
 #'
 #' @importFrom stats predict
 #'
-#' @importFrom cli cli_rule
 ## usethis namespace: end
 NULL

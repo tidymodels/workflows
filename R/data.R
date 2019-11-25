@@ -27,7 +27,9 @@ NULL
 #' @docType data
 #' @return \item{stackoverflow}{a tibble}
 #'
-#' @source https://supervised-ml-course.netlify.com/chapter2
+#' @source
+#' Julia Silge, _Supervised Machine Learning Case Studies in R_,
+#' \url(https://supervised-ml-course.netlify.com/chapter2)
 #' @keywords datasets
 #' @examples
 #' data(stackoverflow)

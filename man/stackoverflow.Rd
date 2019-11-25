@@ -6,7 +6,7 @@
 \title{Annual Stack Overflow Developer Survey Data}
 \source{
 Julia Silge, \emph{Supervised Machine Learning Case Studies in R},
-\url(https://supervised-ml-course.netlify.com/chapter2)
+\url{https://supervised-ml-course.netlify.com/chapter2}
 }
 \value{
 \item{stackoverflow}{a tibble}

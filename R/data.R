@@ -29,7 +29,7 @@ NULL
 #'
 #' @source
 #' Julia Silge, _Supervised Machine Learning Case Studies in R_,
-#' \url(https://supervised-ml-course.netlify.com/chapter2)
+#' \url{https://supervised-ml-course.netlify.com/chapter2}
 #' @keywords datasets
 #' @examples
 #' data(stackoverflow)

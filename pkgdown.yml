@@ -1,5 +1,7 @@
 pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
-articles: []
+articles:
+  getting-started: extras/getting-started.html
+  stages: stages.html
 

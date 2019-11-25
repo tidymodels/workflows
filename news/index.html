@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a recipe to a workflow — add_recipe • workflows</title>
+<title>Changelog • workflows</title>
 
 
 <!-- jquery -->
@@ -34,10 +34,7 @@
 
 
 
-<meta property="og:title" content="Add a recipe to a workflow — add_recipe" />
-<meta property="og:description" content="add_recipe() specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -64,7 +61,7 @@ is required through the usage of a recipe." />
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -117,67 +114,28 @@ is required through the usage of a recipe." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a recipe to a workflow</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/pre-action-recipe.R'><code>R/pre-action-recipe.R</code></a></small>
-    <div class="hidden name"><code>add_recipe.Rd</code></div>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/tidymodels/workflows/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p><code>add_recipe()</code> specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe.</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A workflow</p></td>
-    </tr>
-    <tr>
-      <th>recipe</th>
-      <td><p>A recipe created using <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipes::recipe()</a></code></p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>To fit a workflow, one of <code><a href='add_formula.html'>add_formula()</a></code> or <code>add_recipe()</code> <em>must</em> be
-specified, but not both.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘recipes’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    step</span></div><div class='input'>
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>)
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>cyl</span>)
-
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_recipe</span>(<span class='no'>workflow</span>, <span class='no'>recipe</span>)
-<span class='no'>workflow</span></div><div class='output co'>#&gt; &lt;workflow&gt;
-#&gt;   &lt;preprocessor&gt;
-#&gt;     Recipe
-#&gt; 
-#&gt;   &lt;model&gt;
-#&gt;     None</div></pre>
+    <div id="workflows-0-0-0-9001" class="section level1">
+<h1 class="page-header">
+<a href="#workflows-0-0-0-9001" class="anchor"></a>workflows 0.0.0.9001</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#workflows-0-0-0-9001">0.0.0.9001</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
 

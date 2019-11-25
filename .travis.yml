@@ -3,6 +3,17 @@
 language: R
 cache: packages
 
+# used for pkgdown vignettes:
+
+r_packages:
+  - mda
+  - earth
+  - yardstick
+  - ggplot2
+  - discrim
+  - dplyr
+  - tidyr
+
 matrix:
   include:
   - r: release

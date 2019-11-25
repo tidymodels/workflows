@@ -19,6 +19,7 @@ Imports:
     glue,
     hardhat,
     parsnip (>= 0.0.4),
+    utils,
     rlang (>= 0.4.1),
     vctrs (>= 0.2.0)
 Remotes:
@@ -30,6 +31,9 @@ RoxygenNote: 7.0.0
 Suggests: 
     testthat (>= 2.3.0),
     covr,
-    recipes
+    recipes,
+    knitr,
+    rmarkdown
 Depends: 
     R (>= 3.2)
+VignetteBuilder: knitr

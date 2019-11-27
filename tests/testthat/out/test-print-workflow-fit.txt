@@ -1,0 +1,24 @@
+> fit(workflow, mtcars)
+== Workflow [trained] ==========================================================
+Preprocessor: Formula
+Model: linear_reg()
+
+-- Preprocessor ----------------------------------------------------------------
+mpg ~ cyl
+
+-- Model -----------------------------------------------------------------------
+parsnip model object
+
+Fit in:  0ms
+Call:
+stats::lm(formula = formula, data = data)
+
+Coefficients:
+(Intercept)          cyl  
+     37.885       -2.876  
+
+Linear Regression Model Specification (regression)
+
+Computational engine: lm 
+
+

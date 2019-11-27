@@ -1,0 +1,21 @@
+> add_recipe(workflow(), rec)
+== Workflow ====================================================================
+Preprocessor: Recipe
+Model: None
+
+-- Preprocessor ----------------------------------------------------------------
+12 Recipe Steps
+
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* step_log()
+* ...
+* and 2 more steps.
+

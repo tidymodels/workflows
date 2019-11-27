@@ -1,0 +1,17 @@
+> add_model(workflow(), model)
+== Workflow ====================================================================
+Preprocessor: None
+Model: linear_reg()
+
+-- Model -----------------------------------------------------------------------
+Linear Regression Model Specification (regression)
+
+Main Arguments:
+  penalty = 0.01
+
+Engine-Specific Arguments:
+  dfmax = 5
+
+Computational engine: glmnet 
+
+

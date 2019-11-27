@@ -1,162 +1,84 @@
-
-library(recipes)
-library(parsnip)
-
-# ------------------------------------------------------------------------------
-
-car_rec <-
-  recipe(mpg ~ ., data = mtcars) %>%
-  step_normalize(all_predictors()) %>%
-  step_ns(disp)
-
-lm_mod <- linear_reg() %>% set_engine("lm")
-
-# ------------------------------------------------------------------------------
-
-test_that("printing an empty workflow", {
-
-  expect_output(
-    print(workflow()),
-    "── model workflow  ───"
-  )
-  expect_output(
-    print(workflow()),
-    "no pre-processors"
-  )
-  expect_output(
-    print(workflow()),
-    "\nmodel"
-  )
-  expect_output(
-    print(workflow()),
-    "no model object"
-  )
-
-})
-
-# ------------------------------------------------------------------------------
-
-test_that("printing a workflow containing only a formula", {
-
-  wflow <- workflow() %>% add_formula(mpg ~ .)
-
-  expect_output(
-    print(wflow),
-    "── model workflow  ───"
-  )
-  expect_output(
-    print(wflow),
-    "\nformula"
-  )
-  expect_output(
-    print(wflow),
-    "mpg ~ ."
-  )
-  expect_output(
-    print(wflow),
-    "\nmodel"
-  )
-  expect_output(
-    print(wflow),
-    "no model object"
-  )
-
-})
-
-
-# ------------------------------------------------------------------------------
-
-test_that("printing a workflow containing only a recipe", {
-
-  wflow <- workflow() %>% add_recipe(car_rec)
-
-  expect_output(
-    print(wflow),
-    "── model workflow  ───"
-  )
-  expect_output(
-    print(wflow),
-    "\nrecipe"
-  )
-  expect_output(
-    print(wflow),
-    "step_normalize, and step_ns"
-  )
-  expect_output(
-    print(wflow),
-    "\nmodel"
-  )
-  expect_output(
-    print(wflow),
-    "no model object"
-  )
-
-})
-
-# ------------------------------------------------------------------------------
-
-test_that("printing a workflow containing an unfit model", {
-
-  wflow <- workflow() %>% add_recipe(car_rec) %>% add_model(lm_mod)
-
-  expect_output(
-    print(wflow),
-    "── model workflow  ───"
-  )
-  expect_output(
-    print(wflow),
-    "\nrecipe"
-  )
-  expect_output(
-    print(wflow),
-    "step_normalize, and step_ns"
-  )
-  expect_output(
-    print(wflow),
-    "\nmodel"
-  )
-  expect_output(
-    print(wflow),
-    "\nLinear Regression Model Specification (regression)",
-    fixed = TRUE
-  )
-  expect_output(
-    print(wflow),
-    "\nComputational engine: lm"
+test_that("can print empty workflow", {
+  verify_output(
+    test_path("out/test-print-workflow-empty.txt"),
+    workflow()
   )
 })
 
-# ------------------------------------------------------------------------------
+test_that("can print workflow with recipe", {
+  rec <- recipes::recipe(mtcars)
 
-test_that("printing a workflow containing a fit model", {
-
-  wflow <- workflow() %>% add_recipe(car_rec) %>% add_model(lm_mod) %>% fit(mtcars)
-
-  expect_output(
-    print(wflow),
-    "── model workflow  [trained] ──",
-    fixed = TRUE
-  )
-  expect_output(
-    print(wflow),
-    "\nrecipe"
-  )
-  expect_output(
-    print(wflow),
-    "step_normalize, and step_ns"
-  )
-  expect_output(
-    print(wflow),
-    "\nmodel"
-  )
-  expect_output(
-    print(wflow),
-    "\nstats::lm(formula = formula, data = data)",
-    fixed = TRUE
-  )
-  expect_output(
-    print(wflow),
-    "24.97234"
+  verify_output(
+    test_path("out/test-print-workflow-recipe.txt"),
+    add_recipe(workflow(), rec)
   )
 })
 
+test_that("can print workflow with formula", {
+  verify_output(
+    test_path("out/test-print-workflow-formula.txt"),
+    add_formula(workflow(), y ~ x)
+  )
+})
+
+test_that("can print workflow with model", {
+  model <- parsnip::linear_reg()
+
+  verify_output(
+    test_path("out/test-print-workflow-model.txt"),
+    add_model(workflow(), model)
+  )
+})
+
+test_that("can print workflow with model with engine specific args", {
+  model <- parsnip::linear_reg(penalty = 0.01)
+  model <- parsnip::set_engine(model, "glmnet", dfmax = 5)
+
+  verify_output(
+    test_path("out/test-print-workflow-model-args.txt"),
+    add_model(workflow(), model)
+  )
+})
+
+test_that("can print workflow with fit model", {
+  model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, model)
+
+  verify_output(
+    test_path("out/test-print-workflow-fit.txt"),
+    fit(workflow, mtcars)
+  )
+})
+
+test_that("can print workflow with >10 recipe steps", {
+  rec <- recipes::recipe(mpg~cyl, mtcars)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+  rec <- recipes::step_log(rec, cyl)
+
+  add_recipe(workflow(), rec)
+
+  verify_output(
+    test_path("out/test-print-workflow-recipe-11-steps.txt"),
+    add_recipe(workflow(), rec)
+  )
+
+  rec <- recipes::step_log(rec, cyl)
+
+  verify_output(
+    test_path("out/test-print-workflow-recipe-12-steps.txt"),
+    add_recipe(workflow(), rec)
+  )
+})

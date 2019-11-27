@@ -61,9 +61,9 @@ is_workflow <- function(x) {
 print.workflow <- function(x, ...) {
   print_header(x)
   print_preprocessor(x)
-  cat_line("")
   print_model(x)
-  print_postprocessor(x)
+  # cat_line("")
+  # print_postprocessor(x)
   invisible(x)
 }
 
@@ -74,56 +74,162 @@ print_header <- function(x) {
     trained <- ""
   }
 
-  cat(cli::rule(glue::glue("model workflow {trained}")))
+  header <- glue::glue("Workflow{trained}")
+  header <- cli::rule(header, line = 2)
+
+  cat_line(header)
+
+  preprocessor_msg <- cli::style_italic("Preprocessor:")
+
+  if (has_preprocessor_formula(x)) {
+    preprocessor <- "Formula"
+  } else if (has_preprocessor_recipe(x)) {
+    preprocessor <- "Recipe"
+  } else {
+    preprocessor <- "None"
+  }
+
+  preprocessor_msg <- glue::glue("{preprocessor_msg} {preprocessor}")
+  cat_line(preprocessor_msg)
+
+  spec_msg <- cli::style_italic("Model:")
+
+  if (has_spec(x)) {
+    spec <- class(pull_workflow_spec(x))[[1]]
+    spec <- glue::glue("{spec}()")
+  } else {
+    spec <- "None"
+  }
+
+  spec_msg <- glue::glue("{spec_msg} {spec}")
+  cat_line(spec_msg)
 
   invisible(x)
 }
 
 print_preprocessor <- function(x) {
-  actions <- names(x$pre$actions)
+  has_preprocessor_formula <- has_preprocessor_formula(x)
+  has_preprocessor_recipe <- has_preprocessor_recipe(x)
 
-  if ("formula" %in% actions) {
-    cat_line(cli::style_bold("\nformula\n"))
-    chr_f <- rlang::expr_text(x$pre$actions$formula$formula)
-    cat_line(glue::glue_collapse(chr_f, width = options()$width - 4))
-  } else if ("recipe" %in% actions) {
-    opers <- x$pre$actions$recipe$recipe$steps
-    if (length(opers) > 0) {
-      opers <- vapply(opers, function(x) class(x)[1], character(1))
-    } else {
-      opers <- ("no steps\n")
-    }
-    cat_line(cli::style_bold("\nrecipe\n"))
-    cat_line(glue::glue_collapse(opers, sep = ", ", last = ", and ", width = options()$width - 4))
-  } else {
-    cat("\nno pre-processors\n")
-  }
-
-  invisible(x)
-}
-
-print_model <- function(x) {
-  cat_line(cli::style_bold("model\n"))
-
-  actions <- names(x$fit$actions)
-
-  has_model <- "model" %in% actions
-
-  if (!has_model) {
-    cat_line("no model object")
+  if (!has_preprocessor_formula && !has_preprocessor_recipe) {
     return(invisible(x))
   }
 
-  if (!is.null(x$fit$fit)) {
-    print(x$fit$fit$fit)
-  } else {
-    print(x$fit$actions$model$spec)
+  # Space between Workflow section and Preprocessor section
+  cat_line("")
+
+  header <- cli::rule("Preprocessor")
+  cat_line(header)
+
+  if (has_preprocessor_formula) {
+    print_preprocessor_formula(x)
   }
+
+  if (has_preprocessor_recipe) {
+    print_preprocessor_recipe(x)
+  }
+
   invisible(x)
 }
 
-# Nothing for now
-print_postprocessor <- function(x) {
+print_preprocessor_formula <- function(x) {
+  formula <- pull_workflow_preprocessor(x)
+  formula <- rlang::expr_text(formula)
+
+  cat_line(formula)
+
+  invisible(x)
+}
+
+print_preprocessor_recipe <- function(x) {
+  recipe <- pull_workflow_preprocessor(x)
+  steps <- recipe$steps
+
+  n_steps <- length(steps)
+
+  if (n_steps == 1L) {
+    step <- "Step"
+  } else {
+    step <- "Steps"
+  }
+
+  n_steps_msg <- glue::glue("{n_steps} Recipe {step}")
+  cat_line(n_steps_msg)
+
+  if (n_steps == 0L) {
+    return(invisible(x))
+  }
+
+  cat_line("")
+
+  step_names <- map_chr(steps, pull_step_name)
+
+  if (n_steps <= 10L) {
+    cli::cat_bullet(step_names)
+    return(invisible(x))
+  }
+
+  extra_steps <- n_steps - 10L
+  step_names <- step_names[1:10]
+
+  if (extra_steps == 1L) {
+    step <- "step"
+  } else {
+    step <- "steps"
+  }
+
+  extra_dots <- "..."
+  extra_msg <- glue::glue("and {extra_steps} more {step}.")
+
+  step_names <- c(step_names, extra_dots, extra_msg)
+
+  cli::cat_bullet(step_names)
+  invisible(x)
+}
+
+pull_step_name <- function(x) {
+  step <- class(x)[[1]]
+  glue::glue("{step}()")
+}
+
+print_model <- function(x) {
+  has_spec <- has_spec(x)
+
+  if (!has_spec) {
+    return(invisible(x))
+  }
+
+  has_fit <- has_fit(x)
+
+  # Space between Workflow/Preprocessor section and Model section
+  cat_line("")
+
+  header <- cli::rule("Model")
+  cat_line(header)
+
+  if (has_fit) {
+    print_fit(x)
+  }
+
+  print_spec(x)
+
+  invisible(x)
+}
+
+print_spec <- function(x) {
+  spec <- pull_workflow_spec(x)
+
+  print(spec)
+
+  invisible(x)
+}
+
+print_fit <- function(x) {
+  fit <- pull_workflow_fit(x)
+
+  # TODO improve this?
+  print(fit)
+
   invisible(x)
 }
 

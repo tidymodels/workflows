@@ -24,7 +24,7 @@ workflow <- function() {
 new_workflow <- function(pre = new_stage_pre(),
                          fit = new_stage_fit(),
                          post = new_stage_post(),
-                         run = FALSE) {
+                         trained = FALSE) {
   if (!is_stage(pre)) {
     abort("`pre` must be a `stage`.")
   }
@@ -37,15 +37,15 @@ new_workflow <- function(pre = new_stage_pre(),
     abort("`post` must be a `stage`.")
   }
 
-  if (!is_scalar_logical(run)) {
-    abort("`run` must be a single logical value.")
+  if (!is_scalar_logical(trained)) {
+    abort("`trained` must be a single logical value.")
   }
 
   data <- list(
     pre = pre,
     fit = fit,
     post = post,
-    run = run
+    trained = trained
   )
 
   structure(data, class = "workflow")
@@ -68,7 +68,7 @@ print.workflow <- function(x, ...) {
 }
 
 print_header <- function(x) {
-  if (x$run) {
+  if (x$trained) {
     fit <- " [trained]"
   } else {
     fit <- ""

@@ -30,6 +30,6 @@ test_that("constructor validates input", {
   expect_error(new_workflow(fit = 1), "must be a `stage`")
   expect_error(new_workflow(post = 1), "must be a `stage`")
 
-  expect_error(new_workflow(run = 1), "must be a single logical value")
+  expect_error(new_workflow(trained = 1), "must be a single logical value")
 })
 

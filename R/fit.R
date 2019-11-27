@@ -60,7 +60,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   # pred <- result$pred
   # result <- fit_post(workflow, pred)
 
-  workflow$run <- TRUE
+  workflow$trained <- TRUE
 
   workflow
 }
@@ -78,7 +78,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #'
 #'   For `.fit_pre()`, this should be a fresh workflow.
 #'
-#'   For `.fit_model()`, this should be a workflow that has already been run
+#'   For `.fit_model()`, this should be a workflow that has already been trained
 #'   through `.fit_pre()`.
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the

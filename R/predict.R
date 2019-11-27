@@ -47,8 +47,8 @@
 predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) {
   workflow <- object
 
-  if (!workflow$run) {
-    abort("Workflow has not yet been fit. Do you need to call `fit()`?")
+  if (!workflow$trained) {
+    abort("Workflow has not yet been trained. Do you need to call `fit()`?")
   }
 
   blueprint <- workflow$pre$mold$blueprint

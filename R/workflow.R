@@ -69,12 +69,12 @@ print.workflow <- function(x, ...) {
 
 print_header <- function(x) {
   if (x$trained) {
-    fit <- " [trained]"
+    trained <- " [trained]"
   } else {
-    fit <- ""
+    trained <- ""
   }
 
-  cat(cli::rule(glue::glue("model workflow {fit}")))
+  cat(cli::rule(glue::glue("model workflow {trained}")))
 
   invisible(x)
 }

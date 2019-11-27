@@ -177,29 +177,45 @@ after the model has been fit.</p>
 
 <span class='no'>formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
 
-<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; &lt;workflow [fit]&gt;
-#&gt;   &lt;preprocessor&gt;
-#&gt;     Formula
+<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: linear_reg()
 #&gt; 
-#&gt;   &lt;model&gt;
-#&gt;     Linear Regression Model Specification (regression)
-#&gt;     
-#&gt;     Computational engine: lm 
-#&gt;     </div><div class='input'>
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ cyl + log(disp)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = formula, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl  `log(disp)`  
+#&gt;     67.6674      -0.1755      -8.7971  
+#&gt; </div><div class='input'>
 <span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
 <span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>disp</span>)
 
 <span class='no'>recipe_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>base_workflow</span>, <span class='no'>recipe</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>recipe_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; &lt;workflow [fit]&gt;
-#&gt;   &lt;preprocessor&gt;
-#&gt;     Recipe
+<span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>recipe_workflow</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; Preprocessor: Recipe
+#&gt; Model: linear_reg()
 #&gt; 
-#&gt;   &lt;model&gt;
-#&gt;     Linear Regression Model Specification (regression)
-#&gt;     
-#&gt;     Computational engine: lm 
-#&gt;     </div></pre>
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; 1 Recipe Step
+#&gt; 
+#&gt; ● step_log()
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = formula, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl         disp  
+#&gt;     67.6674      -0.1755      -8.7971  
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

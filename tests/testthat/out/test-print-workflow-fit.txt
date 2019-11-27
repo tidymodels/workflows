@@ -7,18 +7,12 @@ Model: linear_reg()
 mpg ~ cyl
 
 -- Model -----------------------------------------------------------------------
-parsnip model object
 
-Fit in:  0ms
 Call:
 stats::lm(formula = formula, data = data)
 
 Coefficients:
 (Intercept)          cyl  
      37.885       -2.876  
-
-Linear Regression Model Specification (regression)
-
-Computational engine: lm 
 
 

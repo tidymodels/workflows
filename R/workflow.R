@@ -209,10 +209,10 @@ print_model <- function(x) {
 
   if (has_fit) {
     print_fit(x)
+    return(invisible(x))
   }
 
   print_spec(x)
-
   invisible(x)
 }
 
@@ -225,10 +225,26 @@ print_spec <- function(x) {
 }
 
 print_fit <- function(x) {
-  fit <- pull_workflow_fit(x)
+  parsnip_fit <- pull_workflow_fit(x)
+  fit <- parsnip_fit$fit
 
-  # TODO improve this?
-  print(fit)
+  output <- capture.output(fit)
+  n_output <- length(output)
+
+  if (n_output < 50L) {
+    print(fit)
+    return(invisible(x))
+  }
+
+  n_extra_output <- n_output - 50L
+  output <- output[1:50]
+
+  extra_output_msg <- glue::glue("and {n_extra_output} more lines.")
+
+  cat_line(output)
+  cat_line("")
+  cat_line("...")
+  cat_line(extra_output_msg)
 
   invisible(x)
 }

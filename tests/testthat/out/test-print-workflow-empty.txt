@@ -1,8 +1,5 @@
 > workflow()
-<workflow>
-  <preprocessor>
-    None
-
-  <model>
-    None
+== Workflow ====================================================================
+Preprocessor: None
+Model: None
 

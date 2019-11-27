@@ -15,7 +15,7 @@
 
 For \code{.fit_pre()}, this should be a fresh workflow.
 
-For \code{.fit_model()}, this should be a workflow that has already been run
+For \code{.fit_model()}, this should be a workflow that has already been trained
 through \code{.fit_pre()}.}
 
 \item{data}{A data frame of predictors and outcomes to use when fitting the

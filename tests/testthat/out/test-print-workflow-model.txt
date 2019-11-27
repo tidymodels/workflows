@@ -1,9 +1,9 @@
 > add_model(workflow(), model)
-<workflow>
-  <preprocessor>
-    None
+== Workflow ====================================================================
+Preprocessor: None
+Model: linear_reg()
 
-  <model>
-    Linear Regression Model Specification (regression)
-    
+-- Model -----------------------------------------------------------------------
+Linear Regression Model Specification (regression)
+
 

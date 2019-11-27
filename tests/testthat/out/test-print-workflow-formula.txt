@@ -1,8 +1,8 @@
 > add_formula(workflow(), y ~ x)
-<workflow>
-  <preprocessor>
-    Formula
+== Workflow ====================================================================
+Preprocessor: Formula
+Model: None
 
-  <model>
-    None
+-- Preprocessor ----------------------------------------------------------------
+y ~ x
 

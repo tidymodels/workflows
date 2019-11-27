@@ -24,7 +24,7 @@ workflow <- function() {
 new_workflow <- function(pre = new_stage_pre(),
                          fit = new_stage_fit(),
                          post = new_stage_post(),
-                         run = FALSE) {
+                         trained = FALSE) {
   if (!is_stage(pre)) {
     abort("`pre` must be a `stage`.")
   }
@@ -37,15 +37,15 @@ new_workflow <- function(pre = new_stage_pre(),
     abort("`post` must be a `stage`.")
   }
 
-  if (!is_scalar_logical(run)) {
-    abort("`run` must be a single logical value.")
+  if (!is_scalar_logical(trained)) {
+    abort("`trained` must be a single logical value.")
   }
 
   data <- list(
     pre = pre,
     fit = fit,
     post = post,
-    run = run
+    trained = trained
   )
 
   structure(data, class = "workflow")
@@ -61,75 +61,194 @@ is_workflow <- function(x) {
 print.workflow <- function(x, ...) {
   print_header(x)
   print_preprocessor(x)
-  cat_line("")
   print_model(x)
-  print_postprocessor(x)
+  # cat_line("")
+  # print_postprocessor(x)
   invisible(x)
 }
 
 print_header <- function(x) {
-  if (x$run) {
-    fit <- " [fit]"
+  if (x$trained) {
+    trained <- " [trained]"
   } else {
-    fit <- ""
+    trained <- ""
   }
 
-  cat_line(glue::glue("<workflow{fit}>"))
+  header <- glue::glue("Workflow{trained}")
+  header <- cli::rule(header, line = 2)
+
+  cat_line(header)
+
+  preprocessor_msg <- cli::style_italic("Preprocessor:")
+
+  if (has_preprocessor_formula(x)) {
+    preprocessor <- "Formula"
+  } else if (has_preprocessor_recipe(x)) {
+    preprocessor <- "Recipe"
+  } else {
+    preprocessor <- "None"
+  }
+
+  preprocessor_msg <- glue::glue("{preprocessor_msg} {preprocessor}")
+  cat_line(preprocessor_msg)
+
+  spec_msg <- cli::style_italic("Model:")
+
+  if (has_spec(x)) {
+    spec <- class(pull_workflow_spec(x))[[1]]
+    spec <- glue::glue("{spec}()")
+  } else {
+    spec <- "None"
+  }
+
+  spec_msg <- glue::glue("{spec_msg} {spec}")
+  cat_line(spec_msg)
 
   invisible(x)
 }
 
 print_preprocessor <- function(x) {
-  actions <- names(x$pre$actions)
-  preprocessor <- tab("<preprocessor>")
+  has_preprocessor_formula <- has_preprocessor_formula(x)
+  has_preprocessor_recipe <- has_preprocessor_recipe(x)
 
-  if ("formula" %in% actions) {
-    type <- tab("Formula", 2L)
-  } else if ("recipe" %in% actions) {
-    type <- tab("Recipe", 2L)
-  } else {
-    type <- tab("None", 2L)
-  }
-
-  preprocessor <- c(preprocessor, type)
-
-  cat_line(preprocessor)
-  invisible(x)
-}
-
-print_model <- function(x) {
-  actions <- names(x$fit$actions)
-  model <- tab("<model>")
-
-  has_model <- "model" %in% actions
-
-  if (!has_model) {
-    model <- c(model, tab("None", 2L))
-    cat_line(model)
+  if (!has_preprocessor_formula && !has_preprocessor_recipe) {
     return(invisible(x))
   }
 
-  # capture.output() is ugly but it works
-  spec <- x$fit$actions$model$spec
-  spec_format <- utils::capture.output(spec)
-  spec_format <- tab(spec_format, 2L)
+  # Space between Workflow section and Preprocessor section
+  cat_line("")
 
-  model <- c(model, spec_format)
+  header <- cli::rule("Preprocessor")
+  cat_line(header)
 
-  cat_line(model)
+  if (has_preprocessor_formula) {
+    print_preprocessor_formula(x)
+  }
+
+  if (has_preprocessor_recipe) {
+    print_preprocessor_recipe(x)
+  }
+
   invisible(x)
 }
 
-# Nothing for now
-print_postprocessor <- function(x) {
+print_preprocessor_formula <- function(x) {
+  formula <- pull_workflow_preprocessor(x)
+  formula <- rlang::expr_text(formula)
+
+  cat_line(formula)
+
   invisible(x)
 }
 
-tab <- function(x, times = 1L) {
-  space <- paste0(rep("  ", times = times), collapse = "")
-  paste0(space, x)
+print_preprocessor_recipe <- function(x) {
+  recipe <- pull_workflow_preprocessor(x)
+  steps <- recipe$steps
+
+  n_steps <- length(steps)
+
+  if (n_steps == 1L) {
+    step <- "Step"
+  } else {
+    step <- "Steps"
+  }
+
+  n_steps_msg <- glue::glue("{n_steps} Recipe {step}")
+  cat_line(n_steps_msg)
+
+  if (n_steps == 0L) {
+    return(invisible(x))
+  }
+
+  cat_line("")
+
+  step_names <- map_chr(steps, pull_step_name)
+
+  if (n_steps <= 10L) {
+    cli::cat_bullet(step_names)
+    return(invisible(x))
+  }
+
+  extra_steps <- n_steps - 10L
+  step_names <- step_names[1:10]
+
+  if (extra_steps == 1L) {
+    step <- "step"
+  } else {
+    step <- "steps"
+  }
+
+  extra_dots <- "..."
+  extra_msg <- glue::glue("and {extra_steps} more {step}.")
+
+  step_names <- c(step_names, extra_dots, extra_msg)
+
+  cli::cat_bullet(step_names)
+  invisible(x)
 }
 
-cat_line <- function (...) {
+pull_step_name <- function(x) {
+  step <- class(x)[[1]]
+  glue::glue("{step}()")
+}
+
+print_model <- function(x) {
+  has_spec <- has_spec(x)
+
+  if (!has_spec) {
+    return(invisible(x))
+  }
+
+  has_fit <- has_fit(x)
+
+  # Space between Workflow/Preprocessor section and Model section
+  cat_line("")
+
+  header <- cli::rule("Model")
+  cat_line(header)
+
+  if (has_fit) {
+    print_fit(x)
+    return(invisible(x))
+  }
+
+  print_spec(x)
+  invisible(x)
+}
+
+print_spec <- function(x) {
+  spec <- pull_workflow_spec(x)
+
+  print(spec)
+
+  invisible(x)
+}
+
+print_fit <- function(x) {
+  parsnip_fit <- pull_workflow_fit(x)
+  fit <- parsnip_fit$fit
+
+  output <- capture.output(fit)
+  n_output <- length(output)
+
+  if (n_output < 50L) {
+    print(fit)
+    return(invisible(x))
+  }
+
+  n_extra_output <- n_output - 50L
+  output <- output[1:50]
+
+  extra_output_msg <- glue::glue("and {n_extra_output} more lines.")
+
+  cat_line(output)
+  cat_line("")
+  cat_line("...")
+  cat_line(extra_output_msg)
+
+  invisible(x)
+}
+
+cat_line <- function(...) {
   cat(paste0(..., collapse = "\n"), "\n", sep = "")
 }

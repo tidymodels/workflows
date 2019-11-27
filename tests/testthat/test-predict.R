@@ -15,7 +15,7 @@ test_that("can predict from a workflow", {
 })
 
 test_that("workflow must have been `fit()` before prediction can be done", {
-  expect_error(predict(workflow(), mtcars), "Workflow has not yet been fit")
+  expect_error(predict(workflow(), mtcars), "Workflow has not yet been trained")
 })
 
 test_that("formula preprocessing is done to the `new_data`", {

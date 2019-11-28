@@ -45,3 +45,45 @@ test_that("cannot add two formulas", {
 
   expect_error(add_formula(workflow, mpg ~ cyl), "`formula` action has already been added")
 })
+
+test_that("remove a formula", {
+  workflow0 <- workflow()
+  workflow  <- add_formula(workflow0, mpg ~ cyl)
+  workflow  <- remove_formula(workflow)
+  expect_equal(workflow0$pre, workflow$pre)
+})
+
+test_that("remove a formula after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow0 <- workflow()
+  workflow0 <- add_model(workflow0, lm_model)
+  workflow  <- add_formula(workflow0, mpg ~ cyl)
+
+  workflow <- fit(workflow, data = mtcars)
+  workflow <- remove_formula(workflow)
+  expect_equal(workflow0$pre, workflow$pre)
+})
+
+test_that("update a formula", {
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- update_formula(workflow, mpg ~ disp)
+  expect_equal(workflow$pre$actions$formula$formula, mpg ~ disp)
+})
+
+
+test_that("update a formula after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  workflow <- fit(workflow, data = mtcars)
+  workflow <- update_formula(workflow, mpg ~ disp)
+  expect_equal(workflow$pre$actions$formula$formula, mpg ~ disp)
+  expect_null(workflow$pre$mold)
+})

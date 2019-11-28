@@ -41,3 +41,57 @@ test_that("can provide a model formula override", {
     names(result$fit$fit$fit$coefficients)
   )
 })
+
+
+test_that("remove a model", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow0 <- workflow()
+  workflow0 <- add_formula(workflow0, mpg ~ cyl)
+  workflow  <- add_model(workflow0, lm_model)
+  workflow  <- remove_model(workflow)
+  expect_equal(workflow0$fit, workflow$fit)
+})
+
+test_that("remove a model after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow0 <- workflow()
+  workflow0 <- add_formula(workflow0, mpg ~ cyl)
+  workflow  <- add_model(workflow0, lm_model)
+
+  workflow <- fit(workflow, data = mtcars)
+  workflow <- remove_model(workflow)
+  expect_equal(workflow0$fit, workflow$fit)
+})
+
+test_that("update a model", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+  glmn_model <- parsnip::set_engine(lm_model, "glmnet")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, lm_model)
+  workflow <- update_model(workflow, glmn_model)
+  expect_equal(workflow$fit$actions$model$spec$engine, "glmnet")
+})
+
+
+test_that("update a model after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+  no_model <- parsnip::set_engine(lm_model, "lm", model = FALSE)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  workflow <- fit(workflow, data = mtcars)
+  workflow <- update_formula(workflow, mpg ~ disp)
+  expect_false(any(names(workflow$fit$actions$model$spec$eng_args) == "model"))
+
+  expect_null(workflow$fit$fit)
+})

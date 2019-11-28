@@ -56,3 +56,4 @@ test_that("cannot add two recipe", {
 
   expect_error(add_recipe(workflow, rec), "`recipe` action has already been added")
 })
+

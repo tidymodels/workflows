@@ -2,9 +2,15 @@
 % Please edit documentation in R/fit-action-model.R
 \name{add_model}
 \alias{add_model}
+\alias{remove_model}
+\alias{update_model}
 \title{Add a model to a workflow}
 \usage{
 add_model(x, spec, formula = NULL)
+
+remove_model(x)
+
+update_model(x, spec, formula = NULL)
 }
 \arguments{
 \item{x}{A workflow.}
@@ -24,13 +30,38 @@ used for those purposes.}
 }
 \details{
 \code{add_model()} is a required step to construct a minimal workflow.
+
+\code{remove_model()} removes the model specification as well as any fitted model
+object. Any extra formulas are also removed.
+
+\code{update_model()} first removes the model then adds the new specification to
+the workflow.
 }
 \examples{
 library(parsnip)
 
-model <- linear_reg()
-model <- set_engine(model, "lm")
+lm_model <- linear_reg()
+lm_model <- set_engine(lm_model, "lm")
+
+regularized_model <- set_engine(lm_model, "glmnet")
 
 workflow <- workflow()
-workflow <- add_model(workflow, model)
+workflow <- add_model(workflow, lm_model)
+workflow
+
+workflow <- add_formula(workflow, mpg ~ .)
+workflow
+
+remove_model(workflow)
+
+fitted <- fit(workflow, data = mtcars)
+fitted
+
+remove_model(fitted)
+
+remove_model(workflow)
+
+update_model(workflow, regularized_model)
+update_model(fitted, regularized_model)
+
 }

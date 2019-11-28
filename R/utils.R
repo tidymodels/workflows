@@ -27,6 +27,22 @@ validate_recipes_available <- function() {
   invisible()
 }
 
+# ------------------------------------------------------------------------------
+
+check_existing_object <- function(x, type = c("formula", "recipe", "model")) {
+  type <- match.arg(type)
+
+  loc <-  switch(type,
+                 formula = , recipe = x$pre$actions,
+                 model = x$fit$actions)
+
+  if (!any(names(loc) == type)) {
+    rlang::warn(glue::glue("The workflow has no {type} to remove."))
+  }
+  invisible(NULL)
+}
+
+
 validate_is_workflow <- function(x, arg = "`x`") {
   if (!is_workflow(x)) {
     glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")

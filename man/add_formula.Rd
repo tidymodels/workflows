@@ -2,9 +2,15 @@
 % Please edit documentation in R/pre-action-formula.R
 \name{add_formula}
 \alias{add_formula}
+\alias{remove_formula}
+\alias{update_formula}
 \title{Add formula terms to a workflow}
 \usage{
 add_formula(x, formula)
+
+remove_formula(x)
+
+update_formula(x, formula)
 }
 \arguments{
 \item{x}{A workflow}
@@ -18,6 +24,14 @@ required.}
 formula.
 }
 \details{
+\code{remove_formula()} removes the formula as well as any objects for the
+application of the formula to the data (e.g., terms, if they exist), as well
+as any fitted model that used the formula.
+
+\code{update_formula()} first removes the formula, then replaces the previous
+formula with the new one. Any fitted model based on this formula will need
+to be refit.
+
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
 specified, but not both.
 }
@@ -25,4 +39,8 @@ specified, but not both.
 workflow <- workflow()
 workflow <- add_formula(workflow, mpg ~ cyl)
 workflow
+
+remove_formula(workflow)
+
+update_formula(workflow, mpg ~ disp)
 }

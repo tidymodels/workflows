@@ -1,24 +1,27 @@
 #' Add formula terms to a workflow
 #'
-#' `add_formula()` specifies the terms of the model through the usage of a
-#' formula.
+#' @description
+#' - `add_formula()` specifies the terms of the model through the usage of a
+#'   formula.
 #'
-#' `remove_formula()` removes the formula as well as any objects for the
-#'  application of the formula to the data (e.g., terms, if they exist), as well
-#'  as any fitted model that used the formula.
+#' - `remove_formula()` removes the formula as well as any downstream objects
+#'   that might get created after the formula is used for preprocessing, such as
+#'   terms. Additionally, if the model has already been fit, then the fit is
+#'   removed.
 #'
-#' `update_formula()` first removes the formula, then replaces the previous
-#'  formula with the new one. Any fitted model based on this formula will need
-#'  to be refit.
+#' - `update_formula()` first removes the formula, then replaces the previous
+#'   formula with the new one. Any model that has already been fit based on this
+#'   formula will need to be refit.
 #'
+#' @details
 #' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
 #' specified, but not both.
 #'
 #' @param x A workflow
 #'
 #' @param formula A formula specifying the terms of the model. It is advised to
-#' not do preprocessing in the formula, and instead use a recipe if that is
-#' required.
+#'   not do preprocessing in the formula, and instead use a recipe if that is
+#'   required.
 #'
 #' @export
 #' @examples
@@ -37,7 +40,12 @@ add_formula <- function(x, formula) {
 #' @rdname add_formula
 #' @export
 remove_formula <- function(x) {
-  check_existing_object(x, "formula")
+  validate_is_workflow(x)
+
+  if (!has_preprocessor_formula(x)) {
+    rlang::warn("The workflow has no formula preprocessor to remove.")
+  }
+
   new_workflow(
     pre = new_stage_pre(),
     fit = new_stage_fit(actions = x$fit$actions),

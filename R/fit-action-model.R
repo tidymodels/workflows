@@ -1,14 +1,16 @@
 #' Add a model to a workflow
 #'
-#' `add_model()` adds a parsnip model to the workflow.
+#' @description
+#' - `add_model()` adds a parsnip model to the workflow.
 #'
+#' - `remove_model()` removes the model specification as well as any fitted
+#'   model object. Any extra formulas are also removed.
+#'
+#' - `update_model()` first removes the model then adds the new specification to
+#'   the workflow.
+#'
+#' @details
 #' `add_model()` is a required step to construct a minimal workflow.
-#'
-#' `remove_model()` removes the model specification as well as any fitted model
-#' object. Any extra formulas are also removed.
-#'
-#' `update_model()` first removes the model then adds the new specification to
-#' the workflow.
 #'
 #' @param x A workflow.
 #'
@@ -58,7 +60,12 @@ add_model <- function(x, spec, formula = NULL) {
 #' @rdname add_model
 #' @export
 remove_model <- function(x) {
-  check_existing_object(x, "model")
+  validate_is_workflow(x)
+
+  if (!has_spec(x)) {
+    rlang::warn("The workflow has no model to remove.")
+  }
+
   new_workflow(
     pre = x$pre,
     fit = new_stage_fit(),

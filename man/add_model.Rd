@@ -26,16 +26,16 @@ must be passed unchanged into the model call itself. This argument is
 used for those purposes.}
 }
 \description{
-\code{add_model()} adds a parsnip model to the workflow.
+\itemize{
+\item \code{add_model()} adds a parsnip model to the workflow.
+\item \code{remove_model()} removes the model specification as well as any fitted
+model object. Any extra formulas are also removed.
+\item \code{update_model()} first removes the model then adds the new specification to
+the workflow.
+}
 }
 \details{
 \code{add_model()} is a required step to construct a minimal workflow.
-
-\code{remove_model()} removes the model specification as well as any fitted model
-object. Any extra formulas are also removed.
-
-\code{update_model()} first removes the model then adds the new specification to
-the workflow.
 }
 \examples{
 library(parsnip)

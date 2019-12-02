@@ -20,18 +20,19 @@ not do preprocessing in the formula, and instead use a recipe if that is
 required.}
 }
 \description{
-\code{add_formula()} specifies the terms of the model through the usage of a
+\itemize{
+\item \code{add_formula()} specifies the terms of the model through the usage of a
 formula.
+\item \code{remove_formula()} removes the formula as well as any downstream objects
+that might get created after the formula is used for preprocessing, such as
+terms. Additionally, if the model has already been fit, then the fit is
+removed.
+\item \code{update_formula()} first removes the formula, then replaces the previous
+formula with the new one. Any model that has already been fit based on this
+formula will need to be refit.
+}
 }
 \details{
-\code{remove_formula()} removes the formula as well as any objects for the
-application of the formula to the data (e.g., terms, if they exist), as well
-as any fitted model that used the formula.
-
-\code{update_formula()} first removes the formula, then replaces the previous
-formula with the new one. Any fitted model based on this formula will need
-to be refit.
-
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
 specified, but not both.
 }

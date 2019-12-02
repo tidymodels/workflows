@@ -56,3 +56,33 @@ test_that("cannot add two recipe", {
 
   expect_error(add_recipe(workflow, rec), "`recipe` action has already been added")
 })
+
+test_that("can pass a blueprint through to hardhat::mold()", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  blueprint <- hardhat::default_recipe_blueprint(intercept = TRUE)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_recipe(workflow, rec, blueprint = blueprint)
+
+  workflow <- fit(workflow, data = mtcars)
+
+  expect_true("(Intercept)" %in% colnames(workflow$pre$mold$predictors))
+  expect_equal(workflow$pre$actions$recipe$blueprint, blueprint)
+})
+
+test_that("can only use a 'recipe_blueprint' blueprint", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+  blueprint <- hardhat::default_formula_blueprint()
+
+  workflow <- workflow()
+
+  expect_error(
+    add_recipe(workflow, rec, blueprint = blueprint),
+    "must be a hardhat 'recipe_blueprint'"
+  )
+})

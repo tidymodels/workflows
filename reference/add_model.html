@@ -35,7 +35,15 @@
 
 
 <meta property="og:title" content="Add a model to a workflow — add_model" />
-<meta property="og:description" content="add_model() adds a parsnip model to the workflow." />
+<meta property="og:description" content="
+
+add_model() adds a parsnip model to the workflow.
+remove_model() removes the model specification as well as any fitted
+model object. Any extra formulas are also removed.
+update_model() first removes the model then adds the new specification to
+the workflow.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,10 +130,22 @@
     </div>
 
     <div class="ref-description">
-    <p><code>add_model()</code> adds a parsnip model to the workflow.</p>
+    
+<ul>
+<li><p><code>add_model()</code> adds a parsnip model to the workflow.</p></li>
+<li><p><code>remove_model()</code> removes the model specification as well as any fitted
+model object. Any extra formulas are also removed.</p></li>
+<li><p><code>update_model()</code> first removes the model then adds the new specification to
+the workflow.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>add_model</span>(<span class='no'>x</span>, <span class='no'>spec</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>add_model</span>(<span class='no'>x</span>, <span class='no'>spec</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>remove_model</span>(<span class='no'>x</span>)
+
+<span class='fu'>update_model</span>(<span class='no'>x</span>, <span class='no'>spec</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,11 +177,96 @@ used for those purposes.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"lm"</span>)
+
+<span class='no'>regularized_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"glmnet"</span>)
 
 <span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_model</span>(<span class='no'>workflow</span>, <span class='no'>model</span>)</div></pre>
+<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_model</span>(<span class='no'>workflow</span>, <span class='no'>lm_model</span>)
+<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: None
+#&gt; Model: linear_reg()
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: lm 
+#&gt; </div><div class='input'>
+<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>.</span>)
+<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: lm 
+#&gt; </div><div class='input'>
+<span class='fu'>remove_model</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: None
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .</div><div class='input'>
+<span class='no'>fitted</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='no'>fitted</span></div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = formula, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl         disp           hp         drat           wt  
+#&gt;    12.30337     -0.11144      0.01334     -0.02148      0.78711     -3.71530  
+#&gt;        qsec           vs           am         gear         carb  
+#&gt;     0.82104      0.31776      2.52023      0.65541     -0.19942  
+#&gt; </div><div class='input'>
+<span class='fu'>remove_model</span>(<span class='no'>fitted</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: None
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .</div><div class='input'>
+<span class='fu'>remove_model</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: None
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .</div><div class='input'>
+<span class='fu'>update_model</span>(<span class='no'>workflow</span>, <span class='no'>regularized_model</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: glmnet 
+#&gt; </div><div class='input'><span class='fu'>update_model</span>(<span class='no'>fitted</span>, <span class='no'>regularized_model</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ .
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: glmnet 
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

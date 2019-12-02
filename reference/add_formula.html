@@ -35,8 +35,19 @@
 
 
 <meta property="og:title" content="Add formula terms to a workflow — add_formula" />
-<meta property="og:description" content="add_formula() specifies the terms of the model through the usage of a
-formula." />
+<meta property="og:description" content="
+
+add_formula() specifies the terms of the model through the usage of a
+formula.
+remove_formula() removes the formula as well as any downstream objects
+that might get created after the formula is used for preprocessing, such as
+terms. Additionally, if the model has already been fit, then the fit is
+removed.
+update_formula() first removes the formula, then replaces the previous
+formula with the new one. Any model that has already been fit based on this
+formula will need to be refit.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,11 +134,26 @@ formula." />
     </div>
 
     <div class="ref-description">
-    <p><code>add_formula()</code> specifies the terms of the model through the usage of a
-formula.</p>
+    
+<ul>
+<li><p><code>add_formula()</code> specifies the terms of the model through the usage of a
+formula.</p></li>
+<li><p><code>remove_formula()</code> removes the formula as well as any downstream objects
+that might get created after the formula is used for preprocessing, such as
+terms. Additionally, if the model has already been fit, then the fit is
+removed.</p></li>
+<li><p><code>update_formula()</code> first removes the formula, then replaces the previous
+formula with the new one. Any model that has already been fit based on this
+formula will need to be refit.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>add_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>)</pre>
+    <pre class="usage"><span class='fu'>add_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>)
+
+<span class='fu'>remove_formula</span>(<span class='no'>x</span>)
+
+<span class='fu'>update_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +183,16 @@ specified, but not both.</p>
 #&gt; Model: None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; mpg ~ cyl</div></pre>
+#&gt; mpg ~ cyl</div><div class='input'>
+<span class='fu'>remove_formula</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: None
+#&gt; Model: None</div><div class='input'>
+<span class='fu'>update_formula</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>disp</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: None
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ disp</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

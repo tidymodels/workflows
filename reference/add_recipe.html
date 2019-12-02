@@ -35,8 +35,19 @@
 
 
 <meta property="og:title" content="Add a recipe to a workflow — add_recipe" />
-<meta property="og:description" content="add_recipe() specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe." />
+<meta property="og:description" content="
+
+add_recipe() specifies the terms of the model and any preprocessing that
+is required through the usage of a recipe.
+remove_recipe() removes the recipe as well as any downstream objects
+that might get created after the recipe is used for preprocessing, such as
+the prepped recipe. Additionally, if the model has already been fit, then
+the fit is removed.
+update_recipe() first removes the recipe, then replaces the previous
+recipe with the new one. Any model that has already been fit based on this
+recipe will need to be refit.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,11 +134,26 @@ is required through the usage of a recipe." />
     </div>
 
     <div class="ref-description">
-    <p><code>add_recipe()</code> specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe.</p>
+    
+<ul>
+<li><p><code>add_recipe()</code> specifies the terms of the model and any preprocessing that
+is required through the usage of a recipe.</p></li>
+<li><p><code>remove_recipe()</code> removes the recipe as well as any downstream objects
+that might get created after the recipe is used for preprocessing, such as
+the prepped recipe. Additionally, if the model has already been fit, then
+the fit is removed.</p></li>
+<li><p><code>update_recipe()</code> first removes the recipe, then replaces the previous
+recipe with the new one. Any model that has already been fit based on this
+recipe will need to be refit.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)</pre>
+    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)
+
+<span class='fu'>remove_recipe</span>(<span class='no'>x</span>)
+
+<span class='fu'>update_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,7 +195,17 @@ specified, but not both.</p>
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; 1 Recipe Step
 #&gt; 
-#&gt; ● step_log()</div></pre>
+#&gt; ● step_log()</div><div class='input'>
+<span class='fu'>remove_recipe</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The workflow has no recipe preprocessor to remove.</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: None
+#&gt; Model: None</div><div class='input'>
+<span class='fu'>update_recipe</span>(<span class='no'>workflow</span>, <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: The workflow has no recipe preprocessor to remove.</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Preprocessor: Recipe
+#&gt; Model: None
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; 0 Recipe Steps</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

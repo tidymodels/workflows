@@ -1,7 +1,15 @@
 #' Add a model to a workflow
 #'
-#' `add_model()` adds a parsnip model to the workflow.
+#' @description
+#' - `add_model()` adds a parsnip model to the workflow.
 #'
+#' - `remove_model()` removes the model specification as well as any fitted
+#'   model object. Any extra formulas are also removed.
+#'
+#' - `update_model()` first removes the model then adds the new specification to
+#'   the workflow.
+#'
+#' @details
 #' `add_model()` is a required step to construct a minimal workflow.
 #'
 #' @param x A workflow.
@@ -20,14 +28,58 @@
 #' @examples
 #' library(parsnip)
 #'
-#' model <- linear_reg()
-#' model <- set_engine(model, "lm")
+#' lm_model <- linear_reg()
+#' lm_model <- set_engine(lm_model, "lm")
+#'
+#' regularized_model <- set_engine(lm_model, "glmnet")
 #'
 #' workflow <- workflow()
-#' workflow <- add_model(workflow, model)
+#' workflow <- add_model(workflow, lm_model)
+#' workflow
+#'
+#' workflow <- add_formula(workflow, mpg ~ .)
+#' workflow
+#'
+#' remove_model(workflow)
+#'
+#' fitted <- fit(workflow, data = mtcars)
+#' fitted
+#'
+#' remove_model(fitted)
+#'
+#' remove_model(workflow)
+#'
+#' update_model(workflow, regularized_model)
+#' update_model(fitted, regularized_model)
+#'
 add_model <- function(x, spec, formula = NULL) {
   action <- new_action_model(spec, formula)
   add_action(x, action, "model")
+}
+
+#' @rdname add_model
+#' @export
+remove_model <- function(x) {
+  validate_is_workflow(x)
+
+  if (!has_spec(x)) {
+    rlang::warn("The workflow has no model to remove.")
+  }
+
+  new_workflow(
+    pre = x$pre,
+    fit = new_stage_fit(),
+    post = new_stage_post(actions = x$post$actions),
+    trained = FALSE
+  )
+}
+
+
+#' @rdname add_model
+#' @export
+update_model <- function(x, spec, formula = NULL) {
+  x <- remove_model(x)
+  add_model(x, spec, formula)
 }
 
 # ------------------------------------------------------------------------------

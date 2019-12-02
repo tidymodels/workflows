@@ -2,9 +2,15 @@
 % Please edit documentation in R/pre-action-recipe.R
 \name{add_recipe}
 \alias{add_recipe}
+\alias{remove_recipe}
+\alias{update_recipe}
 \title{Add a recipe to a workflow}
 \usage{
 add_recipe(x, recipe)
+
+remove_recipe(x)
+
+update_recipe(x, recipe)
 }
 \arguments{
 \item{x}{A workflow}
@@ -12,8 +18,17 @@ add_recipe(x, recipe)
 \item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
 }
 \description{
-\code{add_recipe()} specifies the terms of the model and any preprocessing that
+\itemize{
+\item \code{add_recipe()} specifies the terms of the model and any preprocessing that
 is required through the usage of a recipe.
+\item \code{remove_recipe()} removes the recipe as well as any downstream objects
+that might get created after the recipe is used for preprocessing, such as
+the prepped recipe. Additionally, if the model has already been fit, then
+the fit is removed.
+\item \code{update_recipe()} first removes the recipe, then replaces the previous
+recipe with the new one. Any model that has already been fit based on this
+recipe will need to be refit.
+}
 }
 \details{
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
@@ -28,4 +43,9 @@ recipe <- step_log(recipe, cyl)
 workflow <- workflow()
 workflow <- add_recipe(workflow, recipe)
 workflow
+
+remove_recipe(workflow)
+
+update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
+
 }

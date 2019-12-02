@@ -2,9 +2,15 @@
 % Please edit documentation in R/pre-action-formula.R
 \name{add_formula}
 \alias{add_formula}
+\alias{remove_formula}
+\alias{update_formula}
 \title{Add formula terms to a workflow}
 \usage{
 add_formula(x, formula)
+
+remove_formula(x)
+
+update_formula(x, formula)
 }
 \arguments{
 \item{x}{A workflow}
@@ -14,8 +20,17 @@ not do preprocessing in the formula, and instead use a recipe if that is
 required.}
 }
 \description{
-\code{add_formula()} specifies the terms of the model through the usage of a
+\itemize{
+\item \code{add_formula()} specifies the terms of the model through the usage of a
 formula.
+\item \code{remove_formula()} removes the formula as well as any downstream objects
+that might get created after the formula is used for preprocessing, such as
+terms. Additionally, if the model has already been fit, then the fit is
+removed.
+\item \code{update_formula()} first removes the formula, then replaces the previous
+formula with the new one. Any model that has already been fit based on this
+formula will need to be refit.
+}
 }
 \details{
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
@@ -25,4 +40,8 @@ specified, but not both.
 workflow <- workflow()
 workflow <- add_formula(workflow, mpg ~ cyl)
 workflow
+
+remove_formula(workflow)
+
+update_formula(workflow, mpg ~ disp)
 }

@@ -27,6 +27,8 @@ validate_recipes_available <- function() {
   invisible()
 }
 
+# ------------------------------------------------------------------------------
+
 validate_is_workflow <- function(x, arg = "`x`") {
   if (!is_workflow(x)) {
     glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")

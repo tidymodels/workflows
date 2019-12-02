@@ -45,3 +45,53 @@ test_that("cannot add two formulas", {
 
   expect_error(add_formula(workflow, mpg ~ cyl), "`formula` action has already been added")
 })
+
+test_that("remove a formula", {
+  workflow_no_formula <- workflow()
+  workflow_with_formula <- add_formula(workflow_no_formula, mpg ~ cyl)
+  workflow_removed_formula <- remove_formula(workflow_with_formula)
+
+  expect_equal(workflow_no_formula$pre, workflow_removed_formula$pre)
+})
+
+test_that("remove a formula after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow_no_formula <- workflow()
+  workflow_no_formula <- add_model(workflow_no_formula, lm_model)
+
+  workflow_with_formula  <- add_formula(workflow_no_formula, mpg ~ cyl)
+  workflow_with_formula <- fit(workflow_with_formula, data = mtcars)
+
+  workflow_removed_formula <- remove_formula(workflow_with_formula)
+
+  expect_equal(workflow_no_formula$pre, workflow_removed_formula$pre)
+})
+
+test_that("update a formula", {
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- update_formula(workflow, mpg ~ disp)
+
+  expect_equal(workflow$pre$actions$formula$formula, mpg ~ disp)
+})
+
+test_that("update a formula after model fit", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  workflow <- fit(workflow, data = mtcars)
+
+  # Should clear fitted model
+  workflow <- update_formula(workflow, mpg ~ disp)
+
+  expect_equal(workflow$pre$actions$formula$formula, mpg ~ disp)
+
+  expect_equal(workflow$fit$actions$model$spec, lm_model)
+  expect_null(workflow$pre$mold)
+})

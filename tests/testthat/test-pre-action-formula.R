@@ -110,6 +110,7 @@ test_that("can pass a blueprint through to hardhat::mold()", {
 
   expect_true("(Intercept)" %in% colnames(workflow$pre$mold$predictors))
   expect_equal(workflow$pre$actions$formula$blueprint, blueprint)
+  expect_true(workflow$pre$mold$blueprint$intercept)
 })
 
 test_that("can only use a 'formula_blueprint' blueprint", {

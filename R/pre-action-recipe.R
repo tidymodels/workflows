@@ -21,6 +21,11 @@
 #'
 #' @param recipe A recipe created using [recipes::recipe()]
 #'
+#' @param ... Not used.
+#'
+#' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
+#'   If `NULL`, [hardhat::default_recipe_blueprint()] is used.
+#'
 #' @export
 #' @examples
 #' library(recipes)
@@ -36,9 +41,10 @@
 #'
 #' update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
 #'
-add_recipe <- function(x, recipe) {
+add_recipe <- function(x, recipe, ..., blueprint = NULL) {
+  ellipsis::check_dots_empty()
   validate_recipes_available()
-  action <- new_action_recipe(recipe)
+  action <- new_action_recipe(recipe, blueprint)
   add_action(x, action, "recipe")
 }
 
@@ -61,17 +67,19 @@ remove_recipe <- function(x) {
 
 #' @rdname add_recipe
 #' @export
-update_recipe <- function(x, recipe) {
+update_recipe <- function(x, recipe, ..., blueprint = NULL) {
+  ellipsis::check_dots_empty()
   x <- remove_recipe(x)
-  add_recipe(x, recipe)
+  add_recipe(x, recipe, blueprint = blueprint)
 }
 
 # ------------------------------------------------------------------------------
 
 fit.action_recipe <- function(object, workflow, data) {
   recipe <- object$recipe
+  blueprint <- object$blueprint
 
-  workflow$pre$mold <- hardhat::mold(recipe, data)
+  workflow$pre$mold <- hardhat::mold(recipe, data, blueprint = blueprint)
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)
@@ -91,14 +99,28 @@ check_conflicts.action_recipe <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_recipe <- function(recipe) {
+new_action_recipe <- function(recipe, blueprint) {
   if (!is_recipe(recipe)) {
     abort("`recipe` must be a recipe.")
   }
 
-  new_action_pre(recipe = recipe, subclass = "action_recipe")
+  if (is.null(blueprint)) {
+    blueprint <- hardhat::default_recipe_blueprint()
+  } else if (!is_recipe_blueprint(blueprint)) {
+    abort("`blueprint` must be a hardhat 'recipe_blueprint'.")
+  }
+
+  new_action_pre(
+    recipe = recipe,
+    blueprint = blueprint,
+    subclass = "action_recipe"
+  )
 }
 
 is_recipe <- function(x) {
   inherits(x, "recipe")
+}
+
+is_recipe_blueprint <- function(x) {
+  inherits(x, "recipe_blueprint")
 }

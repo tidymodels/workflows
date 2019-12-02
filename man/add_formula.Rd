@@ -6,11 +6,11 @@
 \alias{update_formula}
 \title{Add formula terms to a workflow}
 \usage{
-add_formula(x, formula)
+add_formula(x, formula, ..., blueprint = NULL)
 
 remove_formula(x)
 
-update_formula(x, formula)
+update_formula(x, formula, ..., blueprint = NULL)
 }
 \arguments{
 \item{x}{A workflow}
@@ -18,6 +18,11 @@ update_formula(x, formula)
 \item{formula}{A formula specifying the terms of the model. It is advised to
 not do preprocessing in the formula, and instead use a recipe if that is
 required.}
+
+\item{...}{Not used.}
+
+\item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
+If \code{NULL}, \code{\link[hardhat:default_formula_blueprint]{hardhat::default_formula_blueprint()}} is used.}
 }
 \description{
 \itemize{

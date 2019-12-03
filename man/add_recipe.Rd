@@ -6,16 +6,21 @@
 \alias{update_recipe}
 \title{Add a recipe to a workflow}
 \usage{
-add_recipe(x, recipe)
+add_recipe(x, recipe, ..., blueprint = NULL)
 
 remove_recipe(x)
 
-update_recipe(x, recipe)
+update_recipe(x, recipe, ..., blueprint = NULL)
 }
 \arguments{
 \item{x}{A workflow}
 
 \item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
+
+\item{...}{Not used.}
+
+\item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
+If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.}
 }
 \description{
 \itemize{

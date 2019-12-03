@@ -95,3 +95,31 @@ test_that("update a formula after model fit", {
   expect_equal(workflow$fit$actions$model$spec, lm_model)
   expect_null(workflow$pre$mold)
 })
+
+test_that("can pass a blueprint through to hardhat::mold()", {
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  blueprint <- hardhat::default_formula_blueprint(intercept = TRUE)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_formula(workflow, mpg ~ cyl, blueprint = blueprint)
+
+  workflow <- fit(workflow, data = mtcars)
+
+  expect_true("(Intercept)" %in% colnames(workflow$pre$mold$predictors))
+  expect_equal(workflow$pre$actions$formula$blueprint, blueprint)
+  expect_true(workflow$pre$mold$blueprint$intercept)
+})
+
+test_that("can only use a 'formula_blueprint' blueprint", {
+  blueprint <- hardhat::default_recipe_blueprint()
+
+  workflow <- workflow()
+
+  expect_error(
+    add_formula(workflow, mpg ~ cyl, blueprint = blueprint),
+    "must be a hardhat 'formula_blueprint'"
+  )
+})

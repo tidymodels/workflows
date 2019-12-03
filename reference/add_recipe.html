@@ -149,11 +149,11 @@ recipe will need to be refit.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)
+    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>remove_recipe</span>(<span class='no'>x</span>)
 
-<span class='fu'>update_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>)</pre>
+<span class='fu'>update_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,6 +165,15 @@ recipe will need to be refit.</p></li>
     <tr>
       <th>recipe</th>
       <td><p>A recipe created using <code><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipes::recipe()</a></code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
+    </tr>
+    <tr>
+      <th>blueprint</th>
+      <td><p>A hardhat blueprint used for fine tuning the preprocessing.
+If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html'>hardhat::default_recipe_blueprint()</a></code> is used.</p></td>
     </tr>
     </table>
 

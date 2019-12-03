@@ -149,11 +149,11 @@ formula will need to be refit.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>)
+    <pre class="usage"><span class='fu'>add_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>remove_formula</span>(<span class='no'>x</span>)
 
-<span class='fu'>update_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>)</pre>
+<span class='fu'>update_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +167,15 @@ formula will need to be refit.</p></li>
       <td><p>A formula specifying the terms of the model. It is advised to
 not do preprocessing in the formula, and instead use a recipe if that is
 required.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
+    </tr>
+    <tr>
+      <th>blueprint</th>
+      <td><p>A hardhat blueprint used for fine tuning the preprocessing.
+If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>hardhat::default_formula_blueprint()</a></code> is used.</p></td>
     </tr>
     </table>
 

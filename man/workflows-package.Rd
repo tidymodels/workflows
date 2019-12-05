@@ -4,10 +4,12 @@
 \name{workflows-package}
 \alias{workflows}
 \alias{workflows-package}
-\title{workflows: Workflows}
+\title{workflows: Modeling Workflows}
 \description{
-Bundle a 'parsnip' model specification with a
-    preprocessing formula or recipe for streamlined model fitting.
+Managing both a 'parsnip' model and a preprocessor, such as a
+    model formula or recipe from 'recipes', can often be challenging. The goal
+    of 'workflows' is to streamline this process by bundling the model alongside
+    the preprocessor, all within the same object.
 }
 \seealso{
 Useful links:

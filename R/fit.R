@@ -104,7 +104,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' partially_fit_workflow <- .fit_pre(formula_workflow, mtcars)
 #' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
 .fit_pre <- function(workflow, data) {
-  n <- vec_size(workflow[["pre"]]$actions)
+  n <- length(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
     action <- workflow[["pre"]]$actions[[i]]

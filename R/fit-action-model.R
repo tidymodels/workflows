@@ -113,7 +113,7 @@ fit_from_xy <- function(spec, mold, control_parsnip) {
 }
 
 fit_from_formula <- function(spec, mold, control_parsnip, formula) {
-  data <- vec_cbind(mold$outcomes, mold$predictors)
+  data <- cbind(mold$outcomes, mold$predictors)
   fit(spec, formula = formula, data = data, control = control_parsnip)
 }
 

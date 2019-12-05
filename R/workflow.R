@@ -228,7 +228,7 @@ print_fit <- function(x) {
   parsnip_fit <- pull_workflow_fit(x)
   fit <- parsnip_fit$fit
 
-  output <- capture.output(fit)
+  output <- utils::capture.output(fit)
   n_output <- length(output)
 
   if (n_output < 50L) {

@@ -24,8 +24,7 @@ Imports:
     glue,
     hardhat,
     parsnip (>= 0.0.4),
-    rlang (>= 0.4.1),
-    utils
+    rlang (>= 0.4.1)
 Suggests: 
     covr,
     knitr,

@@ -18,7 +18,7 @@ BugReports: https://github.com/tidymodels/workflows/issues
 Depends: 
     R (>= 3.2)
 Imports: 
-    cli,
+    cli (>= 2.0.0),
     ellipsis (>= 0.2.0),
     generics,
     glue,

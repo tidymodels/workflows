@@ -41,6 +41,9 @@ Default value is \code{FALSE}.
 (not implemented yet)
 }}
 }
+\value{
+A data frame of model predictions, with as many rows as \code{new_data} has.
+}
 \description{
 This is the \code{predict()} method for a fit workflow object. The nice thing
 about predicting from a workflow is that it will:

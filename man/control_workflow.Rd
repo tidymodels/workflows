@@ -10,6 +10,9 @@ control_workflow(control_parsnip = NULL)
 \item{control_parsnip}{A parsnip control object. If \code{NULL}, a default control
 argument is constructed from \code{\link[parsnip:control_parsnip]{parsnip::control_parsnip()}}.}
 }
+\value{
+A \code{control_workflow} object for tweaking the workflow fitting process.
+}
 \description{
 \code{control_workflow()} holds the control parameters for a workflow.
 }

@@ -26,6 +26,9 @@
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
 #'   If `NULL`, [hardhat::default_recipe_blueprint()] is used.
 #'
+#' @return
+#' `x`, updated with either a new or removed recipe preprocessor.
+#'
 #' @export
 #' @examples
 #' library(recipes)

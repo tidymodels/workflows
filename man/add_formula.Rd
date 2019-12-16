@@ -24,6 +24,9 @@ required.}
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
 If \code{NULL}, \code{\link[hardhat:default_formula_blueprint]{hardhat::default_formula_blueprint()}} is used.}
 }
+\value{
+\code{x}, updated with either a new or removed formula preprocessor.
+}
 \description{
 \itemize{
 \item \code{add_formula()} specifies the terms of the model through the usage of a

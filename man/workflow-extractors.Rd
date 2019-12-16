@@ -22,6 +22,10 @@ pull_workflow_prepped_recipe(x)
 \arguments{
 \item{x}{A workflow}
 }
+\value{
+The extracted value from the workflow, \code{x}, as described in the description
+section.
+}
 \description{
 These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.

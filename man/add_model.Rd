@@ -25,6 +25,9 @@ of the model. In those cases, a formula specifying the model structure
 must be passed unchanged into the model call itself. This argument is
 used for those purposes.}
 }
+\value{
+\code{x}, updated with either a new or removed model.
+}
 \description{
 \itemize{
 \item \code{add_model()} adds a parsnip model to the workflow.

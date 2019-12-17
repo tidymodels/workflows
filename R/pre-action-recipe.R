@@ -56,7 +56,7 @@ add_recipe <- function(x, recipe, ..., blueprint = NULL) {
 remove_recipe <- function(x) {
   validate_is_workflow(x)
 
-  if (!has_preprocessor_formula(x)) {
+  if (!has_preprocessor_recipe(x)) {
     rlang::warn("The workflow has no recipe preprocessor to remove.")
   }
 

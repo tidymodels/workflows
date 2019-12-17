@@ -190,7 +190,7 @@ autoplot(simple_glm_roc) +
   )
 ```
 
-That is a potential, if not slight, improvmement.
+That is a potential, if not slight, improvemement.
 
 The Box-Cox procedure recommended transformations that are pretty close to the inverse.
 
@@ -261,7 +261,7 @@ Not this one, at least.
 
 ## The test set
 
-Based on these results, the model with the logitic regression model with inverse terms is probably our best bet. Using the test set:
+Based on these results, the model with the logistic regression model with inverse terms is probably our best bet. Using the test set:
 
 ```{r test-set}
 test_probs <- 

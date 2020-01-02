@@ -41,7 +41,7 @@
         <a class="navbar-brand" href="../../index.html">workflows</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
         </div>
       </div>
     </div>
@@ -236,7 +236,7 @@
 <a class="sourceLine" id="cb9-29" data-line-number="29">    <span class="dt">col =</span> <span class="st">"#21908CFF"</span></a>
 <a class="sourceLine" id="cb9-30" data-line-number="30">  )</a></code></pre></div>
 <p><img src="getting-started_files/figure-html/rec-trans-1.png" width="768"></p>
-<p>That is a potential, if not slight, improvmement.</p>
+<p>That is a potential, if not slight, improvemement.</p>
 <p>The Box-Cox procedure recommended transformations that are pretty close to the inverse.</p>
 <p>The model above creates a class boundary for these data:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(bivariate_train, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">/</span>A, <span class="dt">y =</span> <span class="dv">1</span><span class="op">/</span>B, <span class="dt">col =</span> Class)) <span class="op">+</span><span class="st"> </span></a>
@@ -304,7 +304,7 @@
 <div id="the-test-set" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-test-set" class="anchor"></a>The test set</h2>
-<p>Based on these results, the model with the logitic regression model with inverse terms is probably our best bet. Using the test set:</p>
+<p>Based on these results, the model with the logistic regression model with inverse terms is probably our best bet. Using the test set:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">test_probs &lt;-<span class="st"> </span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(trans_glm, bivariate_test, <span class="dt">type =</span> <span class="st">"prob"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span>(bivariate_test)</a>

@@ -91,7 +91,7 @@ recipe will need to be refit.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info">
           <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9002</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
         </div>
       </div>
     </div>
@@ -177,6 +177,9 @@ If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_rec
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>x</code>, updated with either a new or removed recipe preprocessor.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>To fit a workflow, one of <code><a href='add_formula.html'>add_formula()</a></code> or <code>add_recipe()</code> <em>must</em> be
@@ -205,10 +208,10 @@ specified, but not both.</p>
 #&gt; 1 Recipe Step
 #&gt; 
 #&gt; ● step_log()</div><div class='input'>
-<span class='fu'>remove_recipe</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The workflow has no recipe preprocessor to remove.</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>remove_recipe</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; Preprocessor: None
 #&gt; Model: None</div><div class='input'>
-<span class='fu'>update_recipe</span>(<span class='no'>workflow</span>, <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: The workflow has no recipe preprocessor to remove.</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>update_recipe</span>(<span class='no'>workflow</span>, <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; Preprocessor: Recipe
 #&gt; Model: None
 #&gt; 
@@ -220,6 +223,7 @@ specified, but not both.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -91,7 +91,7 @@ workflows makes this easier by combining these objects together:
 ``` r
 car_wflow <- workflow() %>% 
   add_recipe(spline_cars) %>% 
-  add_model(Bayes_lm)
+  add_model(bayes_lm)
 ```
 
 Now you can prepare the recipe and estimate the model via a single call

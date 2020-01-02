@@ -5,6 +5,9 @@
 #' preprocessing, specified through [add_recipe()], or the model specification
 #' to fit, specified through [add_model()].
 #'
+#' @return
+#' A new `workflow` object.
+#'
 #' @examples
 #' library(recipes)
 #'

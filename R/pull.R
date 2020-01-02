@@ -20,6 +20,10 @@
 #'
 #' @param x A workflow
 #'
+#' @return
+#' The extracted value from the workflow, `x`, as described in the description
+#' section.
+#'
 #' @name workflow-extractors
 #' @examples
 #' library(parsnip)

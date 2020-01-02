@@ -33,6 +33,22 @@ advantages are:
     operations, such as modifying the probability cutoff for two-class
     models.
 
+## Installation
+
+You can install workflows from CRAN with:
+
+``` r
+install.packages("workflows")
+```
+
+You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("tidymodels/workflows")
+```
+
 ## Example
 
 Suppose you were modeling data on cars. Say…the fuel efficiency of 32
@@ -87,13 +103,3 @@ car_wflow_fit <- fit(car_wflow, data = mtcars)
 
 You can alter existing workflows using `update_recipe()` /
 `update_model()` and `remove_recipe()` / `remove_model()`.
-
-## Installation
-
-You can install the development version from
-[GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("tidymodels/workflows")
-```

@@ -22,6 +22,9 @@ update_recipe(x, recipe, ..., blueprint = NULL)
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
 If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.}
 }
+\value{
+\code{x}, updated with either a new or removed recipe preprocessor.
+}
 \description{
 \itemize{
 \item \code{add_recipe()} specifies the terms of the model and any preprocessing that

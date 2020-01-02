@@ -26,6 +26,9 @@
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
 #'   If `NULL`, [hardhat::default_recipe_blueprint()] is used.
 #'
+#' @return
+#' `x`, updated with either a new or removed recipe preprocessor.
+#'
 #' @export
 #' @examples
 #' library(recipes)
@@ -53,7 +56,7 @@ add_recipe <- function(x, recipe, ..., blueprint = NULL) {
 remove_recipe <- function(x) {
   validate_is_workflow(x)
 
-  if (!has_preprocessor_formula(x)) {
+  if (!has_preprocessor_recipe(x)) {
     rlang::warn("The workflow has no recipe preprocessor to remove.")
   }
 

@@ -21,6 +21,10 @@
 #'
 #' @param control A [control_workflow()] object
 #'
+#' @return
+#' The workflow `object`, updated with a fit parsnip model in the
+#' `object$fit$fit` slot.
+#'
 #' @name fit-workflow
 #' @export
 #' @examples

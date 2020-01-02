@@ -6,6 +6,9 @@
 \usage{
 workflow()
 }
+\value{
+A new \code{workflow} object.
+}
 \description{
 A \code{workflow} is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in

@@ -24,6 +24,9 @@
 #'   must be passed unchanged into the model call itself. This argument is
 #'   used for those purposes.
 #'
+#' @return
+#' `x`, updated with either a new or removed model.
+#'
 #' @export
 #' @examples
 #' library(parsnip)

@@ -17,6 +17,10 @@ workflow}
 
 \item{control}{A \code{\link[=control_workflow]{control_workflow()}} object}
 }
+\value{
+The workflow \code{object}, updated with a fit parsnip model in the
+\code{object$fit$fit} slot.
+}
 \description{
 Fitting a workflow currently involves two main steps:
 \itemize{

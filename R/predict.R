@@ -19,6 +19,9 @@
 #' @param new_data A data frame containing the new predictors to preprocess
 #'   and predict on
 #'
+#' @return
+#' A data frame of model predictions, with as many rows as `new_data` has.
+#'
 #' @name predict-workflow
 #' @export
 #' @examples

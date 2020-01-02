@@ -1,11 +1,12 @@
-# TODO - What else?
-
 #' Control object for a workflow
 #'
 #' `control_workflow()` holds the control parameters for a workflow.
 #'
 #' @param control_parsnip A parsnip control object. If `NULL`, a default control
 #'   argument is constructed from [parsnip::control_parsnip()].
+#'
+#' @return
+#' A `control_workflow` object for tweaking the workflow fitting process.
 #'
 #' @export
 #' @examples

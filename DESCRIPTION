@@ -22,7 +22,7 @@ Imports:
     ellipsis (>= 0.2.0),
     generics,
     glue,
-    hardhat,
+    hardhat (>= 0.1.2),
     parsnip (>= 0.0.4),
     rlang (>= 0.4.1)
 Suggests: 

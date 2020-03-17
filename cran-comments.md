@@ -8,3 +8,7 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+## Submission 0.1.1
+
+This patch release just bumps the minimum required version of hardhat.

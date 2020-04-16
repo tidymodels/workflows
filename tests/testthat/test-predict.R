@@ -121,15 +121,15 @@ test_that("blueprint will get passed on to hardhat::forge()", {
 test_that("outcomes = TRUE works.", {
   # outcome with transformation from formula
   mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
   wf <- add_formula(add_model(workflow(), mod), formula = log(mpg) ~ .)
   fit <- fit(wf, mtcars)
   prediction_with_outcome <- predict(fit, mtcars, outcomes = TRUE)
   expect_equal(log(mtcars$mpg), prediction_with_outcome$`log(mpg)`)
 
   # outcome with transformetion from recipe
-  mod <- parsnip::linear_reg()
-  rec <- recipe(mpg ~ ., mtcars)
-  rec <- step_log(rec, all_outcomes())
+  rec <- recipes::recipe(mpg ~ ., mtcars)
+  rec <- recipes::step_log(rec, recipes::all_outcomes())
   wf <- add_model(workflow(), mod)
   wf <- add_recipe(wf, rec)
   fit <- fit(wf, mtcars)

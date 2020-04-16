@@ -5,7 +5,7 @@
 \alias{predict.workflow}
 \title{Predict from a workflow}
 \usage{
-\method{predict}{workflow}(object, new_data, type = NULL, opts = list(), ...)
+\method{predict}{workflow}(object, new_data, type = NULL, opts = list(), outcomes = FALSE, ...)
 }
 \arguments{
 \item{object}{A workflow that has been fit by \code{\link[=fit.workflow]{fit.workflow()}}}
@@ -22,6 +22,8 @@ based on the model's mode.}
 predict function that will be used when \code{type = "raw"}. The
 list should not include options for the model object or the
 new data being predicted.}
+
+\item{outcomes}{A logical. Should the outcomes be processed and returned as well?}
 
 \item{...}{Arguments to the underlying model's prediction
 function cannot be passed here (see \code{opts}). There are some

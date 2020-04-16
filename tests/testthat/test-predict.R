@@ -117,3 +117,28 @@ test_that("blueprint will get passed on to hardhat::forge()", {
 
   expect_false(identical(prediction_with_intercept, prediction_no_intercept))
 })
+
+test_that("outcomes = TRUE works.", {
+  # outcome with transformation from formula
+  mod <- parsnip::linear_reg()
+  wf <- add_formula(add_model(workflow(), mod), formula = log(mpg) ~ .)
+  fit <- fit(wf, mtcars)
+  prediction_with_outcome <- predict(fit, mtcars, outcomes = TRUE)
+  expect_equal(log(mtcars$mpg), prediction_with_outcome$`log(mpg)`)
+
+  # outcome with transformetion from recipe
+  mod <- parsnip::linear_reg()
+  rec <- recipe(mpg ~ ., mtcars)
+  rec <- step_log(rec, all_outcomes())
+  wf <- add_model(workflow(), mod)
+  wf <- add_recipe(wf, rec)
+  fit <- fit(wf, mtcars)
+  prediction_with_outcome <- predict(fit, mtcars, outcomes = TRUE)
+  expect_equal(log(mtcars$mpg), prediction_with_outcome$mpg)
+
+  # gives error when the new_data do not contain the outcome(s) column(s)
+  mtcars_without_outcome_column <- mtcars
+  mtcars_without_outcome_column$mpg <- NULL
+  expect_error(predict(fit, mtcars_without_outcome_column, outcomes = TRUE))
+})
+

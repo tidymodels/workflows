@@ -19,6 +19,8 @@
 #' @param new_data A data frame containing the new predictors to preprocess
 #'   and predict on
 #'
+#' @param outcomes A logical. Should the outcomes be processed and returned as well?
+#'
 #' @return
 #' A data frame of model predictions, with as many rows as `new_data` has.
 #'
@@ -47,7 +49,7 @@
 #' # This will automatically `bake()` the recipe on `testing`,
 #' # applying the log step to `disp`, and then fit the regression.
 #' predict(fit_workflow, testing)
-predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) {
+predict.workflow <- function(object, new_data, type = NULL, opts = list(), outcomes = FALSE, ...) {
   workflow <- object
 
   if (!workflow$trained) {
@@ -55,10 +57,16 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   }
 
   blueprint <- workflow$pre$mold$blueprint
-  forged <- hardhat::forge(new_data, blueprint)
+  forged <- hardhat::forge(new_data, blueprint, outcomes = outcomes)
   new_data <- forged$predictors
 
   fit <- workflow$fit$fit
 
-  predict(fit, new_data, type = type, opts = opts, ...)
+  predict_df <- predict(fit, new_data, type = type, opts = opts, ...)
+
+  if(outcomes) {
+    predict_df <- cbind(predict_df, forged$outcomes)
+  }
+
+  predict_df
 }

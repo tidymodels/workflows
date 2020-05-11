@@ -13,7 +13,7 @@ Description: Managing both a 'parsnip' model and a preprocessor, such as a
     of 'workflows' is to streamline this process by bundling the model alongside
     the preprocessor, all within the same object.
 License: MIT + file LICENSE
-URL: https://github.com/tidymodels/workflows
+URL: https://github.com/tidymodels/workflows, https://workflows.tidymodels.org
 BugReports: https://github.com/tidymodels/workflows/issues
 Depends: 
     R (>= 3.2)

@@ -103,9 +103,7 @@ new_action_formula <- function(formula, blueprint) {
     abort("`formula` must be a formula.")
   }
 
-  if (is.null(blueprint)) {
-    blueprint <- hardhat::default_formula_blueprint()
-  } else if (!is_formula_blueprint(blueprint)) {
+  if (!rlang::is_null(blueprint) && !is_formula_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'formula_blueprint'.")
   }
 

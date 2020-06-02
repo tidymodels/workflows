@@ -25,6 +25,8 @@ Imports:
     hardhat (>= 0.1.2),
     parsnip (>= 0.0.4),
     rlang (>= 0.4.1)
+Remotes:
+    tidymodels/parsnip
 Suggests: 
     covr,
     knitr,

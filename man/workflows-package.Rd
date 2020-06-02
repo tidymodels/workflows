@@ -15,6 +15,7 @@ Managing both a 'parsnip' model and a preprocessor, such as a
 Useful links:
 \itemize{
   \item \url{https://github.com/tidymodels/workflows}
+  \item \url{https://workflows.tidymodels.org}
   \item Report bugs at \url{https://github.com/tidymodels/workflows/issues}
 }
 

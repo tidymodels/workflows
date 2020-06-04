@@ -108,8 +108,8 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' partially_fit_workflow <- .fit_pre(formula_workflow, mtcars)
 #' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
 .fit_pre <- function(workflow, data) {
+  workflow <- finalize_blueprint(workflow)
 
-  workflow <- update_model_encoding(workflow)
   n <- length(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
@@ -159,30 +159,56 @@ validate_has_minimal_components <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-update_model_encoding <- function(x) {
-
-  preprocessor <- names(x[["pre"]][["actions"]])
-
-  if (!is_null(x[["pre"]][["actions"]][[preprocessor]][["blueprint"]])) {
-    return(x)
-  } else {
-    if (preprocessor == "formula") {
-      blueprint <- hardhat::default_formula_blueprint()
-
-      # get encoding from model spec in workflow to update blueprint
-      model_spec <- x[["fit"]][["actions"]][["model"]][["spec"]]
-      encoding_spec <- merge(
-        parsnip::get_encoding(class(model_spec)[1]),
-        data.frame(engine = model_spec$engine,
-                   mode = model_spec$mode),
-        by = c("engine", "mode")
-      )
-      blueprint[["indicators"]] <- encoding_spec$predictor_indicators
-    } else if (preprocessor == "recipe") {
-      blueprint <- hardhat::default_recipe_blueprint()
-    }
-
-    x[["pre"]][["actions"]][[preprocessor]][["blueprint"]] <- blueprint
-    return(x)
+finalize_blueprint <- function(workflow) {
+  # Use user supplied blueprint if provided
+  if (has_blueprint(workflow)) {
+    return(workflow)
   }
+
+  if (has_preprocessor_recipe(workflow)) {
+    finalize_blueprint_recipe(workflow)
+  } else if (has_preprocessor_formula(workflow)) {
+    finalize_blueprint_formula(workflow)
+  } else {
+    abort("Internal error: `workflow` should have a preprocessor at this point.")
+  }
+}
+
+finalize_blueprint_recipe <- function(workflow) {
+  # Use the default blueprint, no parsnip model encoding info is used here
+  blueprint <- hardhat::default_recipe_blueprint()
+
+  recipe <- pull_workflow_preprocessor(workflow)
+
+  update_recipe(workflow, recipe = recipe, blueprint = blueprint)
+}
+
+finalize_blueprint_formula <- function(workflow) {
+  # Use the model indicators information to construct the blueprint
+  indicators <- pull_workflow_spec_indicators(workflow)
+  blueprint <- hardhat::default_formula_blueprint(indicators = indicators)
+
+  formula <- pull_workflow_preprocessor(workflow)
+
+  update_formula(workflow, formula = formula, blueprint = blueprint)
+}
+
+pull_workflow_spec_indicators <- function(x) {
+  spec <- pull_workflow_spec(x)
+
+  spec_cls <- class(spec)[[1]]
+
+  tbl_encodings <- parsnip::get_encoding(spec_cls)
+
+  indicator_engine <- tbl_encodings$engine == spec$engine
+  indicator_mode <- tbl_encodings$mode == spec$mode
+  indicator_spec <- indicator_engine & indicator_mode
+
+  model_encodings <- tbl_encodings[indicator_spec, , drop = FALSE]
+
+  if (nrow(model_encodings) != 1L) {
+    abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
+  }
+
+  model_encodings$predictor_indicators
 }

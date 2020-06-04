@@ -22,7 +22,9 @@ required.}
 \item{...}{Not used.}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
-If \code{NULL}, \code{\link[hardhat:default_formula_blueprint]{hardhat::default_formula_blueprint()}} is used.}
+If \code{NULL}, \code{\link[hardhat:default_formula_blueprint]{hardhat::default_formula_blueprint()}} is used and is passed
+an \code{indicators} argument that best aligns with the model present in
+the workflow.}
 }
 \value{
 \code{x}, updated with either a new or removed formula preprocessor.

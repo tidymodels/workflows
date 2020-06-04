@@ -107,6 +107,7 @@ new_action_recipe <- function(recipe, blueprint) {
     abort("`recipe` must be a recipe.")
   }
 
+  # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_recipe_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'recipe_blueprint'.")
   }

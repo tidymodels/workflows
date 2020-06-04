@@ -103,6 +103,7 @@ new_action_formula <- function(formula, blueprint) {
     abort("`formula` must be a formula.")
   }
 
+  # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_formula_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'formula_blueprint'.")
   }

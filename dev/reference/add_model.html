@@ -36,6 +36,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Add a model to a workflow — add_model" />
@@ -184,10 +188,10 @@ used for those purposes.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
 
-<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"lm"</span>)
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
+<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"lm"</span>)
 
-<span class='no'>regularized_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"glmnet"</span>)
+<span class='no'>regularized_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"glmnet"</span>)
 
 <span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
 <span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_model</span>(<span class='no'>workflow</span>, <span class='no'>lm_model</span>)
@@ -219,7 +223,7 @@ used for those purposes.</p></td>
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
-<span class='no'>fitted</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='no'>fitted</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='no'>fitted</span></div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; Preprocessor: Formula
 #&gt; Model: linear_reg()
@@ -230,7 +234,7 @@ used for those purposes.</p></td>
 #&gt; ── Model ───────────────────────────────────────────────────────────────────────
 #&gt; 
 #&gt; Call:
-#&gt; stats::lm(formula = formula, data = data)
+#&gt; stats::lm(formula = ..y ~ ., data = data)
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          cyl         disp           hp         drat           wt  

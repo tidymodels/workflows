@@ -36,6 +36,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Extract elements of a workflow — workflow-extractors" />
@@ -181,8 +185,8 @@ section.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
 
 <span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>)
 <span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>disp</span>)
@@ -193,8 +197,8 @@ section.</p>
 <span class='no'>recipe_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>base_workflow</span>, <span class='no'>recipe</span>)
 <span class='no'>formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
 
-<span class='no'>fit_recipe_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>recipe_workflow</span>, <span class='no'>mtcars</span>)
-<span class='no'>fit_formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)
+<span class='no'>fit_recipe_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>recipe_workflow</span>, <span class='no'>mtcars</span>)
+<span class='no'>fit_formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)
 
 <span class='co'># The preprocessor is either a recipe or a formula</span>
 <span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>recipe_workflow</span>)</div><div class='output co'>#&gt; Data Recipe
@@ -208,7 +212,7 @@ section.</p>
 #&gt; Operations:
 #&gt; 
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>formula_workflow</span>)</div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x92545d8&gt;</div><div class='input'>
+#&gt; &lt;environment: 0x97c46f8&gt;</div><div class='input'>
 <span class='co'># The `spec` is the parsnip spec before it has been fit.</span>
 <span class='co'># The `fit` is the fit parsnip model.</span>
 <span class='fu'>pull_workflow_spec</span>(<span class='no'>fit_formula_workflow</span>)</div><div class='output co'>#&gt; Linear Regression Model Specification (regression)
@@ -219,7 +223,7 @@ section.</p>
 #&gt; Fit time:  2ms 
 #&gt; 
 #&gt; Call:
-#&gt; stats::lm(formula = formula, data = data)
+#&gt; stats::lm(formula = ..y ~ ., data = data)
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)          cyl  `log(disp)`  

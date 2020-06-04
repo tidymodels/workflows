@@ -36,6 +36,10 @@
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
 
+<!--optional theme-->
+<link href="../.css" rel="stylesheet">
+
+
 
 
 <meta property="og:title" content="Add formula terms to a workflow — add_formula" />
@@ -179,7 +183,9 @@ required.</p></td>
     <tr>
       <th>blueprint</th>
       <td><p>A hardhat blueprint used for fine tuning the preprocessing.
-If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>hardhat::default_formula_blueprint()</a></code> is used.</p></td>
+If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>hardhat::default_formula_blueprint()</a></code> is used and is passed
+an <code>indicators</code> argument that best aligns with the model present in
+the workflow.</p></td>
     </tr>
     </table>
 

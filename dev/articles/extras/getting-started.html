@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><link href="../../tidyverse-2.css" rel="stylesheet">
+<!--optional theme--><link href="../../.css" rel="stylesheet">
 <meta property="og:title" content="Getting Started">
 <meta property="og:description" content="workflows">
 <meta name="twitter:card" content="summary">
@@ -121,8 +122,8 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">parsnip</span>)
 
 <span class="no">logit_mod</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/logistic_reg.html">logistic_reg</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html">set_engine</a></span>(<span class="st">"glm"</span>)</pre></body></html></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/logistic_reg.html">logistic_reg</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/set_engine.html">set_engine</a></span>(<span class="st">"glm"</span>)</pre></body></html></div>
 <p>This data analysis will involve looking at a few different approaches of representing the two predictors so that we have a high-quality model. We’ll walk though the thought process of this analysis as we go. This will emulate how most data analysis projects happen: an initial approach is taken and then potential steps are attempted to make improvements. There is no pre-defined blueprint to this process and the R4DS diagram summarizes the process nicely.</p>
 <p>Since we are going to try different combinations of feature engineering and models, <code>workflows</code> are really useful since you can have one object that contains all of these operations. It helps organize your work instead of having different objects in your workspace that, at some point, have been used in pairs.</p>
 </div>
@@ -140,7 +141,7 @@
   <span class="co"># Add both predictors in</span>
   <span class="fu"><a href="../../reference/add_formula.html">add_formula</a></span>(<span class="no">Class</span> ~ <span class="no">.</span>) <span class="kw">%&gt;%</span>
   <span class="co"># Fit the model:</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)</pre></body></html></div>
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)</pre></body></html></div>
 <p>To evaluate this model, the ROC curve will be computed along with its corresponding AUC.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">yardstick</span>)
 <span class="co">#&gt; For binary classification, the first factor level is assumed to be the event.</span>
@@ -167,7 +168,7 @@
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">ratio_glm</span> <span class="kw">&lt;-</span>
   <span class="no">glm_workflow</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../../reference/add_formula.html">add_formula</a></span>(<span class="no">Class</span> ~ <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span>(<span class="no">A</span>/<span class="no">B</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
 
 <span class="no">ratio_glm_probs</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">ratio_glm</span>, <span class="no">bivariate_val</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"prob"</span>) <span class="kw">%&gt;%</span>
@@ -205,12 +206,12 @@
 <p>Creating the recipe only makes an object with the instructions; it does not carry out the instructions (e.g. estimate the transformation parameter). The general process to use a recipe with a model would be to:</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="co"># estimate the required parameters via `prep()`:</span>
 <span class="no">updated_rec</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/recipes/man/prep.html">prep</a></span>(<span class="no">trans_recipe</span>)</pre></body></html></div>
-<p>Now we have all of the ingredients to execute the data pre-processing. To get the pre-processed version of the training set, <code><a href="https://rdrr.io/pkg/recipes/man/juice.html">juice()</a></code> can be used to return a data frame with the transformed predictors, and these can be passed on to <code><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit()</a></code>.</p>
+<p>Now we have all of the ingredients to execute the data pre-processing. To get the pre-processed version of the training set, <code><a href="https://rdrr.io/pkg/recipes/man/juice.html">juice()</a></code> can be used to return a data frame with the transformed predictors, and these can be passed on to <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit()</a></code>.</p>
 <p><code>workflows</code> eliminates the multiple steps between creating the recipe and getting the fitted model. Internally, it prepares the recipe so that you don’t have to:</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">trans_glm</span> <span class="kw">&lt;-</span>
   <span class="no">glm_workflow</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../../reference/add_recipe.html">add_recipe</a></span>(<span class="no">trans_recipe</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
 
 <span class="no">trans_glm_probs</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">trans_glm</span>, <span class="no">bivariate_val</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"prob"</span>) <span class="kw">%&gt;%</span>
@@ -254,7 +255,7 @@
 <span class="no">pca_glm</span> <span class="kw">&lt;-</span>
   <span class="no">glm_workflow</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../../reference/add_recipe.html">add_recipe</a></span>(<span class="no">pca_recipe</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
 
 <span class="no">pca_glm_probs</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">pca_glm</span>, <span class="no">bivariate_val</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"prob"</span>) <span class="kw">%&gt;%</span>
@@ -279,14 +280,14 @@
 
 <span class="no">discrim_mod</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/pkg/discrim/man/discrim_flexible.html">discrim_flexible</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html">set_engine</a></span>(<span class="st">"earth"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_args.html">set_mode</a></span>(<span class="st">"classification"</span>)
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/set_engine.html">set_engine</a></span>(<span class="st">"earth"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/set_args.html">set_mode</a></span>(<span class="st">"classification"</span>)
 
 <span class="no">discrim_wflow</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="../../reference/workflow.html">workflow</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../../reference/add_recipe.html">add_recipe</a></span>(<span class="no">trans_recipe</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../../reference/add_model.html">add_model</a></span>(<span class="no">discrim_mod</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
+  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="no">bivariate_train</span>)
 
 <span class="no">discrim_probs</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="no">discrim_wflow</span>, <span class="no">bivariate_val</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"prob"</span>) <span class="kw">%&gt;%</span>

@@ -58,3 +58,13 @@ has_spec <- function(x) {
 has_fit <- function(x) {
   !is.null(x$fit$fit)
 }
+
+has_blueprint <- function(x) {
+  if (has_preprocessor_formula(x)) {
+    !is.null(x$pre$actions$formula$blueprint)
+  } else if (has_preprocessor_recipe(x)) {
+    !is.null(x$pre$actions$recipe$blueprint)
+  } else {
+    abort("Internal error: `x` must have a preprocessor to check for a blueprint.")
+  }
+}

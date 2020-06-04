@@ -26,7 +26,9 @@
 #' @param ... Not used.
 #'
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
-#'   If `NULL`, [hardhat::default_formula_blueprint()] is used.
+#'   If `NULL`, [hardhat::default_formula_blueprint()] is used and is passed
+#'   an `indicators` argument that best aligns with the model present in
+#'   the workflow.
 #'
 #' @return
 #' `x`, updated with either a new or removed formula preprocessor.
@@ -103,9 +105,8 @@ new_action_formula <- function(formula, blueprint) {
     abort("`formula` must be a formula.")
   }
 
-  if (is.null(blueprint)) {
-    blueprint <- hardhat::default_formula_blueprint()
-  } else if (!is_formula_blueprint(blueprint)) {
+  # `NULL` blueprints are finalized at fit time
+  if (!is_null(blueprint) && !is_formula_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'formula_blueprint'.")
   }
 

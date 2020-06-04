@@ -9,7 +9,7 @@ mpg ~ cyl
 -- Model -----------------------------------------------------------------------
 
 Call:
-stats::lm(formula = formula, data = data)
+stats::lm(formula = ..y ~ ., data = data)
 
 Coefficients:
 (Intercept)          cyl  

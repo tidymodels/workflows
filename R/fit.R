@@ -108,6 +108,8 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' partially_fit_workflow <- .fit_pre(formula_workflow, mtcars)
 #' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
 .fit_pre <- function(workflow, data) {
+  workflow <- finalize_blueprint(workflow)
+
   n <- length(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
@@ -152,4 +154,61 @@ validate_has_minimal_components <- function(x) {
   }
 
   invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+finalize_blueprint <- function(workflow) {
+  # Use user supplied blueprint if provided
+  if (has_blueprint(workflow)) {
+    return(workflow)
+  }
+
+  if (has_preprocessor_recipe(workflow)) {
+    finalize_blueprint_recipe(workflow)
+  } else if (has_preprocessor_formula(workflow)) {
+    finalize_blueprint_formula(workflow)
+  } else {
+    abort("Internal error: `workflow` should have a preprocessor at this point.")
+  }
+}
+
+finalize_blueprint_recipe <- function(workflow) {
+  # Use the default blueprint, no parsnip model encoding info is used here
+  blueprint <- hardhat::default_recipe_blueprint()
+
+  recipe <- pull_workflow_preprocessor(workflow)
+
+  update_recipe(workflow, recipe = recipe, blueprint = blueprint)
+}
+
+finalize_blueprint_formula <- function(workflow) {
+  # Use the model indicators information to construct the blueprint
+  indicators <- pull_workflow_spec_indicators(workflow)
+  blueprint <- hardhat::default_formula_blueprint(indicators = indicators)
+
+  formula <- pull_workflow_preprocessor(workflow)
+
+  update_formula(workflow, formula = formula, blueprint = blueprint)
+}
+
+pull_workflow_spec_indicators <- function(x) {
+  spec <- pull_workflow_spec(x)
+
+  spec_cls <- class(spec)[[1]]
+
+  tbl_encodings <- parsnip::get_encoding(spec_cls)
+
+  indicator_engine <- tbl_encodings$engine == spec$engine
+  indicator_mode <- tbl_encodings$mode == spec$mode
+  indicator_spec <- indicator_engine & indicator_mode
+
+  indicators <- tbl_encodings$predictor_indicators[indicator_spec]
+
+  if (length(indicators) != 1L) {
+    abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
+  }
+
+  indicators
 }

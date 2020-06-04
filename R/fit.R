@@ -204,11 +204,11 @@ pull_workflow_spec_indicators <- function(x) {
   indicator_mode <- tbl_encodings$mode == spec$mode
   indicator_spec <- indicator_engine & indicator_mode
 
-  model_encodings <- tbl_encodings[indicator_spec, , drop = FALSE]
+  indicators <- tbl_encodings$predictor_indicators[indicator_spec]
 
-  if (nrow(model_encodings) != 1L) {
+  if (length(indicators) != 1L) {
     abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
   }
 
-  model_encodings$predictor_indicators
+  indicators
 }

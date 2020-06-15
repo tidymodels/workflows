@@ -27,9 +27,11 @@ Imports:
     rlang (>= 0.4.1)
 Remotes:
     tidymodels/parsnip
+    tidymodels/modeldata
 Suggests: 
     covr,
     knitr,
+    modeldata,
     recipes,
     rmarkdown,
     testthat (>= 2.3.0)

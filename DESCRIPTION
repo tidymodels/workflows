@@ -31,6 +31,7 @@ Remotes:
 Suggests: 
     covr,
     knitr,
+    magrittr,
     modeldata,
     recipes,
     rmarkdown,

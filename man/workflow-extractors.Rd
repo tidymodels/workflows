@@ -45,14 +45,14 @@ extracted from the mold object returned from \code{pull_workflow_mold()}.
 library(parsnip)
 library(recipes)
 
-model <- linear_reg()
-model <- set_engine(model, "lm")
+model <- linear_reg() \%>\%
+    set_engine("lm")
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars)
-recipe <- step_log(recipe, disp)
+recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+    step_log(disp)
 
-base_workflow <- workflow()
-base_workflow <- add_model(base_workflow, model)
+base_workflow <- workflow() \%>\%
+    add_model(model)
 
 recipe_workflow <- add_recipe(base_workflow, recipe)
 formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))

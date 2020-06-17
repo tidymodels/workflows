@@ -33,11 +33,11 @@
 #' @examples
 #' library(recipes)
 #'
-#' recipe <- recipe(mpg ~ cyl, mtcars)
-#' recipe <- step_log(recipe, cyl)
+#' recipe <- recipe(mpg ~ cyl, mtcars) %>%
+#'     step_log(cyl)
 #'
-#' workflow <- workflow()
-#' workflow <- add_recipe(workflow, recipe)
+#' workflow <- workflow() %>%
+#'     add_recipe(recipe)
 #' workflow
 #'
 #' remove_recipe(workflow)

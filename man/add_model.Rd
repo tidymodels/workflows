@@ -55,26 +55,7 @@ formula added via \code{\link[=add_formula]{add_formula()}} to predict
 property price from property type, square footage, number of beds, and
 number of baths:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
 library(recipes)
-}\if{html}{\out{</div>}}\preformatted{## Loading required package: dplyr
-
-## 
-## Attaching package: 'dplyr'
-
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-
-## 
-## Attaching package: 'recipes'
-
-## The following object is masked from 'package:stats':
-## 
-##     step
-}\if{html}{\out{<div class="r">}}\preformatted{library(workflows)
+library(workflows)
 library(modeldata)
 
 data("Sacramento")
@@ -89,23 +70,25 @@ This first model does create dummy/indicator variables:\if{html}{\out{<div class
 base_wf \%>\%
   add_model(lm_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ════════════════════════════════════════════════
 ## Preprocessor: Formula
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ──────────────────────────────────────────────────────
 ## price ~ type + sqft + beds + baths
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ─────────────────────────────────────────────────────────────
 ## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
 ## Coefficients:
-##      (Intercept)         typeCondo  typeMulti_Family   typeResidential  
-##          66607.9          -33688.6          -55684.4                NA  
-##             sqft              beds             baths  
-##            156.2          -29788.0            8730.0
+##      (Intercept)         typeCondo  typeMulti_Family  
+##          66607.9          -33688.6          -55684.4  
+##  typeResidential              sqft              beds  
+##               NA             156.2          -29788.0  
+##            baths  
+##           8730.0
 }
 
 There are \strong{five} independent variables in the fitted model for this
@@ -122,14 +105,14 @@ This second model does not create dummy/indicator variables:\if{html}{\out{<div 
 base_wf \%>\%
   add_model(rf_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ════════════════════════════════════════════════
 ## Preprocessor: Formula
 ## Model: rand_forest()
 ## 
-## ── Preprocessor ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Preprocessor ──────────────────────────────────────────────────────
 ## price ~ type + sqft + beds + baths
 ## 
-## ── Model ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Model ─────────────────────────────────────────────────────────────
 ## Ranger result
 ## 
 ## Call:
@@ -143,8 +126,8 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7058699777 
-## R squared (OOB):                  0.5894733
+## OOB prediction error (MSE):       7116902042 
+## R squared (OOB):                  0.5860883
 }
 
 Note that there are \strong{four} independent variables in the fitted model

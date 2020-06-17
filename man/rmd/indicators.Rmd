@@ -1,5 +1,10 @@
 # Indicator Variable Details
 
+```{r echo=FALSE}
+options(cli.width = 70, width = 70)
+```
+
+
 Some modeling functions in R create indicator/dummy variables from categorical data when you use a model formula, and some do not. When you specify and fit a model with a `workflow()`, parsnip and workflows match and reproduce the underlying behavior of the user-specified model's computational engine.
 
 ## Formula Preprocessor

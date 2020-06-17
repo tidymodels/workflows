@@ -45,14 +45,14 @@ This first model does create dummy/indicator variables:\if{html}{\out{<div class
 base_wf \%>\%
   add_model(lm_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: linear_reg()
 ## 
-## ── Preprocessor ──────────────────────────────────────────────────────
+## -- Preprocessor ------------------------------------------------------
 ## price ~ type + sqft + beds + baths
 ## 
-## ── Model ─────────────────────────────────────────────────────────────
+## -- Model -------------------------------------------------------------
 ## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
@@ -80,14 +80,14 @@ This second model does not create dummy/indicator variables:\if{html}{\out{<div 
 base_wf \%>\%
   add_model(rf_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## ══ Workflow [trained] ════════════════════════════════════════════════
+}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: rand_forest()
 ## 
-## ── Preprocessor ──────────────────────────────────────────────────────
+## -- Preprocessor ------------------------------------------------------
 ## price ~ type + sqft + beds + baths
 ## 
-## ── Model ─────────────────────────────────────────────────────────────
+## -- Model -------------------------------------------------------------
 ## Ranger result
 ## 
 ## Call:
@@ -101,8 +101,8 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7078957922 
-## R squared (OOB):                  0.5882951
+## OOB prediction error (MSE):       7046365809 
+## R squared (OOB):                  0.5901907
 }
 
 Note that there are \strong{four} independent variables in the fitted model

@@ -1,7 +1,7 @@
 # Indicator Variable Details
 
 ```{r echo=FALSE}
-options(cli.width = 70, width = 70)
+options(cli.width = 70, width = 70, cli.unicode = FALSE)
 ```
 
 

@@ -57,26 +57,7 @@ number of baths:\if{html}{\out{<div class="r">}}\preformatted{set.seed(123)
 
 library(parsnip)
 library(recipes)
-}\if{html}{\out{</div>}}\preformatted{## Loading required package: dplyr
-
-## 
-## Attaching package: 'dplyr'
-
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-
-## 
-## Attaching package: 'recipes'
-
-## The following object is masked from 'package:stats':
-## 
-##     step
-}\if{html}{\out{<div class="r">}}\preformatted{library(workflows)
+library(workflows)
 library(modeldata)
 
 data("Sacramento")

@@ -2,6 +2,14 @@
 
 ```{r echo=FALSE}
 options(cli.width = 70, width = 70, cli.unicode = FALSE)
+
+# Load them early on so package conflict messages don't show up
+suppressPackageStartupMessages({
+  library(parsnip)
+  library(recipes)
+  library(workflows)
+  library(modeldata)
+})
 ```
 
 

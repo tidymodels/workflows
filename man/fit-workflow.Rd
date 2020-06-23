@@ -26,7 +26,7 @@ Fitting a workflow currently involves two main steps:
 \itemize{
 \item Preprocessing the data using a formula preprocessor, or by calling
 \code{\link[recipes:prep]{recipes::prep()}} on a recipe.
-\item Fitting the underlying parsnip model using \code{\link[parsnip:fit]{parsnip::fit.model_spec()}}.
+\item Fitting the underlying parsnip model using \code{\link[parsnip:fit.model_spec]{parsnip::fit.model_spec()}}.
 }
 }
 \details{
@@ -36,23 +36,24 @@ after the model has been fit.
 \examples{
 library(parsnip)
 library(recipes)
+library(magrittr)
 
 model <- linear_reg() \%>\%
-    set_engine("lm")
+  set_engine("lm")
 
 base_wf <- workflow() \%>\%
-    add_model(model)
+  add_model(model)
 
 formula_wf <- base_wf \%>\%
-    add_formula(mpg ~ cyl + log(disp))
+  add_formula(mpg ~ cyl + log(disp))
 
 fit(formula_wf, mtcars)
 
 recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
-    step_log(disp)
+  step_log(disp)
 
 recipe_wf <- base_wf \%>\%
-    add_recipe(recipe)
+  add_recipe(recipe)
 
 fit(recipe_wf, mtcars)
 }

@@ -55,7 +55,30 @@ formula added via \code{\link[=add_formula]{add_formula()}} to predict
 property price from property type, square footage, number of beds, and
 number of baths:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
 library(recipes)
-library(workflows)
+}\if{html}{\out{</div>}}\preformatted{## Loading required package: dplyr
+
+## 
+## Attaching package: 'dplyr'
+
+## The following object is masked from 'package:testthat':
+## 
+##     matches
+
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+
+## 
+## Attaching package: 'recipes'
+
+## The following object is masked from 'package:stats':
+## 
+##     step
+}\if{html}{\out{<div class="r">}}\preformatted{library(workflows)
 library(modeldata)
 
 data("Sacramento")
@@ -96,7 +119,7 @@ OLS linear regression. With this model type and engine, the factor
 predictor \code{type} of the real estate properties was converted to two
 binary predictors, \code{typeMulti_Family} and \code{typeResidential}. (The third
 type, for condos, does not need its own column because it is the
-baseline level.)
+baseline level).
 
 This second model does not create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{rf_spec <- rand_forest() \%>\%
   set_mode("regression") \%>\%
@@ -126,16 +149,16 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7020318961 
-## R squared (OOB):                  0.5917055
+## OOB prediction error (MSE):       7132788814 
+## R squared (OOB):                  0.5851644
 }
 
 Note that there are \strong{four} independent variables in the fitted model
 for this ranger random forest. With this model type and engine,
 indicator variables were not created for the \code{type} of real estate
 property being sold. Tree-based models such as random forest models can
-handle factor predictors and don’t need any conversion to numeric binary
-variables.
+handle factor predictors directly, and don’t need any conversion to
+numeric binary variables.
 }
 
 \subsection{Recipe Preprocessor}{

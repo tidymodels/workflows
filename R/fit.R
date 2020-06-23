@@ -30,23 +30,24 @@
 #' @examples
 #' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
 #'
 #' model <- linear_reg() %>%
-#'     set_engine("lm")
+#'   set_engine("lm")
 #'
 #' base_wf <- workflow() %>%
-#'     add_model(model)
+#'   add_model(model)
 #'
 #' formula_wf <- base_wf %>%
-#'     add_formula(mpg ~ cyl + log(disp))
+#'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' fit(formula_wf, mtcars)
 #'
 #' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
-#'     step_log(disp)
+#'   step_log(disp)
 #'
 #' recipe_wf <- base_wf %>%
-#'     add_recipe(recipe)
+#'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
@@ -98,16 +99,17 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @examples
 #' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
 #'
 #' model <- linear_reg() %>%
-#'     set_engine("lm")
+#'   set_engine("lm")
 #'
 #' unfit_wf <- workflow() %>%
-#'     add_model(model) %>%
-#'     add_formula(mpg ~ cyl + log(disp))
+#'   add_model(model) %>%
+#'   add_formula(mpg ~ cyl + log(disp))
 #'
-#' partially_fit_workflow <- .fit_pre(unfit_wf, mtcars)
-#' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
+#' partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
+#' fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
 .fit_pre <- function(workflow, data) {
   workflow <- finalize_blueprint(workflow)
 

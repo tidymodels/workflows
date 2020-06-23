@@ -13,30 +13,30 @@
 #' @examples
 #' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
 #' library(modeldata)
 #'
 #' data("attrition")
 #'
 #' model <- logistic_reg() %>%
-#'     set_engine("glm")
+#'   set_engine("glm")
 #'
 #' base_wf <- workflow() %>%
-#'     add_model(model)
+#'   add_model(model)
 #'
 #' formula_wf <- base_wf %>%
-#'     add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
+#'   add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
 #'
 #' fit(formula_wf, attrition)
 #'
 #' recipe <- recipe(Attrition ~ ., attrition) %>%
-#'     step_dummy(all_nominal(), -Attrition) %>%
-#'     step_corr(all_predictors(), threshold = 0.8)
+#'   step_dummy(all_nominal(), -Attrition) %>%
+#'   step_corr(all_predictors(), threshold = 0.8)
 #'
 #' recipe_wf <- base_wf %>%
-#'     add_recipe(recipe)
+#'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, attrition)
-#'
 #' @export
 workflow <- function() {
   new_workflow()

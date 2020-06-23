@@ -44,16 +44,17 @@ specified, but not both.
 }
 \examples{
 library(recipes)
+library(magrittr)
 
 recipe <- recipe(mpg ~ cyl, mtcars) \%>\%
-    step_log(cyl)
+  step_log(cyl)
 
 workflow <- workflow() \%>\%
-    add_recipe(recipe)
+  add_recipe(recipe)
+
 workflow
 
 remove_recipe(workflow)
 
 update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
-
 }

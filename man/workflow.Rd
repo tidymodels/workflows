@@ -71,7 +71,7 @@ OLS linear regression. With this model type and engine, the factor
 predictor \code{type} of the real estate properties was converted to two
 binary predictors, \code{typeMulti_Family} and \code{typeResidential}. (The third
 type, for condos, does not need its own column because it is the
-baseline level.)
+baseline level).
 
 This second model does not create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{rf_spec <- rand_forest() \%>\%
   set_mode("regression") \%>\%
@@ -101,16 +101,16 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7046365809 
-## R squared (OOB):                  0.5901907
+## OOB prediction error (MSE):       7098567202 
+## R squared (OOB):                  0.5871547
 }
 
 Note that there are \strong{four} independent variables in the fitted model
 for this ranger random forest. With this model type and engine,
 indicator variables were not created for the \code{type} of real estate
 property being sold. Tree-based models such as random forest models can
-handle factor predictors and don’t need any conversion to numeric binary
-variables.
+handle factor predictors directly, and don’t need any conversion to
+numeric binary variables.
 }
 
 \subsection{Recipe Preprocessor}{
@@ -125,28 +125,28 @@ behavior from the model’s computational engine.
 \examples{
 library(parsnip)
 library(recipes)
+library(magrittr)
 library(modeldata)
 
 data("attrition")
 
 model <- logistic_reg() \%>\%
-    set_engine("glm")
+  set_engine("glm")
 
 base_wf <- workflow() \%>\%
-    add_model(model)
+  add_model(model)
 
 formula_wf <- base_wf \%>\%
-    add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
+  add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
 
 fit(formula_wf, attrition)
 
 recipe <- recipe(Attrition ~ ., attrition) \%>\%
-    step_dummy(all_nominal(), -Attrition) \%>\%
-    step_corr(all_predictors(), threshold = 0.8)
+  step_dummy(all_nominal(), -Attrition) \%>\%
+  step_corr(all_predictors(), threshold = 0.8)
 
 recipe_wf <- base_wf \%>\%
-    add_recipe(recipe)
+  add_recipe(recipe)
 
 fit(recipe_wf, attrition)
-
 }

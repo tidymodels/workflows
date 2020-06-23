@@ -32,15 +32,16 @@ general user should never need to worry about them.
 \examples{
 library(parsnip)
 library(recipes)
+library(magrittr)
 
 model <- linear_reg() \%>\%
-    set_engine("lm")
+  set_engine("lm")
 
 unfit_wf <- workflow() \%>\%
-    add_model(model) \%>\%
-    add_formula(mpg ~ cyl + log(disp))
+  add_model(model) \%>\%
+  add_formula(mpg ~ cyl + log(disp))
 
-partially_fit_workflow <- .fit_pre(unfit_wf, mtcars)
-fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
+partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
+fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
 }
 \keyword{internal}

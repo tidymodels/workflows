@@ -12,6 +12,8 @@ Some modeling functions in R create indicator/dummy variables from categorical d
 In the [modeldata::Sacramento] data set of real estate prices, the `type` variable has three levels: `"Residential"`, `"Condo"`, and `"Multi-Family"`. This base `workflow()` contains a formula added via [add_formula()] to predict property price from property type, square footage, number of beds, and number of baths:
 
 ```{r}
+set.seed(123)
+
 library(parsnip)
 library(recipes)
 library(workflows)

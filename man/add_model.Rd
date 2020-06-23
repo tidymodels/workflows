@@ -53,16 +53,14 @@ estate prices, the \code{type} variable has three levels: \code{"Residential"},
 \code{"Condo"}, and \code{"Multi-Family"}. This base \code{workflow()} contains a
 formula added via \code{\link[=add_formula]{add_formula()}} to predict
 property price from property type, square footage, number of beds, and
-number of baths:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
+number of baths:\if{html}{\out{<div class="r">}}\preformatted{set.seed(123)
+
+library(parsnip)
 library(recipes)
 }\if{html}{\out{</div>}}\preformatted{## Loading required package: dplyr
 
 ## 
 ## Attaching package: 'dplyr'
-
-## The following object is masked from 'package:testthat':
-## 
-##     matches
 
 ## The following objects are masked from 'package:stats':
 ## 
@@ -149,8 +147,8 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7132788814 
-## R squared (OOB):                  0.5851644
+## OOB prediction error (MSE):       7058847504 
+## R squared (OOB):                  0.5894647
 }
 
 Note that there are \strong{four} independent variables in the fitted model

@@ -27,6 +27,7 @@ Imports:
     rlang (>= 0.4.1)
 Remotes:
     tidymodels/parsnip
+    tidymodels/hardhat
 Suggests: 
     covr,
     knitr,

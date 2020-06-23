@@ -32,18 +32,19 @@
 #' @export
 #' @examples
 #' library(recipes)
+#' library(magrittr)
 #'
-#' recipe <- recipe(mpg ~ cyl, mtcars)
-#' recipe <- step_log(recipe, cyl)
+#' recipe <- recipe(mpg ~ cyl, mtcars) %>%
+#'   step_log(cyl)
 #'
-#' workflow <- workflow()
-#' workflow <- add_recipe(workflow, recipe)
+#' workflow <- workflow() %>%
+#'   add_recipe(recipe)
+#'
 #' workflow
 #'
 #' remove_recipe(workflow)
 #'
 #' update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
-#'
 add_recipe <- function(x, recipe, ..., blueprint = NULL) {
   ellipsis::check_dots_empty()
   validate_recipes_available()

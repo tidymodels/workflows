@@ -44,42 +44,43 @@ extracted from the mold object returned from \code{pull_workflow_mold()}.
 \examples{
 library(parsnip)
 library(recipes)
+library(magrittr)
 
-model <- linear_reg()
-model <- set_engine(model, "lm")
+model <- linear_reg() \%>\%
+  set_engine("lm")
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars)
-recipe <- step_log(recipe, disp)
+recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+  step_log(disp)
 
-base_workflow <- workflow()
-base_workflow <- add_model(base_workflow, model)
+base_wf <- workflow() \%>\%
+  add_model(model)
 
-recipe_workflow <- add_recipe(base_workflow, recipe)
-formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
+recipe_wf <- add_recipe(base_wf, recipe)
+formula_wf <- add_formula(base_wf, mpg ~ cyl + log(disp))
 
-fit_recipe_workflow <- fit(recipe_workflow, mtcars)
-fit_formula_workflow <- fit(formula_workflow, mtcars)
+fit_recipe_wf <- fit(recipe_wf, mtcars)
+fit_formula_wf <- fit(formula_wf, mtcars)
 
 # The preprocessor is either a recipe or a formula
-pull_workflow_preprocessor(recipe_workflow)
-pull_workflow_preprocessor(formula_workflow)
+pull_workflow_preprocessor(recipe_wf)
+pull_workflow_preprocessor(formula_wf)
 
 # The `spec` is the parsnip spec before it has been fit.
 # The `fit` is the fit parsnip model.
-pull_workflow_spec(fit_formula_workflow)
-pull_workflow_fit(fit_formula_workflow)
+pull_workflow_spec(fit_formula_wf)
+pull_workflow_fit(fit_formula_wf)
 
 # The mold is returned from `hardhat::mold()`, and contains the
 # predictors, outcomes, and information about the preprocessing
 # for use on new data at `predict()` time.
-pull_workflow_mold(fit_recipe_workflow)
+pull_workflow_mold(fit_recipe_wf)
 
 # A useful shortcut is to extract the prepped recipe from the workflow
-pull_workflow_prepped_recipe(fit_recipe_workflow)
+pull_workflow_prepped_recipe(fit_recipe_wf)
 
 # That is identical to
 identical(
-  pull_workflow_mold(fit_recipe_workflow)$blueprint$recipe,
-  pull_workflow_prepped_recipe(fit_recipe_workflow)
+  pull_workflow_mold(fit_recipe_wf)$blueprint$recipe,
+  pull_workflow_prepped_recipe(fit_recipe_wf)
 )
 }

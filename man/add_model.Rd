@@ -40,6 +40,136 @@ the workflow.
 \details{
 \code{add_model()} is a required step to construct a minimal workflow.
 }
+\section{Indicator Variable Details}{
+Some modeling functions in R create indicator/dummy variables from
+categorical data when you use a model formula, and some do not. When you
+specify and fit a model with a \code{workflow()}, parsnip and workflows match
+and reproduce the underlying behavior of the user-specified model’s
+computational engine.
+\subsection{Formula Preprocessor}{
+
+In the \link[modeldata:Sacramento]{modeldata::Sacramento} data set of real
+estate prices, the \code{type} variable has three levels: \code{"Residential"},
+\code{"Condo"}, and \code{"Multi-Family"}. This base \code{workflow()} contains a
+formula added via \code{\link[=add_formula]{add_formula()}} to predict
+property price from property type, square footage, number of beds, and
+number of baths:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
+library(recipes)
+}\if{html}{\out{</div>}}\preformatted{## Loading required package: dplyr
+
+## 
+## Attaching package: 'dplyr'
+
+## The following object is masked from 'package:testthat':
+## 
+##     matches
+
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+
+## 
+## Attaching package: 'recipes'
+
+## The following object is masked from 'package:stats':
+## 
+##     step
+}\if{html}{\out{<div class="r">}}\preformatted{library(workflows)
+library(modeldata)
+
+data("Sacramento")
+
+base_wf <- workflow() \%>\%
+  add_formula(price ~ type + sqft + beds + baths)
+}\if{html}{\out{</div>}}
+
+This first model does create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+  set_engine("lm")
+
+base_wf \%>\%
+  add_model(lm_spec) \%>\%
+  fit(Sacramento)
+}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
+## Preprocessor: Formula
+## Model: linear_reg()
+## 
+## -- Preprocessor ------------------------------------------------------
+## price ~ type + sqft + beds + baths
+## 
+## -- Model -------------------------------------------------------------
+## 
+## Call:
+## stats::lm(formula = ..y ~ ., data = data)
+## 
+## Coefficients:
+##      (Intercept)         typeCondo  typeMulti_Family  
+##          66607.9          -33688.6          -55684.4  
+##  typeResidential              sqft              beds  
+##               NA             156.2          -29788.0  
+##            baths  
+##           8730.0
+}
+
+There are \strong{five} independent variables in the fitted model for this
+OLS linear regression. With this model type and engine, the factor
+predictor \code{type} of the real estate properties was converted to two
+binary predictors, \code{typeMulti_Family} and \code{typeResidential}. (The third
+type, for condos, does not need its own column because it is the
+baseline level).
+
+This second model does not create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{rf_spec <- rand_forest() \%>\%
+  set_mode("regression") \%>\%
+  set_engine("ranger")
+
+base_wf \%>\%
+  add_model(rf_spec) \%>\%
+  fit(Sacramento)
+}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
+## Preprocessor: Formula
+## Model: rand_forest()
+## 
+## -- Preprocessor ------------------------------------------------------
+## price ~ type + sqft + beds + baths
+## 
+## -- Model -------------------------------------------------------------
+## Ranger result
+## 
+## Call:
+##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      932 
+## Number of independent variables:  4 
+## Mtry:                             2 
+## Target node size:                 5 
+## Variable importance mode:         none 
+## Splitrule:                        variance 
+## OOB prediction error (MSE):       7132788814 
+## R squared (OOB):                  0.5851644
+}
+
+Note that there are \strong{four} independent variables in the fitted model
+for this ranger random forest. With this model type and engine,
+indicator variables were not created for the \code{type} of real estate
+property being sold. Tree-based models such as random forest models can
+handle factor predictors directly, and don’t need any conversion to
+numeric binary variables.
+}
+
+\subsection{Recipe Preprocessor}{
+
+When you specify a model with a \code{workflow()} and a recipe preprocessor
+via \code{\link[=add_recipe]{add_recipe()}}, the \emph{recipe} controls whether
+dummy variables are created or not; the recipe overrides any underlying
+behavior from the model’s computational engine.
+}
+}
+
 \examples{
 library(parsnip)
 

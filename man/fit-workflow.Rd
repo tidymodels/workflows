@@ -36,21 +36,24 @@ after the model has been fit.
 \examples{
 library(parsnip)
 library(recipes)
+library(magrittr)
 
-model <- linear_reg()
-model <- set_engine(model, "lm")
+model <- linear_reg() \%>\%
+  set_engine("lm")
 
-base_workflow <- workflow()
-base_workflow <- add_model(base_workflow, model)
+base_wf <- workflow() \%>\%
+  add_model(model)
 
-formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
+formula_wf <- base_wf \%>\%
+  add_formula(mpg ~ cyl + log(disp))
 
-fit(formula_workflow, mtcars)
+fit(formula_wf, mtcars)
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars)
-recipe <- step_log(recipe, disp)
+recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+  step_log(disp)
 
-recipe_workflow <- add_recipe(base_workflow, recipe)
+recipe_wf <- base_wf \%>\%
+  add_recipe(recipe)
 
-fit(recipe_workflow, mtcars)
+fit(recipe_wf, mtcars)
 }

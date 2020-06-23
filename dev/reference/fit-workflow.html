@@ -144,7 +144,7 @@ Fitting the underlying parsnip model using parsnip::fit.model_spec().
     </div>
 
     <pre class="usage"><span class='co'># S3 method for workflow</span>
-<span class='fu'>fit</span>(<span class='no'>object</span>, <span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>control</span> <span class='kw'>=</span> <span class='fu'><a href='control_workflow.html'>control_workflow</a></span>())</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>object</span>, <span class='kw'>data</span>, <span class='kw'>...</span>, control = <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow</a></span>())</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,7 +164,7 @@ workflow</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>A <code><a href='control_workflow.html'>control_workflow()</a></code> object</p></td>
+      <td><p>A <code><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow()</a></code> object</p></td>
     </tr>
     </table>
 
@@ -178,22 +178,22 @@ workflow</p></td>
 after the model has been fit.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>magrittr</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&gt;%</span>
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>base_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>model</span>)
+<span class='kw'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_model.html'>add_model</a></span>(<span class='kw'>model</span>)
 
-<span class='no'>formula_wf</span> <span class='kw'>&lt;-</span> <span class='no'>base_wf</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
+<span class='kw'>formula_wf</span> <span class='op'>&lt;-</span> <span class='kw'>base_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_formula.html'>add_formula</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>disp</span>))
 
-<span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>formula_wf</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; Preprocessor: Formula
-#&gt; Model: linear_reg()
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>formula_wf</span>, <span class='kw'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ cyl + log(disp)
@@ -207,15 +207,15 @@ after the model has been fit.</p>
 #&gt; (Intercept)          cyl  `log(disp)`  
 #&gt;     67.6674      -0.1755      -8.7971  
 #&gt; </div><div class='input'>
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='no'>disp</span>)
+<span class='kw'>recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>disp</span>, <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='kw'>disp</span>)
 
-<span class='no'>recipe_wf</span> <span class='kw'>&lt;-</span> <span class='no'>base_wf</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>recipe</span>)
+<span class='kw'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='kw'>base_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_recipe.html'>add_recipe</a></span>(<span class='kw'>recipe</span>)
 
-<span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>recipe_wf</span>, <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; Preprocessor: Recipe
-#&gt; Model: linear_reg()
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>recipe_wf</span>, <span class='kw'>mtcars</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Recipe
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; 1 Recipe Step
@@ -230,7 +230,7 @@ after the model has been fit.</p>
 #&gt; Coefficients:
 #&gt; (Intercept)          cyl         disp  
 #&gt;     67.6674      -0.1755      -8.7971  
-#&gt; </div></pre>
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

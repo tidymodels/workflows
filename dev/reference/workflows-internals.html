@@ -133,15 +133,15 @@ general user should never need to worry about them." />
     </div>
 
     <div class="ref-description">
-    <p><code>.fit_pre()</code> and <code>.fit_model()</code> are internal workflow functions for
+    <p><code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code> and <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model()</a></code> are internal workflow functions for
 <em>partially</em> fitting a workflow object. They are only exported for usage by
 the tuning package, <a href='https://github.com/tidymodels/tune'>tune</a>, and the
 general user should never need to worry about them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.fit_pre</span>(<span class='no'>workflow</span>, <span class='no'>data</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre</a></span>(<span class='kw'>workflow</span>, <span class='kw'>data</span>)
 
-<span class='fu'>.fit_model</span>(<span class='no'>workflow</span>, <span class='no'>control</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model</a></span>(<span class='kw'>workflow</span>, <span class='kw'>control</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -149,9 +149,9 @@ general user should never need to worry about them.</p>
     <tr>
       <th>workflow</th>
       <td><p>A workflow</p>
-<p>For <code>.fit_pre()</code>, this should be a fresh workflow.</p>
-<p>For <code>.fit_model()</code>, this should be a workflow that has already been trained
-through <code>.fit_pre()</code>.</p></td>
+<p>For <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code>, this should be a fresh workflow.</p>
+<p>For <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model()</a></code>, this should be a workflow that has already been trained
+through <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -160,25 +160,25 @@ workflow</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>A <code><a href='control_workflow.html'>control_workflow()</a></code> object</p></td>
+      <td><p>A <code><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow()</a></code> object</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>magrittr</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&gt;%</span>
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>unfit_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>model</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
+<span class='kw'>unfit_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_model.html'>add_model</a></span>(<span class='kw'>model</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_formula.html'>add_formula</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>disp</span>))
 
-<span class='no'>partially_fit_wf</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_pre</span>(<span class='no'>unfit_wf</span>, <span class='no'>mtcars</span>)
-<span class='no'>fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_model</span>(<span class='no'>partially_fit_wf</span>, <span class='fu'><a href='control_workflow.html'>control_workflow</a></span>())</div></pre>
+<span class='kw'>partially_fit_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre</a></span>(<span class='kw'>unfit_wf</span>, <span class='kw'>mtcars</span>)
+<span class='kw'>fit_workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model</a></span>(<span class='kw'>partially_fit_wf</span>, <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow</a></span>())</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

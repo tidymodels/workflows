@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="tidyverse-2.css" rel="stylesheet">
-<!--optional theme--><link href=".css" rel="stylesheet">
+<!--optional theme--><link href="tidymodels.css" rel="stylesheet">
 <meta property="og:title" content="Modeling Workflows">
 <meta property="og:description" content="Managing both a parsnip model and a preprocessor, such as a
     model formula or recipe from recipes, can often be challenging. The goal
@@ -94,7 +94,7 @@
 <p>A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests. For example, if you have a <code>recipe</code> and <code>parsnip</code> model, these can be combined into a workflow. The advantages are:</p>
 <ul>
 <li><p>You don’t have to keep track of separate objects in your workspace.</p></li>
-<li><p>The recipe prepping and model fitting can be executed using a single call to <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit()</a></code>.</p></li>
+<li><p>The recipe prepping and model fitting can be executed using a single call to <code><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit()</a></code>.</p></li>
 <li><p>If you have custom tuning parameter settings, these can be defined using a simpler interface when combined with <a href="https://github.com/tidymodels/tune">tune</a>.</p></li>
 <li><p>In the future, workflows will be able to add post-processing operations, such as modifying the probability cutoff for two-class models.</p></li>
 </ul>
@@ -116,21 +116,21 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">parsnip</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">workflows</span>)
 
-<span class="no">spline_cars</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/recipes/man/recipe.html">recipe</a></span>(<span class="no">mpg</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/recipes/man/step_ns.html">step_ns</a></span>(<span class="no">disp</span>, <span class="kw">deg_free</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></div>
+<span class="no">spline_cars</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html">recipe</a></span>(<span class="no">mpg</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_ns.html">step_ns</a></span>(<span class="no">disp</span>, <span class="kw">deg_free</span> <span class="kw">=</span> <span class="fl">10</span>)</pre></div>
 <p>and a model object:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">bayes_lm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/linear_reg.html">linear_reg</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/set_engine.html">set_engine</a></span>(<span class="st">"stan"</span>)</pre></div>
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">bayes_lm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html">linear_reg</a></span>() <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html">set_engine</a></span>(<span class="st">"stan"</span>)</pre></div>
 <p>To use these, you would generally run:</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="no">spline_cars_prepped</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/recipes/man/prep.html">prep</a></span>(<span class="no">spline_cars</span>, <span class="no">mtcars</span>)
-<span class="no">bayes_lm_fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="no">bayes_lm</span>, <span class="no">mpg</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/recipes/man/juice.html">juice</a></span>(<span class="no">spline_cars_prepped</span>))</pre></div>
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">spline_cars_prepped</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html">prep</a></span>(<span class="no">spline_cars</span>, <span class="no">mtcars</span>)
+<span class="no">bayes_lm_fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="no">bayes_lm</span>, <span class="no">mpg</span> ~ <span class="no">.</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/juice.html">juice</a></span>(<span class="no">spline_cars_prepped</span>))</pre></div>
 <p>You can’t predict on new samples using <code>bayes_lm_fit</code> without the prepped version of <code>spline_cars</code> around. You also might have other models and recipes in your workspace. This might lead to getting them mixed-up or forgetting to save the model/recipe pair that you are most interested in.</p>
 <p>workflows makes this easier by combining these objects together:</p>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="no">car_wflow</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/workflow.html">workflow</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/add_recipe.html">add_recipe</a></span>(<span class="no">spline_cars</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/add_model.html">add_model</a></span>(<span class="no">bayes_lm</span>)</pre></div>
-<p>Now you can prepare the recipe and estimate the model via a single call to <code><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit()</a></code>:</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">car_wflow_fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/parsnip/man/reexports.html">fit</a></span>(<span class="no">car_wflow</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>)</pre></div>
+<p>Now you can prepare the recipe and estimate the model via a single call to <code><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="r"><span class="no">car_wflow_fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/reexports.html">fit</a></span>(<span class="no">car_wflow</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>)</pre></div>
 <p>You can alter existing workflows using <code><a href="reference/add_recipe.html">update_recipe()</a></code> / <code><a href="reference/add_model.html">update_model()</a></code> and <code><a href="reference/add_recipe.html">remove_recipe()</a></code> / <code><a href="reference/add_model.html">remove_model()</a></code>.</p>
 </div>
 </div>

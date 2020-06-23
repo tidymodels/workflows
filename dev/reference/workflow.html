@@ -37,7 +37,7 @@
 <link href="../tidyverse-2.css" rel="stylesheet">
 
 <!--optional theme-->
-<link href="../.css" rel="stylesheet">
+<link href="../tidymodels.css" rel="stylesheet">
 
 
 
@@ -145,15 +145,218 @@ to fit, specified through <code><a href='add_model.html'>add_model()</a></code>.
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A new <code>workflow</code> object.</p>
+    <h2 class="hasAnchor" id="indicator-variable-details"><a class="anchor" href="#indicator-variable-details"></a>Indicator Variable Details</h2>
+
+    <p>Some modeling functions in R create indicator/dummy variables from
+categorical data when you use a model formula, and some do not. When you
+specify and fit a model with a <code>workflow()</code>, parsnip and workflows match
+and reproduce the underlying behavior of the user-specified model’s
+computational engine.</p><h3>Formula Preprocessor</h3>
+
+
+<p>In the <a href='https://modeldata.tidymodels.org/reference/Sacramento.html'>modeldata::Sacramento</a> data set of real
+estate prices, the <code>type</code> variable has three levels: <code>"Residential"</code>,
+<code>"Condo"</code>, and <code>"Multi-Family"</code>. This base <code>workflow()</code> contains a
+formula added via <code><a href='add_formula.html'>add_formula()</a></code> to predict
+property price from property type, square footage, number of beds, and
+number of baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>workflows</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"Sacramento"</span>)
+
+<span class='no'>base_wf</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'>workflow</span>() <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>price</span> ~ <span class='no'>type</span> + <span class='no'>sqft</span> + <span class='no'>beds</span> + <span class='no'>baths</span>)</pre><p></div></p>
+<p>This first model does create dummy/indicator variables:<div class="r"></p><pre><span class='no'>lm_spec</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
+
+<span class='no'>base_wf</span> <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>lm_spec</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>Sacramento</span>)</pre><p></div></p><pre>## == Workflow [trained] ================================================
+## Preprocessor: Formula
+## Model: linear_reg()
+## 
+## -- Preprocessor ------------------------------------------------------
+## price ~ type + sqft + beds + baths
+## 
+## -- Model -------------------------------------------------------------
+## 
+## Call:
+## stats::lm(formula = ..y ~ ., data = data)
+## 
+## Coefficients:
+##      (Intercept)         typeCondo  typeMulti_Family  
+##          66607.9          -33688.6          -55684.4  
+##  typeResidential              sqft              beds  
+##               NA             156.2          -29788.0  
+##            baths  
+##           8730.0
+</pre>
+
+<p>There are <strong>five</strong> independent variables in the fitted model for this
+OLS linear regression. With this model type and engine, the factor
+predictor <code>type</code> of the real estate properties was converted to two
+binary predictors, <code>typeMulti_Family</code> and <code>typeResidential</code>. (The third
+type, for condos, does not need its own column because it is the
+baseline level).</p>
+<p>This second model does not create dummy/indicator variables:<div class="r"></p><pre><span class='no'>rf_spec</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://parsnip.tidymodels.org/reference/rand_forest.html'>rand_forest</a></span>() <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span>(<span class='st'>"regression"</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"ranger"</span>)
+
+<span class='no'>base_wf</span> <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>rf_spec</span>) <span class='kw'>%&amp;gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>Sacramento</span>)</pre><p></div></p><pre>## == Workflow [trained] ================================================
+## Preprocessor: Formula
+## Model: rand_forest()
+## 
+## -- Preprocessor ------------------------------------------------------
+## price ~ type + sqft + beds + baths
+## 
+## -- Model -------------------------------------------------------------
+## Ranger result
+## 
+## Call:
+##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      932 
+## Number of independent variables:  4 
+## Mtry:                             2 
+## Target node size:                 5 
+## Variable importance mode:         none 
+## Splitrule:                        variance 
+## OOB prediction error (MSE):       7098567202 
+## R squared (OOB):                  0.5871547
+</pre>
+
+<p>Note that there are <strong>four</strong> independent variables in the fitted model
+for this ranger random forest. With this model type and engine,
+indicator variables were not created for the <code>type</code> of real estate
+property being sold. Tree-based models such as random forest models can
+handle factor predictors directly, and don’t need any conversion to
+numeric binary variables.</p>
+
+<h3>Recipe Preprocessor</h3>
+
+
+<p>When you specify a model with a <code>workflow()</code> and a recipe preprocessor
+via <code><a href='add_recipe.html'>add_recipe()</a></code>, the <em>recipe</em> controls whether
+dummy variables are created or not; the recipe overrides any underlying
+behavior from the model’s computational engine.</p>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
 
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>)
-<span class='no'>rec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>rec</span>, <span class='no'>cyl</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"attrition"</span>)
 
-<span class='no'>wrk</span> <span class='kw'>&lt;-</span> <span class='fu'>workflow</span>()
-<span class='no'>wrk</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>wrk</span>, <span class='no'>rec</span>)</div></pre>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/logistic_reg.html'>logistic_reg</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"glm"</span>)
+
+<span class='no'>base_wf</span> <span class='kw'>&lt;-</span> <span class='fu'>workflow</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>model</span>)
+
+<span class='no'>formula_wf</span> <span class='kw'>&lt;-</span> <span class='no'>base_wf</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>Attrition</span> ~ <span class='no'>BusinessTravel</span> + <span class='no'>YearsSinceLastPromotion</span> + <span class='no'>OverTime</span>)
+
+<span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>formula_wf</span>, <span class='no'>attrition</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; Preprocessor: Formula
+#&gt; Model: logistic_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                     (Intercept)       `BusinessTravelNon-Travel`  
+#&gt;                        -2.17844                         -0.64727  
+#&gt; BusinessTravelTravel_Frequently      BusinessTravelTravel_Rarely  
+#&gt;                         0.64747                               NA  
+#&gt;         YearsSinceLastPromotion                      OverTimeYes  
+#&gt;                        -0.03092                          1.31904  
+#&gt; 
+#&gt; Degrees of Freedom: 1469 Total (i.e. Null);  1465 Residual
+#&gt; Null Deviance:	    1299 
+#&gt; Residual Deviance: 1194 	AIC: 1204</div><div class='input'>
+<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>Attrition</span> ~ <span class='no'>.</span>, <span class='no'>attrition</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_nominal</a></span>(), -<span class='no'>Attrition</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_corr.html'>step_corr</a></span>(<span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span>(), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)
+
+<span class='no'>recipe_wf</span> <span class='kw'>&lt;-</span> <span class='no'>base_wf</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>recipe</span>)
+
+<span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>recipe_wf</span>, <span class='no'>attrition</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; Preprocessor: Recipe
+#&gt; Model: logistic_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; 2 Recipe Steps
+#&gt; 
+#&gt; ● step_dummy()
+#&gt; ● step_corr()
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                      (Intercept)                               Age  
+#&gt;                       -2.535e+00                        -3.131e-02  
+#&gt;                        DailyRate                  DistanceFromHome  
+#&gt;                       -3.126e-04                         4.927e-02  
+#&gt;                       HourlyRate                     MonthlyIncome  
+#&gt;                        2.762e-03                         1.127e-06  
+#&gt;                      MonthlyRate                NumCompaniesWorked  
+#&gt;                        1.663e-06                         1.956e-01  
+#&gt;                PercentSalaryHike                  StockOptionLevel  
+#&gt;                       -2.495e-02                        -1.968e-01  
+#&gt;                TotalWorkingYears             TrainingTimesLastYear  
+#&gt;                       -6.820e-02                        -1.863e-01  
+#&gt;                   YearsAtCompany                YearsInCurrentRole  
+#&gt;                        8.916e-02                        -1.371e-01  
+#&gt;          YearsSinceLastPromotion              YearsWithCurrManager  
+#&gt;                        1.849e-01                        -1.516e-01  
+#&gt; BusinessTravel_Travel_Frequently      BusinessTravel_Travel_Rarely  
+#&gt;                        1.940e+00                         1.080e+00  
+#&gt;                      Education_1                       Education_2  
+#&gt;                       -1.391e-01                        -2.753e-01  
+#&gt;                      Education_3                       Education_4  
+#&gt;                       -7.324e-02                         3.858e-02  
+#&gt;     EducationField_Life_Sciences          EducationField_Marketing  
+#&gt;                       -6.939e-01                        -2.212e-01  
+#&gt;           EducationField_Medical              EducationField_Other  
+#&gt;                       -7.210e-01                        -6.755e-01  
+#&gt;  EducationField_Technical_Degree         EnvironmentSatisfaction_1  
+#&gt;                        2.936e-01                        -9.501e-01  
+#&gt;        EnvironmentSatisfaction_2         EnvironmentSatisfaction_3  
+#&gt;                        4.383e-01                        -2.491e-01  
+#&gt;                      Gender_Male                  JobInvolvement_1  
+#&gt;                        4.243e-01                        -1.474e+00  
+#&gt;                 JobInvolvement_2                  JobInvolvement_3  
+#&gt;                        2.297e-01                        -2.855e-01  
+#&gt;          JobRole_Human_Resources     JobRole_Laboratory_Technician  
+#&gt;                        1.441e+00                         1.549e+00  
+#&gt;                  JobRole_Manager    JobRole_Manufacturing_Director  
+#&gt;                        1.900e-01                         3.726e-01  
+#&gt;        JobRole_Research_Director        JobRole_Research_Scientist  
+#&gt;                       -9.581e-01                         6.055e-01  
+#&gt;          JobRole_Sales_Executive      JobRole_Sales_Representative  
+#&gt;                        1.056e+00                         2.149e+00  
+#&gt;                JobSatisfaction_1                 JobSatisfaction_2  
+#&gt;                       -9.446e-01                        -8.929e-03  
+#&gt;                JobSatisfaction_3             MaritalStatus_Married  
+#&gt;                       -2.860e-01                         3.135e-01  
+#&gt; 
+#&gt; ...
+#&gt; and 14 more lines.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

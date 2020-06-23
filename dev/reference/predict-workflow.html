@@ -37,7 +37,7 @@
 <link href="../tidyverse-2.css" rel="stylesheet">
 
 <!--optional theme-->
-<link href="../.css" rel="stylesheet">
+<link href="../tidymodels.css" rel="stylesheet">
 
 
 
@@ -144,8 +144,8 @@ about predicting from a workflow is that it will:</p><ul>
 <li><p>Preprocess <code>new_data</code> using the preprocessing method specified when the
 workflow was created and fit. This is accomplished using
 <code><a href='https://rdrr.io/pkg/hardhat/man/forge.html'>hardhat::forge()</a></code>, which will apply any formula preprocessing or call
-<code><a href='https://rdrr.io/pkg/recipes/man/bake.html'>recipes::bake()</a></code> if a recipe was supplied.</p></li>
-<li><p>Call <code><a href='https://rdrr.io/pkg/parsnip/man/predict.model_fit.html'>parsnip::predict.model_fit()</a></code> for you using the underlying fit
+<code><a href='https://recipes.tidymodels.org/reference/bake.html'>recipes::bake()</a></code> if a recipe was supplied.</p></li>
+<li><p>Call <code><a href='https://parsnip.tidymodels.org/reference/predict.model_fit.html'>parsnip::predict.model_fit()</a></code> for you using the underlying fit
 parsnip model.</p></li>
 </ul>
 
@@ -208,22 +208,23 @@ Default value is <code>FALSE</code>.</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
 
 <span class='no'>training</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>20</span>,]
 <span class='no'>testing</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[<span class='fl'>21</span>:<span class='fl'>32</span>,]
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>workflow</span>, <span class='no'>model</span>)
+<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>model</span>)
 
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>training</span>)
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/recipes/man/step_log.html'>step_log</a></span>(<span class='no'>recipe</span>, <span class='no'>disp</span>)
+<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>training</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='no'>disp</span>)
 
 <span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>workflow</span>, <span class='no'>recipe</span>)
 
-<span class='no'>fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='no'>training</span>)
+<span class='no'>fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='no'>training</span>)
 
 <span class='co'># This will automatically `bake()` the recipe on `testing`,</span>
 <span class='co'># applying the log step to `disp`, and then fit the regression.</span>

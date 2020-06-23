@@ -26,13 +26,12 @@ Imports:
     parsnip (>= 0.0.4),
     rlang (>= 0.4.1)
 Remotes:
-    tidymodels/parsnip,
-    tidymodels/modeldata
+    tidymodels/parsnip
 Suggests: 
     covr,
     knitr,
     magrittr,
-    modeldata,
+    modeldata (>= 0.0.2),
     recipes,
     rmarkdown,
     testthat (>= 2.3.0)

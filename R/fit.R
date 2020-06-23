@@ -185,30 +185,40 @@ finalize_blueprint_recipe <- function(workflow) {
 
 finalize_blueprint_formula <- function(workflow) {
   # Use the model indicators information to construct the blueprint
-  indicators <- pull_workflow_spec_indicators(workflow)
-  blueprint <- hardhat::default_formula_blueprint(indicators = indicators)
+  indicators <- pull_workflow_spec_encodings(workflow, "indicators")
+  one_hot <- pull_workflow_spec_encodings(workflow, "one_hot")
+  blueprint <- hardhat::default_formula_blueprint(
+    indicators = indicators,
+    one_hot = one_hot
+  )
 
   formula <- pull_workflow_preprocessor(workflow)
 
   update_formula(workflow, formula = formula, blueprint = blueprint)
 }
 
-pull_workflow_spec_indicators <- function(x) {
+pull_workflow_spec_encodings <- function(x,
+                                         encoding = c("indicators", "one_hot")) {
+  encoding <- match.arg(encoding)
+
   spec <- pull_workflow_spec(x)
-
   spec_cls <- class(spec)[[1]]
-
   tbl_encodings <- parsnip::get_encoding(spec_cls)
 
   indicator_engine <- tbl_encodings$engine == spec$engine
   indicator_mode <- tbl_encodings$mode == spec$mode
   indicator_spec <- indicator_engine & indicator_mode
 
-  indicators <- tbl_encodings$predictor_indicators[indicator_spec]
+  ret <- switch (
+    encoding,
+    indicators = tbl_encodings$predictor_indicators[indicator_spec],
+    one_hot    = tbl_encodings$one_hot[indicator_spec],
+    abort("Unexpected model encoding")
+  )
 
-  if (length(indicators) != 1L) {
+  if (length(ret) != 1L) {
     abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
   }
 
-  indicators
+  ret
 }

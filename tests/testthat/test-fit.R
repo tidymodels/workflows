@@ -68,12 +68,12 @@ test_that("cannot fit without a fit stage", {
 # .fit_pre()
 
 test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encoding info", {
+  workflow <- workflow()
+  workflow <- add_formula(workflow, Sepal.Length ~ .)
+
   mod <- parsnip::rand_forest()
   mod <- parsnip::set_engine(mod, "ranger")
   mod <- parsnip::set_mode(mod, "regression")
-
-  workflow <- workflow()
-  workflow <- add_formula(workflow, Sepal.Length ~ .)
   workflow <- add_model(workflow, mod)
 
   result <- .fit_pre(workflow, iris)
@@ -81,6 +81,20 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
   # ranger sets `indicators = FALSE`, so `Species` is not expanded
   expect_true("Species" %in% names(result$pre$mold$predictors))
   expect_false(result$pre$actions$formula$blueprint$indicators)
+
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "glmnet")
+  mod <- parsnip::set_mode(mod, "regression")
+  workflow <- update_model(workflow, mod)
+
+  result <- .fit_pre(workflow, iris)
+
+  # glmnet sets `one_hot = TRUE`, so `Species` is expanded to three values
+  expect_true(all(c("Speciessetosa",
+                    "Speciesversicolor",
+                    "Speciesvirginica") %in% names(result$pre$mold$predictors)))
+  expect_true(result$pre$actions$formula$blueprint$indicators)
+
 })
 
 test_that("`.fit_pre()` ignores parsnip's encoding info with recipes", {
@@ -107,7 +121,8 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   # request `indicators` to be used, even though parsnip's info on ranger
   # says not to make them.
-  blueprint <- hardhat::default_formula_blueprint(indicators = TRUE)
+  blueprint <- hardhat::default_formula_blueprint(indicators = TRUE,
+                                                  one_hot = FALSE)
 
   workflow <- workflow()
   workflow <- add_formula(workflow, Sepal.Length ~ ., blueprint = blueprint)
@@ -115,7 +130,8 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   result <- .fit_pre(workflow, iris)
 
-  expect_true("Speciessetosa" %in% names(result$pre$mold$predictors))
+  expect_false("Speciessetosa" %in% names(result$pre$mold$predictors))
+  expect_true("Speciesversicolor" %in% names(result$pre$mold$predictors))
   expect_identical(result$pre$actions$formula$blueprint, blueprint)
 })
 

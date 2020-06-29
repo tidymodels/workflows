@@ -26,7 +26,7 @@ Fitting a workflow currently involves two main steps:
 \itemize{
 \item Preprocessing the data using a formula preprocessor, or by calling
 \code{\link[recipes:prep]{recipes::prep()}} on a recipe.
-\item Fitting the underlying parsnip model using \code{\link[parsnip:fit.model_spec]{parsnip::fit.model_spec()}}.
+\item Fitting the underlying parsnip model using \code{\link[parsnip:fit]{parsnip::fit.model_spec()}}.
 }
 }
 \details{

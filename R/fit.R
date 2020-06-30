@@ -186,10 +186,10 @@ finalize_blueprint_recipe <- function(workflow) {
 finalize_blueprint_formula <- function(workflow) {
   # Use the model indicators information to construct the blueprint
   indicators <- pull_workflow_spec_encodings(workflow, "indicators")
-  one_hot <- pull_workflow_spec_encodings(workflow, "one_hot")
+  intcpt     <- pull_workflow_spec_encodings(workflow, "compute_intercept")
   blueprint <- hardhat::default_formula_blueprint(
     indicators = indicators,
-    one_hot = one_hot
+    intercept = intcpt
   )
 
   formula <- pull_workflow_preprocessor(workflow)
@@ -198,12 +198,17 @@ finalize_blueprint_formula <- function(workflow) {
 }
 
 pull_workflow_spec_encodings <- function(x,
-                                         encoding = c("indicators", "one_hot")) {
+                                         encoding = c("indicators", "compute_intercept")) {
   encoding <- match.arg(encoding)
 
   spec <- pull_workflow_spec(x)
   spec_cls <- class(spec)[[1]]
-  tbl_encodings <- parsnip::get_encoding(spec_cls)
+
+  # TODO what if old version?
+  tbl_encodings <- try(parsnip::get_encoding(spec_cls), silent = TRUE)
+  if (inherits(tbl_encodings, "try-error")) {
+    glubort("Can't find the predictor encoding information for {spec_cls} models.")
+  }
 
   indicator_engine <- tbl_encodings$engine == spec$engine
   indicator_mode <- tbl_encodings$mode == spec$mode
@@ -211,8 +216,8 @@ pull_workflow_spec_encodings <- function(x,
 
   ret <- switch (
     encoding,
-    indicators = tbl_encodings$predictor_indicators[indicator_spec],
-    one_hot    = tbl_encodings$one_hot[indicator_spec],
+    indicators         = tbl_encodings$predictor_indicators[indicator_spec],
+    compute_intercept  = tbl_encodings$compute_intercept[indicator_spec],
     abort("Unexpected model encoding")
   )
 

@@ -204,7 +204,6 @@ pull_workflow_spec_encodings <- function(x,
   spec <- pull_workflow_spec(x)
   spec_cls <- class(spec)[[1]]
 
-  # TODO what if old version?
   tbl_encodings <- try(parsnip::get_encoding(spec_cls), silent = TRUE)
   if (inherits(tbl_encodings, "try-error")) {
     glubort("Can't find the predictor encoding information for {spec_cls} models.")

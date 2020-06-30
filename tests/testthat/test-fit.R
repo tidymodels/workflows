@@ -78,22 +78,22 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
 
   result <- .fit_pre(workflow, iris)
 
-  # ranger sets `indicators = FALSE`, so `Species` is not expanded
+  # ranger sets `indicators = 'none'`, so `Species` is not expanded
   expect_true("Species" %in% names(result$pre$mold$predictors))
-  expect_false(result$pre$actions$formula$blueprint$indicators)
+  expect_equal(result$pre$actions$formula$blueprint$indicators, "none")
 
-  mod <- parsnip::linear_reg()
-  mod <- parsnip::set_engine(mod, "glmnet")
+  mod <- parsnip::boost_tree(trees = 5)
+  mod <- parsnip::set_engine(mod, "xgboost")
   mod <- parsnip::set_mode(mod, "regression")
   workflow <- update_model(workflow, mod)
 
   result <- .fit_pre(workflow, iris)
 
-  # glmnet sets `one_hot = TRUE`, so `Species` is expanded to three values
+  # xgboost sets `indicators = 'one_hot'`, so `Species` is expanded to three values
   expect_true(all(c("Speciessetosa",
                     "Speciesversicolor",
                     "Speciesvirginica") %in% names(result$pre$mold$predictors)))
-  expect_true(result$pre$actions$formula$blueprint$indicators)
+  expect_equal(result$pre$actions$formula$blueprint$indicators, "one-hot")
 
 })
 
@@ -121,8 +121,7 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   # request `indicators` to be used, even though parsnip's info on ranger
   # says not to make them.
-  blueprint <- hardhat::default_formula_blueprint(indicators = TRUE,
-                                                  one_hot = FALSE)
+  blueprint <- hardhat::default_formula_blueprint(indicators = "traditional")
 
   workflow <- workflow()
   workflow <- add_formula(workflow, Sepal.Length ~ ., blueprint = blueprint)
@@ -130,8 +129,7 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   result <- .fit_pre(workflow, iris)
 
-  expect_false("Speciessetosa" %in% names(result$pre$mold$predictors))
-  expect_true("Speciesversicolor" %in% names(result$pre$mold$predictors))
+  expect_equal(sum(grepl("^Species", names(result$pre$mold$predictors))), 3)
   expect_identical(result$pre$actions$formula$blueprint, blueprint)
 })
 

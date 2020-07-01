@@ -1,6 +1,8 @@
 # Formula Handling
 
 ```{r start, include = FALSE}
+options(width = 70)
+
 library(tidymodels)
 library(modeldata)
 library(hardhat)

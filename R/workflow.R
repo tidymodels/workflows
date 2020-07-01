@@ -8,15 +8,35 @@
 #' @return
 #' A new `workflow` object.
 #'
+#' @includeRmd man/rmd/indicators.Rmd details
+#'
 #' @examples
+#' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
+#' library(modeldata)
 #'
-#' rec <- recipe(mpg ~ cyl, mtcars)
-#' rec <- step_log(rec, cyl)
+#' data("attrition")
 #'
-#' wrk <- workflow()
-#' wrk <- add_recipe(wrk, rec)
+#' model <- logistic_reg() %>%
+#'   set_engine("glm")
 #'
+#' base_wf <- workflow() %>%
+#'   add_model(model)
+#'
+#' formula_wf <- base_wf %>%
+#'   add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
+#'
+#' fit(formula_wf, attrition)
+#'
+#' recipe <- recipe(Attrition ~ ., attrition) %>%
+#'   step_dummy(all_nominal(), -Attrition) %>%
+#'   step_corr(all_predictors(), threshold = 0.8)
+#'
+#' recipe_wf <- base_wf %>%
+#'   add_recipe(recipe)
+#'
+#' fit(recipe_wf, attrition)
 #' @export
 workflow <- function() {
   new_workflow()

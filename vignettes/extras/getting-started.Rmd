@@ -25,14 +25,15 @@ This is an example of a fairly realistic interactive data analysis project to de
 
 ## Introduction
 
-The data are simple: there are two predictors that should be used to differentiate two classes in the outcome. 
+In this `bivariate` data set, there are two predictors that can be used to differentiate two classes in the outcome. 
 
-There are three partitions of the original data: training (n = 1009), validation (n = 300), and testing (n = 710). We will work with the training set the most and use the validation set to compare models during the development process and then use the test set once we think that we have a good algorithm for making predictions.
+There are three partitions of the original data: training (n = 1009), validation (n = 300), and testing (n = 710). We will work with the training set the most, use the validation set to compare models during the development process, and then use the test set once we think that we have a good algorithm for making predictions.
 
 Here is the training set:
 
 ```{r plot-data, message = FALSE}
 library(workflows)
+library(modeldata)
 library(ggplot2)
 library(dplyr)
 

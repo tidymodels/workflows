@@ -1,0 +1,65 @@
+# Indicator Variable Details
+
+```{r echo=FALSE}
+options(cli.width = 70, width = 70, cli.unicode = FALSE)
+
+# Load them early on so package conflict messages don't show up
+suppressPackageStartupMessages({
+  library(parsnip)
+  library(recipes)
+  library(workflows)
+  library(modeldata)
+})
+```
+
+
+Some modeling functions in R create indicator/dummy variables from categorical data when you use a model formula, and some do not. When you specify and fit a model with a `workflow()`, parsnip and workflows match and reproduce the underlying behavior of the user-specified model's computational engine.
+
+## Formula Preprocessor
+
+In the [modeldata::Sacramento] data set of real estate prices, the `type` variable has three levels: `"Residential"`, `"Condo"`, and `"Multi-Family"`. This base `workflow()` contains a formula added via [add_formula()] to predict property price from property type, square footage, number of beds, and number of baths:
+
+```{r}
+set.seed(123)
+
+library(parsnip)
+library(recipes)
+library(workflows)
+library(modeldata)
+
+data("Sacramento")
+
+base_wf <- workflow() %>%
+  add_formula(price ~ type + sqft + beds + baths)
+```
+
+This first model does create dummy/indicator variables:
+
+```{r}
+lm_spec <- linear_reg() %>%
+  set_engine("lm")
+
+base_wf %>%
+  add_model(lm_spec) %>%
+  fit(Sacramento)
+```
+
+There are **five** independent variables in the fitted model for this OLS linear regression. With this model type and engine, the factor predictor `type` of the real estate properties was converted to two binary predictors, `typeMulti_Family` and `typeResidential`. (The third type, for condos, does not need its own column because it is the baseline level).
+
+This second model does not create dummy/indicator variables:
+
+```{r}
+rf_spec <- rand_forest() %>%
+  set_mode("regression") %>%
+  set_engine("ranger")
+
+base_wf %>%
+  add_model(rf_spec) %>%
+  fit(Sacramento)
+```
+
+Note that there are **four** independent variables in the fitted model for this ranger random forest. With this model type and engine, indicator variables were not created for the `type` of real estate property being sold. Tree-based models such as random forest models can handle factor predictors directly, and don't need any conversion to numeric binary variables.
+
+## Recipe Preprocessor
+
+When you specify a model with a `workflow()` and a recipe preprocessor via [add_recipe()], the _recipe_ controls whether dummy variables are created or not; the recipe overrides any underlying behavior from the model's computational engine.

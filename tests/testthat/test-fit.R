@@ -79,8 +79,9 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
   result <- .fit_pre(workflow, iris)
 
   # ranger sets `indicators = 'none'`, so `Species` is not expanded
-  expect_true("Species" %in% names(result$pre$mold$predictors))
-  expect_equal(result$pre$actions$formula$blueprint$indicators, "none")
+  expected <- "Species"
+  expect_true(expected %in% names(result$pre$mold$predictors))
+  expect_identical(result$pre$actions$formula$blueprint$indicators, "none")
 
   mod <- parsnip::boost_tree(trees = 5)
   mod <- parsnip::set_engine(mod, "xgboost")
@@ -90,11 +91,9 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
   result <- .fit_pre(workflow, iris)
 
   # xgboost sets `indicators = 'one_hot'`, so `Species` is expanded to three values
-  expect_true(all(c("Speciessetosa",
-                    "Speciesversicolor",
-                    "Speciesvirginica") %in% names(result$pre$mold$predictors)))
-  expect_equal(result$pre$actions$formula$blueprint$indicators, "one_hot")
-
+  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expect_true(all(expected %in% names(result$pre$mold$predictors)))
+  expect_identical(result$pre$actions$formula$blueprint$indicators, "one_hot")
 })
 
 test_that("`.fit_pre()` ignores parsnip's encoding info with recipes", {
@@ -129,7 +128,8 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   result <- .fit_pre(workflow, iris)
 
-  expect_equal(sum(grepl("^Species", names(result$pre$mold$predictors))), 3)
+  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expect_true(all(expected %in% names(result$pre$mold$predictors)))
   expect_identical(result$pre$actions$formula$blueprint, blueprint)
 })
 

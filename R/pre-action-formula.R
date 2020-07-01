@@ -17,7 +17,7 @@
 #' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
 #' specified, but not both.
 #'
-#' @includeRmd man/rmd/add_formula.Rmd details
+#' @includeRmd man/rmd/add-formula.Rmd details
 #'
 #' @param x A workflow
 #'

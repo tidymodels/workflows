@@ -93,7 +93,7 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
   expect_true(all(c("Speciessetosa",
                     "Speciesversicolor",
                     "Speciesvirginica") %in% names(result$pre$mold$predictors)))
-  expect_equal(result$pre$actions$formula$blueprint$indicators, "one-hot")
+  expect_equal(result$pre$actions$formula$blueprint$indicators, "one_hot")
 
 })
 

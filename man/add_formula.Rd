@@ -22,9 +22,16 @@ required.}
 \item{...}{Not used.}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
+
 If \code{NULL}, \code{\link[hardhat:default_formula_blueprint]{hardhat::default_formula_blueprint()}} is used and is passed
-an \code{indicators} argument that best aligns with the model present in
-the workflow.}
+arguments that best align with the model present in the workflow.
+
+Note that preprocessing done here is separate from preprocessing that
+might be done by the underlying model. For example, if a blueprint with
+\code{indicators = "none"} is specified, no dummy variables will be created by
+hardhat, but if the underlying model requires a formula interface that
+internally uses \code{\link[stats:model.matrix]{stats::model.matrix()}}, factors will still be expanded to
+dummy variables by the model.}
 }
 \value{
 \code{x}, updated with either a new or removed formula preprocessor.

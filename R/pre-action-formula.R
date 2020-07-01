@@ -28,9 +28,16 @@
 #' @param ... Not used.
 #'
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
+#'
 #'   If `NULL`, [hardhat::default_formula_blueprint()] is used and is passed
-#'   an `indicators` argument that best aligns with the model present in
-#'   the workflow.
+#'   arguments that best align with the model present in the workflow.
+#'
+#'   Note that preprocessing done here is separate from preprocessing that
+#'   might be done by the underlying model. For example, if a blueprint with
+#'   `indicators = "none"` is specified, no dummy variables will be created by
+#'   hardhat, but if the underlying model requires a formula interface that
+#'   internally uses [stats::model.matrix()], factors will still be expanded to
+#'   dummy variables by the model.
 #'
 #' @return
 #' `x`, updated with either a new or removed formula preprocessor.

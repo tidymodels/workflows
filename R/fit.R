@@ -12,6 +12,8 @@
 #' In the future, there will also be _postprocessing_ steps that can be added
 #' after the model has been fit.
 #'
+#' @includeRmd man/rmd/indicators.Rmd details
+#'
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the

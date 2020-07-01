@@ -45,18 +45,19 @@ formula will need to be refit.
 \details{
 To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
 specified, but not both.
-
+}
+\section{Formula Handling}{
 Note that, for different models, the formula given to \code{add_formula()}
-might be handled in different ways, depending on the \code{parsnip} model
-being used. For example, a random forest model using \code{ranger} would not
+might be handled in different ways, depending on the parsnip model being
+used. For example, a random forest model fit using ranger would not
 convert any factor predictors to binary indicator variables. This is
-consistent with what the \code{ranger()} function would do, but is
-inconsistent with what \code{model.matrix()} would do.
+consistent with what \code{ranger::ranger()} would do, but is inconsistent
+with what \code{stats::model.matrix()} would do.
 
-The documentation package for \code{parsnip} models provide details about how
-the data given in the formula are encoded for the model if they diverge
-from the standard \code{model.matrix()} methodology. Our goal is to be
-consistent with how the function in the underlying model package works.
+The documentation for parsnip models provides details about how the data
+given in the formula are encoded for the model if they diverge from the
+standard \code{model.matrix()} methodology. Our goal is to be consistent with
+how the underlying model package works.
 \subsection{How is this formula used?}{
 
 To demonstrate, the example below uses \code{lm()} to fit a model. The
@@ -67,37 +68,36 @@ library(hardhat)
 
 data(penguins)
 
-lm_mod <- linear_reg() \%>\% set_engine("lm")
+lm_mod <- linear_reg() \%>\% 
+  set_engine("lm")
 
-lm_wflow <- 
-  workflow() \%>\% 
+lm_wflow <- workflow() \%>\% 
   add_model(lm_mod)
 
-pre_encoded <- 
-  lm_wflow \%>\% 
+pre_encoded <- lm_wflow \%>\% 
   add_formula(body_mass_g ~ species + island + bill_depth_mm) \%>\% 
   fit(data = penguins)
 
-pre_encoded_fit <- 
-  pre_encoded \%>\% 
-  pull_workflow_fit() \%>\% 
-  pluck("fit") 
+pre_encoded_parsnip_fit <- pre_encoded \%>\% 
+  pull_workflow_fit()
 
-# The `lm()` formula is *not* the same as the `add_model()` formula: 
+pre_encoded_fit <- pre_encoded_parsnip_fit$fit
+
+# The `lm()` formula is *not* the same as the `add_formula()` formula: 
 pre_encoded_fit
 }\if{html}{\out{</div>}}\preformatted{## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
 ## Coefficients:
-##      (Intercept)  speciesChinstrap     speciesGentoo       islandDream  
-##        -1009.943             1.328          2236.865             9.221  
-##  islandTorgersen     bill_depth_mm  
-##          -18.433           256.913
+##      (Intercept)  speciesChinstrap     speciesGentoo  
+##        -1009.943             1.328          2236.865  
+##      islandDream   islandTorgersen     bill_depth_mm  
+##            9.221           -18.433           256.913
 }
 
-This can affect how the are analyzed. For example, to get sequential
-hypothesis tests, each individual term is tested:\if{html}{\out{<div class="r">}}\preformatted{anova(pre_encoded_fit)
+This can affect how the results are analyzed. For example, to get
+sequential hypothesis tests, each individual term is tested:\if{html}{\out{<div class="r">}}\preformatted{anova(pre_encoded_fit)
 }\if{html}{\out{</div>}}\preformatted{## Analysis of Variance Table
 ## 
 ## Response: ..y
@@ -115,21 +115,22 @@ hypothesis tests, each individual term is tested:\if{html}{\out{<div class="r">}
 
 \subsection{Overriding the default encodings}{
 
-Users can override the model-specific encodings by use a \code{hardhat}
+Users can override the model-specific encodings by using a hardhat
 blueprint. The blueprint can specify how factors are encoded and whether
 intercepts are included. As an example, if you use a formula and would
 like the data to be passed to a model untouched:\if{html}{\out{<div class="r">}}\preformatted{minimal <- default_formula_blueprint(indicators = "none", intercept = FALSE)
 
-un_encoded <- 
-  lm_wflow \%>\% 
-  add_formula(body_mass_g ~ species + island + bill_depth_mm, 
-              blueprint = minimal) \%>\% 
+un_encoded <- lm_wflow \%>\% 
+  add_formula(
+    body_mass_g ~ species + island + bill_depth_mm, 
+    blueprint = minimal
+  ) \%>\% 
   fit(data = penguins)
 
-un_encoded_fit <- 
-  un_encoded \%>\% 
-  pull_workflow_fit() \%>\% 
-  pluck("fit") 
+un_encoded_parsnip_fit <- un_encoded \%>\% 
+  pull_workflow_fit()
+
+un_encoded_fit <- un_encoded_parsnip_fit$fit
 
 un_encoded_fit
 }\if{html}{\out{</div>}}\preformatted{## 
@@ -137,10 +138,10 @@ un_encoded_fit
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
 ## Coefficients:
-##      (Intercept)     bill_depth_mm  speciesChinstrap     speciesGentoo  
-##        -1009.943           256.913             1.328          2236.865  
-##      islandDream   islandTorgersen  
-##            9.221           -18.433
+##      (Intercept)     bill_depth_mm  speciesChinstrap  
+##        -1009.943           256.913             1.328  
+##    speciesGentoo       islandDream   islandTorgersen  
+##         2236.865             9.221           -18.433
 }
 
 While this looks the same, the raw columns were given to \code{lm()} and that
@@ -165,17 +166,21 @@ Additionally, the formula passed to the underlying model can also be
 customized. In this case, the \code{formula} argument of \code{add_model()} can be
 used. To demonstrate, a spline function will be used for the bill depth:\if{html}{\out{<div class="r">}}\preformatted{library(splines)
 
-custom_formula <- 
-  workflow() \%>\%
-  add_model(lm_mod, formula = body_mass_g ~ species + island + ns(bill_depth_mm, 3)) \%>\% 
-  add_formula(body_mass_g ~ species + island + bill_depth_mm, 
-              blueprint = minimal) \%>\% 
+custom_formula <- workflow() \%>\%
+  add_model(
+    lm_mod, 
+    formula = body_mass_g ~ species + island + ns(bill_depth_mm, 3)
+  ) \%>\% 
+  add_formula(
+    body_mass_g ~ species + island + bill_depth_mm, 
+    blueprint = minimal
+  ) \%>\% 
   fit(data = penguins)
 
-custom_fit <- 
-  custom_formula \%>\% 
-  pull_workflow_fit() \%>\% 
-  pluck("fit") 
+custom_parsnip_fit <- custom_formula \%>\% 
+  pull_workflow_fit()
+
+custom_fit <- custom_parsnip_fit$fit
 
 custom_fit
 }\if{html}{\out{</div>}}\preformatted{## 
@@ -190,30 +195,20 @@ custom_fit
 ##                 2.425                -12.002               1476.386  
 ## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  
 ##              3187.839               1686.996
-}\if{html}{\out{<div class="r">}}\preformatted{anova(custom_fit)
-}\if{html}{\out{</div>}}\preformatted{## Analysis of Variance Table
-## 
-## Response: body_mass_g
-##                       Df    Sum Sq  Mean Sq  F value Pr(>F)    
-## species                2 146864214 73432107 585.5731 <2e-16 ***
-## island                 2     13655     6827   0.0544  0.947    
-## ns(bill_depth_mm, 3)   3  30545518 10181839  81.1935 <2e-16 ***
-## Residuals            334  41884311   125402                    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 }
 }
 
 \subsection{Altering the formula}{
 
 Finally, when a formula is updated or removed from a fitted workflow,
-the corresponding model fit is removed.\if{html}{\out{<div class="r">}}\preformatted{custom_formula \%>\% 
-  update_formula(body_mass_g ~ species) \%>\% 
-  pull_workflow_fit() 
-}\if{html}{\out{</div>}}\preformatted{## Error: The workflow does not have a model fit. Have you called `fit()` yet?
+the corresponding model fit is removed.\if{html}{\out{<div class="r">}}\preformatted{custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
+
+try(pull_workflow_fit(custom_formula_no_fit))
+}\if{html}{\out{</div>}}\preformatted{## Error : The workflow does not have a model fit. Have you called `fit()` yet?
 }
 }
 }
+
 \examples{
 workflow <- workflow()
 workflow <- add_formula(workflow, mpg ~ cyl)

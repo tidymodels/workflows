@@ -20,7 +20,11 @@ update_recipe(x, recipe, ..., blueprint = NULL)
 \item{...}{Not used.}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
-If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.}
+
+If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.
+
+Note that preprocessing done here is separate from preprocessing that
+might be done automatically by the underlying model.}
 }
 \value{
 \code{x}, updated with either a new or removed recipe preprocessor.

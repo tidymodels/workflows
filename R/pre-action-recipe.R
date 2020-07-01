@@ -24,7 +24,11 @@
 #' @param ... Not used.
 #'
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
+#'
 #'   If `NULL`, [hardhat::default_recipe_blueprint()] is used.
+#'
+#'   Note that preprocessing done here is separate from preprocessing that
+#'   might be done automatically by the underlying model.
 #'
 #' @return
 #' `x`, updated with either a new or removed recipe preprocessor.

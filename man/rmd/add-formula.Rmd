@@ -1,0 +1,118 @@
+# Formula Handling
+
+```{r start, include = FALSE}
+options(width = 70)
+
+library(parsnip)
+library(workflows)
+library(magrittr)
+library(modeldata)
+library(hardhat)
+library(splines)
+```
+
+Note that, for different models, the formula given to `add_formula()` might be handled in different ways, depending on the parsnip model being used. For example, a random forest model fit using ranger would not convert any factor predictors to binary indicator variables. This is consistent with what `ranger::ranger()` would do, but is inconsistent with what `stats::model.matrix()` would do.
+
+The documentation for parsnip models provides details about how the data given in the formula are encoded for the model if they diverge from the standard `model.matrix()` methodology. Our goal is to be consistent with how the underlying model package works.
+
+## How is this formula used?
+
+To demonstrate, the example below uses `lm()` to fit a model. The formula given to `add_formula()` is used to create the model matrix and that is what is passed to `lm()` with a simple formula of `body_mass_g ~ .`:
+
+```{r pre-encoded-fit}
+library(parsnip)
+library(workflows)
+library(magrittr)
+library(modeldata)
+library(hardhat)
+
+data(penguins)
+
+lm_mod <- linear_reg() %>% 
+  set_engine("lm")
+
+lm_wflow <- workflow() %>% 
+  add_model(lm_mod)
+
+pre_encoded <- lm_wflow %>% 
+  add_formula(body_mass_g ~ species + island + bill_depth_mm) %>% 
+  fit(data = penguins)
+
+pre_encoded_parsnip_fit <- pre_encoded %>% 
+  pull_workflow_fit()
+
+pre_encoded_fit <- pre_encoded_parsnip_fit$fit
+
+# The `lm()` formula is *not* the same as the `add_formula()` formula: 
+pre_encoded_fit
+```
+
+This can affect how the results are analyzed. For example, to get sequential hypothesis tests, each individual term is tested: 
+
+```{r pre-encoded-anova}
+anova(pre_encoded_fit)
+```
+
+## Overriding the default encodings
+
+Users can override the model-specific encodings by using a hardhat blueprint. The blueprint can specify how factors are encoded and whether intercepts are included. As an example, if you use a formula and would like the data to be passed to a model untouched:
+
+```{r blueprint-fit}
+minimal <- default_formula_blueprint(indicators = "none", intercept = FALSE)
+
+un_encoded <- lm_wflow %>% 
+  add_formula(
+    body_mass_g ~ species + island + bill_depth_mm, 
+    blueprint = minimal
+  ) %>% 
+  fit(data = penguins)
+
+un_encoded_parsnip_fit <- un_encoded %>% 
+  pull_workflow_fit()
+
+un_encoded_fit <- un_encoded_parsnip_fit$fit
+
+un_encoded_fit
+```
+
+While this looks the same, the raw columns were given to `lm()` and that function created the dummy variables. Because of this, the sequential ANOVA tests groups of parameters to get column-level p-values: 
+
+```{r blueprint-anova}
+anova(un_encoded_fit)
+```
+
+## Overriding the default model formula
+
+Additionally, the formula passed to the underlying model can also be customized. In this case, the `formula` argument of `add_model()` can be used. To demonstrate, a spline function will be used for the bill depth:
+
+```{r extra-formula-fit}
+library(splines)
+
+custom_formula <- workflow() %>%
+  add_model(
+    lm_mod, 
+    formula = body_mass_g ~ species + island + ns(bill_depth_mm, 3)
+  ) %>% 
+  add_formula(
+    body_mass_g ~ species + island + bill_depth_mm, 
+    blueprint = minimal
+  ) %>% 
+  fit(data = penguins)
+
+custom_parsnip_fit <- custom_formula %>% 
+  pull_workflow_fit()
+
+custom_fit <- custom_parsnip_fit$fit
+
+custom_fit
+```
+
+## Altering the formula
+
+Finally, when a formula is updated or removed from a fitted workflow, the corresponding model fit is removed.
+
+```{r remove}
+custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
+
+try(pull_workflow_fit(custom_formula_no_fit))
+```

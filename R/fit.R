@@ -12,6 +12,8 @@
 #' In the future, there will also be _postprocessing_ steps that can be added
 #' after the model has been fit.
 #'
+#' @includeRmd man/rmd/indicators.Rmd details
+#'
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
@@ -187,18 +189,31 @@ finalize_blueprint_recipe <- function(workflow) {
 }
 
 finalize_blueprint_formula <- function(workflow) {
-  # Use the model indicators information to construct the blueprint
-  indicators <- pull_workflow_spec_indicators(workflow)
-  blueprint <- hardhat::default_formula_blueprint(indicators = indicators)
+  tbl_encodings <- pull_workflow_spec_encoding_tbl(workflow)
+
+  indicators <- tbl_encodings$predictor_indicators
+  intercept <- tbl_encodings$compute_intercept
+
+  if (!is_string(indicators)) {
+    abort("Internal error: `indicators` encoding from parsnip should be a string.")
+  }
+  if (!is_bool(intercept)) {
+    abort("Internal error: `intercept` encoding from parsnip should be a bool.")
+  }
+
+  # Use model specific information to construct the blueprint
+  blueprint <- hardhat::default_formula_blueprint(
+    indicators = indicators,
+    intercept = intercept
+  )
 
   formula <- pull_workflow_preprocessor(workflow)
 
   update_formula(workflow, formula = formula, blueprint = blueprint)
 }
 
-pull_workflow_spec_indicators <- function(x) {
-  spec <- pull_workflow_spec(x)
-
+pull_workflow_spec_encoding_tbl <- function(workflow) {
+  spec <- pull_workflow_spec(workflow)
   spec_cls <- class(spec)[[1]]
 
   tbl_encodings <- parsnip::get_encoding(spec_cls)
@@ -207,11 +222,11 @@ pull_workflow_spec_indicators <- function(x) {
   indicator_mode <- tbl_encodings$mode == spec$mode
   indicator_spec <- indicator_engine & indicator_mode
 
-  indicators <- tbl_encodings$predictor_indicators[indicator_spec]
+  out <- tbl_encodings[indicator_spec, , drop = FALSE]
 
-  if (length(indicators) != 1L) {
+  if (nrow(out) != 1L) {
     abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
   }
 
-  indicators
+  out
 }

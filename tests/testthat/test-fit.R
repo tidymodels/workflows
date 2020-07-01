@@ -68,19 +68,32 @@ test_that("cannot fit without a fit stage", {
 # .fit_pre()
 
 test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encoding info", {
+  workflow <- workflow()
+  workflow <- add_formula(workflow, Sepal.Length ~ .)
+
   mod <- parsnip::rand_forest()
   mod <- parsnip::set_engine(mod, "ranger")
   mod <- parsnip::set_mode(mod, "regression")
-
-  workflow <- workflow()
-  workflow <- add_formula(workflow, Sepal.Length ~ .)
   workflow <- add_model(workflow, mod)
 
   result <- .fit_pre(workflow, iris)
 
-  # ranger sets `indicators = FALSE`, so `Species` is not expanded
-  expect_true("Species" %in% names(result$pre$mold$predictors))
-  expect_false(result$pre$actions$formula$blueprint$indicators)
+  # ranger sets `indicators = 'none'`, so `Species` is not expanded
+  expected <- "Species"
+  expect_true(expected %in% names(result$pre$mold$predictors))
+  expect_identical(result$pre$actions$formula$blueprint$indicators, "none")
+
+  mod <- parsnip::boost_tree(trees = 5)
+  mod <- parsnip::set_engine(mod, "xgboost")
+  mod <- parsnip::set_mode(mod, "regression")
+  workflow <- update_model(workflow, mod)
+
+  result <- .fit_pre(workflow, iris)
+
+  # xgboost sets `indicators = 'one_hot'`, so `Species` is expanded to three values
+  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expect_true(all(expected %in% names(result$pre$mold$predictors)))
+  expect_identical(result$pre$actions$formula$blueprint$indicators, "one_hot")
 })
 
 test_that("`.fit_pre()` ignores parsnip's encoding info with recipes", {
@@ -107,7 +120,7 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   # request `indicators` to be used, even though parsnip's info on ranger
   # says not to make them.
-  blueprint <- hardhat::default_formula_blueprint(indicators = TRUE)
+  blueprint <- hardhat::default_formula_blueprint(indicators = "traditional")
 
   workflow <- workflow()
   workflow <- add_formula(workflow, Sepal.Length ~ ., blueprint = blueprint)
@@ -115,7 +128,8 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
 
   result <- .fit_pre(workflow, iris)
 
-  expect_true("Speciessetosa" %in% names(result$pre$mold$predictors))
+  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expect_true(all(expected %in% names(result$pre$mold$predictors)))
   expect_identical(result$pre$actions$formula$blueprint, blueprint)
 })
 

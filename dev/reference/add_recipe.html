@@ -180,8 +180,10 @@ recipe will need to be refit.</p></li>
     </tr>
     <tr>
       <th>blueprint</th>
-      <td><p>A hardhat blueprint used for fine tuning the preprocessing.
-If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html'>hardhat::default_recipe_blueprint()</a></code> is used.</p></td>
+      <td><p>A hardhat blueprint used for fine tuning the preprocessing.</p>
+<p>If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html'>hardhat::default_recipe_blueprint()</a></code> is used.</p>
+<p>Note that preprocessing done here is separate from preprocessing that
+might be done automatically by the underlying model.</p></td>
     </tr>
     </table>
 

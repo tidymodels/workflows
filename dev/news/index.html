@@ -131,7 +131,7 @@
 <a href="#workflows-development-version" class="anchor"></a>workflows (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li>When using a formula preprocessor with <code><a href="https://rdrr.io/pkg/workflows/man/add_formula.html">add_formula()</a></code>, workflows now uses model-specific information from parsnip to decide whether or not to expand factors into dummy variables. This should result in more intuitive behavior when working with models that don’t require dummy variables. For example, if a parsnip <code><a href="https://parsnip.tidymodels.org/reference/rand_forest.html">rand_forest()</a></code> model is used with a ranger engine, dummy variables will not be created, because ranger can handle factors directly (<a href='https://github.com/tidymodels/workflows/issues/51'>#51</a>).</li>
+<li>When using a formula preprocessor with <code><a href="https://rdrr.io/pkg/workflows/man/add_formula.html">add_formula()</a></code>, workflows now uses model-specific information from parsnip to decide whether to expand factors via dummy encoding (<code>n - 1</code> levels), one-hot encoding (<code>n</code> levels), or no expansion at all. This should result in more intuitive behavior when working with models that don’t require dummy variables. For example, if a parsnip <code><a href="https://parsnip.tidymodels.org/reference/rand_forest.html">rand_forest()</a></code> model is used with a ranger engine, dummy variables will not be created, because ranger can handle factors directly (<a href='https://github.com/tidymodels/workflows/issues/51'>#51</a>, <a href='https://github.com/tidymodels/workflows/issues/53'>#53</a>).</li>
 </ul>
 </div>
     <div id="workflows-011" class="section level1">

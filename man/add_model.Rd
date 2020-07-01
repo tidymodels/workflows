@@ -85,12 +85,10 @@ base_wf \%>\%
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
 ## Coefficients:
-##      (Intercept)         typeCondo  typeMulti_Family  
-##          66607.9          -33688.6          -55684.4  
-##  typeResidential              sqft              beds  
-##               NA             156.2          -29788.0  
-##            baths  
-##           8730.0
+##      (Intercept)  typeMulti_Family   typeResidential  
+##          32919.4          -21995.8           33688.6  
+##             sqft              beds             baths  
+##            156.2          -29788.0            8730.0
 }
 
 There are \strong{five} independent variables in the fitted model for this

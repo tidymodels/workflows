@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# workflows
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# workflows
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![Codecov test coverage](https://codecov.io/gh/tidymodels/workflows/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflows?branch=master)

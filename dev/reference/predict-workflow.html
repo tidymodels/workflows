@@ -8,6 +8,13 @@
 
 <title>Predict from a workflow — predict-workflow • workflows</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -53,6 +60,7 @@ Call parsnip::predict.model_fit() for you using the underlying fit
 parsnip model.
 
 " />
+<meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -190,9 +198,9 @@ value of <code>type</code>. Possible arguments are:</p><ul>
 is the parameter for the tail area of the intervals
 (e.g. confidence level for confidence intervals).
 Default value is 0.95.</p></li>
-<li><p><code>std_error</code>: add the standard error of fit or
-prediction for <code>type</code>s of "conf_int" and "pred_int".
-Default value is <code>FALSE</code>.</p></li>
+<li><p><code>std_error</code>: add the standard error of fit or prediction (on
+the scale of the linear predictors) for <code>type</code>s of "conf_int"
+and "pred_int". Default value is <code>FALSE</code>.</p></li>
 <li><p><code>quantile</code>: the quantile(s) for quantile regression
 (not implemented yet)</p></li>
 <li><p><code>time</code>: the time(s) for hazard probability estimates

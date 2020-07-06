@@ -7,6 +7,7 @@
 #' @import rlang
 #'
 #' @importFrom generics fit
+#' @importFrom generics tidy
 #'
 #' @importFrom parsnip fit_xy
 #'

@@ -32,7 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("remotes")
+          # Use dev remotes for better installation order behavior
+          install.packages("https://github.com/r-lib/remotes/archive/master.tar.gz", repos = NULL)
           remotes::install_deps(dependencies = TRUE)
           remotes::install_dev("pkgdown")
           remotes::install_github("tidyverse/tidytemplate")

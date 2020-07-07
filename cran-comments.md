@@ -7,6 +7,11 @@
 
 0 errors | 0 warnings | 0 notes
 
+## Submission 0.1.2
+
+This small release uses model-specific information from 'parsnip' to determine
+how to encode factor variables in `add_formula()`.
+
 ## Submission 0.1.1
 
 This patch release just bumps the minimum required version of hardhat.

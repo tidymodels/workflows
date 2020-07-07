@@ -191,7 +191,7 @@ autoplot(simple_glm_roc) +
   )
 ```
 
-That is a potential, if not slight, improvemement.
+That is a potential, if not slight, improvement.
 
 The Box-Cox procedure recommended transformations that are pretty close to the inverse.
 

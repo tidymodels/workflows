@@ -104,7 +104,7 @@ parsnip model.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2.9000</span>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@ parsnip model.</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>A workflow that has been fit by <code><a href='https://rdrr.io/pkg/workflows/man/fit-workflow.html'>fit.workflow()</a></code></p></td>
+      <td><p>A workflow that has been fit by <code><a href='https://workflows.tidymodels.org//reference/fit-workflow.html'>fit.workflow()</a></code></p></td>
     </tr>
     <tr>
       <th>new_data</th>
@@ -224,13 +224,13 @@ and "pred_int". Default value is <code>FALSE</code>.</p></li>
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_model.html'>add_model</a></span>(<span class='kw'>model</span>)
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://workflows.tidymodels.org//reference/workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://workflows.tidymodels.org//reference/add_model.html'>add_model</a></span>(<span class='kw'>model</span>)
 
 <span class='kw'>recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>disp</span>, <span class='kw'>training</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='kw'>disp</span>)
 
-<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_recipe.html'>add_recipe</a></span>(<span class='kw'>workflow</span>, <span class='kw'>recipe</span>)
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://workflows.tidymodels.org//reference/add_recipe.html'>add_recipe</a></span>(<span class='kw'>workflow</span>, <span class='kw'>recipe</span>)
 
 <span class='kw'>fit_workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>workflow</span>, <span class='kw'>training</span>)
 

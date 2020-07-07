@@ -8,29 +8,44 @@
 
 <title>Internal workflow functions — workflows-internals • workflows</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
 <link href="../tidyverse.css" rel="stylesheet">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 <link href="../tidyverse-2.css" rel="stylesheet">
+
+<!--optional theme-->
+<link href="../tidymodels.css" rel="stylesheet">
+
 
 
 
@@ -39,6 +54,7 @@
 partially fitting a workflow object. They are only exported for usage by
 the tuning package, tune, and the
 general user should never need to worry about them." />
+<meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -65,7 +81,7 @@ general user should never need to worry about them." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,9 +96,9 @@ general user should never need to worry about them." />
 
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">workflows</a>
-        <div class="info">
-          <span class="partof">part of <a href="https://github.com/tidymodels">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <div class="info hidden-xs hidden-sm">
+          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
         </div>
       </div>
     </div>
@@ -101,7 +117,7 @@ general user should never need to worry about them." />
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/workflows">
+  <a href="https://github.com/tidymodels/workflows/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -125,15 +141,15 @@ general user should never need to worry about them." />
     </div>
 
     <div class="ref-description">
-    <p><code>.fit_pre()</code> and <code>.fit_model()</code> are internal workflow functions for
+    <p><code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code> and <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model()</a></code> are internal workflow functions for
 <em>partially</em> fitting a workflow object. They are only exported for usage by
 the tuning package, <a href='https://github.com/tidymodels/tune'>tune</a>, and the
 general user should never need to worry about them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.fit_pre</span>(<span class='no'>workflow</span>, <span class='no'>data</span>)
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre</a></span>(<span class='kw'>workflow</span>, <span class='kw'>data</span>)
 
-<span class='fu'>.fit_model</span>(<span class='no'>workflow</span>, <span class='no'>control</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model</a></span>(<span class='kw'>workflow</span>, <span class='kw'>control</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,9 +157,9 @@ general user should never need to worry about them.</p>
     <tr>
       <th>workflow</th>
       <td><p>A workflow</p>
-<p>For <code>.fit_pre()</code>, this should be a fresh workflow.</p>
-<p>For <code>.fit_model()</code>, this should be a workflow that has already been trained
-through <code>.fit_pre()</code>.</p></td>
+<p>For <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code>, this should be a fresh workflow.</p>
+<p>For <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model()</a></code>, this should be a workflow that has already been trained
+through <code><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre()</a></code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -152,33 +168,30 @@ workflow</p></td>
     </tr>
     <tr>
       <th>control</th>
-      <td><p>A <code><a href='control_workflow.html'>control_workflow()</a></code> object</p></td>
+      <td><p>A <code><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow()</a></code> object</p></td>
     </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>magrittr</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/parsnip/man/set_engine.html'>set_engine</a></span>(<span class='no'>model</span>, <span class='st'>"lm"</span>)
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>base_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>base_workflow</span>, <span class='no'>model</span>)
+<span class='kw'>unfit_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_model.html'>add_model</a></span>(<span class='kw'>model</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/add_formula.html'>add_formula</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>disp</span>))
 
-<span class='no'>formula_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
-
-<span class='no'>partially_fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_pre</span>(<span class='no'>formula_workflow</span>, <span class='no'>mtcars</span>)
-<span class='no'>fit_workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>.fit_model</span>(<span class='no'>partially_fit_workflow</span>, <span class='fu'><a href='control_workflow.html'>control_workflow</a></span>())</div></pre>
+<span class='kw'>partially_fit_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_pre</a></span>(<span class='kw'>unfit_wf</span>, <span class='kw'>mtcars</span>)
+<span class='kw'>fit_workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/workflows-internals.html'>.fit_model</a></span>(<span class='kw'>partially_fit_wf</span>, <span class='fu'><a href='https://rdrr.io/pkg/workflows/man/control_workflow.html'>control_workflow</a></span>())</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

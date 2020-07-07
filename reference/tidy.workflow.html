@@ -6,26 +6,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page not found (404) • workflows</title>
+<title>Tidy a workflow — tidy.workflow • workflows</title>
 
 <!-- favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="https://workflows.tidymodels.org//favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://workflows.tidymodels.org//favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://workflows.tidymodels.org//apple-touch-icon.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="https://workflows.tidymodels.org//apple-touch-icon-120x120.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="https://workflows.tidymodels.org//apple-touch-icon-76x76.png" />
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="https://workflows.tidymodels.org//apple-touch-icon-60x60.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 <!-- Bootstrap -->
-<link href="https://workflows.tidymodels.org//tidyverse.css" rel="stylesheet">
+<link href="../tidyverse.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="https://workflows.tidymodels.org//bootstrap-toc.css">
-<script src="https://workflows.tidymodels.org//bootstrap-toc.js"></script>
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -39,17 +39,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="https://workflows.tidymodels.org//pkgdown.css" rel="stylesheet">
-<script src="https://workflows.tidymodels.org//pkgdown.js"></script>
-<link href="https://workflows.tidymodels.org//tidyverse-2.css" rel="stylesheet">
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
+<link href="../tidyverse-2.css" rel="stylesheet">
 
 <!--optional theme-->
-<link href="https://workflows.tidymodels.org//tidymodels.css" rel="stylesheet">
+<link href="../tidymodels.css" rel="stylesheet">
 
 
 
 
-<meta property="og:title" content="Page not found (404)" />
+<meta property="og:title" content="Tidy a workflow — tidy.workflow" />
+<meta property="og:description" content="This is a generics::tidy() method for a workflow that calls tidy() on
+either the underlying parsnip model or the recipe, depending on the value
+of what.
+x must be a fitted workflow, resulting in fitted parsnip model or prepped
+recipe that you want to tidy." />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -78,7 +83,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -91,7 +96,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a class="navbar-brand" href="https://workflows.tidymodels.org//index.html">workflows</a>
+        <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
           <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
@@ -101,16 +106,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="articles/stages.html">Workflow Stages</a>
+  <a href="../articles/stages.html">Workflow Stages</a>
 </li>
 <li>
-  <a href="articles/extras/getting-started.html">Getting Started</a>
+  <a href="../articles/extras/getting-started.html">Getting Started</a>
 </li>
 <li>
-  <a href="news/index.html">News</a>
+  <a href="../news/index.html">News</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
         <li>
   <a href="https://github.com/tidymodels/workflows/">
@@ -129,23 +134,54 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Page not found (404)</h1>
+    <h1>Tidy a workflow</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/tidy.R'><code>R/tidy.R</code></a></small>
+    <div class="hidden name"><code>tidy.workflow.Rd</code></div>
     </div>
 
-Content not found. Please use links in the navbar.
+    <div class="ref-description">
+    <p>This is a <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>generics::tidy()</a></code> method for a workflow that calls <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> on
+either the underlying parsnip model or the recipe, depending on the value
+of <code>what</code>.</p>
+<p><code>x</code> must be a fitted workflow, resulting in fitted parsnip model or prepped
+recipe that you want to tidy.</p>
+    </div>
+
+    <pre class="usage"><span class='co'># S3 method for workflow</span>
+<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span>(<span class='kw'>x</span>, what = <span class='st'>"model"</span>, <span class='kw'>...</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An object to be converted into a tidy <code><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble::tibble()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>what</th>
+      <td><p>A single string. Either <code>"model"</code> or <code>"recipe"</code> to select
+which part of the workflow to tidy. Defaults to tidying the model.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments to tidying method.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>To tidy the unprepped recipe, use <code><a href='https://rdrr.io/pkg/workflows/man/workflow-extractors.html'>pull_workflow_preprocessor()</a></code> and <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code>
+that directly.</p>
 
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
-
 
 
       <footer>

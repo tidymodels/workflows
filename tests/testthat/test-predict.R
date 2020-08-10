@@ -119,14 +119,17 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   mod1 <- fit(workflow1, train)
   mod2 <- fit(workflow2, train)
 
+  expect_warning(pred1 <- predict(mod1, test))
+  expect_warning(pred2 <- predict(mod2, test), NA)
+
   expect_identical(
-    expect_warning(predict(mod1, test)),
-    tibble::tibble(.pred = c(2, 4.5, NA))
+    pred1[[".pred"]],
+    c(2, 4.5, NA)
   )
 
   expect_identical(
-    expect_warning(predict(mod2, test), NA),
-    tibble::tibble(.pred = c(2, 4.5, 2))
+    pred2[[".pred"]],
+    c(2, 4.5, 2)
   )
 })
 

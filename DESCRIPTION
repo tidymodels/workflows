@@ -23,7 +23,7 @@ Imports:
     generics,
     glue,
     hardhat (>= 0.1.4),
-    parsnip (>= 0.1.2),
+    parsnip (>= 0.1.3),
     rlang (>= 0.4.1)
 Suggests: 
     covr,

@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* A test has been updated to reflect a change in parsnip 0.1.3 regarding how
+  intercept columns are removed during prediction (#65).
+
 # workflows 0.1.2
 
 * When using a formula preprocessor with `add_formula()`, workflows now uses

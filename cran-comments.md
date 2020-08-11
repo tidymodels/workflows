@@ -14,6 +14,10 @@ We checked 4 reverse dependencies, comparing R CMD check results across CRAN and
  * We saw 0 new problems
  * We failed to check 0 packages
 
+## Submission 0.1.3
+
+This is a small release to fix a test that broke with parsnip 0.1.3.
+
 ## Submission 0.1.2
 
 This small release uses model-specific information from 'parsnip' to determine

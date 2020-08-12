@@ -149,4 +149,12 @@ recipe_wf <- base_wf \%>\%
   add_recipe(recipe)
 
 fit(recipe_wf, attrition)
+
+variable_wf <- base_wf \%>\%
+  add_variables(
+    Attrition,
+    c(BusinessTravel, YearsSinceLastPromotion, OverTime)
+  )
+
+fit(variable_wf, attrition)
 }

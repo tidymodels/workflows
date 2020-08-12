@@ -14,8 +14,8 @@
 #'   recipe will need to be refit.
 #'
 #' @details
-#' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
-#' specified, but not both.
+#' To fit a workflow, exactly one of [add_formula()], [add_recipe()], or
+#' [add_variables()] _must_ be specified.
 #'
 #' @param x A workflow
 #'
@@ -69,7 +69,8 @@ remove_recipe <- function(x) {
     pre = new_stage_pre(),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
-    trained = FALSE
+    trained = FALSE,
+    env = x$env
   )
 }
 
@@ -100,6 +101,9 @@ check_conflicts.action_recipe <- function(action, x) {
 
   if (has_action(pre, "formula")) {
     abort("A recipe cannot be added when a formula already exists.")
+  }
+  if (has_action(pre, "variables")) {
+    abort("A recipe cannot be added when variables already exist.")
   }
 
   invisible(action)

@@ -54,7 +54,7 @@ test_that("cannot fit without a pre stage", {
   workflow <- workflow()
   workflow <- add_model(workflow, mod)
 
-  expect_error(fit(workflow, mtcars), "must have a formula or recipe")
+  expect_error(fit(workflow, mtcars), "formula, recipe, or variables")
 })
 
 test_that("cannot fit without a fit stage", {

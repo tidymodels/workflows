@@ -70,8 +70,7 @@ remove_formula <- function(x) {
     pre = new_stage_pre(),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
-    trained = FALSE,
-    env = x$env
+    trained = FALSE
   )
 }
 

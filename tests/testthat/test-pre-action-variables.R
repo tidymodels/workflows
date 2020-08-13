@@ -3,8 +3,8 @@ test_that("can add variables to a workflow", {
   wf <- add_variables(wf, y, c(x1, x2))
 
   expect_s3_class(wf$pre$actions$variables, "action_variables")
-  expect_identical(wf$pre$actions$variables$outcomes, expr(y))
-  expect_identical(wf$pre$actions$variables$predictors, expr(c(x1, x2)))
+  expect_identical(wf$pre$actions$variables$outcomes, quo(y))
+  expect_identical(wf$pre$actions$variables$predictors, quo(c(x1, x2)))
 })
 
 test_that("cannot add variables if a recipe already exists", {
@@ -53,9 +53,7 @@ test_that("can use a `NULL` outcome", {
   workflow <- workflow()
   workflow <- add_variables(workflow, NULL, c(cyl, disp))
 
-  workflow <- .add_env(workflow, environment())
   workflow <- .fit_pre(workflow, mtcars)
-  workflow <- .remove_env(workflow)
 
   expect_named(
     workflow$pre$mold$predictors,
@@ -93,43 +91,6 @@ test_that("can use `all_of(x)` when `x` is in the scope of `fit()`", {
   expect_named(
     result$pre$mold$predictors,
     c("disp", "cyl")
-  )
-})
-
-test_that("`all_of(x)` fails `x` is not in the scope of `fit()`", {
-  workflow <- local({
-    x <- c("disp", "cyl")
-
-    mod <- parsnip::linear_reg()
-    mod <- parsnip::set_engine(mod, "lm")
-
-    workflow <- workflow()
-    workflow <- add_variables(workflow, mpg, all_of(x))
-    add_model(workflow, mod)
-  })
-
-  expect_error(fit(workflow, mtcars), "'x' not found")
-})
-
-test_that("`{{ }}` quosures are squashed", {
-  fn <- function(outcomes, predictors) {
-    wf <- workflow()
-    wf <- add_variables(wf, {{ outcomes}}, {{ predictors }})
-    wf
-  }
-
-  wf <- fn(cyl, mpg)
-
-  # Not a quosure because of `tidymodels_quo_squash()`!
-  expect_identical(
-    wf$pre$actions$variables$outcomes,
-    expr(cyl)
-  )
-
-  # Not a quosure because of `tidymodels_quo_squash()`!
-  expect_identical(
-    wf$pre$actions$variables$predictors,
-    expr(mpg)
   )
 })
 
@@ -171,7 +132,7 @@ test_that("can update a formula", {
 
   expect_identical(
     pull_workflow_preprocessor(wf2),
-    list(outcomes = expr(cyl), predictors = expr(mpg))
+    list(outcomes = quo(cyl), predictors = quo(mpg))
   )
 })
 

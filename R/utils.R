@@ -74,7 +74,3 @@ has_blueprint <- function(x) {
     abort("Internal error: `x` must have a preprocessor to check for a blueprint.")
   }
 }
-
-has_env <- function(x) {
-  !is.null(x$env)
-}

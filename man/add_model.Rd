@@ -41,9 +41,6 @@ the workflow.
 \code{add_model()} is a required step to construct a minimal workflow.
 }
 \section{Indicator Variable Details}{
-\preformatted{## Warning: package 'parsnip' was built under R version 4.0.2
-}
-
 Some modeling functions in R create indicator/dummy variables from
 categorical data when you use a model formula, and some do not. When you
 specify and fit a model with a \code{workflow()}, parsnip and workflows match

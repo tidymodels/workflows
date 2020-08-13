@@ -55,8 +55,7 @@ workflow <- function() {
 new_workflow <- function(pre = new_stage_pre(),
                          fit = new_stage_fit(),
                          post = new_stage_post(),
-                         trained = FALSE,
-                         env = NULL) {
+                         trained = FALSE) {
   if (!is_stage(pre)) {
     abort("`pre` must be a `stage`.")
   }
@@ -73,16 +72,11 @@ new_workflow <- function(pre = new_stage_pre(),
     abort("`trained` must be a single logical value.")
   }
 
-  if (!is_null(env) && !is_environment(env)) {
-    abort("`env` must be an environment, or `NULL`.")
-  }
-
   data <- list(
     pre = pre,
     fit = fit,
     post = post,
-    trained = trained,
-    env = env
+    trained = trained
   )
 
   structure(data, class = "workflow")
@@ -192,8 +186,11 @@ print_preprocessor_formula <- function(x) {
 print_preprocessor_variables <- function(x) {
   variables <- pull_workflow_preprocessor(x)
 
-  outcomes <- rlang::expr_text(variables$outcomes)
-  predictors <- rlang::expr_text(variables$predictors)
+  outcomes <- quo_get_expr(variables$outcomes)
+  predictors <- quo_get_expr(variables$predictors)
+
+  outcomes <- expr_text(outcomes)
+  predictors <- expr_text(predictors)
 
   cat_line("Outcomes: ", outcomes)
   cat_line("Predictors: ", predictors)

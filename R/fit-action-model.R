@@ -75,8 +75,7 @@ remove_model <- function(x) {
     pre = x$pre,
     fit = new_stage_fit(),
     post = new_stage_post(actions = x$post$actions),
-    trained = FALSE,
-    env = x$env
+    trained = FALSE
   )
 }
 

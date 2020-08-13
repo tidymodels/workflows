@@ -62,17 +62,12 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   ellipsis::check_dots_empty()
   validate_has_minimal_components(object)
 
-  env <- caller_env()
-  workflow <- .add_env(workflow, env)
-
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
 
   # Eh? Predictions during the fit?
   # pred <- result$pred
   # result <- fit_post(workflow, pred)
-
-  workflow <- .remove_env(workflow)
 
   workflow$trained <- TRUE
 
@@ -81,7 +76,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-#' Internal fitting functions
+#' Internal workflow functions
 #'
 #' `.fit_pre()` and `.fit_model()` are internal workflow functions for
 #' _partially_ fitting a workflow object. They are only exported for usage by
@@ -100,7 +95,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #'
 #' @param control A [control_workflow()] object
 #'
-#' @name workflows-internals-fit
+#' @name workflows-internals
 #' @keywords internal
 #' @export
 #' @examples
@@ -135,7 +130,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow
 }
 
-#' @rdname workflows-internals-fit
+#' @rdname workflows-internals
 #' @export
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]

@@ -1,5 +1,18 @@
 # workflows (development version)
 
+* New `add_variables()` for specifying model terms using tidyselect expressions
+  with no extra preprocessing. For example:
+  
+  ```
+  wf <- workflow() %>%
+    add_variables(y, c(var1, start_with("x_"))) %>%
+    add_model(spec_lm)
+  ```
+  
+  One benefit of specifying terms in this way over the formula method is to
+  avoid preprocessing from `model.matrix()`, which might strip the class of
+  your predictor columns (as it does with Date columns) (#34).
+
 # workflows 0.1.3
 
 * A test has been updated to reflect a change in parsnip 0.1.3 regarding how

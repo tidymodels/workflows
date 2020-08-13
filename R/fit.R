@@ -81,7 +81,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-#' Internal workflow functions
+#' Internal fitting functions
 #'
 #' `.fit_pre()` and `.fit_model()` are internal workflow functions for
 #' _partially_ fitting a workflow object. They are only exported for usage by
@@ -100,7 +100,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #'
 #' @param control A [control_workflow()] object
 #'
-#' @name workflows-internals
+#' @name workflows-internals-fit
 #' @keywords internal
 #' @export
 #' @examples
@@ -135,7 +135,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow
 }
 
-#' @rdname workflows-internals
+#' @rdname workflows-internals-fit
 #' @export
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]

@@ -1,3 +1,47 @@
+#' Add variables to a workflow
+#'
+#' @description
+#' - `add_variables()` specifies the terms of the model through the usage of
+#'   [tidyselect::select_helpers] for the `outcomes` and `predictors`.
+#'
+#' - `remove_variables()` removes the variables. Additionally, if the model
+#'   has already been fit, then the fit is removed.
+#'
+#' - `update_variables()` first removes the variables, then replaces the
+#'   previous variables with the new ones. Any model that has already been
+#'   fit based on the original variables will need to be refit.
+#'
+#' @details
+#' To fit a workflow, exactly one of [add_formula()], [add_recipe()], or
+#' [add_variables()] _must_ be specified.
+#'
+#' @param x A workflow
+#'
+#' @param outcomes,predictors Tidyselect expressions specifying the terms
+#'   of the model. See [tidyselect::select_helpers] for the full range of
+#'   possible ways to specify terms.
+#'
+#' @param ... Not used.
+#'
+#' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
+#'
+#'   If `NULL`, [hardhat::default_xy_blueprint()] is used.
+#'
+#'   Note that preprocessing done here is separate from preprocessing that
+#'   might be done by the underlying model.
+#'
+#' @return
+#' `x`, updated with either a new or removed variables preprocessor.
+#'
+#' @export
+#' @examples
+#' workflow <- workflow()
+#' workflow <- add_variables(workflow, mpg, c(cyl, disp))
+#' workflow
+#'
+#' remove_variables(workflow)
+#'
+#' update_variables(workflow, mpg, !mpg)
 add_variables <- function(x,
                           outcomes,
                           predictors,
@@ -19,6 +63,8 @@ add_variables <- function(x,
   add_action(x, action, "variables")
 }
 
+#' @rdname add_variables
+#' @export
 remove_variables <- function(x) {
   validate_is_workflow(x)
 
@@ -35,6 +81,8 @@ remove_variables <- function(x) {
   )
 }
 
+#' @rdname add_variables
+#' @export
 update_variables <- function(x,
                              outcomes,
                              predictors,

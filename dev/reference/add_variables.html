@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a recipe to a workflow — add_recipe • workflows</title>
+<title>Add variables to a workflow — add_variables • workflows</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,18 +49,16 @@
 
 
 
-<meta property="og:title" content="Add a recipe to a workflow — add_recipe" />
+<meta property="og:title" content="Add variables to a workflow — add_variables" />
 <meta property="og:description" content="
 
-add_recipe() specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe.
-remove_recipe() removes the recipe as well as any downstream objects
-that might get created after the recipe is used for preprocessing, such as
-the prepped recipe. Additionally, if the model has already been fit, then
-the fit is removed.
-update_recipe() first removes the recipe, then replaces the previous
-recipe with the new one. Any model that has already been fit based on this
-recipe will need to be refit.
+add_variables() specifies the terms of the model through the usage of
+tidyselect::select_helpers for the outcomes and predictors.
+remove_variables() removes the variables. Additionally, if the model
+has already been fit, then the fit is removed.
+update_variables() first removes the variables, then replaces the
+previous variables with the new ones. Any model that has already been
+fit based on the original variables will need to be refit.
 
 " />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
@@ -144,32 +142,30 @@ recipe will need to be refit.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a recipe to a workflow</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/pre-action-recipe.R'><code>R/pre-action-recipe.R</code></a></small>
-    <div class="hidden name"><code>add_recipe.Rd</code></div>
+    <h1>Add variables to a workflow</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/pre-action-variables.R'><code>R/pre-action-variables.R</code></a></small>
+    <div class="hidden name"><code>add_variables.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
 <ul>
-<li><p><code>add_recipe()</code> specifies the terms of the model and any preprocessing that
-is required through the usage of a recipe.</p></li>
-<li><p><code>remove_recipe()</code> removes the recipe as well as any downstream objects
-that might get created after the recipe is used for preprocessing, such as
-the prepped recipe. Additionally, if the model has already been fit, then
-the fit is removed.</p></li>
-<li><p><code>update_recipe()</code> first removes the recipe, then replaces the previous
-recipe with the new one. Any model that has already been fit based on this
-recipe will need to be refit.</p></li>
+<li><p><code>add_variables()</code> specifies the terms of the model through the usage of
+<a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a> for the <code>outcomes</code> and <code>predictors</code>.</p></li>
+<li><p><code>remove_variables()</code> removes the variables. Additionally, if the model
+has already been fit, then the fit is removed.</p></li>
+<li><p><code>update_variables()</code> first removes the variables, then replaces the
+previous variables with the new ones. Any model that has already been
+fit based on the original variables will need to be refit.</p></li>
 </ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_variables</span>(<span class='no'>x</span>, <span class='no'>outcomes</span>, <span class='no'>predictors</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>remove_recipe</span>(<span class='no'>x</span>)
+<span class='fu'>remove_variables</span>(<span class='no'>x</span>)
 
-<span class='fu'>update_recipe</span>(<span class='no'>x</span>, <span class='no'>recipe</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>update_variables</span>(<span class='no'>x</span>, <span class='no'>outcomes</span>, <span class='no'>predictors</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,8 +175,10 @@ recipe will need to be refit.</p></li>
       <td><p>A workflow</p></td>
     </tr>
     <tr>
-      <th>recipe</th>
-      <td><p>A recipe created using <code><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipes::recipe()</a></code></p></td>
+      <th>outcomes, predictors</th>
+      <td><p>Tidyselect expressions specifying the terms
+of the model. See <a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a> for the full range of
+possible ways to specify terms.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -189,54 +187,40 @@ recipe will need to be refit.</p></li>
     <tr>
       <th>blueprint</th>
       <td><p>A hardhat blueprint used for fine tuning the preprocessing.</p>
-<p>If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_recipe_blueprint.html'>hardhat::default_recipe_blueprint()</a></code> is used.</p>
+<p>If <code>NULL</code>, <code><a href='https://rdrr.io/pkg/hardhat/man/default_xy_blueprint.html'>hardhat::default_xy_blueprint()</a></code> is used.</p>
 <p>Note that preprocessing done here is separate from preprocessing that
-might be done automatically by the underlying model.</p></td>
+might be done by the underlying model.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>x</code>, updated with either a new or removed recipe preprocessor.</p>
+    <p><code>x</code>, updated with either a new or removed variables preprocessor.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To fit a workflow, exactly one of <code><a href='add_formula.html'>add_formula()</a></code>, <code>add_recipe()</code>, or
-<code><a href='add_variables.html'>add_variables()</a></code> <em>must</em> be specified.</p>
+    <p>To fit a workflow, exactly one of <code><a href='add_formula.html'>add_formula()</a></code>, <code><a href='add_recipe.html'>add_recipe()</a></code>, or
+<code>add_variables()</code> <em>must</em> be specified.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: dplyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘recipes’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    step</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
-
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='no'>cyl</span>)
-
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>add_recipe</span>(<span class='no'>recipe</span>)
-
+    <pre class="examples"><div class='input'><span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_variables</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>cyl</span>, <span class='no'>disp</span>))
 <span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Recipe
+#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Variables
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; 1 Recipe Step
-#&gt; 
-#&gt; ● step_log()</div><div class='input'>
-<span class='fu'>remove_recipe</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Outcomes: mpg
+#&gt; Predictors: c(cyl, disp)</div><div class='input'>
+<span class='fu'>remove_variables</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> None
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None</div><div class='input'>
-<span class='fu'>update_recipe</span>(<span class='no'>workflow</span>, <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span>, <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Recipe
+<span class='fu'>update_variables</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span>, !<span class='no'>mpg</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Variables
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; 0 Recipe Steps</div></span></pre>
+#&gt; Outcomes: mpg
+#&gt; Predictors: !mpg</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

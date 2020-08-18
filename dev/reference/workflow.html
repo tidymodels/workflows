@@ -364,7 +364,36 @@ behavior from the model’s computational engine.</p>
 #&gt;                       -2.860e-01                         3.135e-01  
 #&gt; 
 #&gt; ...
-#&gt; and 14 more lines.</div></span></pre>
+#&gt; and 14 more lines.</div><div class='input'>
+<span class='no'>variable_wf</span> <span class='kw'>&lt;-</span> <span class='no'>base_wf</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_variables.html'>add_variables</a></span>(
+    <span class='no'>Attrition</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>BusinessTravel</span>, <span class='no'>YearsSinceLastPromotion</span>, <span class='no'>OverTime</span>)
+  )
+
+<span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>variable_wf</span>, <span class='no'>attrition</span>)</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Variables
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> logistic_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; Outcomes: Attrition
+#&gt; Predictors: c(BusinessTravel, YearsSinceLastPromotion, OverTime)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt;                     (Intercept)  BusinessTravelTravel_Frequently  
+#&gt;                        -2.82571                          1.29473  
+#&gt;     BusinessTravelTravel_Rarely          YearsSinceLastPromotion  
+#&gt;                         0.64727                         -0.03092  
+#&gt;                     OverTimeYes  
+#&gt;                         1.31904  
+#&gt; 
+#&gt; Degrees of Freedom: 1469 Total (i.e. Null);  1465 Residual
+#&gt; Null Deviance:	    1299 
+#&gt; Residual Deviance: 1194 	AIC: 1204</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

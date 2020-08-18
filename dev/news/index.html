@@ -139,6 +139,15 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#workflows-development-version" class="anchor"></a>workflows (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>
+<p>New <code><a href="../reference/add_variables.html">add_variables()</a></code> for specifying model terms using tidyselect expressions with no extra preprocessing. For example:</p>
+<pre><code>wf &lt;- workflow() %&gt;%
+  add_variables(y, c(var1, start_with("x_"))) %&gt;%
+  add_model(spec_lm)</code></pre>
+<p>One benefit of specifying terms in this way over the formula method is to avoid preprocessing from <code><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix()</a></code>, which might strip the class of your predictor columns (as it does with Date columns) (<a href='https://github.com/tidymodels/workflows/issues/34'>#34</a>).</p>
+</li>
+</ul>
 </div>
     <div id="workflows-013" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.3">

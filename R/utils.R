@@ -47,6 +47,10 @@ has_preprocessor_formula <- function(x) {
   "formula" %in% names(x$pre$actions)
 }
 
+has_preprocessor_variables <- function(x) {
+  "variables" %in% names(x$pre$actions)
+}
+
 has_mold <- function(x) {
   !is.null(x$pre$mold)
 }
@@ -64,6 +68,8 @@ has_blueprint <- function(x) {
     !is.null(x$pre$actions$formula$blueprint)
   } else if (has_preprocessor_recipe(x)) {
     !is.null(x$pre$actions$recipe$blueprint)
+  } else if (has_preprocessor_variables(x)) {
+    !is.null(x$pre$actions$variables$blueprint)
   } else {
     abort("Internal error: `x` must have a preprocessor to check for a blueprint.")
   }

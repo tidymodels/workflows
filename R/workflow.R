@@ -37,6 +37,14 @@
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, attrition)
+#'
+#' variable_wf <- base_wf %>%
+#'   add_variables(
+#'     Attrition,
+#'     c(BusinessTravel, YearsSinceLastPromotion, OverTime)
+#'   )
+#'
+#' fit(variable_wf, attrition)
 #' @export
 workflow <- function() {
   new_workflow()
@@ -85,7 +93,6 @@ print.workflow <- function(x, ...) {
   print_header(x)
   print_preprocessor(x)
   print_model(x)
-  # cat_line("")
   # print_postprocessor(x)
   invisible(x)
 }
@@ -108,6 +115,8 @@ print_header <- function(x) {
     preprocessor <- "Formula"
   } else if (has_preprocessor_recipe(x)) {
     preprocessor <- "Recipe"
+  } else if (has_preprocessor_variables(x)) {
+    preprocessor <- "Variables"
   } else {
     preprocessor <- "None"
   }
@@ -133,8 +142,14 @@ print_header <- function(x) {
 print_preprocessor <- function(x) {
   has_preprocessor_formula <- has_preprocessor_formula(x)
   has_preprocessor_recipe <- has_preprocessor_recipe(x)
+  has_preprocessor_variables <- has_preprocessor_variables(x)
 
-  if (!has_preprocessor_formula && !has_preprocessor_recipe) {
+  no_preprocessor <-
+    !has_preprocessor_formula &&
+    !has_preprocessor_recipe &&
+    !has_preprocessor_variables
+
+  if (no_preprocessor) {
     return(invisible(x))
   }
 
@@ -152,6 +167,10 @@ print_preprocessor <- function(x) {
     print_preprocessor_recipe(x)
   }
 
+  if (has_preprocessor_variables) {
+    print_preprocessor_variables(x)
+  }
+
   invisible(x)
 }
 
@@ -160,6 +179,21 @@ print_preprocessor_formula <- function(x) {
   formula <- rlang::expr_text(formula)
 
   cat_line(formula)
+
+  invisible(x)
+}
+
+print_preprocessor_variables <- function(x) {
+  variables <- pull_workflow_preprocessor(x)
+
+  outcomes <- quo_get_expr(variables$outcomes)
+  predictors <- quo_get_expr(variables$predictors)
+
+  outcomes <- expr_text(outcomes)
+  predictors <- expr_text(predictors)
+
+  cat_line("Outcomes: ", outcomes)
+  cat_line("Predictors: ", predictors)
 
   invisible(x)
 }

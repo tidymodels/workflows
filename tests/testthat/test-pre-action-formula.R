@@ -18,6 +18,13 @@ test_that("cannot add a formula if a recipe already exists", {
   expect_error(add_formula(workflow, mpg ~ cyl), "cannot be added when a recipe already exists")
 })
 
+test_that("cannot add a formula if variables already exist", {
+  workflow <- workflow()
+  workflow <- add_variables(workflow, y, x)
+
+  expect_error(add_formula(workflow, mpg ~ cyl), "cannot be added when variables already exist")
+})
+
 test_that("formula preprocessing is executed upon `fit()`", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

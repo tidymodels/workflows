@@ -140,12 +140,15 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 # ------------------------------------------------------------------------------
 
 validate_has_minimal_components <- function(x) {
-  has_preprocessor <- has_action(x$pre, "formula") || has_action(x$pre, "recipe")
+  has_preprocessor <-
+    has_preprocessor_formula(x) ||
+    has_preprocessor_recipe(x) ||
+    has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
     glubort(
-      "The workflow must have a formula or recipe preprocessor. ",
-      "Provide one with `add_formula()` or `add_recipe()`."
+      "The workflow must have formula, recipe, or variables preprocessor. ",
+      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
     )
   }
 
@@ -174,6 +177,8 @@ finalize_blueprint <- function(workflow) {
     finalize_blueprint_recipe(workflow)
   } else if (has_preprocessor_formula(workflow)) {
     finalize_blueprint_formula(workflow)
+  } else if (has_preprocessor_variables(workflow)) {
+    finalize_blueprint_variables(workflow)
   } else {
     abort("Internal error: `workflow` should have a preprocessor at this point.")
   }
@@ -229,4 +234,18 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   }
 
   out
+}
+
+finalize_blueprint_variables <- function(workflow) {
+  # Use the default blueprint, no parsnip model encoding info is used here
+  blueprint <- hardhat::default_xy_blueprint()
+
+  variables <- pull_workflow_preprocessor(workflow)
+
+  update_variables(
+    workflow,
+    outcomes = !!variables$outcomes,
+    predictors = !!variables$predictors,
+    blueprint = blueprint
+  )
 }

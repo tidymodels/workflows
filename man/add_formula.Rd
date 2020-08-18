@@ -50,8 +50,8 @@ formula will need to be refit.
 }
 }
 \details{
-To fit a workflow, one of \code{add_formula()} or \code{add_recipe()} \emph{must} be
-specified, but not both.
+To fit a workflow, exactly one of \code{\link[=add_formula]{add_formula()}}, \code{\link[=add_recipe]{add_recipe()}}, or
+\code{\link[=add_variables]{add_variables()}} \emph{must} be specified.
 }
 \section{Formula Handling}{
 Note that, for different models, the formula given to \code{add_formula()}

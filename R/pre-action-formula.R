@@ -14,8 +14,8 @@
 #'   formula will need to be refit.
 #'
 #' @details
-#' To fit a workflow, one of `add_formula()` or `add_recipe()` _must_ be
-#' specified, but not both.
+#' To fit a workflow, exactly one of [add_formula()], [add_recipe()], or
+#' [add_variables()] _must_ be specified.
 #'
 #' @includeRmd man/rmd/add-formula.Rmd details
 #'
@@ -102,6 +102,9 @@ check_conflicts.action_formula <- function(action, x) {
 
   if (has_action(pre, "recipe")) {
     abort("A formula cannot be added when a recipe already exists.")
+  }
+  if (has_action(pre, "variables")) {
+    abort("A formula cannot be added when variables already exist.")
   }
 
   invisible(action)

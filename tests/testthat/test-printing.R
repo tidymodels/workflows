@@ -21,6 +21,13 @@ test_that("can print workflow with formula", {
   )
 })
 
+test_that("can print workflow with variables", {
+  verify_output(
+    test_path("out/test-print-workflow-variables.txt"),
+    add_variables(workflow(), y, c(x1, x2))
+  )
+})
+
 test_that("can print workflow with model", {
   model <- parsnip::linear_reg()
 

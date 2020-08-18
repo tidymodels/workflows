@@ -4,8 +4,8 @@
 #' These functions extract various elements from a workflow object. If they do
 #' not exist yet, an error is thrown.
 #'
-#' - `pull_workflow_preprocessor()` returns either the formula or recipe used
-#'   for preprocessing.
+#' - `pull_workflow_preprocessor()` returns the formula, recipe, or variable
+#'   expressions used for preprocessing.
 #'
 #' - `pull_workflow_spec()` returns the parsnip model specification.
 #'
@@ -41,13 +41,16 @@
 #'
 #' recipe_wf <- add_recipe(base_wf, recipe)
 #' formula_wf <- add_formula(base_wf, mpg ~ cyl + log(disp))
+#' variable_wf <- add_variables(base_wf, mpg, c(cyl, disp))
 #'
 #' fit_recipe_wf <- fit(recipe_wf, mtcars)
 #' fit_formula_wf <- fit(formula_wf, mtcars)
 #'
-#' # The preprocessor is either a recipe or a formula
+#' # The preprocessor is a recipes, formula, or a list holding the
+#' # tidyselect expressions identifying the outcomes/predictors
 #' pull_workflow_preprocessor(recipe_wf)
 #' pull_workflow_preprocessor(formula_wf)
+#' pull_workflow_preprocessor(variable_wf)
 #'
 #' # The `spec` is the parsnip spec before it has been fit.
 #' # The `fit` is the fit parsnip model.
@@ -80,6 +83,15 @@ pull_workflow_preprocessor <- function(x) {
 
   if (has_preprocessor_recipe(x)) {
     return(x$pre$actions$recipe$recipe)
+  }
+
+  if (has_preprocessor_variables(x)) {
+    out <- list(
+      outcomes = x$pre$actions$variables$outcomes,
+      predictors = x$pre$actions$variables$predictors
+    )
+
+    return(out)
   }
 
   abort("The workflow does not have a preprocessor.")

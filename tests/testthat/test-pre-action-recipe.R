@@ -20,6 +20,15 @@ test_that("cannot add a recipe if a formula already exists", {
   expect_error(add_recipe(workflow, rec), "cannot be added when a formula already exists")
 })
 
+test_that("cannot add a recipe if variables already exist", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+
+  workflow <- workflow()
+  workflow <- add_variables(workflow, y, x)
+
+  expect_error(add_recipe(workflow, rec), "cannot be added when variables already exist")
+})
+
 test_that("remove a recipe", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
 

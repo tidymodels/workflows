@@ -16,8 +16,10 @@ update_variables(x, outcomes, predictors, ..., blueprint = NULL)
 \item{x}{A workflow}
 
 \item{outcomes, predictors}{Tidyselect expressions specifying the terms
-of the model. See \link[tidyselect:language]{tidyselect::select_helpers} for the full range of
-possible ways to specify terms.}
+of the model. \code{outcomes} is evaluated first, and then all outcome columns
+are removed from the data before \code{predictors} is evaluated.
+See \link[tidyselect:language]{tidyselect::select_helpers} for the full range of possible ways to
+specify terms.}
 
 \item{...}{Not used.}
 
@@ -47,11 +49,29 @@ To fit a workflow, exactly one of \code{\link[=add_formula]{add_formula()}}, \co
 \code{\link[=add_variables]{add_variables()}} \emph{must} be specified.
 }
 \examples{
+library(parsnip)
+
+spec_lm <- linear_reg()
+spec_lm <- set_engine(spec_lm, "lm")
+
 workflow <- workflow()
-workflow <- add_variables(workflow, mpg, c(cyl, disp))
-workflow
+workflow <- add_model(workflow, spec_lm)
 
-remove_variables(workflow)
+# Add terms with tidyselect expressions
+workflow1 <- add_variables(workflow, mpg, c(cyl, disp))
+workflow1 <- fit(workflow1, mtcars)
+workflow1
 
-update_variables(workflow, mpg, !mpg)
+# Removing the variables of a fit workflow will also remove the model
+remove_variables(workflow1)
+
+# Variables can also be updated
+update_variables(workflow1, mpg, starts_with("d"))
+
+# The `outcomes` are removed before the `predictors` expression
+# is evaluated. This allows you to easily specify the predictors
+# as "everything except the outcomes".
+workflow2 <- add_variables(workflow, mpg, everything())
+workflow2 <- fit(workflow2, mtcars)
+pull_workflow_mold(workflow2)$predictors
 }

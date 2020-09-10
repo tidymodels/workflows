@@ -57,8 +57,14 @@ spec_lm <- set_engine(spec_lm, "lm")
 workflow <- workflow()
 workflow <- add_model(workflow, spec_lm)
 
-# Add terms with tidyselect expressions
-workflow1 <- add_variables(workflow, mpg, c(cyl, disp))
+# Add terms with tidyselect expressions.
+# Outcomes are specified before predictors.
+workflow1 <- add_variables(
+  workflow,
+  outcomes = mpg,
+  predictors = c(cyl, disp)
+)
+
 workflow1 <- fit(workflow1, mtcars)
 workflow1
 

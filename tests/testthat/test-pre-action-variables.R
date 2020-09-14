@@ -94,6 +94,53 @@ test_that("can use `all_of(x)` when `x` is in the scope of `fit()`", {
   )
 })
 
+test_that("`outcomes` are removed from set of possible `predictors` (#72)", {
+  workflow <- workflow()
+
+  workflow1 <- add_variables(workflow, mpg, everything())
+
+  result <- .fit_pre(workflow1, mtcars)
+
+  mtcars2 <- mtcars
+  mtcars2$mpg <- NULL
+
+  expect_identical(
+    colnames(result$pre$mold$predictors),
+    colnames(mtcars2)
+  )
+
+  expect_identical(
+    colnames(result$pre$mold$outcomes),
+    "mpg"
+  )
+
+  workflow2 <- add_variables(workflow, mpg, mpg)
+
+  expect_error(.fit_pre(workflow2, mtcars), class = "vctrs_error_subscript_oob")
+})
+
+test_that("selecting no `outcomes` doesn't break selection of `predictors`", {
+  workflow <- workflow()
+  workflow <- add_variables(workflow, any_of("not_here"), everything())
+
+  result <- .fit_pre(workflow, mtcars)
+
+  expect_identical(
+    colnames(result$pre$mold$predictors),
+    colnames(mtcars)
+  )
+
+  expect_identical(
+    colnames(result$pre$mold$outcomes),
+    character()
+  )
+
+  expect_identical(
+    nrow(result$pre$mold$outcomes),
+    32L
+  )
+})
+
 test_that("cannot add two variables", {
   workflow <- workflow()
   workflow <- add_variables(workflow, mpg, cyl)

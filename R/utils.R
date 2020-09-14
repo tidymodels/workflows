@@ -29,6 +29,22 @@ validate_recipes_available <- function() {
 
 # ------------------------------------------------------------------------------
 
+# https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109
+vec_index_invert <- function (x) {
+  if (vec_index_is_empty(x)) {
+    TRUE
+  }
+  else {
+    -x
+  }
+}
+
+vec_index_is_empty <- function (x) {
+  !length(x) || all(x == 0L)
+}
+
+# ------------------------------------------------------------------------------
+
 validate_is_workflow <- function(x, arg = "`x`") {
   if (!is_workflow(x)) {
     glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")

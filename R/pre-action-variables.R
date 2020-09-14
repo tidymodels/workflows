@@ -18,8 +18,10 @@
 #' @param x A workflow
 #'
 #' @param outcomes,predictors Tidyselect expressions specifying the terms
-#'   of the model. See [tidyselect::select_helpers] for the full range of
-#'   possible ways to specify terms.
+#'   of the model. `outcomes` is evaluated first, and then all outcome columns
+#'   are removed from the data before `predictors` is evaluated.
+#'   See [tidyselect::select_helpers] for the full range of possible ways to
+#'   specify terms.
 #'
 #' @param ... Not used.
 #'
@@ -35,13 +37,37 @@
 #'
 #' @export
 #' @examples
+#' library(parsnip)
+#'
+#' spec_lm <- linear_reg()
+#' spec_lm <- set_engine(spec_lm, "lm")
+#'
 #' workflow <- workflow()
-#' workflow <- add_variables(workflow, mpg, c(cyl, disp))
-#' workflow
+#' workflow <- add_model(workflow, spec_lm)
 #'
-#' remove_variables(workflow)
+#' # Add terms with tidyselect expressions.
+#' # Outcomes are specified before predictors.
+#' workflow1 <- add_variables(
+#'   workflow,
+#'   outcomes = mpg,
+#'   predictors = c(cyl, disp)
+#' )
 #'
-#' update_variables(workflow, mpg, !mpg)
+#' workflow1 <- fit(workflow1, mtcars)
+#' workflow1
+#'
+#' # Removing the variables of a fit workflow will also remove the model
+#' remove_variables(workflow1)
+#'
+#' # Variables can also be updated
+#' update_variables(workflow1, mpg, starts_with("d"))
+#'
+#' # The `outcomes` are removed before the `predictors` expression
+#' # is evaluated. This allows you to easily specify the predictors
+#' # as "everything except the outcomes".
+#' workflow2 <- add_variables(workflow, mpg, everything())
+#' workflow2 <- fit(workflow2, mtcars)
+#' pull_workflow_mold(workflow2)$predictors
 add_variables <- function(x,
                           outcomes,
                           predictors,
@@ -107,11 +133,24 @@ fit.action_variables <- function(object, workflow, data) {
   # meaning they carry along their own environments to evaluate in.
   env <- empty_env()
 
-  outcomes <- tidyselect::eval_select(outcomes, data = data, env = env)
-  predictors <- tidyselect::eval_select(predictors, data = data, env = env)
+  outcomes <- tidyselect::eval_select(
+    expr = outcomes,
+    data = data,
+    env = env
+  )
+
+  # Evaluate `predictors` without access to `outcomes`
+  not_outcomes <- vec_index_invert(outcomes)
+  data_potential_predictors <- data[not_outcomes]
+
+  predictors <- tidyselect::eval_select(
+    expr = predictors,
+    data = data_potential_predictors,
+    env = env
+  )
 
   data_outcomes <- data[outcomes]
-  data_predictors <- data[predictors]
+  data_predictors <- data_potential_predictors[predictors]
 
   workflow$pre$mold <- hardhat::mold(
     x = data_predictors,

@@ -161,11 +161,11 @@ fit based on the original variables will need to be refit.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_variables</span>(<span class='no'>x</span>, <span class='no'>outcomes</span>, <span class='no'>predictors</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_variables</span>(<span class='kw'>x</span>, <span class='kw'>outcomes</span>, <span class='kw'>predictors</span>, <span class='kw'>...</span>, blueprint = <span class='kw'>NULL</span>)
 
-<span class='fu'>remove_variables</span>(<span class='no'>x</span>)
+<span class='fu'>remove_variables</span>(<span class='kw'>x</span>)
 
-<span class='fu'>update_variables</span>(<span class='no'>x</span>, <span class='no'>outcomes</span>, <span class='no'>predictors</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>update_variables</span>(<span class='kw'>x</span>, <span class='kw'>outcomes</span>, <span class='kw'>predictors</span>, <span class='kw'>...</span>, blueprint = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,8 +177,10 @@ fit based on the original variables will need to be refit.</p></li>
     <tr>
       <th>outcomes, predictors</th>
       <td><p>Tidyselect expressions specifying the terms
-of the model. See <a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a> for the full range of
-possible ways to specify terms.</p></td>
+of the model. <code>outcomes</code> is evaluated first, and then all outcome columns
+are removed from the data before <code>predictors</code> is evaluated.
+See <a href='https://tidyselect.r-lib.org/reference/language.html'>tidyselect::select_helpers</a> for the full range of possible ways to
+specify terms.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -202,25 +204,87 @@ might be done by the underlying model.</p></td>
 <code>add_variables()</code> <em>must</em> be specified.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_variables</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>cyl</span>, <span class='no'>disp</span>))
-<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+
+<span class='kw'>spec_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>()
+<span class='kw'>spec_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='kw'>spec_lm</span>, <span class='st'>"lm"</span>)
+
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='kw'>workflow</span>, <span class='kw'>spec_lm</span>)
+
+<span class='co'># Add terms with tidyselect expressions.</span>
+<span class='co'># Outcomes are specified before predictors.</span>
+<span class='kw'>workflow1</span> <span class='op'>&lt;-</span> <span class='fu'>add_variables</span>(
+  <span class='kw'>workflow</span>,
+  outcomes = <span class='kw'>mpg</span>,
+  predictors = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>cyl</span>, <span class='kw'>disp</span>)
+)
+
+<span class='kw'>workflow1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>workflow1</span>, <span class='kw'>mtcars</span>)
+<span class='kw'>workflow1</span>
+</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Variables
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; Outcomes: mpg
-#&gt; Predictors: c(cyl, disp)</div><div class='input'>
-<span class='fu'>remove_variables</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; Predictors: c(cyl, disp)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = ..y ~ ., data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl         disp  
+#&gt;    34.66099     -1.58728     -0.02058  
+#&gt; </div><div class='input'>
+<span class='co'># Removing the variables of a fit workflow will also remove the model</span>
+<span class='fu'>remove_variables</span>(<span class='kw'>workflow1</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> None
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None</div><div class='input'>
-<span class='fu'>update_variables</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span>, !<span class='no'>mpg</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: lm 
+#&gt; </div><div class='input'>
+<span class='co'># Variables can also be updated</span>
+<span class='fu'>update_variables</span>(<span class='kw'>workflow1</span>, <span class='kw'>mpg</span>, <span class='fu'>starts_with</span>(<span class='st'>"d"</span>))
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Variables
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; Outcomes: mpg
-#&gt; Predictors: !mpg</div></span></pre>
+#&gt; Predictors: starts_with("d")
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Linear Regression Model Specification (regression)
+#&gt; 
+#&gt; Computational engine: lm 
+#&gt; </div><div class='input'>
+<span class='co'># The `outcomes` are removed before the `predictors` expression</span>
+<span class='co'># is evaluated. This allows you to easily specify the predictors</span>
+<span class='co'># as "everything except the outcomes".</span>
+<span class='kw'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'>add_variables</span>(<span class='kw'>workflow</span>, <span class='kw'>mpg</span>, <span class='fu'>everything</span>())
+<span class='kw'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>workflow2</span>, <span class='kw'>mtcars</span>)
+<span class='fu'><a href='workflow-extractors.html'>pull_workflow_mold</a></span>(<span class='kw'>workflow2</span>)<span class='op'>$</span><span class='kw'>predictors</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 10</span><span>
+#&gt;      cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>     6  160    110  3.9   2.62  16.5     0     1     4     4
+#&gt; </span><span style='color: #555555;'> 2</span><span>     6  160    110  3.9   2.88  17.0     0     1     4     4
+#&gt; </span><span style='color: #555555;'> 3</span><span>     4  108     93  3.85  2.32  18.6     1     1     4     1
+#&gt; </span><span style='color: #555555;'> 4</span><span>     6  258    110  3.08  3.22  19.4     1     0     3     1
+#&gt; </span><span style='color: #555555;'> 5</span><span>     8  360    175  3.15  3.44  17.0     0     0     3     2
+#&gt; </span><span style='color: #555555;'> 6</span><span>     6  225    105  2.76  3.46  20.2     1     0     3     1
+#&gt; </span><span style='color: #555555;'> 7</span><span>     8  360    245  3.21  3.57  15.8     0     0     3     4
+#&gt; </span><span style='color: #555555;'> 8</span><span>     4  147.    62  3.69  3.19  20       1     0     4     2
+#&gt; </span><span style='color: #555555;'> 9</span><span>     4  141.    95  3.92  3.15  22.9     1     0     4     2
+#&gt; </span><span style='color: #555555;'>10</span><span>     6  168.   123  3.92  3.44  18.3     1     0     4     4
+#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

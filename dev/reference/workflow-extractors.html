@@ -165,15 +165,15 @@ extracted from the mold object returned from <code>pull_workflow_mold()</code>.<
 
     </div>
 
-    <pre class="usage"><span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>x</span>)
 
-<span class='fu'>pull_workflow_spec</span>(<span class='no'>x</span>)
+<span class='fu'>pull_workflow_spec</span>(<span class='kw'>x</span>)
 
-<span class='fu'>pull_workflow_fit</span>(<span class='no'>x</span>)
+<span class='fu'>pull_workflow_fit</span>(<span class='kw'>x</span>)
 
-<span class='fu'>pull_workflow_mold</span>(<span class='no'>x</span>)
+<span class='fu'>pull_workflow_mold</span>(<span class='kw'>x</span>)
 
-<span class='fu'>pull_workflow_prepped_recipe</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>pull_workflow_prepped_recipe</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,29 +190,30 @@ extracted from the mold object returned from <code>pull_workflow_mold()</code>.<
 section.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>magrittr</span>)
 
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&gt;%</span>
+<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>recipe</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='no'>disp</span>, <span class='no'>mtcars</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='no'>disp</span>)
+<span class='kw'>recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='kw'>disp</span>, <span class='kw'>mtcars</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span>(<span class='kw'>disp</span>)
 
-<span class='no'>base_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>model</span>)
+<span class='kw'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='kw'>model</span>)
 
-<span class='no'>recipe_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='no'>base_wf</span>, <span class='no'>recipe</span>)
-<span class='no'>formula_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>base_wf</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span> + <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>disp</span>))
-<span class='no'>variable_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_variables.html'>add_variables</a></span>(<span class='no'>base_wf</span>, <span class='no'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>cyl</span>, <span class='no'>disp</span>))
+<span class='kw'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_recipe.html'>add_recipe</a></span>(<span class='kw'>base_wf</span>, <span class='kw'>recipe</span>)
+<span class='kw'>formula_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='kw'>base_wf</span>, <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='kw'>disp</span>))
+<span class='kw'>variable_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_variables.html'>add_variables</a></span>(<span class='kw'>base_wf</span>, <span class='kw'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>cyl</span>, <span class='kw'>disp</span>))
 
-<span class='no'>fit_recipe_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>recipe_wf</span>, <span class='no'>mtcars</span>)
-<span class='no'>fit_formula_wf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>formula_wf</span>, <span class='no'>mtcars</span>)
+<span class='kw'>fit_recipe_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>recipe_wf</span>, <span class='kw'>mtcars</span>)
+<span class='kw'>fit_formula_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>formula_wf</span>, <span class='kw'>mtcars</span>)
 
 <span class='co'># The preprocessor is a recipes, formula, or a list holding the</span>
 <span class='co'># tidyselect expressions identifying the outcomes/predictors</span>
-<span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>recipe_wf</span>)</div><div class='output co'>#&gt; Data Recipe
+<span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>recipe_wf</span>)
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -222,25 +223,29 @@ section.</p>
 #&gt; 
 #&gt; Operations:
 #&gt; 
-#&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>formula_wf</span>)</div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x7fdf0f334828&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='no'>variable_wf</span>)</div><div class='output co'>#&gt; $outcomes
+#&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>formula_wf</span>)
+</div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
+#&gt; &lt;environment: 0x7fc009076038&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>variable_wf</span>)
+</div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^mpg</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fdf0f334828</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7fc009076038</span><span>
 #&gt; 
 #&gt; $predictors
 #&gt; </span><span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^c(cyl, disp)</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fdf0f334828</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7fc009076038</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># The `spec` is the parsnip spec before it has been fit.</span>
 <span class='co'># The `fit` is the fit parsnip model.</span>
-<span class='fu'>pull_workflow_spec</span>(<span class='no'>fit_formula_wf</span>)</div><div class='output co'>#&gt; Linear Regression Model Specification (regression)
+<span class='fu'>pull_workflow_spec</span>(<span class='kw'>fit_formula_wf</span>)
+</div><div class='output co'>#&gt; Linear Regression Model Specification (regression)
 #&gt; 
 #&gt; Computational engine: lm 
-#&gt; </div><div class='input'><span class='fu'>pull_workflow_fit</span>(<span class='no'>fit_formula_wf</span>)</div><div class='output co'>#&gt; parsnip model object
+#&gt; </div><div class='input'><span class='fu'>pull_workflow_fit</span>(<span class='kw'>fit_formula_wf</span>)
+</div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  1ms 
+#&gt; Fit time:  3ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)
@@ -252,7 +257,8 @@ section.</p>
 <span class='co'># The mold is returned from `hardhat::mold()`, and contains the</span>
 <span class='co'># predictors, outcomes, and information about the preprocessing</span>
 <span class='co'># for use on new data at `predict()` time.</span>
-<span class='fu'>pull_workflow_mold</span>(<span class='no'>fit_recipe_wf</span>)</div><div class='output co'>#&gt; $predictors
+<span class='fu'>pull_workflow_mold</span>(<span class='kw'>fit_recipe_wf</span>)
+</div><div class='output co'>#&gt; $predictors
 #&gt; </span><span style='color: #555555;'># A tibble: 32 x 2</span><span>
 #&gt;      cyl  disp
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -298,7 +304,8 @@ section.</p>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># A useful shortcut is to extract the prepped recipe from the workflow</span>
-<span class='fu'>pull_workflow_prepped_recipe</span>(<span class='no'>fit_recipe_wf</span>)</div><div class='output co'>#&gt; Data Recipe
+<span class='fu'>pull_workflow_prepped_recipe</span>(<span class='kw'>fit_recipe_wf</span>)
+</div><div class='output co'>#&gt; Data Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -313,9 +320,10 @@ section.</p>
 #&gt; Log transformation on disp [trained]</div><div class='input'>
 <span class='co'># That is identical to</span>
 <span class='fu'><a href='https://rdrr.io/r/base/identical.html'>identical</a></span>(
-  <span class='fu'>pull_workflow_mold</span>(<span class='no'>fit_recipe_wf</span>)$<span class='no'>blueprint</span>$<span class='no'>recipe</span>,
-  <span class='fu'>pull_workflow_prepped_recipe</span>(<span class='no'>fit_recipe_wf</span>)
-)</div><div class='output co'>#&gt; [1] TRUE</div></span></pre>
+  <span class='fu'>pull_workflow_mold</span>(<span class='kw'>fit_recipe_wf</span>)<span class='op'>$</span><span class='kw'>blueprint</span><span class='op'>$</span><span class='kw'>recipe</span>,
+  <span class='fu'>pull_workflow_prepped_recipe</span>(<span class='kw'>fit_recipe_wf</span>)
+)
+</div><div class='output co'>#&gt; [1] TRUE</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

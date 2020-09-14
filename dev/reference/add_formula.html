@@ -165,11 +165,11 @@ formula will need to be refit.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_formula</span>(<span class='kw'>x</span>, <span class='kw'>formula</span>, <span class='kw'>...</span>, blueprint = <span class='kw'>NULL</span>)
 
-<span class='fu'>remove_formula</span>(<span class='no'>x</span>)
+<span class='fu'>remove_formula</span>(<span class='kw'>x</span>)
 
-<span class='fu'>update_formula</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='no'>...</span>, <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>update_formula</span>(<span class='kw'>x</span>, <span class='kw'>formula</span>, <span class='kw'>...</span>, blueprint = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,170 +220,179 @@ with what <code><a href='https://rdrr.io/r/stats/model.matrix.html'>stats::model
 <p>The documentation for parsnip models provides details about how the data
 given in the formula are encoded for the model if they diverge from the
 standard <code><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix()</a></code> methodology. Our goal is to be consistent with
-how the underlying model package works.</p><h3>How is this formula used?</h3>
+how the underlying model package works.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>How is this formula used?</h3>
 
 
 <p>To demonstrate, the example below uses <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> to fit a model. The
 formula given to <code>add_formula()</code> is used to create the model matrix and
-that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> with a simple formula of <code>body_mass_g ~ .</code>:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>workflows</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>magrittr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>hardhat</span>)
+that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> with a simple formula of <code>body_mass_g ~ .</code>:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/workflows'>workflows</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>magrittr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/hardhat'>hardhat</a></span>)
 
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>penguins</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>penguins</span>)
 
-<span class='no'>lm_mod</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>lm_mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>lm_wflow</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='no'>lm_mod</span>)
+<span class='kw'>lm_wflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='add_model.html'>add_model</a></span>(<span class='kw'>lm_mod</span>)
 
-<span class='no'>pre_encoded</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>lm_wflow</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'>add_formula</span>(<span class='no'>body_mass_g</span> ~ <span class='no'>species</span> + <span class='no'>island</span> + <span class='no'>bill_depth_mm</span>) <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>penguins</span>)
+<span class='kw'>pre_encoded</span> <span class='op'>&lt;-</span> <span class='kw'>lm_wflow</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'>add_formula</span>(<span class='kw'>body_mass_g</span> <span class='op'>~</span> <span class='kw'>species</span> <span class='op'>+</span> <span class='kw'>island</span> <span class='op'>+</span> <span class='kw'>bill_depth_mm</span>) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(data = <span class='kw'>penguins</span>)
 
-<span class='no'>pre_encoded_parsnip_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>pre_encoded</span> <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>pre_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='kw'>pre_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span>()
 
-<span class='no'>pre_encoded_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>pre_encoded_parsnip_fit</span>$<span class='no'>fit</span>
+<span class='kw'>pre_encoded_fit</span> <span class='op'>&lt;-</span> <span class='kw'>pre_encoded_parsnip_fit</span><span class='op'>$</span><span class='kw'>fit</span>
 
 <span class='co'># The `lm()` formula is *not* the same as the `add_formula()` formula: </span>
-<span class='no'>pre_encoded_fit</span></pre><p></div></p><pre>## 
-## Call:
-## stats::lm(formula = ..y ~ ., data = data)
-## 
-## Coefficients:
-##      (Intercept)  speciesChinstrap     speciesGentoo  
-##        -1009.943             1.328          2236.865  
-##      islandDream   islandTorgersen     bill_depth_mm  
-##            9.221           -18.433           256.913
+<span class='kw'>pre_encoded_fit</span>
+</pre><p></div></p><pre><span class='co'>## </span>
+<span class='co'>## Call:</span>
+<span class='co'>## stats::lm(formula = ..y ~ ., data = data)</span>
+<span class='co'>## </span>
+<span class='co'>## Coefficients:</span>
+<span class='co'>##      (Intercept)  speciesChinstrap     speciesGentoo  </span>
+<span class='co'>##        -1009.943             1.328          2236.865  </span>
+<span class='co'>##      islandDream   islandTorgersen     bill_depth_mm  </span>
+<span class='co'>##            9.221           -18.433           256.913</span>
 </pre>
 
 <p>This can affect how the results are analyzed. For example, to get
-sequential hypothesis tests, each individual term is tested:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>pre_encoded_fit</span>)</pre><p></div></p><pre>## Analysis of Variance Table
-## 
-## Response: ..y
-##                   Df    Sum Sq   Mean Sq  F value Pr(&amp;gt;F)    
-## speciesChinstrap   1  18642821  18642821 141.1482 &amp;lt;2e-16 ***
-## speciesGentoo      1 128221393 128221393 970.7875 &amp;lt;2e-16 ***
-## islandDream        1     13399     13399   0.1014 0.7503    
-## islandTorgersen    1       255       255   0.0019 0.9650    
-## bill_depth_mm      1  28051023  28051023 212.3794 &amp;lt;2e-16 ***
-## Residuals        336  44378805    132080                    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+sequential hypothesis tests, each individual term is tested:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='kw'>pre_encoded_fit</span>)
+</pre><p></div></p><pre><span class='co'>## Analysis of Variance Table</span>
+<span class='co'>## </span>
+<span class='co'>## Response: ..y</span>
+<span class='co'>##                   Df    Sum Sq   Mean Sq  F value Pr(&gt;F)    </span>
+<span class='co'>## speciesChinstrap   1  18642821  18642821 141.1482 &lt;2e-16 ***</span>
+<span class='co'>## speciesGentoo      1 128221393 128221393 970.7875 &lt;2e-16 ***</span>
+<span class='co'>## islandDream        1     13399     13399   0.1014 0.7503    </span>
+<span class='co'>## islandTorgersen    1       255       255   0.0019 0.9650    </span>
+<span class='co'>## bill_depth_mm      1  28051023  28051023 212.3794 &lt;2e-16 ***</span>
+<span class='co'>## Residuals        336  44378805    132080                    </span>
+<span class='co'>## ---</span>
+<span class='co'>## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 </pre>
 
 
-<h3>Overriding the default encodings</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Overriding the default encodings</h3>
 
 
 <p>Users can override the model-specific encodings by using a hardhat
 blueprint. The blueprint can specify how factors are encoded and whether
 intercepts are included. As an example, if you use a formula and would
-like the data to be passed to a model untouched:<div class="r"></p><pre><span class='no'>minimal</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>default_formula_blueprint</a></span>(<span class='kw'>indicators</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+like the data to be passed to a model untouched:<div class="r"></p><pre><span class='kw'>minimal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>default_formula_blueprint</a></span>(indicators = <span class='st'>"none"</span>, intercept = <span class='fl'>FALSE</span>)
 
-<span class='no'>un_encoded</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>lm_wflow</span> <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>un_encoded</span> <span class='op'>&lt;-</span> <span class='kw'>lm_wflow</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>add_formula</span>(
-    <span class='no'>body_mass_g</span> ~ <span class='no'>species</span> + <span class='no'>island</span> + <span class='no'>bill_depth_mm</span>,
-    <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='no'>minimal</span>
-  ) <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>penguins</span>)
+    <span class='kw'>body_mass_g</span> <span class='op'>~</span> <span class='kw'>species</span> <span class='op'>+</span> <span class='kw'>island</span> <span class='op'>+</span> <span class='kw'>bill_depth_mm</span>, 
+    blueprint = <span class='kw'>minimal</span>
+  ) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(data = <span class='kw'>penguins</span>)
 
-<span class='no'>un_encoded_parsnip_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>un_encoded</span> <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>un_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='kw'>un_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span>()
 
-<span class='no'>un_encoded_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>un_encoded_parsnip_fit</span>$<span class='no'>fit</span>
+<span class='kw'>un_encoded_fit</span> <span class='op'>&lt;-</span> <span class='kw'>un_encoded_parsnip_fit</span><span class='op'>$</span><span class='kw'>fit</span>
 
-<span class='no'>un_encoded_fit</span></pre><p></div></p><pre>## 
-## Call:
-## stats::lm(formula = ..y ~ ., data = data)
-## 
-## Coefficients:
-##      (Intercept)     bill_depth_mm  speciesChinstrap  
-##        -1009.943           256.913             1.328  
-##    speciesGentoo       islandDream   islandTorgersen  
-##         2236.865             9.221           -18.433
+<span class='kw'>un_encoded_fit</span>
+</pre><p></div></p><pre><span class='co'>## </span>
+<span class='co'>## Call:</span>
+<span class='co'>## stats::lm(formula = ..y ~ ., data = data)</span>
+<span class='co'>## </span>
+<span class='co'>## Coefficients:</span>
+<span class='co'>##      (Intercept)     bill_depth_mm  speciesChinstrap  </span>
+<span class='co'>##        -1009.943           256.913             1.328  </span>
+<span class='co'>##    speciesGentoo       islandDream   islandTorgersen  </span>
+<span class='co'>##         2236.865             9.221           -18.433</span>
 </pre>
 
 <p>While this looks the same, the raw columns were given to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> and that
 function created the dummy variables. Because of this, the sequential
-ANOVA tests groups of parameters to get column-level p-values:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='no'>un_encoded_fit</span>)</pre><p></div></p><pre>## Analysis of Variance Table
-## 
-## Response: ..y
-##                Df    Sum Sq  Mean Sq F value Pr(&amp;gt;F)    
-## bill_depth_mm   1  48840779 48840779 369.782 &amp;lt;2e-16 ***
-## species         2 126067249 63033624 477.239 &amp;lt;2e-16 ***
-## island          2     20864    10432   0.079 0.9241    
-## Residuals     336  44378805   132080                   
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+ANOVA tests groups of parameters to get column-level p-values:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span>(<span class='kw'>un_encoded_fit</span>)
+</pre><p></div></p><pre><span class='co'>## Analysis of Variance Table</span>
+<span class='co'>## </span>
+<span class='co'>## Response: ..y</span>
+<span class='co'>##                Df    Sum Sq  Mean Sq F value Pr(&gt;F)    </span>
+<span class='co'>## bill_depth_mm   1  48840779 48840779 369.782 &lt;2e-16 ***</span>
+<span class='co'>## species         2 126067249 63033624 477.239 &lt;2e-16 ***</span>
+<span class='co'>## island          2     20864    10432   0.079 0.9241    </span>
+<span class='co'>## Residuals     336  44378805   132080                   </span>
+<span class='co'>## ---</span>
+<span class='co'>## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 </pre>
 
 
-<h3>Overriding the default model formula</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Overriding the default model formula</h3>
 
 
 <p>Additionally, the formula passed to the underlying model can also be
 customized. In this case, the <code>formula</code> argument of <code><a href='add_model.html'>add_model()</a></code> can be
-used. To demonstrate, a spline function will be used for the bill depth:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>splines</span>)
+used. To demonstrate, a spline function will be used for the bill depth:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>splines</span>)
 
-<span class='no'>custom_formula</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>custom_formula</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_model.html'>add_model</a></span>(
-    <span class='no'>lm_mod</span>,
-    <span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>body_mass_g</span> ~ <span class='no'>species</span> + <span class='no'>island</span> + <span class='fu'><a href='https://rdrr.io/r/splines/ns.html'>ns</a></span>(<span class='no'>bill_depth_mm</span>, <span class='fl'>3</span>)
-  ) <span class='kw'>%&amp;gt;%</span>
+    <span class='kw'>lm_mod</span>, 
+    formula = <span class='kw'>body_mass_g</span> <span class='op'>~</span> <span class='kw'>species</span> <span class='op'>+</span> <span class='kw'>island</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/splines/ns.html'>ns</a></span>(<span class='kw'>bill_depth_mm</span>, <span class='fl'>3</span>)
+  ) <span class='op'>%&gt;%</span> 
   <span class='fu'>add_formula</span>(
-    <span class='no'>body_mass_g</span> ~ <span class='no'>species</span> + <span class='no'>island</span> + <span class='no'>bill_depth_mm</span>,
-    <span class='kw'>blueprint</span> <span class='kw'>=</span> <span class='no'>minimal</span>
-  ) <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>penguins</span>)
+    <span class='kw'>body_mass_g</span> <span class='op'>~</span> <span class='kw'>species</span> <span class='op'>+</span> <span class='kw'>island</span> <span class='op'>+</span> <span class='kw'>bill_depth_mm</span>, 
+    blueprint = <span class='kw'>minimal</span>
+  ) <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(data = <span class='kw'>penguins</span>)
 
-<span class='no'>custom_parsnip_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>custom_formula</span> <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>custom_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='kw'>custom_formula</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span>()
 
-<span class='no'>custom_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>custom_parsnip_fit</span>$<span class='no'>fit</span>
+<span class='kw'>custom_fit</span> <span class='op'>&lt;-</span> <span class='kw'>custom_parsnip_fit</span><span class='op'>$</span><span class='kw'>fit</span>
 
-<span class='no'>custom_fit</span></pre><p></div></p><pre>## 
-## Call:
-## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, 
-##     3), data = data)
-## 
-## Coefficients:
-##           (Intercept)       speciesChinstrap          speciesGentoo  
-##              1959.090                  8.534               2352.137  
-##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  
-##                 2.425                -12.002               1476.386  
-## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  
-##              3187.839               1686.996
+<span class='kw'>custom_fit</span>
+</pre><p></div></p><pre><span class='co'>## </span>
+<span class='co'>## Call:</span>
+<span class='co'>## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, </span>
+<span class='co'>##     3), data = data)</span>
+<span class='co'>## </span>
+<span class='co'>## Coefficients:</span>
+<span class='co'>##           (Intercept)       speciesChinstrap          speciesGentoo  </span>
+<span class='co'>##              1959.090                  8.534               2352.137  </span>
+<span class='co'>##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  </span>
+<span class='co'>##                 2.425                -12.002               1476.386  </span>
+<span class='co'>## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  </span>
+<span class='co'>##              3187.839               1686.996</span>
 </pre>
 
 
-<h3>Altering the formula</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Altering the formula</h3>
 
 
 <p>Finally, when a formula is updated or removed from a fitted workflow,
-the corresponding model fit is removed.<div class="r"></p><pre><span class='no'>custom_formula_no_fit</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'>update_formula</span>(<span class='no'>custom_formula</span>, <span class='no'>body_mass_g</span> ~ <span class='no'>species</span>)
+the corresponding model fit is removed.<div class="r"></p><pre><span class='kw'>custom_formula_no_fit</span> <span class='op'>&lt;-</span> <span class='fu'>update_formula</span>(<span class='kw'>custom_formula</span>, <span class='kw'>body_mass_g</span> <span class='op'>~</span> <span class='kw'>species</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span>(<span class='no'>custom_formula_no_fit</span>))</pre><p></div></p><pre>## Error : The workflow does not have a model fit. Have you called `fit()` yet?
+<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span>(<span class='kw'>custom_formula_no_fit</span>))
+</pre><p></div></p><pre><span class='co'>## Error : The workflow does not have a model fit. Have you called `fit()` yet?</span>
 </pre>
 
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_formula</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>cyl</span>)
-<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+    <pre class="examples"><div class='input'><span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_formula</span>(<span class='kw'>workflow</span>, <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>cyl</span>)
+<span class='kw'>workflow</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ cyl</div><div class='input'>
-<span class='fu'>remove_formula</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>remove_formula</span>(<span class='kw'>workflow</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> None
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None</div><div class='input'>
-<span class='fu'>update_formula</span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>disp</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>update_formula</span>(<span class='kw'>workflow</span>, <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>disp</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 

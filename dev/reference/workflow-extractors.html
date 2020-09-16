@@ -107,7 +107,7 @@ extracted from the mold object returned from pull_workflow_mold().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
         </div>
       </div>
     </div>
@@ -225,16 +225,16 @@ section.</p>
 #&gt; 
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>formula_wf</span>)
 </div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x7fc009076038&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>variable_wf</span>)
+#&gt; &lt;environment: 0x7fef0ebde3c8&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span>(<span class='kw'>variable_wf</span>)
 </div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^mpg</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fc009076038</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7fef0ebde3c8</span><span>
 #&gt; 
 #&gt; $predictors
 #&gt; </span><span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^c(cyl, disp)</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fc009076038</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7fef0ebde3c8</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># The `spec` is the parsnip spec before it has been fit.</span>
 <span class='co'># The `fit` is the fit parsnip model.</span>
@@ -245,7 +245,7 @@ section.</p>
 #&gt; </div><div class='input'><span class='fu'>pull_workflow_fit</span>(<span class='kw'>fit_formula_wf</span>)
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  3ms 
+#&gt; Fit time:  2ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)

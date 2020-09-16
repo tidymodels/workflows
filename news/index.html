@@ -94,7 +94,7 @@
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
         </div>
       </div>
     </div>
@@ -135,6 +135,20 @@
       <small>Source: <a href='https://github.com/tidymodels/workflows/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="workflows-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#workflows-020" class="anchor"></a>workflows 0.2.0<small> 2020-09-15 </small>
+</h1>
+<ul>
+<li>
+<p>New <code><a href="../reference/add_variables.html">add_variables()</a></code> for specifying model terms using tidyselect expressions with no extra preprocessing. For example:</p>
+<pre><code>wf &lt;- workflow() %&gt;%
+  add_variables(y, c(var1, start_with("x_"))) %&gt;%
+  add_model(spec_lm)</code></pre>
+<p>One benefit of specifying terms in this way over the formula method is to avoid preprocessing from <code><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix()</a></code>, which might strip the class of your predictor columns (as it does with Date columns) (<a href='https://github.com/tidymodels/workflows/issues/34'>#34</a>).</p>
+</li>
+</ul>
+</div>
     <div id="workflows-013" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.3">
 <a href="#workflows-013" class="anchor"></a>workflows 0.1.3<small> 2020-08-10 </small>
@@ -148,7 +162,7 @@
 <a href="#workflows-012" class="anchor"></a>workflows 0.1.2<small> 2020-07-07 </small>
 </h1>
 <ul>
-<li>When using a formula preprocessor with <code><a href="../reference/add_formula.html">add_formula()</a></code>, workflows now uses model-specific information from parsnip to decide whether to expand factors via dummy encoding (<code>n - 1</code> levels), one-hot encoding (<code>n</code> levels), or no expansion at all. This should result in more intuitive behavior when working with models that don’t require dummy variables. For example, if a parsnip <code>rand_forest()</code> model is used with a ranger engine, dummy variables will not be created, because ranger can handle factors directly (<a href='https://github.com/tidymodels/workflows/issues/51'>#51</a>, <a href='https://github.com/tidymodels/workflows/issues/53'>#53</a>).</li>
+<li>When using a formula preprocessor with <code><a href="../reference/add_formula.html">add_formula()</a></code>, workflows now uses model-specific information from parsnip to decide whether to expand factors via dummy encoding (<code>n - 1</code> levels), one-hot encoding (<code>n</code> levels), or no expansion at all. This should result in more intuitive behavior when working with models that don’t require dummy variables. For example, if a parsnip <code><a href="https://parsnip.tidymodels.org/reference/rand_forest.html">rand_forest()</a></code> model is used with a ranger engine, dummy variables will not be created, because ranger can handle factors directly (<a href='https://github.com/tidymodels/workflows/issues/51'>#51</a>, <a href='https://github.com/tidymodels/workflows/issues/53'>#53</a>).</li>
 </ul>
 </div>
     <div id="workflows-011" class="section level1">

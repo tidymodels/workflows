@@ -103,7 +103,7 @@ the workflow.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
         </div>
       </div>
     </div>
@@ -157,11 +157,11 @@ the workflow.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_model</span>(<span class='no'>x</span>, <span class='no'>spec</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_model</span>(<span class='kw'>x</span>, <span class='kw'>spec</span>, formula = <span class='kw'>NULL</span>)
 
-<span class='fu'>remove_model</span>(<span class='no'>x</span>)
+<span class='fu'>remove_model</span>(<span class='kw'>x</span>)
 
-<span class='fu'>update_model</span>(<span class='no'>x</span>, <span class='no'>spec</span>, <span class='kw'>formula</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>update_model</span>(<span class='kw'>x</span>, <span class='kw'>spec</span>, formula = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,7 +198,7 @@ used for those purposes.</p></td>
 categorical data when you use a model formula, and some do not. When you
 specify and fit a model with a <code><a href='workflow.html'>workflow()</a></code>, parsnip and workflows match
 and reproduce the underlying behavior of the user-specified model’s
-computational engine.</p><h3>Formula Preprocessor</h3>
+computational engine.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Formula Preprocessor</h3>
 
 
 <p>In the <a href='https://modeldata.tidymodels.org/reference/Sacramento.html'>modeldata::Sacramento</a> data set of real
@@ -208,37 +208,39 @@ formula added via <code><a href='add_formula.html'>add_formula()</a></code> to p
 property price from property type, square footage, number of beds, and
 number of baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>recipes</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>workflows</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>modeldata</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/recipes'>recipes</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/tidymodels/workflows'>workflows</a></span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://modeldata.tidymodels.org'>modeldata</a></span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"Sacramento"</span>)
 
-<span class='no'>base_wf</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>price</span> ~ <span class='no'>type</span> + <span class='no'>sqft</span> + <span class='no'>beds</span> + <span class='no'>baths</span>)</pre><p></div></p>
-<p>This first model does create dummy/indicator variables:<div class="r"></p><pre><span class='no'>lm_spec</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='kw'>%&amp;gt;%</span>
+<span class='kw'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='kw'>price</span> <span class='op'>~</span> <span class='kw'>type</span> <span class='op'>+</span> <span class='kw'>sqft</span> <span class='op'>+</span> <span class='kw'>beds</span> <span class='op'>+</span> <span class='kw'>baths</span>)
+</pre><p></div></p>
+<p>This first model does create dummy/indicator variables:<div class="r"></p><pre><span class='kw'>lm_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>() <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"lm"</span>)
 
-<span class='no'>base_wf</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'>add_model</span>(<span class='no'>lm_spec</span>) <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>Sacramento</span>)</pre><p></div></p><pre>## == Workflow [trained] ================================================
-## Preprocessor: Formula
-## Model: linear_reg()
-## 
-## -- Preprocessor ------------------------------------------------------
-## price ~ type + sqft + beds + baths
-## 
-## -- Model -------------------------------------------------------------
-## 
-## Call:
-## stats::lm(formula = ..y ~ ., data = data)
-## 
-## Coefficients:
-##      (Intercept)  typeMulti_Family   typeResidential  
-##          32919.4          -21995.8           33688.6  
-##             sqft              beds             baths  
-##            156.2          -29788.0            8730.0
+<span class='kw'>base_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span>(<span class='kw'>lm_spec</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>Sacramento</span>)
+</pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
+<span class='co'>## Preprocessor: Formula</span>
+<span class='co'>## Model: linear_reg()</span>
+<span class='co'>## </span>
+<span class='co'>## -- Preprocessor ------------------------------------------------------</span>
+<span class='co'>## price ~ type + sqft + beds + baths</span>
+<span class='co'>## </span>
+<span class='co'>## -- Model -------------------------------------------------------------</span>
+<span class='co'>## </span>
+<span class='co'>## Call:</span>
+<span class='co'>## stats::lm(formula = ..y ~ ., data = data)</span>
+<span class='co'>## </span>
+<span class='co'>## Coefficients:</span>
+<span class='co'>##      (Intercept)  typeMulti_Family   typeResidential  </span>
+<span class='co'>##          32919.4          -21995.8           33688.6  </span>
+<span class='co'>##             sqft              beds             baths  </span>
+<span class='co'>##            156.2          -29788.0            8730.0</span>
 </pre>
 
 <p>There are <strong>five</strong> independent variables in the fitted model for this
@@ -247,35 +249,36 @@ predictor <code>type</code> of the real estate properties was converted to two
 binary predictors, <code>typeMulti_Family</code> and <code>typeResidential</code>. (The third
 type, for condos, does not need its own column because it is the
 baseline level).</p>
-<p>This second model does not create dummy/indicator variables:<div class="r"></p><pre><span class='no'>rf_spec</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://parsnip.tidymodels.org/reference/rand_forest.html'>rand_forest</a></span>() <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span>(<span class='st'>"regression"</span>) <span class='kw'>%&amp;gt;%</span>
+<p>This second model does not create dummy/indicator variables:<div class="r"></p><pre><span class='kw'>rf_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/rand_forest.html'>rand_forest</a></span>() <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span>(<span class='st'>"regression"</span>) <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='st'>"ranger"</span>)
 
-<span class='no'>base_wf</span> <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'>add_model</span>(<span class='no'>rf_spec</span>) <span class='kw'>%&amp;gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>Sacramento</span>)</pre><p></div></p><pre>## == Workflow [trained] ================================================
-## Preprocessor: Formula
-## Model: rand_forest()
-## 
-## -- Preprocessor ------------------------------------------------------
-## price ~ type + sqft + beds + baths
-## 
-## -- Model -------------------------------------------------------------
-## Ranger result
-## 
-## Call:
-##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
-## 
-## Type:                             Regression 
-## Number of trees:                  500 
-## Sample size:                      932 
-## Number of independent variables:  4 
-## Mtry:                             2 
-## Target node size:                 5 
-## Variable importance mode:         none 
-## Splitrule:                        variance 
-## OOB prediction error (MSE):       7058847504 
-## R squared (OOB):                  0.5894647
+<span class='kw'>base_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span>(<span class='kw'>rf_spec</span>) <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>Sacramento</span>)
+</pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
+<span class='co'>## Preprocessor: Formula</span>
+<span class='co'>## Model: rand_forest()</span>
+<span class='co'>## </span>
+<span class='co'>## -- Preprocessor ------------------------------------------------------</span>
+<span class='co'>## price ~ type + sqft + beds + baths</span>
+<span class='co'>## </span>
+<span class='co'>## -- Model -------------------------------------------------------------</span>
+<span class='co'>## Ranger result</span>
+<span class='co'>## </span>
+<span class='co'>## Call:</span>
+<span class='co'>##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) </span>
+<span class='co'>## </span>
+<span class='co'>## Type:                             Regression </span>
+<span class='co'>## Number of trees:                  500 </span>
+<span class='co'>## Sample size:                      932 </span>
+<span class='co'>## Number of independent variables:  4 </span>
+<span class='co'>## Mtry:                             2 </span>
+<span class='co'>## Target node size:                 5 </span>
+<span class='co'>## Variable importance mode:         none </span>
+<span class='co'>## Splitrule:                        variance </span>
+<span class='co'>## OOB prediction error (MSE):       7058847504 </span>
+<span class='co'>## R squared (OOB):                  0.5894647</span>
 </pre>
 
 <p>Note that there are <strong>four</strong> independent variables in the fitted model
@@ -285,7 +288,7 @@ property being sold. Tree-based models such as random forest models can
 handle factor predictors directly, and don’t need any conversion to
 numeric binary variables.</p>
 
-<h3>Recipe Preprocessor</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Recipe Preprocessor</h3>
 
 
 <p>When you specify a model with a <code><a href='workflow.html'>workflow()</a></code> and a recipe preprocessor
@@ -295,16 +298,17 @@ behavior from the model’s computational engine.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>parsnip</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://parsnip.tidymodels.org'>parsnip</a></span>)
 
-<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>()
-<span class='no'>lm_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"lm"</span>)
+<span class='kw'>lm_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span>()
+<span class='kw'>lm_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='kw'>lm_model</span>, <span class='st'>"lm"</span>)
 
-<span class='no'>regularized_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='no'>lm_model</span>, <span class='st'>"glmnet"</span>)
+<span class='kw'>regularized_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span>(<span class='kw'>lm_model</span>, <span class='st'>"glmnet"</span>)
 
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'>add_model</span>(<span class='no'>workflow</span>, <span class='no'>lm_model</span>)
-<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span>()
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_model</span>(<span class='kw'>workflow</span>, <span class='kw'>lm_model</span>)
+<span class='kw'>workflow</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span><span> None
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
@@ -313,8 +317,9 @@ behavior from the model’s computational engine.</p>
 #&gt; 
 #&gt; Computational engine: lm 
 #&gt; </div><div class='input'>
-<span class='no'>workflow</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='no'>workflow</span>, <span class='no'>mpg</span> ~ <span class='no'>.</span>)
-<span class='no'>workflow</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='kw'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span>(<span class='kw'>workflow</span>, <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>.</span>)
+<span class='kw'>workflow</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
@@ -326,14 +331,16 @@ behavior from the model’s computational engine.</p>
 #&gt; 
 #&gt; Computational engine: lm 
 #&gt; </div><div class='input'>
-<span class='fu'>remove_model</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>remove_model</span>(<span class='kw'>workflow</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
-<span class='no'>fitted</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/reexports.html'>fit</a></span>(<span class='no'>workflow</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='no'>fitted</span></div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+<span class='kw'>fitted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span>(<span class='kw'>workflow</span>, data = <span class='kw'>mtcars</span>)
+<span class='kw'>fitted</span>
+</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
@@ -351,19 +358,22 @@ behavior from the model’s computational engine.</p>
 #&gt;        qsec           vs           am         gear         carb  
 #&gt;     0.82104      0.31776      2.52023      0.65541     -0.19942  
 #&gt; </div><div class='input'>
-<span class='fu'>remove_model</span>(<span class='no'>fitted</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>remove_model</span>(<span class='kw'>fitted</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
-<span class='fu'>remove_model</span>(<span class='no'>workflow</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>remove_model</span>(<span class='kw'>workflow</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
-<span class='fu'>update_model</span>(<span class='no'>workflow</span>, <span class='no'>regularized_model</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'>update_model</span>(<span class='kw'>workflow</span>, <span class='kw'>regularized_model</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 
@@ -374,7 +384,8 @@ behavior from the model’s computational engine.</p>
 #&gt; Linear Regression Model Specification (regression)
 #&gt; 
 #&gt; Computational engine: glmnet 
-#&gt; </div><div class='input'><span class='fu'>update_model</span>(<span class='no'>fitted</span>, <span class='no'>regularized_model</span>)</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; </div><div class='input'><span class='fu'>update_model</span>(<span class='kw'>fitted</span>, <span class='kw'>regularized_model</span>)
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
 #&gt; 

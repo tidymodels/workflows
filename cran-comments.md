@@ -14,6 +14,10 @@ We checked 4 reverse dependencies, comparing R CMD check results across CRAN and
  * We saw 0 new problems
  * We failed to check 0 packages
 
+## Submission 0.2.0
+
+This is a minor release that adds a new preprocessing method through `add_variables()`.
+
 ## Submission 0.1.3
 
 This is a small release to fix a test that broke with parsnip 0.1.3.

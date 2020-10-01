@@ -1,3 +1,5 @@
+data("hardhat-example-data", package = "hardhat")
+
 test_that("can `fit()` a workflow with a recipe", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
 
@@ -69,17 +71,17 @@ test_that("cannot fit without a fit stage", {
 
 test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encoding info", {
   workflow <- workflow()
-  workflow <- add_formula(workflow, Sepal.Length ~ .)
+  workflow <- add_formula(workflow, num_1 ~ .)
 
   mod <- parsnip::rand_forest()
   mod <- parsnip::set_engine(mod, "ranger")
   mod <- parsnip::set_mode(mod, "regression")
   workflow <- add_model(workflow, mod)
 
-  result <- .fit_pre(workflow, iris)
+  result <- .fit_pre(workflow, example_train)
 
   # ranger sets `indicators = 'none'`, so `Species` is not expanded
-  expected <- "Species"
+  expected <- "fac_1"
   expect_true(expected %in% names(result$pre$mold$predictors))
   expect_identical(result$pre$actions$formula$blueprint$indicators, "none")
 
@@ -88,10 +90,10 @@ test_that("`.fit_pre()` updates a formula blueprint according to parsnip's encod
   mod <- parsnip::set_mode(mod, "regression")
   workflow <- update_model(workflow, mod)
 
-  result <- .fit_pre(workflow, iris)
+  result <- .fit_pre(workflow, example_train)
 
   # xgboost sets `indicators = 'one_hot'`, so `Species` is expanded to three values
-  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expected <- c("fac_1a", "fac_1b", "fac_1c")
   expect_true(all(expected %in% names(result$pre$mold$predictors)))
   expect_identical(result$pre$actions$formula$blueprint$indicators, "one_hot")
 })
@@ -100,16 +102,16 @@ test_that("`.fit_pre()` ignores parsnip's encoding info with recipes", {
   mod <- parsnip::rand_forest()
   mod <- parsnip::set_engine(mod, "ranger")
   mod <- parsnip::set_mode(mod, "regression")
-  rec <- recipes::recipe(Sepal.Length ~ ., iris)
+  rec <- recipes::recipe(num_1 ~ ., example_train)
 
   workflow <- workflow()
   workflow <- add_recipe(workflow, rec)
   workflow <- add_model(workflow, mod)
 
-  result <- .fit_pre(workflow, iris)
+  result <- .fit_pre(workflow, example_train)
 
   # recipe preprocessing won't auto-expand factors
-  expect_true("Species" %in% names(result$pre$mold$predictors))
+  expect_true("fac_1" %in% names(result$pre$mold$predictors))
   expect_false("indicators" %in% names(result$pre$actions$recipe$blueprint))
 })
 
@@ -123,12 +125,12 @@ test_that("`.fit_pre()` doesn't modify user supplied formula blueprint", {
   blueprint <- hardhat::default_formula_blueprint(indicators = "traditional")
 
   workflow <- workflow()
-  workflow <- add_formula(workflow, Sepal.Length ~ ., blueprint = blueprint)
+  workflow <- add_formula(workflow, num_1 ~ ., blueprint = blueprint)
   workflow <- add_model(workflow, mod)
 
-  result <- .fit_pre(workflow, iris)
+  result <- .fit_pre(workflow, example_train)
 
-  expected <- c("Speciessetosa", "Speciesversicolor", "Speciesvirginica")
+  expected <- c("fac_1a", "fac_1b", "fac_1c")
   expect_true(all(expected %in% names(result$pre$mold$predictors)))
   expect_identical(result$pre$actions$formula$blueprint, blueprint)
 })
@@ -137,7 +139,7 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
   mod <- parsnip::rand_forest()
   mod <- parsnip::set_engine(mod, "ranger")
   mod <- parsnip::set_mode(mod, "regression")
-  rec <- recipes::recipe(Sepal.Length ~ ., iris)
+  rec <- recipes::recipe(num_1 ~ ., example_train)
 
   blueprint <- hardhat::default_recipe_blueprint(allow_novel_levels = TRUE)
 
@@ -145,9 +147,9 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
   workflow <- add_recipe(workflow, rec, blueprint = blueprint)
   workflow <- add_model(workflow, mod)
 
-  result <- .fit_pre(workflow, iris)
+  result <- .fit_pre(workflow, example_train)
 
-  expect_true("Species" %in% names(result$pre$mold$predictors))
+  expect_true("fac_1" %in% names(result$pre$mold$predictors))
   expect_identical(result$pre$actions$recipe$blueprint, blueprint)
 })
 

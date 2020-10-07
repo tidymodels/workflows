@@ -50,10 +50,10 @@
 
 
 <meta property="og:title" content="Internal workflow functions — workflows-internals" />
-<meta property="og:description" content=".fit_pre() and .fit_model() are internal workflow functions for
-partially fitting a workflow object. They are only exported for usage by
-the tuning package, tune, and the
-general user should never need to worry about them." />
+<meta property="og:description" content=".fit_pre(), .fit_model(), and .fit_finalize() are internal workflow
+functions for partially fitting a workflow object. They are only exported
+for usage by the tuning package, tune,
+and the general user should never need to worry about them." />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -141,15 +141,17 @@ general user should never need to worry about them." />
     </div>
 
     <div class="ref-description">
-    <p><code>.fit_pre()</code> and <code>.fit_model()</code> are internal workflow functions for
-<em>partially</em> fitting a workflow object. They are only exported for usage by
-the tuning package, <a href='https://github.com/tidymodels/tune'>tune</a>, and the
-general user should never need to worry about them.</p>
+    <p><code>.fit_pre()</code>, <code>.fit_model()</code>, and <code>.fit_finalize()</code> are internal workflow
+functions for <em>partially</em> fitting a workflow object. They are only exported
+for usage by the tuning package, <a href='https://github.com/tidymodels/tune'>tune</a>,
+and the general user should never need to worry about them.</p>
     </div>
 
     <pre class="usage"><span class='fu'>.fit_pre</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>data</span><span class='op'>)</span>
 
-<span class='fu'>.fit_model</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>control</span><span class='op'>)</span></pre>
+<span class='fu'>.fit_model</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>control</span><span class='op'>)</span>
+
+<span class='fu'>.fit_finalize</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,7 +161,9 @@ general user should never need to worry about them.</p>
       <td><p>A workflow</p>
 <p>For <code>.fit_pre()</code>, this should be a fresh workflow.</p>
 <p>For <code>.fit_model()</code>, this should be a workflow that has already been trained
-through <code>.fit_pre()</code>.</p></td>
+through <code>.fit_pre()</code>.</p>
+<p>For <code>.fit_finalize()</code>, this should be a workflow that has been through
+both <code>.fit_pre()</code> and <code>.fit_model()</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
@@ -181,13 +185,69 @@ workflow</p></td>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span>
 
-<span class='va'>unfit_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>wf_unfit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>partially_fit_wf</span> <span class='op'>&lt;-</span> <span class='fu'>.fit_pre</span><span class='op'>(</span><span class='va'>unfit_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='va'>fit_workflow</span> <span class='op'>&lt;-</span> <span class='fu'>.fit_model</span><span class='op'>(</span><span class='va'>partially_fit_wf</span>, <span class='fu'><a href='control_workflow.html'>control_workflow</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
+<span class='va'>wf_fit_pre</span> <span class='op'>&lt;-</span> <span class='fu'>.fit_pre</span><span class='op'>(</span><span class='va'>wf_unfit</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>wf_fit_model</span> <span class='op'>&lt;-</span> <span class='fu'>.fit_model</span><span class='op'>(</span><span class='va'>wf_fit_pre</span>, <span class='fu'><a href='control_workflow.html'>control_workflow</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>wf_fit</span> <span class='op'>&lt;-</span> <span class='fu'>.fit_finalize</span><span class='op'>(</span><span class='va'>wf_fit_model</span><span class='op'>)</span>
+
+<span class='co'># Notice that fitting through the model doesn't mark the</span>
+<span class='co'># workflow as being "trained"</span>
+<span class='va'>wf_fit_model</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ cyl + log(disp)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = ..y ~ ., data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl  `log(disp)`  
+#&gt;     67.6674      -0.1755      -8.7971  
+#&gt; </div><div class='input'>
+<span class='co'># Finalizing the workflow marks it as "trained"</span>
+<span class='va'>wf_fit</span>
+</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; mpg ~ cyl + log(disp)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = ..y ~ ., data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl  `log(disp)`  
+#&gt;     67.6674      -0.1755      -8.7971  
+#&gt; </div><div class='input'>
+<span class='co'># Which allows you to predict from it</span>
+<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>wf_fit_model</span>, <span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Error : Workflow has not yet been trained. Do you need to call `fit()`?</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>wf_fit</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 1</span><span>
+#&gt;    .pred
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span>  22.0
+#&gt; </span><span style='color: #555555;'> 2</span><span>  22.0
+#&gt; </span><span style='color: #555555;'> 3</span><span>  25.8
+#&gt; </span><span style='color: #555555;'> 4</span><span>  17.8
+#&gt; </span><span style='color: #555555;'> 5</span><span>  14.5
+#&gt; </span><span style='color: #555555;'> 6</span><span>  19.0
+#&gt; </span><span style='color: #555555;'> 7</span><span>  14.5
+#&gt; </span><span style='color: #555555;'> 8</span><span>  23.1
+#&gt; </span><span style='color: #555555;'> 9</span><span>  23.4
+#&gt; </span><span style='color: #555555;'>10</span><span>  21.6
+#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

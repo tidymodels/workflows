@@ -4,11 +4,14 @@
 \alias{workflows-internals}
 \alias{.fit_pre}
 \alias{.fit_model}
+\alias{.fit_finalize}
 \title{Internal workflow functions}
 \usage{
 .fit_pre(workflow, data)
 
 .fit_model(workflow, control)
+
+.fit_finalize(workflow)
 }
 \arguments{
 \item{workflow}{A workflow
@@ -16,7 +19,10 @@
 For \code{.fit_pre()}, this should be a fresh workflow.
 
 For \code{.fit_model()}, this should be a workflow that has already been trained
-through \code{.fit_pre()}.}
+through \code{.fit_pre()}.
+
+For \code{.fit_finalize()}, this should be a workflow that has been through
+both \code{.fit_pre()} and \code{.fit_model()}.}
 
 \item{data}{A data frame of predictors and outcomes to use when fitting the
 workflow}
@@ -24,10 +30,10 @@ workflow}
 \item{control}{A \code{\link[=control_workflow]{control_workflow()}} object}
 }
 \description{
-\code{.fit_pre()} and \code{.fit_model()} are internal workflow functions for
-\emph{partially} fitting a workflow object. They are only exported for usage by
-the tuning package, \href{https://github.com/tidymodels/tune}{tune}, and the
-general user should never need to worry about them.
+\code{.fit_pre()}, \code{.fit_model()}, and \code{.fit_finalize()} are internal workflow
+functions for \emph{partially} fitting a workflow object. They are only exported
+for usage by the tuning package, \href{https://github.com/tidymodels/tune}{tune},
+and the general user should never need to worry about them.
 }
 \examples{
 library(parsnip)
@@ -37,11 +43,24 @@ library(magrittr)
 model <- linear_reg() \%>\%
   set_engine("lm")
 
-unfit_wf <- workflow() \%>\%
+wf_unfit <- workflow() \%>\%
   add_model(model) \%>\%
   add_formula(mpg ~ cyl + log(disp))
 
-partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
-fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
+wf_fit_pre <- .fit_pre(wf_unfit, mtcars)
+wf_fit_model <- .fit_model(wf_fit_pre, control_workflow())
+wf_fit <- .fit_finalize(wf_fit_model)
+
+# Notice that fitting through the model doesn't mark the
+# workflow as being "trained"
+wf_fit_model
+
+# Finalizing the workflow marks it as "trained"
+wf_fit
+
+# Which allows you to predict from it
+try(predict(wf_fit_model, mtcars))
+
+predict(wf_fit, mtcars)
 }
 \keyword{internal}

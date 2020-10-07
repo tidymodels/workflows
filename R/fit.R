@@ -53,15 +53,13 @@
 #'
 #' fit(recipe_wf, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
-  workflow <- object
+  ellipsis::check_dots_empty()
 
   if (is_missing(data)) {
     abort("`data` must be provided to fit a workflow.")
   }
 
-  ellipsis::check_dots_empty()
-  validate_has_minimal_components(object)
-
+  workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
 
@@ -113,6 +111,11 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
 #' fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
 .fit_pre <- function(workflow, data) {
+  validate_has_preprocessor(workflow)
+  # A model spec is required to ensure that we can always
+  # finalize the blueprint, no matter the preprocessor
+  validate_has_model(workflow)
+
   workflow <- finalize_blueprint(workflow)
 
   n <- length(workflow[["pre"]]$actions)
@@ -139,7 +142,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-validate_has_minimal_components <- function(x) {
+validate_has_preprocessor <- function(x) {
   has_preprocessor <-
     has_preprocessor_formula(x) ||
     has_preprocessor_recipe(x) ||
@@ -152,6 +155,10 @@ validate_has_minimal_components <- function(x) {
     )
   }
 
+  invisible(x)
+}
+
+validate_has_model <- function(x) {
   has_model <- has_action(x$fit, "model")
 
   if (!has_model) {
@@ -163,7 +170,6 @@ validate_has_minimal_components <- function(x) {
 
   invisible(x)
 }
-
 
 # ------------------------------------------------------------------------------
 

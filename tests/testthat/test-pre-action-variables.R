@@ -50,8 +50,12 @@ test_that("works with fit()", {
 })
 
 test_that("can use a `NULL` outcome", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
   workflow <- workflow()
   workflow <- add_variables(workflow, NULL, c(cyl, disp))
+  workflow <- add_model(workflow, mod)
 
   workflow <- .fit_pre(workflow, mtcars)
 
@@ -95,7 +99,11 @@ test_that("can use `all_of(x)` when `x` is in the scope of `fit()`", {
 })
 
 test_that("`outcomes` are removed from set of possible `predictors` (#72)", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
   workflow <- workflow()
+  workflow <- add_model(workflow, mod)
 
   workflow1 <- add_variables(workflow, mpg, everything())
 
@@ -120,8 +128,12 @@ test_that("`outcomes` are removed from set of possible `predictors` (#72)", {
 })
 
 test_that("selecting no `outcomes` doesn't break selection of `predictors`", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
   workflow <- workflow()
   workflow <- add_variables(workflow, any_of("not_here"), everything())
+  workflow <- add_model(workflow, mod)
 
   result <- .fit_pre(workflow, mtcars)
 

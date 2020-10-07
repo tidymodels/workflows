@@ -53,23 +53,18 @@
 #'
 #' fit(recipe_wf, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
-  workflow <- object
+  ellipsis::check_dots_empty()
 
   if (is_missing(data)) {
     abort("`data` must be provided to fit a workflow.")
   }
 
-  ellipsis::check_dots_empty()
-  validate_has_minimal_components(object)
-
+  workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
+  workflow <- .fit_finalize(workflow)
 
-  # Eh? Predictions during the fit?
-  # pred <- result$pred
-  # result <- fit_post(workflow, pred)
-
-  workflow$trained <- TRUE
+  # TODO: Post-processing before `.fit_finalize()`?
 
   workflow
 }
@@ -78,10 +73,10 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 #' Internal workflow functions
 #'
-#' `.fit_pre()` and `.fit_model()` are internal workflow functions for
-#' _partially_ fitting a workflow object. They are only exported for usage by
-#' the tuning package, [tune](https://github.com/tidymodels/tune), and the
-#' general user should never need to worry about them.
+#' `.fit_pre()`, `.fit_model()`, and `.fit_finalize()` are internal workflow
+#' functions for _partially_ fitting a workflow object. They are only exported
+#' for usage by the tuning package, [tune](https://github.com/tidymodels/tune),
+#' and the general user should never need to worry about them.
 #'
 #' @param workflow A workflow
 #'
@@ -89,6 +84,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #'
 #'   For `.fit_model()`, this should be a workflow that has already been trained
 #'   through `.fit_pre()`.
+#'
+#'   For `.fit_finalize()`, this should be a workflow that has been through
+#'   both `.fit_pre()` and `.fit_model()`.
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
 #'   workflow
@@ -106,13 +104,31 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' model <- linear_reg() %>%
 #'   set_engine("lm")
 #'
-#' unfit_wf <- workflow() %>%
+#' wf_unfit <- workflow() %>%
 #'   add_model(model) %>%
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
-#' partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
-#' fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
+#' wf_fit_pre <- .fit_pre(wf_unfit, mtcars)
+#' wf_fit_model <- .fit_model(wf_fit_pre, control_workflow())
+#' wf_fit <- .fit_finalize(wf_fit_model)
+#'
+#' # Notice that fitting through the model doesn't mark the
+#' # workflow as being "trained"
+#' wf_fit_model
+#'
+#' # Finalizing the workflow marks it as "trained"
+#' wf_fit
+#'
+#' # Which allows you to predict from it
+#' try(predict(wf_fit_model, mtcars))
+#'
+#' predict(wf_fit, mtcars)
 .fit_pre <- function(workflow, data) {
+  validate_has_preprocessor(workflow)
+  # A model spec is required to ensure that we can always
+  # finalize the blueprint, no matter the preprocessor
+  validate_has_model(workflow)
+
   workflow <- finalize_blueprint(workflow)
 
   n <- length(workflow[["pre"]]$actions)
@@ -137,9 +153,16 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   fit(action_model, workflow = workflow, control = control)
 }
 
+#' @rdname workflows-internals
+#' @export
+.fit_finalize <- function(workflow) {
+  workflow[["trained"]] <- TRUE
+  workflow
+}
+
 # ------------------------------------------------------------------------------
 
-validate_has_minimal_components <- function(x) {
+validate_has_preprocessor <- function(x) {
   has_preprocessor <-
     has_preprocessor_formula(x) ||
     has_preprocessor_recipe(x) ||
@@ -152,6 +175,10 @@ validate_has_minimal_components <- function(x) {
     )
   }
 
+  invisible(x)
+}
+
+validate_has_model <- function(x) {
   has_model <- has_action(x$fit, "model")
 
   if (!has_model) {
@@ -163,7 +190,6 @@ validate_has_minimal_components <- function(x) {
 
   invisible(x)
 }
-
 
 # ------------------------------------------------------------------------------
 

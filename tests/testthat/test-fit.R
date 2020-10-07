@@ -153,3 +153,40 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
   expect_identical(result$pre$actions$recipe$blueprint, blueprint)
 })
 
+# ------------------------------------------------------------------------------
+# .fit_finalize()
+
+test_that("workflow is marked as 'trained' after going through `.fit_finalize()`", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  workflow_pre <- .fit_pre(workflow, mtcars)
+  workflow_model <- .fit_model(workflow_pre, control_workflow())
+  workflow_final <- .fit_finalize(workflow_model)
+
+  expect_false(workflow_model$trained)
+  expect_true(workflow_final$trained)
+})
+
+test_that("can `predict()` from workflow fit from individual pieces", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  workflow_pre <- .fit_pre(workflow, mtcars)
+  workflow_model <- .fit_model(workflow_pre, control_workflow())
+  workflow_final <- .fit_finalize(workflow_model)
+
+  workflow_fit <- fit(workflow, mtcars)
+  expect <- predict(workflow_fit, mtcars)
+
+  expect_error(predict(workflow_model, mtcars), "has not yet been trained")
+  expect_identical(predict(workflow_final, mtcars), expect)
+})

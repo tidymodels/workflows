@@ -24,7 +24,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-${{ hashFiles('.github/depends.Rds') }}
@@ -32,6 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown")
           remotes::install_github("tidyverse/tidytemplate")
         shell: Rscript {0}

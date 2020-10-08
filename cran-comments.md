@@ -14,6 +14,11 @@ We checked 4 reverse dependencies, comparing R CMD check results across CRAN and
  * We saw 0 new problems
  * We failed to check 0 packages
 
+## Submission 0.2.1
+
+This is a small release to export an internal function for use in the tune
+package.
+
 ## Submission 0.2.0
 
 This is a minor release that adds a new preprocessing method through `add_variables()`.

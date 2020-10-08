@@ -1,4 +1,6 @@
-# workflows (development version)
+# workflows 0.2.1
+
+* New `.fit_finalize()` for internal usage by the tune package.
 
 # workflows 0.2.0
 

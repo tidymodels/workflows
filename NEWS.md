@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* New `.fit_finalize()` for internal usage by the tune package.
+
 # workflows 0.2.0
 
 * New `add_variables()` for specifying model terms using tidyselect expressions

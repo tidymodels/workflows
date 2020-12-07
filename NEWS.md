@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Updated to testthat 3.0.0.
+
 # workflows 0.2.1
 
 * New `.fit_finalize()` for internal usage by the tune package.

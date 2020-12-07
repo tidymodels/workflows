@@ -1,5 +1,5 @@
 test_that("can create a basic workflow control object", {
-  expect_is(control_workflow(), "control_workflow")
+  expect_s3_class(control_workflow(), "control_workflow")
 })
 
 test_that("default parsnip control is created", {

@@ -2,7 +2,7 @@ test_that("can add a formula to a workflow", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 
-  expect_is(workflow$pre$actions$formula, "action_formula")
+  expect_s3_class(workflow$pre$actions$formula, "action_formula")
 })
 
 test_that("formula is validated", {

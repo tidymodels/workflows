@@ -4,7 +4,7 @@ test_that("can add a recipe to a workflow", {
   workflow <- workflow()
   workflow <- add_recipe(workflow, rec)
 
-  expect_is(workflow$pre$actions$recipe, "action_recipe")
+  expect_s3_class(workflow$pre$actions$recipe, "action_recipe")
 })
 
 test_that("recipe is validated", {

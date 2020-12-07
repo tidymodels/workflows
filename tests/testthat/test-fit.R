@@ -12,7 +12,7 @@ test_that("can `fit()` a workflow with a recipe", {
 
   result <- fit(workflow, mtcars)
 
-  expect_is(result$fit$fit, "model_fit")
+  expect_s3_class(result$fit$fit, "model_fit")
 
   expect_equal(
     coef(result$fit$fit$fit),
@@ -30,7 +30,7 @@ test_that("can `fit()` a workflow with a formula", {
 
   result <- fit(workflow, mtcars)
 
-  expect_is(result$fit$fit, "model_fit")
+  expect_s3_class(result$fit$fit, "model_fit")
 
   expect_equal(
     coef(result$fit$fit$fit),

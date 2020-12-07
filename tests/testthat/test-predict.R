@@ -10,7 +10,7 @@ test_that("can predict from a workflow", {
 
   result <- predict(fit_workflow, mtcars)
 
-  expect_is(result, "tbl_df")
+  expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), 32)
 })
 

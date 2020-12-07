@@ -112,7 +112,7 @@ test_that("can pull a mold", {
 
   workflow <- fit(workflow, mtcars)
 
-  expect_is(pull_workflow_mold(workflow), "list")
+  expect_type(pull_workflow_mold(workflow), "list")
 
   expect_equal(
     pull_workflow_mold(workflow),
@@ -149,7 +149,7 @@ test_that("can pull a prepped recipe", {
 
   workflow <- fit(workflow, mtcars)
 
-  expect_is(pull_workflow_prepped_recipe(workflow), "recipe")
+  expect_s3_class(pull_workflow_prepped_recipe(workflow), "recipe")
 
   expect_equal(
     pull_workflow_prepped_recipe(workflow),

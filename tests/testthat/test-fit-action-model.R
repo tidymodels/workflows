@@ -5,7 +5,7 @@ test_that("can add a model to a workflow", {
   workflow <- workflow()
   workflow <- add_model(workflow, mod)
 
-  expect_is(workflow$fit$actions$model, "action_model")
+  expect_s3_class(workflow$fit$actions$model, "action_model")
 })
 
 test_that("model is validated", {

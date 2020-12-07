@@ -105,7 +105,7 @@ fit based on the original variables will need to be refit.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -220,7 +220,7 @@ might be done by the underlying model.</p></td>
   predictors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>cyl</span>, <span class='va'>disp</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='va'>workflow1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow1</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>workflow1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow1</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>workflow1</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Variables
@@ -269,7 +269,7 @@ might be done by the underlying model.</p></td>
 <span class='co'># is evaluated. This allows you to easily specify the predictors</span>
 <span class='co'># as "everything except the outcomes".</span>
 <span class='va'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span>, <span class='fu'>everything</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow2</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow2</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='fu'><a href='workflow-extractors.html'>pull_workflow_mold</a></span><span class='op'>(</span><span class='va'>workflow2</span><span class='op'>)</span><span class='op'>$</span><span class='va'>predictors</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 32 x 10</span><span>
 #&gt;      cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb

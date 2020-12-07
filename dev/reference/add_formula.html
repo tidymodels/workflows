@@ -107,7 +107,7 @@ formula will need to be refit.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -227,7 +227,7 @@ how the underlying model package works.</p><h3 class='hasAnchor' id='arguments'>
 formula given to <code>add_formula()</code> is used to create the model matrix and
 that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</a></code> with a simple formula of <code>body_mass_g ~ .</code>:<div class="r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/workflows'>workflows</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>magrittr</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/hardhat'>hardhat</a></span><span class='op'>)</span>
 
@@ -241,7 +241,7 @@ that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</
 
 <span class='va'>pre_encoded</span> <span class='op'>&lt;-</span> <span class='va'>lm_wflow</span> <span class='op'>%&gt;%</span> 
   <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
 <span class='va'>pre_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -291,7 +291,7 @@ like the data to be passed to a model untouched:<div class="r"></p><pre><span cl
     <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span>, 
     blueprint <span class='op'>=</span> <span class='va'>minimal</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
 <span class='va'>un_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -342,7 +342,7 @@ used. To demonstrate, a spline function will be used for the bill depth:<div cla
     <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span>, 
     blueprint <span class='op'>=</span> <span class='va'>minimal</span>
   <span class='op'>)</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
 <span class='va'>custom_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_formula</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>

@@ -103,7 +103,7 @@ the workflow.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -223,7 +223,7 @@ number of baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.i
 
 <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lm_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
 <span class='co'>## Model: linear_reg()</span>
@@ -255,7 +255,7 @@ baseline level).</p>
 
 <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
 <span class='co'>## Model: rand_forest()</span>
@@ -338,7 +338,7 @@ behavior from the model’s computational engine.</p>
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
-<span class='va'>fitted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>fitted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>fitted</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula

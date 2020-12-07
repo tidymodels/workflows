@@ -107,7 +107,7 @@ extracted from the mold object returned from pull_workflow_mold().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -192,7 +192,7 @@ section.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>magrittr</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
 
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span>
@@ -207,8 +207,8 @@ section.</p>
 <span class='va'>formula_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>base_wf</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>variable_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_variables.html'>add_variables</a></span><span class='op'>(</span><span class='va'>base_wf</span>, <span class='va'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>cyl</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>fit_recipe_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='va'>fit_formula_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>fit_recipe_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>fit_formula_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 
 <span class='co'># The preprocessor is a recipes, formula, or a list holding the</span>
 <span class='co'># tidyselect expressions identifying the outcomes/predictors</span>
@@ -225,16 +225,16 @@ section.</p>
 #&gt; 
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x7fb18011b350&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x7faab5038ac8&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^mpg</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fb18011b350</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7faab5038ac8</span><span>
 #&gt; 
 #&gt; $predictors
 #&gt; </span><span style='font-weight: bold;'>&lt;quosure&gt;</span><span>
 #&gt; expr: </span><span style='color: #0000BB;'>^c(cyl, disp)</span><span>
-#&gt; env:  </span><span style='color: #0000BB;'>0x7fb18011b350</span><span>
+#&gt; env:  </span><span style='color: #0000BB;'>0x7faab5038ac8</span><span>
 #&gt; </div><div class='input'>
 <span class='co'># The `spec` is the parsnip spec before it has been fit.</span>
 <span class='co'># The `fit` is the fit parsnip model.</span>
@@ -245,7 +245,7 @@ section.</p>
 #&gt; </div><div class='input'><span class='fu'>pull_workflow_fit</span><span class='op'>(</span><span class='va'>fit_formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  3ms 
+#&gt; Fit time:  2ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)
@@ -297,6 +297,7 @@ section.</p>
 #&gt;   # Outcomes: 1 
 #&gt;    Intercept: FALSE 
 #&gt; Novel Levels: FALSE 
+#&gt;  Composition: tibble 
 #&gt; 
 #&gt; $extras
 #&gt; $extras$roles

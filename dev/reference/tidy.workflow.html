@@ -99,7 +99,7 @@ recipe that you want to tidy." />
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -142,7 +142,7 @@ recipe that you want to tidy." />
     </div>
 
     <div class="ref-description">
-    <p>This is a <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>generics::tidy()</a></code> method for a workflow that calls <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code> on
+    <p>This is a <code><a href='https://generics.r-lib.org/reference/tidy.html'>generics::tidy()</a></code> method for a workflow that calls <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code> on
 either the underlying parsnip model or the recipe, depending on the value
 of <code>what</code>.</p>
 <p><code>x</code> must be a fitted workflow, resulting in fitted parsnip model or prepped
@@ -150,7 +150,7 @@ recipe that you want to tidy.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for workflow</span>
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, what <span class='op'>=</span> <span class='st'>"model"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='va'>x</span>, what <span class='op'>=</span> <span class='st'>"model"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +172,7 @@ which part of the workflow to tidy. Defaults to tidying the model.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To tidy the unprepped recipe, use <code><a href='workflow-extractors.html'>pull_workflow_preprocessor()</a></code> and <code><a href='https://rdrr.io/pkg/generics/man/tidy.html'>tidy()</a></code>
+    <p>To tidy the unprepped recipe, use <code><a href='workflow-extractors.html'>pull_workflow_preprocessor()</a></code> and <code><a href='https://generics.r-lib.org/reference/tidy.html'>tidy()</a></code>
 that directly.</p>
 
   </div>

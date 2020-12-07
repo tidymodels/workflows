@@ -98,7 +98,7 @@ to fit, specified through add_model()." />
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.0.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.1.9000</span>
         </div>
       </div>
     </div>
@@ -184,7 +184,7 @@ number of baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.i
 
 <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>lm_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
 <span class='co'>## Model: linear_reg()</span>
@@ -216,7 +216,7 @@ baseline level).</p>
 
 <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
 <span class='co'>## Model: rand_forest()</span>
@@ -261,7 +261,7 @@ behavior from the model’s computational engine.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>magrittr</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"attrition"</span><span class='op'>)</span>
@@ -275,7 +275,7 @@ behavior from the model’s computational engine.</p>
 <span class='va'>formula_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>Attrition</span> <span class='op'>~</span> <span class='va'>BusinessTravel</span> <span class='op'>+</span> <span class='va'>YearsSinceLastPromotion</span> <span class='op'>+</span> <span class='va'>OverTime</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> logistic_reg()
@@ -305,7 +305,7 @@ behavior from the model’s computational engine.</p>
 <span class='va'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>recipe</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Recipe
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> logistic_reg()
@@ -376,7 +376,7 @@ behavior from the model’s computational engine.</p>
     <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>BusinessTravel</span>, <span class='va'>YearsSinceLastPromotion</span>, <span class='va'>OverTime</span><span class='op'>)</span>
   <span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/pkg/generics/man/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>variable_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>variable_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Variables
 #&gt; </span><span style='font-style: italic;'>Model:</span><span> logistic_reg()

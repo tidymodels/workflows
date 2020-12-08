@@ -19,6 +19,14 @@ axe_env.workflow(x, verbose = FALSE, ...)
 
 axe_fitted.workflow(x, verbose = FALSE, ...)
 }
+\arguments{
+\item{x}{A workflow.}
+
+\item{verbose}{Should information be printed about how much memory is freed
+from butchering?}
+
+\item{...}{Extra arguments possibly used by underlying methods.}
+}
 \description{
 These methods allow you to use the butcher package to reduce the size of
 a workflow. After calling \code{butcher::butcher()} on a workflow, the only

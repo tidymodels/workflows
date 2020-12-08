@@ -5,6 +5,11 @@
 #' guarantee is that you will still be able to `predict()` from that workflow.
 #' Other functions may not work as expected.
 #'
+#' @param x A workflow.
+#' @param verbose Should information be printed about how much memory is freed
+#'   from butchering?
+#' @param ... Extra arguments possibly used by underlying methods.
+#'
 #' @name workflow-butcher
 
 # @export - onLoad

@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Added support for butchering a workflow using `butcher::butcher()`.
+
 * Updated to testthat 3.0.0.
 
 # workflows 0.2.1

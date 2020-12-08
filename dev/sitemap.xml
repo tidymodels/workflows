@@ -28,6 +28,9 @@
     <loc>https://workflows.tidymodels.org//reference/tidy.workflow.html</loc>
   </url>
   <url>
+    <loc>https://workflows.tidymodels.org//reference/workflow-butcher.html</loc>
+  </url>
+  <url>
     <loc>https://workflows.tidymodels.org//reference/workflow-extractors.html</loc>
   </url>
   <url>

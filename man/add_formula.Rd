@@ -69,7 +69,8 @@ how the underlying model package works.
 
 To demonstrate, the example below uses \code{lm()} to fit a model. The
 formula given to \code{add_formula()} is used to create the model matrix and
-that is what is passed to \code{lm()} with a simple formula of \code{body_mass_g ~ .}:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
+that is what is passed to \code{lm()} with a simple formula of
+\code{body_mass_g ~ .}:\if{html}{\out{<div class="r">}}\preformatted{library(parsnip)
 library(workflows)
 library(magrittr)
 library(modeldata)

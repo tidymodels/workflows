@@ -26,9 +26,9 @@ computational engine.
 In the \link[modeldata:Sacramento]{modeldata::Sacramento} data set of real
 estate prices, the \code{type} variable has three levels: \code{"Residential"},
 \code{"Condo"}, and \code{"Multi-Family"}. This base \code{workflow()} contains a
-formula added via \code{\link[=add_formula]{add_formula()}} to predict
-property price from property type, square footage, number of beds, and
-number of baths:\if{html}{\out{<div class="r">}}\preformatted{set.seed(123)
+formula added via \code{\link[=add_formula]{add_formula()}} to predict property
+price from property type, square footage, number of beds, and number of
+baths:\if{html}{\out{<div class="r">}}\preformatted{set.seed(123)
 
 library(parsnip)
 library(recipes)
@@ -91,7 +91,7 @@ base_wf \%>\%
 ## Ranger result
 ## 
 ## Call:
-##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+##  ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
 ## 
 ## Type:                             Regression 
 ## Number of trees:                  500 
@@ -116,8 +116,8 @@ numeric binary variables.
 \subsection{Recipe Preprocessor}{
 
 When you specify a model with a \code{workflow()} and a recipe preprocessor
-via \code{\link[=add_recipe]{add_recipe()}}, the \emph{recipe} controls whether
-dummy variables are created or not; the recipe overrides any underlying
+via \code{\link[=add_recipe]{add_recipe()}}, the \emph{recipe} controls whether dummy
+variables are created or not; the recipe overrides any underlying
 behavior from the model’s computational engine.
 }
 }

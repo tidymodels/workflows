@@ -204,9 +204,9 @@ computational engine.</p><h3 class='hasAnchor' id='arguments'><a class='anchor' 
 <p>In the <a href='https://modeldata.tidymodels.org/reference/Sacramento.html'>modeldata::Sacramento</a> data set of real
 estate prices, the <code>type</code> variable has three levels: <code>"Residential"</code>,
 <code>"Condo"</code>, and <code>"Multi-Family"</code>. This base <code><a href='workflow.html'>workflow()</a></code> contains a
-formula added via <code><a href='add_formula.html'>add_formula()</a></code> to predict
-property price from property type, square footage, number of beds, and
-number of baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+formula added via <code><a href='add_formula.html'>add_formula()</a></code> to predict property
+price from property type, square footage, number of beds, and number of
+baths:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
@@ -267,7 +267,7 @@ baseline level).</p>
 <span class='co'>## Ranger result</span>
 <span class='co'>## </span>
 <span class='co'>## Call:</span>
-<span class='co'>##  ranger::ranger(formula = ..y ~ ., data = data, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) </span>
+<span class='co'>##  ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) </span>
 <span class='co'>## </span>
 <span class='co'>## Type:                             Regression </span>
 <span class='co'>## Number of trees:                  500 </span>
@@ -292,8 +292,8 @@ numeric binary variables.</p>
 
 
 <p>When you specify a model with a <code><a href='workflow.html'>workflow()</a></code> and a recipe preprocessor
-via <code><a href='add_recipe.html'>add_recipe()</a></code>, the <em>recipe</em> controls whether
-dummy variables are created or not; the recipe overrides any underlying
+via <code><a href='add_recipe.html'>add_recipe()</a></code>, the <em>recipe</em> controls whether dummy
+variables are created or not; the recipe overrides any underlying
 behavior from the model’s computational engine.</p>
 
 

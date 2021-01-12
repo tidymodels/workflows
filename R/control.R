@@ -38,3 +38,8 @@ check_control_parsnip <- function(x) {
 
   x
 }
+
+is_control_workflow <- function(x) {
+  inherits(x, "control_workflow")
+}
+

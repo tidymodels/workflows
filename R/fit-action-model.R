@@ -90,6 +90,10 @@ update_model <- function(x, spec, formula = NULL) {
 # ------------------------------------------------------------------------------
 
 fit.action_model <- function(object, workflow, control) {
+  if (!is_control_workflow(control)) {
+    abort("`control` must be a workflows control object created by `control_workflow()`.")
+  }
+
   control_parsnip <- control$control_parsnip
 
   spec <- object$spec

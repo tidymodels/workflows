@@ -49,6 +49,22 @@ test_that("missing `data` argument has a nice error", {
   expect_error(fit(workflow), "`data` must be provided to fit a workflow")
 })
 
+test_that("invalid `control` argument has a nice error", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  control <- parsnip::control_parsnip()
+
+  expect_error(
+    fit(workflow, mtcars, control = control),
+    "`control` must be a workflows control object created by `control_workflow[(][)]`."
+  )
+})
+
 test_that("cannot fit without a pre stage", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

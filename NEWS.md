@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* `fit()` now errors immediately if `control` is not created by
+  `control_workflow()` (#89).
+
 * Added support for butchering a workflow using `butcher::butcher()`.
 
 * Updated to testthat 3.0.0.

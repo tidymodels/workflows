@@ -108,7 +108,7 @@ replace_workflow_preprocessor <- function(x, value) {
   } else if (has_preprocessor_recipe(x)) {
     x$pre$actions$recipe$recipe <- value
   } else if (has_preprocessor_variables(x)) {
-    x$pre$actions$variables <- value
+    x$pre$actions$variables$variables <- value
   } else {
     abort("The workflow does not have a preprocessor.")
   }

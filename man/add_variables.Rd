@@ -4,13 +4,23 @@
 \alias{add_variables}
 \alias{remove_variables}
 \alias{update_variables}
+\alias{workflow_variables}
 \title{Add variables to a workflow}
 \usage{
-add_variables(x, outcomes, predictors, ..., blueprint = NULL)
+add_variables(x, outcomes, predictors, ..., blueprint = NULL, variables = NULL)
 
 remove_variables(x)
 
-update_variables(x, outcomes, predictors, ..., blueprint = NULL)
+update_variables(
+  x,
+  outcomes,
+  predictors,
+  ...,
+  blueprint = NULL,
+  variables = NULL
+)
+
+workflow_variables(outcomes, predictors)
 }
 \arguments{
 \item{x}{A workflow}
@@ -29,9 +39,27 @@ If \code{NULL}, \code{\link[hardhat:default_xy_blueprint]{hardhat::default_xy_bl
 
 Note that preprocessing done here is separate from preprocessing that
 might be done by the underlying model.}
+
+\item{variables}{An alternative specification of \code{outcomes} and \code{predictors},
+useful for supplying variables programmatically.
+\itemize{
+\item If \code{NULL}, this argument is unused, and \code{outcomes} and \code{predictors} are
+used to specify the variables.
+\item Otherwise, this must be the result of calling \code{workflow_variables()} to
+create a standalone variables object. In this case, \code{outcomes} and
+\code{predictors} are completely ignored.
+}}
 }
 \value{
-\code{x}, updated with either a new or removed variables preprocessor.
+\itemize{
+\item \code{add_variables()} returns \code{x} with a new variables preprocessor.
+\item \code{remove_variables()} returns \code{x} after resetting any model fit and
+removing the variables preprocessor.
+\item \code{update_variables()} returns \code{x} after removing the variables preprocessor,
+and then re-specifying it with new variables.
+\item \code{workflow_variables()} returns a 'workflow_variables' object containing
+both the \code{outcomes} and \code{predictors}.
+}
 }
 \description{
 \itemize{
@@ -42,6 +70,8 @@ has already been fit, then the fit is removed.
 \item \code{update_variables()} first removes the variables, then replaces the
 previous variables with the new ones. Any model that has already been
 fit based on the original variables will need to be refit.
+\item \code{workflow_variables()} bundles \code{outcomes} and \code{predictors} into a single
+variables object, which can be supplied to \code{add_variables()}.
 }
 }
 \details{
@@ -80,4 +110,10 @@ update_variables(workflow1, mpg, starts_with("d"))
 workflow2 <- add_variables(workflow, mpg, everything())
 workflow2 <- fit(workflow2, mtcars)
 pull_workflow_mold(workflow2)$predictors
+
+# Variables can also be added from the result of a call to
+# `workflow_variables()`, which creates a standalone variables object
+variables <- workflow_variables(mpg, c(cyl, disp))
+workflow3 <- add_variables(workflow, variables = variables)
+fit(workflow3, mtcars)
 }

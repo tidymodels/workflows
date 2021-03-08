@@ -117,7 +117,17 @@ is_workflow <- function(x) {
 #' is_trained_workflow(wf)
 is_trained_workflow <- function(x) {
   validate_is_workflow(x)
-  is_true(x[["trained"]])
+  is_true(get_trained(x))
+}
+
+# ------------------------------------------------------------------------------
+
+get_trained <- function(x) {
+  x[["trained"]]
+}
+set_trained <- function(x, value) {
+  x[["trained"]] <- value
+  x
 }
 
 # ------------------------------------------------------------------------------

@@ -100,13 +100,18 @@ is_workflow <- function(x) {
 #'
 #' @export
 #' @examples
-#' rec <- recipes::recipe(mpg ~ cyl, mtcars)
-#' mod <- parsnip::linear_reg()
-#' mod <- parsnip::set_engine(mod, "lm")
+#' library(parsnip)
+#' library(recipes)
+#' library(magrittr)
 #'
-#' wf <- workflow()
-#' wf <- add_recipe(wf, rec)
-#' wf <- add_model(wf, mod)
+#' rec <- recipe(mpg ~ cyl, mtcars)
+#'
+#' mod <- linear_reg()
+#' mod <- set_engine(mod, "lm")
+#'
+#' wf <- workflow() %>%
+#'   add_recipe(rec) %>%
+#'   add_model(mod)
 #'
 #' # Before any preprocessing or model fitting has been done
 #' is_trained_workflow(wf)

@@ -132,7 +132,7 @@ print.workflow <- function(x, ...) {
 }
 
 print_header <- function(x) {
-  if (x$trained) {
+  if (is_trained_workflow(x)) {
     trained <- " [trained]"
   } else {
     trained <- ""

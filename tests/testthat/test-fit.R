@@ -184,8 +184,8 @@ test_that("workflow is marked as 'trained' after going through `.fit_finalize()`
   workflow_model <- .fit_model(workflow_pre, control_workflow())
   workflow_final <- .fit_finalize(workflow_model)
 
-  expect_false(workflow_model$trained)
-  expect_true(workflow_final$trained)
+  expect_false(is_trained_workflow(workflow_model))
+  expect_true(is_trained_workflow(workflow_final))
 })
 
 test_that("can `predict()` from workflow fit from individual pieces", {

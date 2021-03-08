@@ -51,7 +51,7 @@
 predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) {
   workflow <- object
 
-  if (!workflow$trained) {
+  if (!is_trained_workflow(workflow)) {
     abort("Workflow has not yet been trained. Do you need to call `fit()`?")
   }
 

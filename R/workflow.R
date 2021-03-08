@@ -88,6 +88,55 @@ is_workflow <- function(x) {
 
 # ------------------------------------------------------------------------------
 
+#' Determine if a workflow has been trained
+#'
+#' @description
+#' A trained workflow is one that has gone through [`fit()`][fit.workflow],
+#' which preprocesses the underlying data, and fits the parsnip model.
+#'
+#' @param x A workflow.
+#'
+#' @return A single logical indicating if the workflow has been trained or not.
+#'
+#' @export
+#' @examples
+#' library(parsnip)
+#' library(recipes)
+#' library(magrittr)
+#'
+#' rec <- recipe(mpg ~ cyl, mtcars)
+#'
+#' mod <- linear_reg()
+#' mod <- set_engine(mod, "lm")
+#'
+#' wf <- workflow() %>%
+#'   add_recipe(rec) %>%
+#'   add_model(mod)
+#'
+#' # Before any preprocessing or model fitting has been done
+#' is_trained_workflow(wf)
+#'
+#' wf <- fit(wf, mtcars)
+#'
+#' # After all preprocessing and model fitting
+#' is_trained_workflow(wf)
+is_trained_workflow <- function(x) {
+  validate_is_workflow(x)
+  is_true(get_trained(x))
+}
+
+# ------------------------------------------------------------------------------
+
+get_trained <- function(x) {
+  x[["trained"]]
+}
+set_trained <- function(x, value) {
+  x[["trained"]] <- value
+  x
+}
+
+# ------------------------------------------------------------------------------
+
 #' @export
 print.workflow <- function(x, ...) {
   print_header(x)
@@ -98,7 +147,7 @@ print.workflow <- function(x, ...) {
 }
 
 print_header <- function(x) {
-  if (x$trained) {
+  if (is_trained_workflow(x)) {
     trained <- " [trained]"
   } else {
     trained <- ""

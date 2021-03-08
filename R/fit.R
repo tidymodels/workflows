@@ -156,8 +156,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @rdname workflows-internals
 #' @export
 .fit_finalize <- function(workflow) {
-  workflow[["trained"]] <- TRUE
-  workflow
+  set_trained(workflow, TRUE)
 }
 
 # ------------------------------------------------------------------------------

@@ -27,7 +27,7 @@ Imports:
     rlang (>= 0.4.1),
     tidyselect (>= 1.1.0)
 Suggests: 
-    butcher (>= 0.1.2.9000),
+    butcher (>= 0.1.3),
     covr,
     knitr,
     magrittr,
@@ -42,5 +42,3 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
-Remotes:
-    tidymodels/butcher

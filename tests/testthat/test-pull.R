@@ -23,6 +23,18 @@ test_that("can pull a recipe preprocessor", {
   )
 })
 
+test_that("can pull a variables preprocessor", {
+  variables <- workflow_variables(mpg, c(cyl, disp))
+
+  workflow <- workflow()
+  workflow <- add_variables(workflow, variables = variables)
+
+  expect_identical(
+    pull_workflow_preprocessor(workflow),
+    variables
+  )
+})
+
 test_that("error if no preprocessor", {
   expect_error(
     pull_workflow_preprocessor(workflow()),

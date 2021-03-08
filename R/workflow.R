@@ -88,6 +88,40 @@ is_workflow <- function(x) {
 
 # ------------------------------------------------------------------------------
 
+#' Determine if a workflow has been trained
+#'
+#' @description
+#' A trained workflow is one that has gone through [`fit()`][fit.workflow],
+#' which preprocesses the underlying data, and fits the parsnip model.
+#'
+#' @param x A workflow.
+#'
+#' @return A single logical indicating if the workflow has been trained or not.
+#'
+#' @export
+#' @examples
+#' rec <- recipes::recipe(mpg ~ cyl, mtcars)
+#' mod <- parsnip::linear_reg()
+#' mod <- parsnip::set_engine(mod, "lm")
+#'
+#' wf <- workflow()
+#' wf <- add_recipe(wf, rec)
+#' wf <- add_model(wf, mod)
+#'
+#' # Before any preprocessing or model fitting has been done
+#' is_trained_workflow(wf)
+#'
+#' wf <- fit(wf, mtcars)
+#'
+#' # After all preprocessing and model fitting
+#' is_trained_workflow(wf)
+is_trained_workflow <- function(x) {
+  validate_is_workflow(x)
+  is_true(x[["trained"]])
+}
+
+# ------------------------------------------------------------------------------
+
 #' @export
 print.workflow <- function(x, ...) {
   print_header(x)

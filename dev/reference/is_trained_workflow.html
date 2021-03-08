@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • workflows</title>
+<title>Determine if a workflow has been trained — is_trained_workflow • workflows</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,7 +49,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Determine if a workflow has been trained — is_trained_workflow" />
+<meta property="og:description" content="A trained workflow is one that has gone through fit(),
+which preprocesses the underlying data, and fits the parsnip model." />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -78,7 +80,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -129,108 +131,56 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Determine if a workflow has been trained</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/workflow.R'><code>R/workflow.R</code></a></small>
+    <div class="hidden name"><code>is_trained_workflow.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>A trained workflow is one that has gone through <code><a href='fit-workflow.html'>fit()</a></code>,
+which preprocesses the underlying data, and fits the parsnip model.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>is_trained_workflow</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="add_formula.html">add_formula()</a></code> <code><a href="add_formula.html">remove_formula()</a></code> <code><a href="add_formula.html">update_formula()</a></code> </p>
-        </td>
-        <td><p>Add formula terms to a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_model.html">add_model()</a></code> <code><a href="add_model.html">remove_model()</a></code> <code><a href="add_model.html">update_model()</a></code> </p>
-        </td>
-        <td><p>Add a model to a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_recipe.html">add_recipe()</a></code> <code><a href="add_recipe.html">remove_recipe()</a></code> <code><a href="add_recipe.html">update_recipe()</a></code> </p>
-        </td>
-        <td><p>Add a recipe to a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="add_variables.html">add_variables()</a></code> <code><a href="add_variables.html">remove_variables()</a></code> <code><a href="add_variables.html">update_variables()</a></code> </p>
-        </td>
-        <td><p>Add variables to a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="control_workflow.html">control_workflow()</a></code> </p>
-        </td>
-        <td><p>Control object for a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fit-workflow.html">fit(<i>&lt;workflow&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Fit a workflow object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_trained_workflow.html">is_trained_workflow()</a></code> </p>
-        </td>
-        <td><p>Determine if a workflow has been trained</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="predict-workflow.html">predict(<i>&lt;workflow&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Predict from a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tidy.workflow.html">tidy(<i>&lt;workflow&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Tidy a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow-butcher.html">axe_call.workflow()</a></code> <code><a href="workflow-butcher.html">axe_ctrl.workflow()</a></code> <code><a href="workflow-butcher.html">axe_data.workflow()</a></code> <code><a href="workflow-butcher.html">axe_env.workflow()</a></code> <code><a href="workflow-butcher.html">axe_fitted.workflow()</a></code> </p>
-        </td>
-        <td><p>Butcher methods for a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow-extractors.html">pull_workflow_preprocessor()</a></code> <code><a href="workflow-extractors.html">pull_workflow_spec()</a></code> <code><a href="workflow-extractors.html">pull_workflow_fit()</a></code> <code><a href="workflow-extractors.html">pull_workflow_mold()</a></code> <code><a href="workflow-extractors.html">pull_workflow_prepped_recipe()</a></code> </p>
-        </td>
-        <td><p>Extract elements of a workflow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow.html">workflow()</a></code> </p>
-        </td>
-        <td><p>Create a workflow</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A workflow.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A single logical indicating if the workflow has been trained or not.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
+
+<span class='va'>rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='st'>"lm"</span><span class='op'>)</span>
+
+<span class='va'>wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>rec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+
+<span class='co'># Before any preprocessing or model fitting has been done</span>
+<span class='fu'>is_trained_workflow</span><span class='op'>(</span><span class='va'>wf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='va'>wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+
+<span class='co'># After all preprocessing and model fitting</span>
+<span class='fu'>is_trained_workflow</span><span class='op'>(</span><span class='va'>wf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

@@ -22,6 +22,9 @@
     <loc>https://workflows.tidymodels.org//reference/fit-workflow.html</loc>
   </url>
   <url>
+    <loc>https://workflows.tidymodels.org//reference/is_trained_workflow.html</loc>
+  </url>
+  <url>
     <loc>https://workflows.tidymodels.org//reference/predict-workflow.html</loc>
   </url>
   <url>

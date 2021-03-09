@@ -20,7 +20,7 @@ Depends:
 Imports: 
     cli (>= 2.0.0),
     ellipsis (>= 0.2.0),
-    generics,
+    generics (>= 0.1.0),
     glue,
     hardhat (>= 0.1.4),
     parsnip (>= 0.1.5),

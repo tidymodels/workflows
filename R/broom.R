@@ -12,10 +12,12 @@
 #' To tidy the unprepped recipe, use [pull_workflow_preprocessor()] and `tidy()`
 #' that directly.
 #'
-#' @inheritParams generics::tidy
+#' @param x A workflow
 #'
 #' @param what A single string. Either `"model"` or `"recipe"` to select
 #'   which part of the workflow to tidy. Defaults to tidying the model.
+#'
+#' @param ... Arguments passed on to methods
 #'
 #' @export
 tidy.workflow <- function(x, what = "model", ...) {

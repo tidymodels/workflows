@@ -7,12 +7,12 @@
 \method{tidy}{workflow}(x, what = "model", ...)
 }
 \arguments{
-\item{x}{An object to be converted into a tidy \code{\link[tibble:tibble]{tibble::tibble()}}.}
+\item{x}{A workflow}
 
 \item{what}{A single string. Either \code{"model"} or \code{"recipe"} to select
 which part of the workflow to tidy. Defaults to tidying the model.}
 
-\item{...}{Additional arguments to tidying method.}
+\item{...}{Arguments passed on to methods}
 }
 \description{
 This is a \code{\link[generics:tidy]{generics::tidy()}} method for a workflow that calls \code{tidy()} on

@@ -55,11 +55,14 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
     abort("Workflow has not yet been trained. Do you need to call `fit()`?")
   }
 
-  blueprint <- workflow$pre$mold$blueprint
-  forged <- hardhat::forge(new_data, blueprint)
-  new_data <- forged$predictors
-
-  fit <- workflow$fit$fit
+  fit <- pull_workflow_fit(workflow)
+  new_data <- forge_predictors(new_data, workflow)
 
   predict(fit, new_data, type = type, opts = opts, ...)
+}
+
+forge_predictors <- function(new_data, workflow) {
+  mold <- pull_workflow_mold(workflow)
+  forged <- hardhat::forge(new_data, blueprint = mold$blueprint)
+  forged$predictors
 }

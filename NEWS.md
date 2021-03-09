@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* New `is_trained_workflow()` for determining if a workflow has already been
+  trained through a call to `fit()` (#91).
+
 * `fit()` now errors immediately if `control` is not created by
   `control_workflow()` (#89).
 

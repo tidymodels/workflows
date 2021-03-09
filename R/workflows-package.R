@@ -8,6 +8,7 @@
 #'
 #' @importFrom generics fit
 #' @importFrom generics tidy
+#' @importFrom generics glance
 #'
 #' @importFrom parsnip fit_xy
 #'

@@ -1,3 +1,6 @@
+# ------------------------------------------------------------------------------
+# tidy()
+
 test_that("can't tidy the model of an unfit workflow", {
   x <- workflow()
   expect_error(tidy(x), "does not have a model fit")
@@ -37,4 +40,32 @@ test_that("can tidy workflow model or recipe", {
 
   x <- tidy(wf, what = "recipe")
   expect_identical(x$number, 1L)
+})
+
+# ------------------------------------------------------------------------------
+# glance()
+
+test_that("can't glance at the model of an unfit workflow", {
+  x <- workflow()
+  expect_snapshot_error(glance(x))
+})
+
+test_that("can glance at a fitted workflow's model", {
+  skip_if_not_installed("broom")
+
+  df <- data.frame(y = c(2, 3, 4), x = c(1, 5, 3))
+
+  lm_spec <- parsnip::linear_reg()
+  lm_spec <- parsnip::set_engine(lm_spec, "lm")
+
+  wf <- workflow()
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_model(wf, lm_spec)
+
+  wf <- fit(wf, df)
+
+  x <- glance(wf)
+
+  expect_s3_class(x, "tbl_df")
+  expect_identical(nrow(x), 1L)
 })

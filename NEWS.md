@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* Added `broom::augment()` and `broom::glance()` methods for trained workflow
+  objects (#76).
+  
 * `add_variables()` now allows for specifying a bundle of model terms through
   `add_variables(variables = )`, supplying a pre-created set of variables with
   the new `workflow_variables()` helper. This is useful for supplying a set

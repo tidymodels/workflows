@@ -59,6 +59,8 @@ has already been fit, then the fit is removed.
 update_variables() first removes the variables, then replaces the
 previous variables with the new ones. Any model that has already been
 fit based on the original variables will need to be refit.
+workflow_variables() bundles outcomes and predictors into a single
+variables object, which can be supplied to add_variables().
 
 " />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
@@ -157,15 +159,26 @@ has already been fit, then the fit is removed.</p></li>
 <li><p><code>update_variables()</code> first removes the variables, then replaces the
 previous variables with the new ones. Any model that has already been
 fit based on the original variables will need to be refit.</p></li>
+<li><p><code>workflow_variables()</code> bundles <code>outcomes</code> and <code>predictors</code> into a single
+variables object, which can be supplied to <code>add_variables()</code>.</p></li>
 </ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>outcomes</span>, <span class='va'>predictors</span>, <span class='va'>...</span>, blueprint <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>outcomes</span>, <span class='va'>predictors</span>, <span class='va'>...</span>, blueprint <span class='op'>=</span> <span class='cn'>NULL</span>, variables <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>remove_variables</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>update_variables</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>outcomes</span>, <span class='va'>predictors</span>, <span class='va'>...</span>, blueprint <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+<span class='fu'>update_variables</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>outcomes</span>,
+  <span class='va'>predictors</span>,
+  <span class='va'>...</span>,
+  blueprint <span class='op'>=</span> <span class='cn'>NULL</span>,
+  variables <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
+
+<span class='fu'>workflow_variables</span><span class='op'>(</span><span class='va'>outcomes</span>, <span class='va'>predictors</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,11 +206,32 @@ specify terms.</p></td>
 <p>Note that preprocessing done here is separate from preprocessing that
 might be done by the underlying model.</p></td>
     </tr>
+    <tr>
+      <th>variables</th>
+      <td><p>An alternative specification of <code>outcomes</code> and <code>predictors</code>,
+useful for supplying variables programmatically.</p><ul>
+<li><p>If <code>NULL</code>, this argument is unused, and <code>outcomes</code> and <code>predictors</code> are
+used to specify the variables.</p></li>
+<li><p>Otherwise, this must be the result of calling <code>workflow_variables()</code> to
+create a standalone variables object. In this case, <code>outcomes</code> and
+<code>predictors</code> are completely ignored.</p></li>
+</ul></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>x</code>, updated with either a new or removed variables preprocessor.</p>
+    
+<ul>
+<li><p><code>add_variables()</code> returns <code>x</code> with a new variables preprocessor.</p></li>
+<li><p><code>remove_variables()</code> returns <code>x</code> after resetting any model fit and
+removing the variables preprocessor.</p></li>
+<li><p><code>update_variables()</code> returns <code>x</code> after removing the variables preprocessor,
+and then re-specifying it with new variables.</p></li>
+<li><p><code>workflow_variables()</code> returns a 'workflow_variables' object containing
+both the <code>outcomes</code> and <code>predictors</code>.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>To fit a workflow, exactly one of <code><a href='add_formula.html'>add_formula()</a></code>, <code><a href='add_recipe.html'>add_recipe()</a></code>, or
@@ -284,7 +318,29 @@ might be done by the underlying model.</p></td>
 #&gt; </span><span style='color: #BCBCBC;'> 8</span><span>     4  147.    62  3.69  3.19  20       1     0     4     2
 #&gt; </span><span style='color: #BCBCBC;'> 9</span><span>     4  141.    95  3.92  3.15  22.9     1     0     4     2
 #&gt; </span><span style='color: #BCBCBC;'>10</span><span>     6  168.   123  3.92  3.44  18.3     1     0     4     4
-#&gt; </span><span style='color: #949494;'># … with 22 more rows</span><span></div></span></pre>
+#&gt; </span><span style='color: #949494;'># … with 22 more rows</span><span></div><div class='input'>
+<span class='co'># Variables can also be added from the result of a call to</span>
+<span class='co'># `workflow_variables()`, which creates a standalone variables object</span>
+<span class='va'>variables</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_variables</span><span class='op'>(</span><span class='va'>mpg</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>cyl</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>workflow3</span> <span class='op'>&lt;-</span> <span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>workflow</span>, variables <span class='op'>=</span> <span class='va'>variables</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow3</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Variables
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; Outcomes: mpg
+#&gt; Predictors: c(cyl, disp)
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = ..y ~ ., data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          cyl         disp  
+#&gt;    34.66099     -1.58728     -0.02058  
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

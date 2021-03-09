@@ -121,8 +121,18 @@ test_that("axing the env - variables", {
   axed <- butcher::axe_env(fit)
 
   expect_s3_class(axed, "butchered_workflow")
-  expect_false(identical(fit$pre$actions$variables$outcomes, axed$pre$actions$variables$outcomes))
-  expect_false(identical(fit$pre$actions$variables$predictors, axed$pre$actions$variables$predictors))
+
+  original_outcomes <- fit$pre$actions$variables$variables$outcomes
+  original_predictors <- fit$pre$actions$variables$variables$predictors
+
+  axed_outcomes <- axed$pre$actions$variables$variables$outcomes
+  axed_predictors <- axed$pre$actions$variables$variables$predictors
+
+  expect_s3_class(axed_outcomes, "quosure")
+  expect_s3_class(axed_predictors, "quosure")
+
+  expect_false(identical(original_outcomes, axed_outcomes))
+  expect_false(identical(original_predictors, axed_predictors))
 })
 
 test_that("can still predict after butcher - recipe", {

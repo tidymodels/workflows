@@ -11,6 +11,9 @@
 #'   previous variables with the new ones. Any model that has already been
 #'   fit based on the original variables will need to be refit.
 #'
+#' - `workflow_variables()` bundles `outcomes` and `predictors` into a single
+#'   variables object, which can be supplied to `add_variables()`.
+#'
 #' @details
 #' To fit a workflow, exactly one of [add_formula()], [add_recipe()], or
 #' [add_variables()] _must_ be specified.
@@ -32,8 +35,27 @@
 #'   Note that preprocessing done here is separate from preprocessing that
 #'   might be done by the underlying model.
 #'
+#' @param variables An alternative specification of `outcomes` and `predictors`,
+#'   useful for supplying variables programmatically.
+#'
+#'   - If `NULL`, this argument is unused, and `outcomes` and `predictors` are
+#'     used to specify the variables.
+#'
+#'   - Otherwise, this must be the result of calling `workflow_variables()` to
+#'     create a standalone variables object. In this case, `outcomes` and
+#'     `predictors` are completely ignored.
+#'
 #' @return
-#' `x`, updated with either a new or removed variables preprocessor.
+#' - `add_variables()` returns `x` with a new variables preprocessor.
+#'
+#' - `remove_variables()` returns `x` after resetting any model fit and
+#'   removing the variables preprocessor.
+#'
+#' - `update_variables()` returns `x` after removing the variables preprocessor,
+#'   and then re-specifying it with new variables.
+#'
+#' - `workflow_variables()` returns a 'workflow_variables' object containing
+#'   both the `outcomes` and `predictors`.
 #'
 #' @export
 #' @examples
@@ -68,20 +90,32 @@
 #' workflow2 <- add_variables(workflow, mpg, everything())
 #' workflow2 <- fit(workflow2, mtcars)
 #' pull_workflow_mold(workflow2)$predictors
+#'
+#' # Variables can also be added from the result of a call to
+#' # `workflow_variables()`, which creates a standalone variables object
+#' variables <- workflow_variables(mpg, c(cyl, disp))
+#' workflow3 <- add_variables(workflow, variables = variables)
+#' fit(workflow3, mtcars)
 add_variables <- function(x,
                           outcomes,
                           predictors,
                           ...,
-                          blueprint = NULL) {
+                          blueprint = NULL,
+                          variables = NULL) {
   ellipsis::check_dots_empty()
 
-  # TODO: Use partial evaluation with `eval_resolve()`
-  # to only capture expressions
-  # https://github.com/r-lib/tidyselect/issues/207
-  outcomes <- enquo(outcomes)
-  predictors <- enquo(predictors)
+  if (is_null(variables)) {
+    variables <- workflow_variables({{ outcomes }}, {{ predictors }})
+  }
 
-  action <- new_action_variables(outcomes, predictors, blueprint)
+  if (!is_workflow_variables(variables)) {
+    glubort(
+      "`variables` must be a 'workflow_variables' object ",
+      "created from `workflow_variables()`."
+    )
+  }
+
+  action <- new_action_variables(variables, blueprint)
 
   add_action(x, action, "variables")
 }
@@ -109,24 +143,29 @@ update_variables <- function(x,
                              outcomes,
                              predictors,
                              ...,
-                             blueprint = NULL) {
+                             blueprint = NULL,
+                             variables = NULL) {
   ellipsis::check_dots_empty()
 
   x <- remove_variables(x)
 
+  if (is_null(variables)) {
+    variables <- workflow_variables({{ outcomes }}, {{ predictors }})
+  }
+
   add_variables(
     x = x,
-    outcomes = {{ outcomes }},
-    predictors = {{ predictors }},
-    blueprint = blueprint
+    blueprint = blueprint,
+    variables = variables
   )
 }
 
 # ------------------------------------------------------------------------------
 
 fit.action_variables <- function(object, workflow, data) {
-  outcomes <- object$outcomes
-  predictors <- object$predictors
+  variables <- object$variables
+  outcomes <- variables$outcomes
+  predictors <- variables$predictors
   blueprint <- object$blueprint
 
   # `outcomes` and `predictors` should both be quosures,
@@ -179,15 +218,14 @@ check_conflicts.action_variables <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_variables <- function(outcomes, predictors, blueprint) {
+new_action_variables <- function(variables, blueprint) {
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_xy_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'xy_blueprint'.")
   }
 
   new_action_pre(
-    outcomes = outcomes,
-    predictors = predictors,
+    variables = variables,
     blueprint = blueprint,
     subclass = "action_variables"
   )
@@ -195,4 +233,38 @@ new_action_variables <- function(outcomes, predictors, blueprint) {
 
 is_xy_blueprint <- function(x) {
   inherits(x, "xy_blueprint")
+}
+
+# ------------------------------------------------------------------------------
+
+#' @rdname add_variables
+#' @export
+workflow_variables <- function(outcomes, predictors) {
+  # TODO: Use partial evaluation with `eval_resolve()`
+  # to only capture expressions
+  # https://github.com/r-lib/tidyselect/issues/207
+  new_workflow_variables(
+    outcomes = enquo(outcomes),
+    predictors = enquo(predictors)
+  )
+}
+
+new_workflow_variables <- function(outcomes, predictors) {
+  if (!is_quosure(outcomes)) {
+    abort("`outcomes` must be a quosure.")
+  }
+  if (!is_quosure(predictors)) {
+    abort("`predictors` must be a quosure.")
+  }
+
+  data <- list(
+    outcomes = outcomes,
+    predictors = predictors
+  )
+
+  structure(data, class = "workflow_variables")
+}
+
+is_workflow_variables <- function(x) {
+  inherits(x, "workflow_variables")
 }

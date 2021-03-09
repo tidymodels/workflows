@@ -3,8 +3,19 @@ test_that("can add variables to a workflow", {
   wf <- add_variables(wf, y, c(x1, x2))
 
   expect_s3_class(wf$pre$actions$variables, "action_variables")
-  expect_identical(wf$pre$actions$variables$outcomes, quo(y))
-  expect_identical(wf$pre$actions$variables$predictors, quo(c(x1, x2)))
+  expect_s3_class(wf$pre$actions$variables$variables, "workflow_variables")
+  expect_identical(wf$pre$actions$variables$variables$outcomes, quo(y))
+  expect_identical(wf$pre$actions$variables$variables$predictors, quo(c(x1, x2)))
+})
+
+test_that("can add variables to a workflow with `variables` specification", {
+  wf <- workflow()
+  wf <- add_variables(wf, variables = workflow_variables(y, c(x1, x2)))
+
+  expect_s3_class(wf$pre$actions$variables, "action_variables")
+  expect_s3_class(wf$pre$actions$variables$variables, "workflow_variables")
+  expect_identical(wf$pre$actions$variables$variables$outcomes, quo(y))
+  expect_identical(wf$pre$actions$variables$variables$predictors, quo(c(x1, x2)))
 })
 
 test_that("cannot add variables if a recipe already exists", {
@@ -29,6 +40,34 @@ test_that("works with fit()", {
 
   workflow <- workflow()
   workflow <- add_variables(workflow, mpg, c(cyl, disp))
+  workflow <- add_model(workflow, mod)
+
+  result <- fit(workflow, mtcars)
+
+  expect_identical(
+    names(result$fit$fit$fit$coefficients),
+    c("(Intercept)", "cyl", "disp")
+  )
+
+  expect_identical(
+    names(result$pre$mold$outcomes),
+    "mpg"
+  )
+
+  expect_identical(
+    names(result$pre$mold$predictors),
+    c("cyl", "disp")
+  )
+})
+
+test_that("works with fit() when using `variables` specification", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  variables <- workflow_variables(mpg, c(cyl, disp))
+
+  workflow <- workflow()
+  workflow <- add_variables(workflow, variables = variables)
   workflow <- add_model(workflow, mod)
 
   result <- fit(workflow, mtcars)
@@ -158,6 +197,7 @@ test_that("cannot add two variables", {
   workflow <- add_variables(workflow, mpg, cyl)
 
   expect_error(add_variables(workflow, mpg, cyl), "`variables` action has already been added")
+  expect_error(add_variables(workflow, variables = workflow_variables(mpg, cyl)), "`variables` action has already been added")
 })
 
 test_that("can remove variables", {
@@ -188,10 +228,15 @@ test_that("can update a formula", {
   wf <- workflow()
   wf1 <- add_variables(wf, mpg, cyl)
   wf2 <- update_variables(wf1, cyl, mpg)
+  wf3 <- update_variables(wf1, variables = workflow_variables(cyl, mpg))
 
   expect_identical(
     pull_workflow_preprocessor(wf2),
-    list(outcomes = quo(cyl), predictors = quo(mpg))
+    new_workflow_variables(outcomes = quo(cyl), predictors = quo(mpg))
+  )
+  expect_identical(
+    pull_workflow_preprocessor(wf3),
+    new_workflow_variables(outcomes = quo(cyl), predictors = quo(mpg))
   )
 })
 

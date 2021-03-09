@@ -86,12 +86,7 @@ pull_workflow_preprocessor <- function(x) {
   }
 
   if (has_preprocessor_variables(x)) {
-    out <- list(
-      outcomes = x$pre$actions$variables$outcomes,
-      predictors = x$pre$actions$variables$predictors
-    )
-
-    return(out)
+    return(x$pre$actions$variables$variables)
   }
 
   abort("The workflow does not have a preprocessor.")

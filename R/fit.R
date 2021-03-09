@@ -269,8 +269,7 @@ finalize_blueprint_variables <- function(workflow) {
 
   update_variables(
     workflow,
-    outcomes = !!variables$outcomes,
-    predictors = !!variables$predictors,
-    blueprint = blueprint
+    blueprint = blueprint,
+    variables = variables
   )
 }

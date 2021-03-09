@@ -16,10 +16,16 @@
     <loc>https://workflows.tidymodels.org//reference/add_variables.html</loc>
   </url>
   <url>
+    <loc>https://workflows.tidymodels.org//reference/augment.workflow.html</loc>
+  </url>
+  <url>
     <loc>https://workflows.tidymodels.org//reference/control_workflow.html</loc>
   </url>
   <url>
     <loc>https://workflows.tidymodels.org//reference/fit-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org//reference/glance.workflow.html</loc>
   </url>
   <url>
     <loc>https://workflows.tidymodels.org//reference/is_trained_workflow.html</loc>

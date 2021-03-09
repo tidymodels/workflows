@@ -1,7 +1,4 @@
 # workflows (development version)
-
-* Added `broom::augment()` and `broom::glance()` methods for trained workflow
-  objects (#76).
   
 * `add_variables()` now allows for specifying a bundle of model terms through
   `add_variables(variables = )`, supplying a pre-created set of variables with
@@ -13,6 +10,9 @@
 
 * `fit()` now errors immediately if `control` is not created by
   `control_workflow()` (#89).
+
+* Added `broom::augment()` and `broom::glance()` methods for trained workflow
+  objects (#76).
 
 * Added support for butchering a workflow using `butcher::butcher()`.
 

@@ -82,3 +82,71 @@ glance.workflow <- function(x, ...) {
   x <- pull_workflow_fit(x)
   glance(x, ...)
 }
+
+# ------------------------------------------------------------------------------
+
+#' Augment data with predictions
+#'
+#' @description
+#' This is a [generics::augment()] method for a workflow that calls
+#' `augment()` on the underlying parsnip model with `new_data`.
+#'
+#' `x` must be a trained workflow, resulting in fitted parsnip model to
+#' `augment()` with.
+#'
+#' `new_data` will be preprocessed using the preprocessor in the workflow,
+#' and that preprocessed data will be used to generate predictions. The
+#' final result will contain the original `new_data` with new columns containing
+#' the prediction information.
+#'
+#' @param x A workflow
+#'
+#' @param new_data A data frame of predictors
+#'
+#' @param ... Arguments passed on to methods
+#'
+#' @return `new_data` with new prediction specific columns.
+#'
+#' @export
+#' @examples
+#' if (rlang::is_installed("broom")) {
+#'
+#' library(parsnip)
+#' library(magrittr)
+#' library(modeldata)
+#'
+#' data("attrition")
+#'
+#' model <- logistic_reg() %>%
+#'   set_engine("glm")
+#'
+#' wf <- workflow() %>%
+#'   add_model(model) %>%
+#'   add_formula(
+#'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
+#'   )
+#'
+#' wf_fit <- fit(wf, attrition)
+#'
+#' augment(wf_fit, attrition)
+#'
+#' }
+augment.workflow <- function(x, new_data, ...) {
+  fit <- pull_workflow_fit(x)
+
+  # `augment.model_fit()` requires the pre-processed `new_data`
+  predictors <- forge_predictors(new_data, x)
+  predictors_and_predictions <- augment(fit, predictors, ...)
+
+  prediction_columns <- setdiff(
+    names(predictors_and_predictions),
+    names(predictors)
+  )
+
+  predictions <- predictors_and_predictions[prediction_columns]
+
+  # Return original `new_data` with new prediction columns
+  out <- vctrs::vec_cbind(new_data, predictions)
+
+  out
+}

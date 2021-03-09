@@ -9,6 +9,7 @@
 #' @importFrom generics fit
 #' @importFrom generics tidy
 #' @importFrom generics glance
+#' @importFrom generics augment
 #'
 #' @importFrom parsnip fit_xy
 #'

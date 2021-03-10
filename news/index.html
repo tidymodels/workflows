@@ -94,7 +94,7 @@
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
         </div>
       </div>
     </div>
@@ -114,7 +114,7 @@
 </li>
         <li>
   <a href="https://github.com/tidymodels/workflows/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,6 +135,27 @@
       <small>Source: <a href='https://github.com/tidymodels/workflows/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="workflows-022" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2">
+<a href="#workflows-022" class="anchor"></a>workflows 0.2.2<small> 2021-03-10 </small>
+</h1>
+<ul>
+<li><p><code><a href="../reference/add_variables.html">add_variables()</a></code> now allows for specifying a bundle of model terms through <code><a href="../reference/add_variables.html">add_variables(variables = )</a></code>, supplying a pre-created set of variables with the new <code><a href="../reference/add_variables.html">workflow_variables()</a></code> helper. This is useful for supplying a set of variables programmatically (<a href='https://github.com/tidymodels/workflows/issues/92'>#92</a>).</p></li>
+<li><p>New <code><a href="../reference/is_trained_workflow.html">is_trained_workflow()</a></code> for determining if a workflow has already been trained through a call to <code><a href="https://generics.r-lib.org/reference/fit.html">fit()</a></code> (<a href='https://github.com/tidymodels/workflows/issues/91'>#91</a>).</p></li>
+<li><p><code><a href="https://generics.r-lib.org/reference/fit.html">fit()</a></code> now errors immediately if <code>control</code> is not created by <code><a href="../reference/control_workflow.html">control_workflow()</a></code> (<a href='https://github.com/tidymodels/workflows/issues/89'>#89</a>).</p></li>
+<li><p>Added <code>broom::augment()</code> and <code>broom::glance()</code> methods for trained workflow objects (<a href='https://github.com/tidymodels/workflows/issues/76'>#76</a>).</p></li>
+<li><p>Added support for butchering a workflow using <code><a href="https://butcher.tidymodels.org/reference/butcher.html">butcher::butcher()</a></code>.</p></li>
+<li><p>Updated to testthat 3.0.0.</p></li>
+</ul>
+</div>
+    <div id="workflows-021" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.1">
+<a href="#workflows-021" class="anchor"></a>workflows 0.2.1<small> 2020-10-08 </small>
+</h1>
+<ul>
+<li>New <code><a href="../reference/workflows-internals.html">.fit_finalize()</a></code> for internal usage by the tune package.</li>
+</ul>
+</div>
     <div id="workflows-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
 <a href="#workflows-020" class="anchor"></a>workflows 0.2.0<small> 2020-09-15 </small>

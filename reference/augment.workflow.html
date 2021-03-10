@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>workflows: Modeling Workflows — workflows-package • workflows</title>
+<title>Augment data with predictions — augment.workflow • workflows</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -49,12 +49,15 @@
 
 
 
-<meta property="og:title" content="workflows: Modeling Workflows — workflows-package" />
-<meta property="og:description" content="
-Managing both a 'parsnip' model and a preprocessor, such as a
-    model formula or recipe from 'recipes', can often be challenging. The goal
-    of 'workflows' is to streamline this process by bundling the model alongside
-    the preprocessor, all within the same object." />
+<meta property="og:title" content="Augment data with predictions — augment.workflow" />
+<meta property="og:description" content="This is a generics::augment() method for a workflow that calls
+augment() on the underlying parsnip model with new_data.
+x must be a trained workflow, resulting in fitted parsnip model to
+augment() with.
+new_data will be preprocessed using the preprocessor in the workflow,
+and that preprocessed data will be used to generate predictions. The
+final result will contain the original new_data with new columns containing
+the prediction information." />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -136,39 +139,70 @@ Managing both a 'parsnip' model and a preprocessor, such as a
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>workflows: Modeling Workflows</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/workflows-package.R'><code>R/workflows-package.R</code></a></small>
-    <div class="hidden name"><code>workflows-package.Rd</code></div>
+    <h1>Augment data with predictions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflows/blob/master/R/broom.R'><code>R/broom.R</code></a></small>
+    <div class="hidden name"><code>augment.workflow.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
-<p>Managing both a 'parsnip' model and a preprocessor, such as a
-    model formula or recipe from 'recipes', can often be challenging. The goal
-    of 'workflows' is to streamline this process by bundling the model alongside
-    the preprocessor, all within the same object.</p>
+    <p>This is a <code><a href='https://generics.r-lib.org/reference/augment.html'>generics::augment()</a></code> method for a workflow that calls
+<code><a href='https://generics.r-lib.org/reference/augment.html'>augment()</a></code> on the underlying parsnip model with <code>new_data</code>.</p>
+<p><code>x</code> must be a trained workflow, resulting in fitted parsnip model to
+<code><a href='https://generics.r-lib.org/reference/augment.html'>augment()</a></code> with.</p>
+<p><code>new_data</code> will be preprocessed using the preprocessor in the workflow,
+and that preprocessed data will be used to generate predictions. The
+final result will contain the original <code>new_data</code> with new columns containing
+the prediction information.</p>
     </div>
 
+    <pre class="usage"><span class='co'># S3 method for workflow</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/augment.html'>augment</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>new_data</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A workflow</p></td>
+    </tr>
+    <tr>
+      <th>new_data</th>
+      <td><p>A data frame of predictors</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed on to methods</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/tidymodels/workflows'>https://github.com/tidymodels/workflows</a></p></li>
-<li><p><a href='https://workflows.tidymodels.org'>https://workflows.tidymodels.org</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/tidymodels/workflows/issues'>https://github.com/tidymodels/workflows/issues</a></p></li>
-</ul>
+    <p><code>new_data</code> with new prediction specific columns.</p>
 
-</div>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/is_installed.html'>is_installed</a></span><span class='op'>(</span><span class='st'>"broom"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
-    <p><strong>Maintainer</strong>: Davis Vaughan <a href='mailto:davis@rstudio.com'>davis@rstudio.com</a></p>
-<p>Other contributors:</p><ul>
-<li><p>RStudio [copyright holder]</p></li>
-</ul>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modeldata.tidymodels.org'>modeldata</a></span><span class='op'>)</span>
 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"attrition"</span><span class='op'>)</span>
 
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/logistic_reg.html'>logistic_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"glm"</span><span class='op'>)</span>
 
+<span class='va'>wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span>
+    <span class='va'>Attrition</span> <span class='op'>~</span> <span class='va'>BusinessTravel</span> <span class='op'>+</span> <span class='va'>YearsSinceLastPromotion</span> <span class='op'>+</span> <span class='va'>OverTime</span>
+  <span class='op'>)</span>
+
+<span class='va'>wf_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://generics.r-lib.org/reference/augment.html'>augment</a></span><span class='op'>(</span><span class='va'>wf_fit</span>, <span class='va'>attrition</span><span class='op'>)</span>
+
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

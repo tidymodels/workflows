@@ -28,6 +28,17 @@ test_that("workflow must be the first argument when adding actions", {
   expect_error(add_model(1, mod), "must be a workflow")
 })
 
+test_that("can create workflow with recipe and model", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+  mod <- parsnip::linear_reg()
+
+  workflow <- workflow(rec, mod)
+
+  expect_s3_class(workflow, "workflow")
+  expect_s3_class(workflow$pre$actions$recipe, "action_recipe")
+  expect_s3_class(workflow$fit$actions$model, "action_model")
+})
+
 # ------------------------------------------------------------------------------
 # new_workflow()
 

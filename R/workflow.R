@@ -46,8 +46,15 @@
 #'
 #' fit(variable_wf, attrition)
 #' @export
-workflow <- function() {
-  new_workflow()
+workflow <- function(rec = NULL, mod = NULL) {
+  wf <- new_workflow()
+
+  if (!is.null(rec))
+    wf %>% add_recipe(rec)
+  if (!is.null(mod))
+    wf %>% add_model(mod)
+
+  wf
 }
 
 # ------------------------------------------------------------------------------

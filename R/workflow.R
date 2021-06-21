@@ -176,7 +176,7 @@ print_header <- function(x) {
   spec_msg <- cli::style_italic("Model:")
 
   if (has_spec(x)) {
-    spec <- class(pull_workflow_spec(x))[[1]]
+    spec <- class(extract_parsnip_spec(x))[[1]]
     spec <- glue::glue("{spec}()")
   } else {
     spec <- "None"
@@ -224,7 +224,7 @@ print_preprocessor <- function(x) {
 }
 
 print_preprocessor_formula <- function(x) {
-  formula <- pull_workflow_preprocessor(x)
+  formula <- extract_preprocessor(x)
   formula <- rlang::expr_text(formula)
 
   cat_line(formula)
@@ -233,7 +233,7 @@ print_preprocessor_formula <- function(x) {
 }
 
 print_preprocessor_variables <- function(x) {
-  variables <- pull_workflow_preprocessor(x)
+  variables <- extract_preprocessor(x)
 
   outcomes <- quo_get_expr(variables$outcomes)
   predictors <- quo_get_expr(variables$predictors)
@@ -248,7 +248,7 @@ print_preprocessor_variables <- function(x) {
 }
 
 print_preprocessor_recipe <- function(x) {
-  recipe <- pull_workflow_preprocessor(x)
+  recipe <- extract_preprocessor(x)
   steps <- recipe$steps
 
   n_steps <- length(steps)
@@ -323,7 +323,7 @@ print_model <- function(x) {
 }
 
 print_spec <- function(x) {
-  spec <- pull_workflow_spec(x)
+  spec <- extract_parsnip_spec(x)
 
   print(spec)
 
@@ -331,7 +331,7 @@ print_spec <- function(x) {
 }
 
 print_fit <- function(x) {
-  parsnip_fit <- pull_workflow_fit(x)
+  parsnip_fit <- extract_fit_parsnip(x)
   fit <- parsnip_fit$fit
 
   output <- utils::capture.output(fit)

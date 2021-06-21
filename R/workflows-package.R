@@ -15,5 +15,21 @@
 #'
 #' @importFrom stats predict
 #'
+#' @importFrom hardhat extract_parsnip_spec
+#' @export
+hardhat::extract_parsnip_spec
+#'
+#' @importFrom hardhat extract_recipe
+#' @export
+hardhat::extract_recipe
+#'
+#' @importFrom hardhat extract_fit_parsnip
+#' @export
+hardhat::extract_fit_parsnip
+#'
+#' @importFrom hardhat extract_fit_engine
+#' @export
+hardhat::extract_fit_engine
+#'
 ## usethis namespace: end
 NULL

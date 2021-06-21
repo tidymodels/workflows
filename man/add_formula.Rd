@@ -90,8 +90,9 @@ pre_encoded <- lm_wflow \%>\%
 
 pre_encoded_parsnip_fit <- pre_encoded \%>\% 
   pull_workflow_fit()
-
-pre_encoded_fit <- pre_encoded_parsnip_fit$fit
+}\if{html}{\out{</div>}}\preformatted{## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+## Please use `extract_fit_parsnip()` instead.
+}\if{html}{\out{<div class="r">}}\preformatted{pre_encoded_fit <- pre_encoded_parsnip_fit$fit
 
 # The `lm()` formula is *not* the same as the `add_formula()` formula: 
 pre_encoded_fit

@@ -89,7 +89,7 @@
 #' # as "everything except the outcomes".
 #' workflow2 <- add_variables(workflow, mpg, everything())
 #' workflow2 <- fit(workflow2, mtcars)
-#' pull_workflow_mold(workflow2)$predictors
+#' extract_mold(workflow2)$predictors
 #'
 #' # Variables can also be added from the result of a call to
 #' # `workflow_variables()`, which creates a standalone variables object

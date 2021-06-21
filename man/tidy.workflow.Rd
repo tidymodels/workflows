@@ -23,6 +23,6 @@ of \code{what}.
 recipe that you want to tidy.
 }
 \details{
-To tidy the unprepped recipe, use \code{\link[=pull_workflow_preprocessor]{pull_workflow_preprocessor()}} and \code{tidy()}
+To tidy the unprepped recipe, use \code{\link[=extract_preprocessor]{extract_preprocessor()}} and \code{tidy()}
 that directly.
 }

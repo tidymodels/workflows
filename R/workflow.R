@@ -3,13 +3,13 @@
 #' A `workflow` is a container object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing or the model specification. The recipe can be specified either
-#' as an argument or through [add_recipe()]. The model specification can be 
+#' as an argument or through [add_recipe()]. The model specification can be
 #' specified as either an argument or through [add_model()].
 #'
 #' @param rec Optionally, a recipe created using [recipes::recipe()].
-#' 
+#'
 #' @param mod Optionally, a parsnip model specification.
-#' 
+#'
 #' @return
 #' A new `workflow` object.
 #'
@@ -50,18 +50,18 @@
 #'   )
 #'
 #' fit(variable_wf, attrition)
-#' 
+#'
 #' # Alternatively, the recipe and model can be specifed on construction
 #' model_wf <- workflow(recipe, model)
-#' 
+#'
 #' @export
 workflow <- function(rec = NULL, mod = NULL) {
   wf <- new_workflow()
 
   if (!is.null(rec))
-    wf %>% add_recipe(rec)
+    wf <- add_recipe(wf, rec)
   if (!is.null(mod))
-    wf %>% add_model(mod)
+    wf <- add_model(wf, mod)
 
   wf
 }

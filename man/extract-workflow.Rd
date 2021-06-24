@@ -2,7 +2,7 @@
 % Please edit documentation in R/extract.R
 \name{extract-workflow}
 \alias{extract-workflow}
-\alias{extract_parsnip_spec.workflow}
+\alias{extract_spec_parsnip.workflow}
 \alias{extract_recipe.workflow}
 \alias{extract_fit_parsnip.workflow}
 \alias{extract_fit_engine.workflow}
@@ -10,7 +10,7 @@
 \alias{extract_preprocessor.workflow}
 \title{Extract elements of a workflow}
 \usage{
-\method{extract_parsnip_spec}{workflow}(x, ...)
+\method{extract_spec_parsnip}{workflow}(x, ...)
 
 \method{extract_recipe}{workflow}(x, estimated = TRUE, ...)
 
@@ -40,7 +40,7 @@ not exist yet, an error is thrown.
 \itemize{
 \item \code{extract_preprocessor()} returns the formula, recipe, or variable
 expressions used for preprocessing.
-\item \code{extract_parsnip_spec()} returns the parsnip model specification.
+\item \code{extract_spec_parsnip()} returns the parsnip model specification.
 \item \code{extract_fit_parsnip()} returns the parsnip model fit object.
 \item \code{extract_fit_engine()} returns the engine specific fit embedded within
 a parsnip model fit. For example, when using \code{\link[parsnip:linear_reg]{parsnip::linear_reg()}}
@@ -85,7 +85,7 @@ extract_preprocessor(variable_wf)
 
 # The `spec` is the parsnip spec before it has been fit.
 # The `fit` is the fit parsnip model.
-extract_parsnip_spec(fit_formula_wf)
+extract_spec_parsnip(fit_formula_wf)
 extract_fit_parsnip(fit_formula_wf)
 extract_fit_engine(fit_formula_wf)
 

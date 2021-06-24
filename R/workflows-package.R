@@ -15,9 +15,9 @@
 #'
 #' @importFrom stats predict
 #'
-#' @importFrom hardhat extract_parsnip_spec
+#' @importFrom hardhat extract_spec_parsnip
 #' @export
-hardhat::extract_parsnip_spec
+hardhat::extract_spec_parsnip
 #'
 #' @importFrom hardhat extract_recipe
 #' @export

@@ -3,7 +3,7 @@ required_pkgs_workflow <- function(x, infra = TRUE, ...) {
   out <- character()
 
   if (has_spec(x)) {
-    model <- extract_parsnip_spec(x)
+    model <- extract_spec_parsnip(x)
     pkgs <- generics::required_pkgs(model, infra = infra)
     out <- c(pkgs, out)
   }

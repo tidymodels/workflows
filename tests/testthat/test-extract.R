@@ -50,7 +50,7 @@ test_that("error if not a workflow", {
 })
 
 # ------------------------------------------------------------------------------
-# extract_parsnip_spec()
+# extract_spec_parsnip()
 
 test_that("can pull a model spec", {
   model <- parsnip::linear_reg()
@@ -59,21 +59,21 @@ test_that("can pull a model spec", {
   workflow <- add_model(workflow, model)
 
   expect_equal(
-    extract_parsnip_spec(workflow),
+    extract_spec_parsnip(workflow),
     model
   )
 })
 
 test_that("error if no spec", {
   expect_error(
-    extract_parsnip_spec(workflow()),
+    extract_spec_parsnip(workflow()),
     "does not have a model spec"
   )
 })
 
 test_that("error if not a workflow", {
   expect_error(
-    extract_parsnip_spec(1),
+    extract_spec_parsnip(1),
     "no applicable method for"
   )
 })

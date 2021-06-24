@@ -7,7 +7,7 @@
 #' - `extract_preprocessor()` returns the formula, recipe, or variable
 #'   expressions used for preprocessing.
 #'
-#' - `extract_parsnip_spec()` returns the parsnip model specification.
+#' - `extract_spec_parsnip()` returns the parsnip model specification.
 #'
 #' - `extract_fit_parsnip()` returns the parsnip model fit object.
 #'
@@ -63,7 +63,7 @@
 #'
 #' # The `spec` is the parsnip spec before it has been fit.
 #' # The `fit` is the fit parsnip model.
-#' extract_parsnip_spec(fit_formula_wf)
+#' extract_spec_parsnip(fit_formula_wf)
 #' extract_fit_parsnip(fit_formula_wf)
 #' extract_fit_engine(fit_formula_wf)
 #'
@@ -84,7 +84,7 @@ NULL
 
 #' @export
 #' @rdname extract-workflow
-extract_parsnip_spec.workflow <- function(x, ...) {
+extract_spec_parsnip.workflow <- function(x, ...) {
   if (has_spec(x)) {
     return(x$fit$actions$model$spec)
   }

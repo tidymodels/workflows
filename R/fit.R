@@ -243,7 +243,7 @@ finalize_blueprint_formula <- function(workflow) {
 }
 
 pull_workflow_spec_encoding_tbl <- function(workflow) {
-  spec <- extract_parsnip_spec(workflow)
+  spec <- extract_spec_parsnip(workflow)
   spec_cls <- class(spec)[[1]]
 
   tbl_encodings <- parsnip::get_encoding(spec_cls)

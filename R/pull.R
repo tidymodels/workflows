@@ -100,7 +100,7 @@ pull_workflow_preprocessor <- function(x) {
 pull_workflow_spec <- function(x) {
   lifecycle::deprecate_warn("0.2.3",
                             "pull_workflow_spec()",
-                            "extract_parsnip_spec()")
+                            "extract_spec_parsnip()")
   validate_is_workflow(x)
 
   if (has_spec(x)) {

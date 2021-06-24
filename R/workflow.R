@@ -176,7 +176,7 @@ print_header <- function(x) {
   spec_msg <- cli::style_italic("Model:")
 
   if (has_spec(x)) {
-    spec <- class(extract_parsnip_spec(x))[[1]]
+    spec <- class(extract_spec_parsnip(x))[[1]]
     spec <- glue::glue("{spec}()")
   } else {
     spec <- "None"
@@ -323,7 +323,7 @@ print_model <- function(x) {
 }
 
 print_spec <- function(x) {
-  spec <- extract_parsnip_spec(x)
+  spec <- extract_spec_parsnip(x)
 
   print(spec)
 

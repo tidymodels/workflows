@@ -7,6 +7,8 @@
 \alias{extract_recipe}
 \alias{extract_fit_parsnip}
 \alias{extract_fit_engine}
+\alias{extract_mold}
+\alias{extract_preprocessor}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -14,6 +16,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_parsnip_spec}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}}
+  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_parsnip_spec}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}}
 }}
 

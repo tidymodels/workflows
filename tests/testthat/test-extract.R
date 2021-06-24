@@ -45,7 +45,7 @@ test_that("error if no preprocessor", {
 test_that("error if not a workflow", {
   expect_error(
     extract_preprocessor(1),
-    "must be a workflow"
+    "no applicable method"
   )
 })
 
@@ -161,7 +161,7 @@ test_that("error if no mold", {
 test_that("error if not a workflow", {
   expect_error(
     extract_mold(1),
-    "must be a workflow"
+    "no applicable method"
   )
 })
 

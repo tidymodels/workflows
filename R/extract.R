@@ -127,7 +127,7 @@ extract_fit_engine.workflow <- function(x, ...) {
 
 #' @export
 #' @rdname extract-workflow
-extract_mold <- function(x, ...) {
+extract_mold.workflow <- function(x, ...) {
   validate_is_workflow(x)
   if (has_mold(x)) {
     return(x$pre$mold)
@@ -137,7 +137,7 @@ extract_mold <- function(x, ...) {
 
 #' @export
 #' @rdname extract-workflow
-extract_preprocessor <- function(x, ...) {
+extract_preprocessor.workflow <- function(x, ...) {
   validate_is_workflow(x)
   if (has_preprocessor_formula(x)) {
     return(x$pre$actions$formula$formula)

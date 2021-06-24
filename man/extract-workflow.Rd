@@ -6,8 +6,8 @@
 \alias{extract_recipe.workflow}
 \alias{extract_fit_parsnip.workflow}
 \alias{extract_fit_engine.workflow}
-\alias{extract_mold}
-\alias{extract_preprocessor}
+\alias{extract_mold.workflow}
+\alias{extract_preprocessor.workflow}
 \title{Extract elements of a workflow}
 \usage{
 \method{extract_parsnip_spec}{workflow}(x, ...)
@@ -18,9 +18,9 @@
 
 \method{extract_fit_engine}{workflow}(x, ...)
 
-extract_mold(x, ...)
+\method{extract_mold}{workflow}(x, ...)
 
-extract_preprocessor(x, ...)
+\method{extract_preprocessor}{workflow}(x, ...)
 }
 \arguments{
 \item{x}{A workflow}

@@ -31,5 +31,13 @@ hardhat::extract_fit_parsnip
 #' @export
 hardhat::extract_fit_engine
 #'
+#' @importFrom hardhat extract_mold
+#' @export
+hardhat::extract_mold
+#'
+#' @importFrom hardhat extract_preprocessor
+#' @export
+hardhat::extract_preprocessor
+#'
 ## usethis namespace: end
 NULL

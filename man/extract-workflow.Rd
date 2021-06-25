@@ -55,6 +55,22 @@ whether the fitted or original recipe is returned.
 }
 \details{
 These functions supersede the \verb{pull_*()} functions.
+
+Extracting the underlying fit objects can be helpful for describing the
+model via \code{print()}, \code{summarize()}, \code{plot()}, and so on.
+
+However, users should not invoke the \code{predict()} method on an extracted
+model. There may be preprocessing operations that \code{workflows} has executed on
+the data prior to giving it to the model. Bypassing these can lead to errors
+or silently generating incorrect predictions.
+
+\strong{Good}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% predict(new_data)
+}\if{html}{\out{</div>}}
+
+\strong{Bad}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
+   # or
+   workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
+}\if{html}{\out{</div>}}
 }
 \examples{
 library(parsnip)

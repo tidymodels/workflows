@@ -30,8 +30,9 @@
 #' @details
 #' These functions supersede the `pull_*()` functions.
 #'
-#' Extracting the underlying fit objects can be helpful for describing the
-#'  model via `print()`, `summarize()`, `plot()`, and so on.
+#' Extracting the underlying engine fit can be helpful for describing the
+#'  model (via `print()`, `summary()`, `plot()`, etc.) or for variable
+#'  importance/explainers.
 #'
 #' However, users should not invoke the `predict()` method on an extracted
 #'  model. There may be preprocessing operations that `workflows` has executed on
@@ -50,7 +51,7 @@
 #'    workflow_fit %>% extract_fit_parsnip() %>% predict(new_data)
 #' ```
 #' @return
-#' The extracted value from the workflow, `x`, as described in the description
+#' The extracted value from the object, `x`, as described in the description
 #' section.
 #'
 #' @name extract-workflow

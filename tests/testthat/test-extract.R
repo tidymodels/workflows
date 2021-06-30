@@ -11,7 +11,7 @@ test_that("can extract a formula preprocessor", {
   )
 })
 
-test_that("can pull a recipe preprocessor", {
+test_that("can extract a recipe preprocessor", {
   recipe <- recipes::recipe(mpg ~ cyl, mtcars)
 
   workflow <- workflow()

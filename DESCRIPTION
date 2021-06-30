@@ -23,8 +23,8 @@ Imports:
     generics (>= 0.1.0),
     glue,
     hardhat (>= 0.1.5.9000),
+    lifecycle (>= 1.0.0),
     parsnip (>= 0.1.5),
-    lifecycle,
     rlang (>= 0.4.1),
     tidyselect (>= 1.1.0),
     vctrs (>= 0.3.6)

@@ -27,7 +27,7 @@ The extracted value from the workflow, \code{x}, as described in the description
 section.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
 
 Please use the \verb{extract_*()} functions instead of these (e.g. \code{\link[=extract_mold]{extract_mold()}}).
 

@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' `r lifecycle::badge("deprecated")`
+#' `r lifecycle::badge("soft-deprecated")`
 #'
 #' Please use the `extract_*()` functions instead of these (e.g. [extract_mold()]).
 #'

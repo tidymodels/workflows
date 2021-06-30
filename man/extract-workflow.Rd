@@ -12,7 +12,7 @@
 \usage{
 \method{extract_spec_parsnip}{workflow}(x, ...)
 
-\method{extract_recipe}{workflow}(x, estimated = TRUE, ...)
+\method{extract_recipe}{workflow}(x, ..., estimated = TRUE)
 
 \method{extract_fit_parsnip}{workflow}(x, ...)
 
@@ -28,7 +28,7 @@
 \item{...}{Not currently used.}
 
 \item{estimated}{A logical for whether the original (unfit) recipe or the
-fitted recipe should be returned.}
+fitted recipe should be returned. This argument should be named.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description
@@ -44,7 +44,7 @@ expressions used for preprocessing.
 \item \code{extract_fit_parsnip()} returns the parsnip model fit object.
 \item \code{extract_fit_engine()} returns the engine specific fit embedded within
 a parsnip model fit. For example, when using \code{\link[parsnip:linear_reg]{parsnip::linear_reg()}}
-with the \code{"lm"} engine, this would return the underlying \code{lm} object.
+with the \code{"lm"} engine, this returns the underlying \code{lm} object.
 \item \code{extract_mold()} returns the preprocessed "mold" object returned
 from \code{\link[hardhat:mold]{hardhat::mold()}}. It contains information about the preprocessing,
 including either the prepped recipe, the formula terms object, or
@@ -94,14 +94,14 @@ variable_wf <- add_variables(base_wf, mpg, c(cyl, disp))
 fit_recipe_wf <- fit(recipe_wf, mtcars)
 fit_formula_wf <- fit(formula_wf, mtcars)
 
-# The preprocessor is a recipes, formula, or a list holding the
+# The preprocessor is a recipe, formula, or a list holding the
 # tidyselect expressions identifying the outcomes/predictors
 extract_preprocessor(recipe_wf)
 extract_preprocessor(formula_wf)
 extract_preprocessor(variable_wf)
 
 # The `spec` is the parsnip spec before it has been fit.
-# The `fit` is the fit parsnip model.
+# The `fit` is the fitted parsnip model.
 extract_spec_parsnip(fit_formula_wf)
 extract_fit_parsnip(fit_formula_wf)
 extract_fit_engine(fit_formula_wf)

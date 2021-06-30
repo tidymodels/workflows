@@ -25,7 +25,7 @@
 #'
 #' @param x A workflow
 #' @param estimated A logical for whether the original (unfit) recipe or the
-#' fitted recipe should be returned.
+#' fitted recipe should be returned. This argument should be named.
 #' @param ... Not currently used.
 #' @details
 #' These functions supersede the `pull_*()` functions.
@@ -114,7 +114,8 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 
 #' @export
 #' @rdname extract-workflow
-extract_recipe.workflow <- function(x, estimated = TRUE, ...) {
+extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
+  ellipsis::check_dots_empty()
   if (!has_preprocessor_recipe(x)) {
     abort("The workflow must have a recipe preprocessor.")
   }

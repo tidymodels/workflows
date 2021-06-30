@@ -186,6 +186,11 @@ test_that("can pull a prepped recipe", {
     extract_recipe(workflow),
     workflow$pre$mold$blueprint$recipe
   )
+
+  expect_error(
+    extract_recipe(workflow, FALSE),
+    "`...` is not empty"
+  )
 })
 
 test_that("error if no recipe preprocessor", {

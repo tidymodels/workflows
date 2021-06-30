@@ -13,7 +13,7 @@
 #'
 #' - `extract_fit_engine()` returns the engine specific fit embedded within
 #'   a parsnip model fit. For example, when using [parsnip::linear_reg()]
-#'   with the `"lm"` engine, this would return the underlying `lm` object.
+#'   with the `"lm"` engine, this returns the underlying `lm` object.
 #'
 #' - `extract_mold()` returns the preprocessed "mold" object returned
 #'   from [hardhat::mold()]. It contains information about the preprocessing,

@@ -1,6 +1,11 @@
 #' Extract elements of a workflow
 #'
 #' @description
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' Please use the `extract_*()` functions instead of these (e.g. [extract_mold()]).
+#'
 #' These functions extract various elements from a workflow object. If they do
 #' not exist yet, an error is thrown.
 #'

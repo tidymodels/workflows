@@ -27,6 +27,10 @@ The extracted value from the workflow, \code{x}, as described in the description
 section.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+
+Please use the \verb{extract_*()} functions instead of these (e.g. \code{\link[=extract_mold]{extract_mold()}}).
+
 These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.
 \itemize{

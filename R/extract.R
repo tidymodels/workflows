@@ -145,10 +145,7 @@ extract_fit_parsnip.workflow <- function(x, ...) {
 #' @export
 #' @rdname extract-workflow
 extract_fit_engine.workflow <- function(x, ...) {
-  if (has_fit(x)) {
-    return(extract_fit_parsnip(x)$fit)
-  }
-  abort("The workflow does not have a model fit. Have you called `fit()` yet?")
+  extract_fit_parsnip(x)$fit
 }
 
 #' @export

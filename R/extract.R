@@ -116,9 +116,13 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 #' @rdname extract-workflow
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
   ellipsis::check_dots_empty()
+  if (!is_bool(estimated)) {
+    abort("`estimated` must be a single `TRUE` or `FALSE`.")
+  }
   if (!has_preprocessor_recipe(x)) {
     abort("The workflow must have a recipe preprocessor.")
   }
+
   if (estimated) {
     # Gracefully fails if not yet fitted
     mold <- extract_mold(x)

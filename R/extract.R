@@ -76,7 +76,7 @@
 #' fit_recipe_wf <- fit(recipe_wf, mtcars)
 #' fit_formula_wf <- fit(formula_wf, mtcars)
 #'
-#' # The preprocessor is a recipes, formula, or a list holding the
+#' # The preprocessor is a recipe, formula, or a list holding the
 #' # tidyselect expressions identifying the outcomes/predictors
 #' extract_preprocessor(recipe_wf)
 #' extract_preprocessor(formula_wf)
@@ -171,4 +171,3 @@ extract_preprocessor.workflow <- function(x, ...) {
   }
   abort("The workflow does not have a preprocessor.")
 }
-

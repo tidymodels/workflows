@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # extract_preprocessor()
 
-test_that("can pull a formula preprocessor", {
+test_that("can extract a formula preprocessor", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 

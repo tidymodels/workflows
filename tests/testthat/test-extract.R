@@ -52,7 +52,7 @@ test_that("error if not a workflow", {
 # ------------------------------------------------------------------------------
 # extract_spec_parsnip()
 
-test_that("can pull a model spec", {
+test_that("can extract a model spec", {
   model <- parsnip::linear_reg()
 
   workflow <- workflow()
@@ -81,7 +81,7 @@ test_that("error if not a workflow", {
 # ------------------------------------------------------------------------------
 # extract_fit_parsnip()
 
-test_that("can pull a parsnip model fit", {
+test_that("can extract a parsnip model fit", {
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -114,7 +114,7 @@ test_that("error if not a workflow", {
 # ------------------------------------------------------------------------------
 # extract_fit_engine()
 
-test_that("can pull a engine model fit", {
+test_that("can extract a engine model fit", {
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -133,7 +133,7 @@ test_that("can pull a engine model fit", {
 # ------------------------------------------------------------------------------
 # extract_mold()
 
-test_that("can pull a mold", {
+test_that("can extract a mold", {
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -168,7 +168,7 @@ test_that("error if not a workflow", {
 # ------------------------------------------------------------------------------
 # extract_recipe()
 
-test_that("can pull a prepped recipe", {
+test_that("can extract a prepped recipe", {
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 

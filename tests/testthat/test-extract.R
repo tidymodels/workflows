@@ -187,9 +187,11 @@ test_that("can pull a prepped recipe", {
     workflow$pre$mold$blueprint$recipe
   )
 
+  expect_snapshot(error = TRUE, extract_recipe(workflow, FALSE))
+
   expect_error(
-    extract_recipe(workflow, FALSE),
-    "`...` is not empty"
+    extract_recipe(workflow, estimated = "yes please"),
+    "`estimated` must be a single `TRUE` or `FALSE`"
   )
 })
 

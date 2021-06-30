@@ -23,7 +23,7 @@ test_that("can pull a recipe preprocessor", {
   )
 })
 
-test_that("can pull a variables preprocessor", {
+test_that("can extract a variables preprocessor", {
   variables <- workflow_variables(mpg, c(cyl, disp))
 
   workflow <- workflow()

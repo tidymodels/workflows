@@ -83,7 +83,7 @@
 #' extract_preprocessor(variable_wf)
 #'
 #' # The `spec` is the parsnip spec before it has been fit.
-#' # The `fit` is the fit parsnip model.
+#' # The `fit` is the fitted parsnip model.
 #' extract_spec_parsnip(fit_formula_wf)
 #' extract_fit_parsnip(fit_formula_wf)
 #' extract_fit_engine(fit_formula_wf)

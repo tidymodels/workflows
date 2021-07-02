@@ -15,7 +15,7 @@
 # @export - onLoad
 #' @rdname workflow-butcher
 axe_call.workflow <- function(x, verbose = FALSE, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_call(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
   add_butcher_class(x)
@@ -24,7 +24,7 @@ axe_call.workflow <- function(x, verbose = FALSE, ...) {
 # @export - onLoad
 #' @rdname workflow-butcher
 axe_ctrl.workflow <- function(x, verbose = FALSE, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_ctrl(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
   add_butcher_class(x)
@@ -33,7 +33,7 @@ axe_ctrl.workflow <- function(x, verbose = FALSE, ...) {
 # @export - onLoad
 #' @rdname workflow-butcher
 axe_data.workflow <- function(x, verbose = FALSE, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_data(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
 
@@ -46,12 +46,12 @@ axe_data.workflow <- function(x, verbose = FALSE, ...) {
 # @export - onLoad
 #' @rdname workflow-butcher
 axe_env.workflow <- function(x, verbose = FALSE, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_env(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
 
   # Axe env of preprocessor
-  preprocessor <- pull_workflow_preprocessor(x)
+  preprocessor <- extract_preprocessor(x)
 
   if (has_preprocessor_recipe(x)) {
     preprocessor <- butcher::axe_env(preprocessor, verbose = verbose, ...)
@@ -66,7 +66,7 @@ axe_env.workflow <- function(x, verbose = FALSE, ...) {
 
   # Axe env of prepped recipe (separate from fresh recipe preprocessor)
   if (has_preprocessor_recipe(x)) {
-    prepped <- pull_workflow_prepped_recipe(x)
+    prepped <- extract_recipe(x)
     prepped <- butcher::axe_env(prepped, verbose = verbose, ...)
     x <- replace_workflow_prepped_recipe(x, prepped)
   }
@@ -77,7 +77,7 @@ axe_env.workflow <- function(x, verbose = FALSE, ...) {
 # @export - onLoad
 #' @rdname workflow-butcher
 axe_fitted.workflow <- function(x, verbose = FALSE, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_fitted(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
   add_butcher_class(x)
@@ -131,7 +131,7 @@ replace_workflow_fit <- function(x, value) {
 replace_workflow_predictors <- function(x, value) {
   validate_is_workflow(x)
 
-  mold <- pull_workflow_mold(x)
+  mold <- extract_mold(x)
   mold$predictors <- value
 
   replace_workflow_mold(x, mold)
@@ -140,7 +140,7 @@ replace_workflow_predictors <- function(x, value) {
 replace_workflow_outcomes <- function(x, value) {
   validate_is_workflow(x)
 
-  mold <- pull_workflow_mold(x)
+  mold <- extract_mold(x)
   mold$outcomes <- value
 
   replace_workflow_mold(x, mold)
@@ -153,7 +153,7 @@ replace_workflow_prepped_recipe <- function(x, value) {
     abort("The workflow must have a recipe preprocessor.")
   }
 
-  mold <- pull_workflow_mold(x)
+  mold <- extract_mold(x)
   mold$blueprint$recipe <- value
 
   replace_workflow_mold(x, mold)

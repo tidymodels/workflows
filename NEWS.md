@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* New `extract_*()` functions that supersede the existing `pull_*()` functions. The `pull_*()` functions have been soft-deprecated, and will eventually be removed (#106).
+
 # workflows 0.2.2
   
 * `add_variables()` now allows for specifying a bundle of model terms through

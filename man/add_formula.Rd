@@ -90,8 +90,9 @@ pre_encoded <- lm_wflow \%>\%
 
 pre_encoded_parsnip_fit <- pre_encoded \%>\% 
   pull_workflow_fit()
-
-pre_encoded_fit <- pre_encoded_parsnip_fit$fit
+}\if{html}{\out{</div>}}\preformatted{## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+## Please use `extract_fit_parsnip()` instead.
+}\if{html}{\out{<div class="r">}}\preformatted{pre_encoded_fit <- pre_encoded_parsnip_fit$fit
 
 # The `lm()` formula is *not* the same as the `add_formula()` formula: 
 pre_encoded_fit
@@ -139,8 +140,9 @@ un_encoded <- lm_wflow \%>\%
 
 un_encoded_parsnip_fit <- un_encoded \%>\% 
   pull_workflow_fit()
-
-un_encoded_fit <- un_encoded_parsnip_fit$fit
+}\if{html}{\out{</div>}}\preformatted{## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+## Please use `extract_fit_parsnip()` instead.
+}\if{html}{\out{<div class="r">}}\preformatted{un_encoded_fit <- un_encoded_parsnip_fit$fit
 
 un_encoded_fit
 }\if{html}{\out{</div>}}\preformatted{## 
@@ -189,8 +191,9 @@ custom_formula <- workflow() \%>\%
 
 custom_parsnip_fit <- custom_formula \%>\% 
   pull_workflow_fit()
-
-custom_fit <- custom_parsnip_fit$fit
+}\if{html}{\out{</div>}}\preformatted{## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+## Please use `extract_fit_parsnip()` instead.
+}\if{html}{\out{<div class="r">}}\preformatted{custom_fit <- custom_parsnip_fit$fit
 
 custom_fit
 }\if{html}{\out{</div>}}\preformatted{## 
@@ -214,7 +217,10 @@ Finally, when a formula is updated or removed from a fitted workflow,
 the corresponding model fit is removed.\if{html}{\out{<div class="r">}}\preformatted{custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
 
 try(pull_workflow_fit(custom_formula_no_fit))
-}\if{html}{\out{</div>}}\preformatted{## Error : The workflow does not have a model fit. Have you called `fit()` yet?
+}\if{html}{\out{</div>}}\preformatted{## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.
+## Please use `extract_fit_parsnip()` instead.
+
+## Error : The workflow does not have a model fit. Have you called `fit()` yet?
 }
 }
 }

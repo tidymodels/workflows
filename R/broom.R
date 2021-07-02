@@ -9,7 +9,7 @@
 #' recipe that you want to tidy.
 #'
 #' @details
-#' To tidy the unprepped recipe, use [pull_workflow_preprocessor()] and `tidy()`
+#' To tidy the unprepped recipe, use [extract_preprocessor()] and `tidy()`
 #' that directly.
 #'
 #' @param x A workflow
@@ -24,13 +24,13 @@ tidy.workflow <- function(x, what = "model", ...) {
   what <- arg_match(what, values = c("model", "recipe"))
 
   if (identical(what, "model")) {
-    x <- pull_workflow_fit(x)
+    x <- extract_fit_parsnip(x)
     out <- tidy(x, ...)
     return(out)
   }
 
   if (identical(what, "recipe")) {
-    x <- pull_workflow_prepped_recipe(x)
+    x <- extract_recipe(x)
     out <- tidy(x, ...)
     return(out)
   }
@@ -81,7 +81,7 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' }
 glance.workflow <- function(x, ...) {
-  x <- pull_workflow_fit(x)
+  x <- extract_fit_parsnip(x)
   glance(x, ...)
 }
 
@@ -134,7 +134,7 @@ glance.workflow <- function(x, ...) {
 #'
 #' }
 augment.workflow <- function(x, new_data, ...) {
-  fit <- pull_workflow_fit(x)
+  fit <- extract_fit_parsnip(x)
 
   # `augment.model_fit()` requires the pre-processed `new_data`
   predictors <- forge_predictors(new_data, x)

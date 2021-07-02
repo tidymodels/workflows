@@ -213,7 +213,7 @@ finalize_blueprint_recipe <- function(workflow) {
   # Use the default blueprint, no parsnip model encoding info is used here
   blueprint <- hardhat::default_recipe_blueprint()
 
-  recipe <- pull_workflow_preprocessor(workflow)
+  recipe <- extract_preprocessor(workflow)
 
   update_recipe(workflow, recipe = recipe, blueprint = blueprint)
 }
@@ -237,13 +237,13 @@ finalize_blueprint_formula <- function(workflow) {
     intercept = intercept
   )
 
-  formula <- pull_workflow_preprocessor(workflow)
+  formula <- extract_preprocessor(workflow)
 
   update_formula(workflow, formula = formula, blueprint = blueprint)
 }
 
 pull_workflow_spec_encoding_tbl <- function(workflow) {
-  spec <- pull_workflow_spec(workflow)
+  spec <- extract_spec_parsnip(workflow)
   spec_cls <- class(spec)[[1]]
 
   tbl_encodings <- parsnip::get_encoding(spec_cls)
@@ -265,7 +265,7 @@ finalize_blueprint_variables <- function(workflow) {
   # Use the default blueprint, no parsnip model encoding info is used here
   blueprint <- hardhat::default_xy_blueprint()
 
-  variables <- pull_workflow_preprocessor(workflow)
+  variables <- extract_preprocessor(workflow)
 
   update_variables(
     workflow,

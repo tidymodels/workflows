@@ -3,13 +3,13 @@ required_pkgs_workflow <- function(x, infra = TRUE, ...) {
   out <- character()
 
   if (has_spec(x)) {
-    model <- pull_workflow_spec(x)
+    model <- extract_spec_parsnip(x)
     pkgs <- generics::required_pkgs(model, infra = infra)
     out <- c(pkgs, out)
   }
 
   if (has_preprocessor_recipe(x)) {
-    preprocessor <- pull_workflow_preprocessor(x)
+    preprocessor <- extract_preprocessor(x)
 
     # This also has the side effect of loading recipes, ensuring that its
     # S3 methods for `required_pkgs()` are registered

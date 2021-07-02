@@ -1,6 +1,11 @@
 #' Extract elements of a workflow
 #'
 #' @description
+#'
+#' `r lifecycle::badge("soft-deprecated")`
+#'
+#' Please use the `extract_*()` functions instead of these (e.g. [extract_mold()]).
+#'
 #' These functions extract various elements from a workflow object. If they do
 #' not exist yet, an error is thrown.
 #'
@@ -75,6 +80,9 @@ NULL
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_preprocessor <- function(x) {
+  lifecycle::deprecate_soft("0.2.3",
+                            "pull_workflow_preprocessor()",
+                            "extract_preprocessor()")
   validate_is_workflow(x)
 
   if (has_preprocessor_formula(x)) {
@@ -95,6 +103,9 @@ pull_workflow_preprocessor <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_spec <- function(x) {
+  lifecycle::deprecate_soft("0.2.3",
+                            "pull_workflow_spec()",
+                            "extract_spec_parsnip()")
   validate_is_workflow(x)
 
   if (has_spec(x)) {
@@ -107,6 +118,9 @@ pull_workflow_spec <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_fit <- function(x) {
+  lifecycle::deprecate_soft("0.2.3",
+                            "pull_workflow_fit()",
+                            "extract_fit_parsnip()")
   validate_is_workflow(x)
 
   if (has_fit(x)) {
@@ -119,6 +133,9 @@ pull_workflow_fit <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_mold <- function(x) {
+  lifecycle::deprecate_soft("0.2.3",
+                            "pull_workflow_mold()",
+                            "extract_mold()")
   validate_is_workflow(x)
 
   if (has_mold(x)) {
@@ -131,6 +148,9 @@ pull_workflow_mold <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_prepped_recipe <- function(x) {
+  lifecycle::deprecate_soft("0.2.3",
+                            "pull_workflow_prepped_recipe()",
+                            "extract_recipe()")
   validate_is_workflow(x)
 
   if (!has_preprocessor_recipe(x)) {

@@ -22,6 +22,9 @@
     <loc>https://workflows.tidymodels.org//reference/control_workflow.html</loc>
   </url>
   <url>
+    <loc>https://workflows.tidymodels.org//reference/extract-workflow.html</loc>
+  </url>
+  <url>
     <loc>https://workflows.tidymodels.org//reference/fit-workflow.html</loc>
   </url>
   <url>
@@ -32,6 +35,9 @@
   </url>
   <url>
     <loc>https://workflows.tidymodels.org//reference/predict-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org//reference/reexports.html</loc>
   </url>
   <url>
     <loc>https://workflows.tidymodels.org//reference/tidy.workflow.html</loc>

@@ -305,8 +305,8 @@ behavior from the model’s computational engine.</p>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ cyl + log(disp)
@@ -328,13 +328,13 @@ behavior from the model’s computational engine.</p>
 
 <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Recipe
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Recipe
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; 1 Recipe Step
 #&gt; 
-#&gt; ● step_log()
+#&gt; • step_log()
 #&gt; 
 #&gt; ── Model ───────────────────────────────────────────────────────────────────────
 #&gt; 
@@ -344,7 +344,7 @@ behavior from the model’s computational engine.</p>
 #&gt; Coefficients:
 #&gt; (Intercept)          cyl         disp  
 #&gt;     67.6674      -0.1755      -8.7971  
-#&gt; </div></span></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

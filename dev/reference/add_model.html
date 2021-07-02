@@ -309,8 +309,8 @@ behavior from the model’s computational engine.</p>
 <span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>lm_model</span><span class='op'>)</span>
 <span class='va'>workflow</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> None
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> None
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Model ───────────────────────────────────────────────────────────────────────
 #&gt; Linear Regression Model Specification (regression)
@@ -320,8 +320,8 @@ behavior from the model’s computational engine.</p>
 <span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>.</span><span class='op'>)</span>
 <span class='va'>workflow</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .
@@ -333,16 +333,16 @@ behavior from the model’s computational engine.</p>
 #&gt; </div><div class='input'>
 <span class='fu'>remove_model</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
 <span class='va'>fitted</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='va'>fitted</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .
@@ -360,22 +360,22 @@ behavior from the model’s computational engine.</p>
 #&gt; </div><div class='input'>
 <span class='fu'>remove_model</span><span class='op'>(</span><span class='va'>fitted</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
 <span class='fu'>remove_model</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .</div><div class='input'>
 <span class='fu'>update_model</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>regularized_model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .
@@ -386,8 +386,8 @@ behavior from the model’s computational engine.</p>
 #&gt; Computational engine: glmnet 
 #&gt; </div><div class='input'><span class='fu'>update_model</span><span class='op'>(</span><span class='va'>fitted</span>, <span class='va'>regularized_model</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> linear_reg()
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ .
@@ -397,7 +397,7 @@ behavior from the model’s computational engine.</p>
 #&gt; 
 #&gt; Computational engine: glmnet 
 #&gt; </div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -246,8 +246,9 @@ that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</
 
 <span class='va'>pre_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='va'>pre_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
+</pre><p></div></p><pre><span class='co'>## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
+<span class='co'>## Please use `extract_fit_parsnip()` instead.</span>
+</pre><p><div class="r"></p><pre><span class='va'>pre_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
 
 <span class='co'># The `lm()` formula is *not* the same as the `add_formula()` formula: </span>
 <span class='va'>pre_encoded_fit</span>
@@ -296,8 +297,9 @@ like the data to be passed to a model untouched:<div class="r"></p><pre><span cl
 
 <span class='va'>un_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='va'>un_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
+</pre><p></div></p><pre><span class='co'>## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
+<span class='co'>## Please use `extract_fit_parsnip()` instead.</span>
+</pre><p><div class="r"></p><pre><span class='va'>un_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
 
 <span class='va'>un_encoded_fit</span>
 </pre><p></div></p><pre><span class='co'>## </span>
@@ -347,8 +349,9 @@ used. To demonstrate, a spline function will be used for the bill depth:<div cla
 
 <span class='va'>custom_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_formula</span> <span class='op'>%&gt;%</span> 
   <span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='va'>custom_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
+</pre><p></div></p><pre><span class='co'>## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
+<span class='co'>## Please use `extract_fit_parsnip()` instead.</span>
+</pre><p><div class="r"></p><pre><span class='va'>custom_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
 
 <span class='va'>custom_fit</span>
 </pre><p></div></p><pre><span class='co'>## </span>
@@ -373,7 +376,10 @@ used. To demonstrate, a spline function will be used for the bill depth:<div cla
 the corresponding model fit is removed.<div class="r"></p><pre><span class='va'>custom_formula_no_fit</span> <span class='op'>&lt;-</span> <span class='fu'>update_formula</span><span class='op'>(</span><span class='va'>custom_formula</span>, <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span><span class='op'>)</span>
 
 <span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'><a href='workflow-extractors.html'>pull_workflow_fit</a></span><span class='op'>(</span><span class='va'>custom_formula_no_fit</span><span class='op'>)</span><span class='op'>)</span>
-</pre><p></div></p><pre><span class='co'>## Error : The workflow does not have a model fit. Have you called `fit()` yet?</span>
+</pre><p></div></p><pre><span class='co'>## Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
+<span class='co'>## Please use `extract_fit_parsnip()` instead.</span>
+
+<span class='co'>## Error : The workflow does not have a model fit. Have you called `fit()` yet?</span>
 </pre>
 
 
@@ -383,22 +389,22 @@ the corresponding model fit is removed.<div class="r"></p><pre><span class='va'>
 <span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span><span class='op'>)</span>
 <span class='va'>workflow</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
 #&gt; mpg ~ cyl</div><div class='input'>
 <span class='fu'>remove_formula</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> None
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None</div><div class='input'>
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> None
+#&gt; <span style='font-style: italic;'>Model:</span> None</div><div class='input'>
 <span class='fu'>update_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>disp</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
-#&gt; </span><span style='font-style: italic;'>Model:</span><span> None
+#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
+#&gt; <span style='font-style: italic;'>Model:</span> None
 #&gt; 
 #&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; mpg ~ disp</div></span></pre>
+#&gt; mpg ~ disp</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

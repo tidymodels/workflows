@@ -28,6 +28,35 @@ test_that("workflow must be the first argument when adding actions", {
   expect_error(add_model(1, mod), "must be a workflow")
 })
 
+test_that("can add a model spec directly to a workflow", {
+  mod <- parsnip::linear_reg()
+  workflow <- workflow(spec = mod)
+
+  expect_identical(workflow$fit$actions$model$spec, mod)
+})
+
+test_that("can add a preprocessor directly to a workflow", {
+  preprocessor <- recipes::recipe(mpg ~ cyl, mtcars)
+  workflow <- workflow(preprocessor)
+  expect_identical(workflow$pre$actions$recipe$recipe, preprocessor)
+
+  preprocessor <- mpg ~ cyl
+  workflow <- workflow(preprocessor)
+  expect_identical(workflow$pre$actions$formula$formula, preprocessor)
+
+  preprocessor <- workflow_variables(mpg, cyl)
+  workflow <- workflow(preprocessor)
+  expect_identical(workflow$pre$actions$variables$variables, preprocessor)
+})
+
+test_that("model spec is validated", {
+  expect_snapshot(error = TRUE, workflow(spec = 1))
+})
+
+test_that("preprocessor is validated", {
+  expect_snapshot(error = TRUE, workflow(preprocessor = 1))
+})
+
 # ------------------------------------------------------------------------------
 # new_workflow()
 

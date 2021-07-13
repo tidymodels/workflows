@@ -1,9 +1,25 @@
 #' Create a workflow
 #'
+#' @description
 #' A `workflow` is a container object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing, specified through [add_recipe()], or the model specification
 #' to fit, specified through [add_model()].
+#'
+#' The `preprocessor` and `spec` arguments allow you add components to a
+#' workflow quickly, without having to go through the `add_*()` functions, such
+#' as [add_recipe()] or [add_model()]. However, if you need to control any of
+#' the optional arguments to those functions, such as the `blueprint` or the
+#' model `formula`, then you should use the `add_*()` functions directly
+#' instead.
+#'
+#' @param preprocessor An optional preprocessor to add to the workflow. One of:
+#'   - A formula, passed on to [add_formula()].
+#'   - A recipe, passed on to [add_recipe()].
+#'   - A [workflow_variables()] object, passed on to [add_variables()].
+#'
+#' @param spec An optional parsnip model specification to add to the workflow.
+#'   Passed on to [add_model()].
 #'
 #' @return
 #' A new `workflow` object.
@@ -21,33 +37,57 @@
 #' model <- logistic_reg() %>%
 #'   set_engine("glm")
 #'
-#' base_wf <- workflow() %>%
-#'   add_model(model)
+#' formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'
-#' formula_wf <- base_wf %>%
-#'   add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
+#' wf_formula <- workflow(formula, model)
 #'
-#' fit(formula_wf, attrition)
+#' fit(wf_formula, attrition)
 #'
 #' recipe <- recipe(Attrition ~ ., attrition) %>%
 #'   step_dummy(all_nominal(), -Attrition) %>%
 #'   step_corr(all_predictors(), threshold = 0.8)
 #'
-#' recipe_wf <- base_wf %>%
-#'   add_recipe(recipe)
+#' wf_recipe <- workflow(recipe, model)
 #'
-#' fit(recipe_wf, attrition)
+#' fit(wf_recipe, attrition)
 #'
-#' variable_wf <- base_wf %>%
-#'   add_variables(
-#'     Attrition,
-#'     c(BusinessTravel, YearsSinceLastPromotion, OverTime)
-#'   )
+#' variables <- workflow_variables(
+#'   Attrition,
+#'   c(BusinessTravel, YearsSinceLastPromotion, OverTime)
+#' )
 #'
-#' fit(variable_wf, attrition)
+#' wf_variables <- workflow(variables, model)
+#'
+#' fit(wf_variables, attrition)
 #' @export
-workflow <- function() {
-  new_workflow()
+workflow <- function(preprocessor = NULL, spec = NULL) {
+  out <- new_workflow()
+
+  if (!is_null(preprocessor)) {
+    out <- add_preprocessor(out, preprocessor)
+  }
+
+  if (!is_null(spec)) {
+    out <- add_model(out, spec)
+  }
+
+  out
+}
+
+add_preprocessor <- function(x, preprocessor) {
+  if (is_formula(preprocessor)) {
+    return(add_formula(x, preprocessor))
+  }
+
+  if (is_recipe(preprocessor)) {
+    return(add_recipe(x, preprocessor))
+  }
+
+  if (is_workflow_variables(preprocessor)) {
+    return(add_variables(x, variables = preprocessor))
+  }
+
+  abort("`preprocessor` must be a formula, recipe, or a set of workflow variables.")
 }
 
 # ------------------------------------------------------------------------------

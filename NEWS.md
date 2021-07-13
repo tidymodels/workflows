@@ -1,6 +1,9 @@
 # workflows (development version)
 
-* New `extract_*()` functions that supersede the existing `pull_*()` functions. The `pull_*()` functions have been soft-deprecated, and will eventually be removed (#106).
+* New `extract_*()` functions have been added that supersede the existing
+  `pull_*()` functions. This is part of a larger move across the tidymodels
+  packages towards a family of generic `extract_*()` functions. The `pull_*()`
+  functions have been soft-deprecated, and will eventually be removed (#106).
 
 # workflows 0.2.2
   

@@ -4,7 +4,18 @@
 \alias{workflow}
 \title{Create a workflow}
 \usage{
-workflow()
+workflow(preprocessor = NULL, spec = NULL)
+}
+\arguments{
+\item{preprocessor}{An optional preprocessor to add to the workflow. One of:
+\itemize{
+\item A formula, passed on to \code{\link[=add_formula]{add_formula()}}.
+\item A recipe, passed on to \code{\link[=add_recipe]{add_recipe()}}.
+\item A \code{\link[=workflow_variables]{workflow_variables()}} object, passed on to \code{\link[=add_variables]{add_variables()}}.
+}}
+
+\item{spec}{An optional parsnip model specification to add to the workflow.
+Passed on to \code{\link[=add_model]{add_model()}}.}
 }
 \value{
 A new \code{workflow} object.
@@ -14,6 +25,13 @@ A \code{workflow} is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
 to fit, specified through \code{\link[=add_model]{add_model()}}.
+
+The \code{preprocessor} and \code{spec} arguments allow you add components to a
+workflow quickly, without having to go through the \verb{add_*()} functions, such
+as \code{\link[=add_recipe]{add_recipe()}} or \code{\link[=add_model]{add_model()}}. However, if you need to control any of
+the optional arguments to those functions, such as the \code{blueprint} or the
+model \code{formula}, then you should use the \verb{add_*()} functions directly
+instead.
 }
 \section{Indicator Variable Details}{
 Some modeling functions in R create indicator/dummy variables from
@@ -133,28 +151,26 @@ data("attrition")
 model <- logistic_reg() \%>\%
   set_engine("glm")
 
-base_wf <- workflow() \%>\%
-  add_model(model)
+formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 
-formula_wf <- base_wf \%>\%
-  add_formula(Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime)
+wf_formula <- workflow(formula, model)
 
-fit(formula_wf, attrition)
+fit(wf_formula, attrition)
 
 recipe <- recipe(Attrition ~ ., attrition) \%>\%
   step_dummy(all_nominal(), -Attrition) \%>\%
   step_corr(all_predictors(), threshold = 0.8)
 
-recipe_wf <- base_wf \%>\%
-  add_recipe(recipe)
+wf_recipe <- workflow(recipe, model)
 
-fit(recipe_wf, attrition)
+fit(wf_recipe, attrition)
 
-variable_wf <- base_wf \%>\%
-  add_variables(
-    Attrition,
-    c(BusinessTravel, YearsSinceLastPromotion, OverTime)
-  )
+variables <- workflow_variables(
+  Attrition,
+  c(BusinessTravel, YearsSinceLastPromotion, OverTime)
+)
 
-fit(variable_wf, attrition)
+wf_variables <- workflow(variables, model)
+
+fit(wf_variables, attrition)
 }

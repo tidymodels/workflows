@@ -266,16 +266,16 @@ or silently generating incorrect predictions.</p>
 #&gt; 
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x7fdf2a572b38&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x55a6573f8a20&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x7fdf2a572b38</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55a6573f8a20</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x7fdf2a572b38</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55a6573f8a20</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>
@@ -288,7 +288,7 @@ or silently generating incorrect predictions.</p>
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='va'>fit_formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  1ms 
+#&gt; Fit time:  2ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)

@@ -140,7 +140,8 @@
 <a href="#workflows-development-version" class="anchor"></a>workflows (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li>New <code>extract_*()</code> functions have been added that supersede the existing <code>pull_*()</code> functions. This is part of a larger move across the tidymodels packages towards a family of generic <code>extract_*()</code> functions. The <code>pull_*()</code> functions have been soft-deprecated, and will eventually be removed (<a href='https://github.com/tidymodels/workflows/issues/106'>#106</a>).</li>
+<li><p><code><a href="../reference/workflow.html">workflow()</a></code> has gained new <code>preprocessor</code> and <code>spec</code> arguments for adding a preprocessor (such as a recipe or formula) and a parsnip model specification directly to a workflow upon creation. In many cases, this can reduce the lines of code required to construct a complete workflow (<a href='https://github.com/tidymodels/workflows/issues/108'>#108</a>).</p></li>
+<li><p>New <code>extract_*()</code> functions have been added that supersede the existing <code>pull_*()</code> functions. This is part of a larger move across the tidymodels packages towards a family of generic <code>extract_*()</code> functions. The <code>pull_*()</code> functions have been soft-deprecated, and will eventually be removed (<a href='https://github.com/tidymodels/workflows/issues/106'>#106</a>).</p></li>
 </ul>
 </div>
     <div id="workflows-022" class="section level1">

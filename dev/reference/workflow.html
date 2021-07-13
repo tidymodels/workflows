@@ -53,7 +53,13 @@
 <meta property="og:description" content="A workflow is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through add_recipe(), or the model specification
-to fit, specified through add_model()." />
+to fit, specified through add_model().
+The preprocessor and spec arguments allow you add components to a
+workflow quickly, without having to go through the add_*() functions, such
+as add_recipe() or add_model(). However, if you need to control any of
+the optional arguments to those functions, such as the blueprint or the
+model formula, then you should use the add_*() functions directly
+instead." />
 <meta property="og:image" content="https://workflows.tidymodels.org/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -145,10 +151,33 @@ to fit, specified through add_model()." />
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through <code><a href='add_recipe.html'>add_recipe()</a></code>, or the model specification
 to fit, specified through <code><a href='add_model.html'>add_model()</a></code>.</p>
+<p>The <code>preprocessor</code> and <code>spec</code> arguments allow you add components to a
+workflow quickly, without having to go through the <code>add_*()</code> functions, such
+as <code><a href='add_recipe.html'>add_recipe()</a></code> or <code><a href='add_model.html'>add_model()</a></code>. However, if you need to control any of
+the optional arguments to those functions, such as the <code>blueprint</code> or the
+model <code>formula</code>, then you should use the <code>add_*()</code> functions directly
+instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>workflow</span><span class='op'>(</span>preprocessor <span class='op'>=</span> <span class='cn'>NULL</span>, spec <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>preprocessor</th>
+      <td><p>An optional preprocessor to add to the workflow. One of:</p><ul>
+<li><p>A formula, passed on to <code><a href='add_formula.html'>add_formula()</a></code>.</p></li>
+<li><p>A recipe, passed on to <code><a href='add_recipe.html'>add_recipe()</a></code>.</p></li>
+<li><p>A <code><a href='add_variables.html'>workflow_variables()</a></code> object, passed on to <code><a href='add_variables.html'>add_variables()</a></code>.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>spec</th>
+      <td><p>An optional parsnip model specification to add to the workflow.
+Passed on to <code><a href='add_model.html'>add_model()</a></code>.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -269,13 +298,11 @@ behavior from the model’s computational engine.</p>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/logistic_reg.html'>logistic_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"glm"</span><span class='op'>)</span>
 
-<span class='va'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='va'>formula</span> <span class='op'>&lt;-</span> <span class='va'>Attrition</span> <span class='op'>~</span> <span class='va'>BusinessTravel</span> <span class='op'>+</span> <span class='va'>YearsSinceLastPromotion</span> <span class='op'>+</span> <span class='va'>OverTime</span>
 
-<span class='va'>formula_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>Attrition</span> <span class='op'>~</span> <span class='va'>BusinessTravel</span> <span class='op'>+</span> <span class='va'>YearsSinceLastPromotion</span> <span class='op'>+</span> <span class='va'>OverTime</span><span class='op'>)</span>
+<span class='va'>wf_formula</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>wf_formula</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
 #&gt; <span style='font-style: italic;'>Model:</span> logistic_reg()
@@ -302,10 +329,9 @@ behavior from the model’s computational engine.</p>
   <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_dummy.html'>step_dummy</a></span><span class='op'>(</span><span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_nominal</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>-</span><span class='va'>Attrition</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_corr.html'>step_corr</a></span><span class='op'>(</span><span class='fu'><a href='https://recipes.tidymodels.org/reference/has_role.html'>all_predictors</a></span><span class='op'>(</span><span class='op'>)</span>, threshold <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
 
-<span class='va'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>recipe</span><span class='op'>)</span>
+<span class='va'>wf_recipe</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='va'>recipe</span>, <span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>wf_recipe</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span> Recipe
 #&gt; <span style='font-style: italic;'>Model:</span> logistic_reg()
@@ -370,13 +396,14 @@ behavior from the model’s computational engine.</p>
 #&gt; 
 #&gt; ...
 #&gt; and 14 more lines.</div><div class='input'>
-<span class='va'>variable_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_variables.html'>add_variables</a></span><span class='op'>(</span>
-    <span class='va'>Attrition</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>BusinessTravel</span>, <span class='va'>YearsSinceLastPromotion</span>, <span class='va'>OverTime</span><span class='op'>)</span>
-  <span class='op'>)</span>
+<span class='va'>variables</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_variables.html'>workflow_variables</a></span><span class='op'>(</span>
+  <span class='va'>Attrition</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>BusinessTravel</span>, <span class='va'>YearsSinceLastPromotion</span>, <span class='va'>OverTime</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>variable_wf</span>, <span class='va'>attrition</span><span class='op'>)</span>
+<span class='va'>wf_variables</span> <span class='op'>&lt;-</span> <span class='fu'>workflow</span><span class='op'>(</span><span class='va'>variables</span>, <span class='va'>model</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>wf_variables</span>, <span class='va'>attrition</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span> Variables
 #&gt; <span style='font-style: italic;'>Model:</span> logistic_reg()

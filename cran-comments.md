@@ -9,6 +9,10 @@ We checked 4 reverse dependencies, comparing R CMD check results across CRAN and
  * We saw 0 new problems
  * We failed to check 0 packages
  
+## Submission 0.2.3
+
+This is a minor release adding support for the `extract_*()` generics from hardhat, along with adding new capabilities to `workflow()`.
+ 
 ## Submission 0.2.2
 
 This is a minor release adding new features to `add_variables()` and a few

@@ -6,16 +6,18 @@
 \alias{update_model}
 \title{Add a model to a workflow}
 \usage{
-add_model(x, spec, formula = NULL)
+add_model(x, spec, ..., formula = NULL)
 
 remove_model(x)
 
-update_model(x, spec, formula = NULL)
+update_model(x, spec, ..., formula = NULL)
 }
 \arguments{
 \item{x}{A workflow.}
 
 \item{spec}{A parsnip model specification.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{formula}{An optional formula override to specify the terms of the
 model. Typically, the terms are extracted from the formula or recipe

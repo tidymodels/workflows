@@ -14,6 +14,8 @@
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
+#' @inheritParams ellipsis::dots_empty
+#'
 #' @param x A workflow.
 #'
 #' @param spec A parsnip model specification.
@@ -57,7 +59,8 @@
 #' update_model(workflow, regularized_model)
 #' update_model(fitted, regularized_model)
 #'
-add_model <- function(x, spec, formula = NULL) {
+add_model <- function(x, spec, ..., formula = NULL) {
+  ellipsis::check_dots_empty()
   action <- new_action_model(spec, formula)
   add_action(x, action, "model")
 }
@@ -82,9 +85,10 @@ remove_model <- function(x) {
 
 #' @rdname add_model
 #' @export
-update_model <- function(x, spec, formula = NULL) {
+update_model <- function(x, spec, ..., formula = NULL) {
+  ellipsis::check_dots_empty()
   x <- remove_model(x)
-  add_model(x, spec, formula)
+  add_model(x, spec, formula = formula)
 }
 
 # ------------------------------------------------------------------------------

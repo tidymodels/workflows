@@ -2,6 +2,8 @@
 # pull_workflow_preprocessor()
 
 test_that("can pull a formula preprocessor", {
+  local_lifecycle_quiet()
+
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 
@@ -12,6 +14,8 @@ test_that("can pull a formula preprocessor", {
 })
 
 test_that("can pull a recipe preprocessor", {
+  local_lifecycle_quiet()
+
   recipe <- recipes::recipe(mpg ~ cyl, mtcars)
 
   workflow <- workflow()
@@ -24,6 +28,8 @@ test_that("can pull a recipe preprocessor", {
 })
 
 test_that("can pull a variables preprocessor", {
+  local_lifecycle_quiet()
+
   variables <- workflow_variables(mpg, c(cyl, disp))
 
   workflow <- workflow()
@@ -36,6 +42,8 @@ test_that("can pull a variables preprocessor", {
 })
 
 test_that("error if no preprocessor", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_preprocessor(workflow()),
     "does not have a preprocessor"
@@ -43,16 +51,27 @@ test_that("error if no preprocessor", {
 })
 
 test_that("error if not a workflow", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_preprocessor(1),
     "must be a workflow"
   )
 })
 
+test_that("`pull_workflow_preprocessor()` is soft-deprecated", {
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  expect_snapshot(x <- pull_workflow_preprocessor(workflow))
+})
+
 # ------------------------------------------------------------------------------
 # pull_workflow_spec()
 
 test_that("can pull a model spec", {
+  local_lifecycle_quiet()
+
   model <- parsnip::linear_reg()
 
   workflow <- workflow()
@@ -65,6 +84,8 @@ test_that("can pull a model spec", {
 })
 
 test_that("error if no spec", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_spec(workflow()),
     "does not have a model spec"
@@ -72,16 +93,29 @@ test_that("error if no spec", {
 })
 
 test_that("error if not a workflow", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_spec(1),
     "must be a workflow"
   )
 })
 
+test_that("`pull_workflow_spec()` is soft-deprecated", {
+  model <- parsnip::linear_reg()
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+
+  expect_snapshot(x <- pull_workflow_spec(workflow))
+})
+
 # ------------------------------------------------------------------------------
 # pull_workflow_fit()
 
 test_that("can pull a model fit", {
+  local_lifecycle_quiet()
+
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -98,6 +132,8 @@ test_that("can pull a model fit", {
 })
 
 test_that("error if no fit", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_fit(workflow()),
     "does not have a model fit. Have you called `fit[(][)]` yet?"
@@ -105,16 +141,33 @@ test_that("error if no fit", {
 })
 
 test_that("error if not a workflow", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_fit(1),
     "must be a workflow"
   )
 })
 
+test_that("`pull_workflow_fit()` is soft-deprecated", {
+  model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  workflow <- fit(workflow, mtcars)
+
+  expect_snapshot(x <- pull_workflow_fit(workflow))
+})
+
 # ------------------------------------------------------------------------------
 # pull_workflow_mold()
 
 test_that("can pull a mold", {
+  local_lifecycle_quiet()
+
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -133,6 +186,8 @@ test_that("can pull a mold", {
 })
 
 test_that("error if no mold", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_mold(workflow()),
     "does not have a mold. Have you called `fit[(][)]` yet?"
@@ -140,16 +195,33 @@ test_that("error if no mold", {
 })
 
 test_that("error if not a workflow", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_mold(1),
     "must be a workflow"
   )
 })
 
+test_that("`pull_workflow_mold()` is soft-deprecated", {
+  model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  workflow <- fit(workflow, mtcars)
+
+  expect_snapshot(x <- pull_workflow_mold(workflow))
+})
+
 # ------------------------------------------------------------------------------
 # pull_workflow_prepped_recipe()
 
 test_that("can pull a prepped recipe", {
+  local_lifecycle_quiet()
+
   model <- parsnip::linear_reg()
   model <- parsnip::set_engine(model, "lm")
 
@@ -170,6 +242,8 @@ test_that("can pull a prepped recipe", {
 })
 
 test_that("error if no recipe preprocessor", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_prepped_recipe(workflow()),
     "must have a recipe preprocessor"
@@ -177,6 +251,8 @@ test_that("error if no recipe preprocessor", {
 })
 
 test_that("error if no mold", {
+  local_lifecycle_quiet()
+
   recipe <- recipes::recipe(mpg ~ cyl, mtcars)
 
   workflow <- workflow()
@@ -189,8 +265,25 @@ test_that("error if no mold", {
 })
 
 test_that("error if not a workflow", {
+  local_lifecycle_quiet()
+
   expect_error(
     pull_workflow_prepped_recipe(1),
     "must be a workflow"
   )
+})
+
+test_that("`pull_workflow_prepped_recipe()` is soft-deprecated", {
+  model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
+
+  recipe <- recipes::recipe(mpg ~ cyl, mtcars)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+  workflow <- add_recipe(workflow, recipe)
+
+  workflow <- fit(workflow, mtcars)
+
+  expect_snapshot(x <- pull_workflow_prepped_recipe(workflow))
 })

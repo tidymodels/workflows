@@ -29,7 +29,8 @@ section.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
 
-Please use the \verb{extract_*()} functions instead of these (e.g. \code{\link[=extract_mold]{extract_mold()}}).
+Please use the \verb{extract_*()} functions instead of these
+(e.g. \code{\link[=extract_mold]{extract_mold()}}).
 
 These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.
@@ -91,3 +92,4 @@ identical(
   pull_workflow_prepped_recipe(fit_recipe_wf)
 )
 }
+\keyword{internal}

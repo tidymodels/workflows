@@ -54,8 +54,6 @@ whether the fitted or original recipe is returned.
 }
 }
 \details{
-These functions supersede the \verb{pull_*()} functions.
-
 Extracting the underlying engine fit can be helpful for describing the
 model (via \code{print()}, \code{summary()}, \code{plot()}, etc.) or for variable
 importance/explainers.
@@ -65,12 +63,12 @@ model. There may be preprocessing operations that \code{workflows} has executed 
 the data prior to giving it to the model. Bypassing these can lead to errors
 or silently generating incorrect predictions.
 
-\emph{Good}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% predict(new_data)
+\emph{Good}:\if{html}{\out{<div class="r">}}\preformatted{workflow_fit \%>\% predict(new_data)
 }\if{html}{\out{</div>}}
 
-\emph{Bad}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
-   # or
-   workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
+\emph{Bad}:\if{html}{\out{<div class="r">}}\preformatted{workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
+# or
+workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
 }\if{html}{\out{</div>}}
 }
 \examples{

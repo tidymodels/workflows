@@ -39,7 +39,7 @@ pre_encoded <- lm_wflow %>%
   fit(data = penguins)
 
 pre_encoded_parsnip_fit <- pre_encoded %>% 
-  pull_workflow_fit()
+  extract_fit_parsnip()
 
 pre_encoded_fit <- pre_encoded_parsnip_fit$fit
 
@@ -68,7 +68,7 @@ un_encoded <- lm_wflow %>%
   fit(data = penguins)
 
 un_encoded_parsnip_fit <- un_encoded %>% 
-  pull_workflow_fit()
+  extract_fit_parsnip()
 
 un_encoded_fit <- un_encoded_parsnip_fit$fit
 
@@ -100,7 +100,7 @@ custom_formula <- workflow() %>%
   fit(data = penguins)
 
 custom_parsnip_fit <- custom_formula %>% 
-  pull_workflow_fit()
+  extract_fit_parsnip()
 
 custom_fit <- custom_parsnip_fit$fit
 
@@ -114,5 +114,5 @@ Finally, when a formula is updated or removed from a fitted workflow, the corres
 ```{r remove}
 custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
 
-try(pull_workflow_fit(custom_formula_no_fit))
+try(extract_fit_parsnip(custom_formula_no_fit))
 ```

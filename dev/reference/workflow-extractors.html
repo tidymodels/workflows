@@ -51,7 +51,8 @@
 
 <meta property="og:title" content="Extract elements of a workflow — workflow-extractors" />
 <meta property="og:description" content="
-Please use the extract_*() functions instead of these (e.g. extract_mold()).
+Please use the extract_*() functions instead of these
+(e.g. extract_mold()).
 These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.
 pull_workflow_preprocessor() returns the formula, recipe, or variable
@@ -153,7 +154,8 @@ extracted from the mold object returned from pull_workflow_mold().
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated'><img src='figures/lifecycle-soft-deprecated.svg' alt='[Soft-deprecated]' /></a></p>
-<p>Please use the <code>extract_*()</code> functions instead of these (e.g. <code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold()</a></code>).</p>
+<p>Please use the <code>extract_*()</code> functions instead of these
+(e.g. <code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold()</a></code>).</p>
 <p>These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.</p><ul>
 <li><p><code>pull_workflow_preprocessor()</code> returns the formula, recipe, or variable
@@ -231,17 +233,17 @@ section.</p>
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x559b2f61a9b0&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x55a464d3c9a8&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x559b2f61a9b0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55a464d3c9a8</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x559b2f61a9b0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55a464d3c9a8</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>

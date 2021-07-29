@@ -109,7 +109,7 @@ extracted from the mold object returned from pull_workflow_mold().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.2.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.3.9000</span>
         </div>
       </div>
     </div>
@@ -231,17 +231,17 @@ section.</p>
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x55625a7e8b58&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x561d6442a668&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x55625a7e8b58</span>
+#&gt; env:  <span style='color: #0000BB;'>0x561d6442a668</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x55625a7e8b58</span>
+#&gt; env:  <span style='color: #0000BB;'>0x561d6442a668</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>
@@ -271,7 +271,7 @@ section.</p>
 <span class='fu'>pull_workflow_mold</span><span class='op'>(</span><span class='va'>fit_recipe_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_mold()` instead.</span></div><div class='output co'>#&gt; $predictors
-#&gt; <span style='color: #949494;'># A tibble: 32 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 2</span>
 #&gt;      cyl  disp
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>     6  5.08
@@ -287,7 +287,7 @@ section.</p>
 #&gt; <span style='color: #949494;'># … with 22 more rows</span>
 #&gt; 
 #&gt; $outcomes
-#&gt; <span style='color: #949494;'># A tibble: 32 x 1</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 1</span>
 #&gt;      mpg
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>  21  

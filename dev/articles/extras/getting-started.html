@@ -51,7 +51,7 @@
         <a class="navbar-brand" href="../../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.2.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.3.9000</span>
         </div>
       </div>
     </div>
@@ -169,7 +169,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_curve.html">roc_curve</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
 
 <span class="va">simple_glm_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.773</span>
@@ -193,7 +193,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_curve.html">roc_curve</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
 
 <span class="va">ratio_glm_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.765</span>
@@ -239,7 +239,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_curve.html">roc_curve</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
 
 <span class="va">trans_glm_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.815</span>
@@ -285,7 +285,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_curve.html">roc_curve</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
 
 <span class="va">pca_glm_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.815</span></code></pre></div>
@@ -318,7 +318,7 @@
   <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_curve.html">roc_curve</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
 
 <span class="va">discrim_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.813</span></code></pre></div>
@@ -339,7 +339,7 @@
 
 <span class="co"># A little more optimistic than the validation set</span>
 <span class="va">test_probs</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://yardstick.tidymodels.org/reference/roc_auc.html">roc_auc</a></span><span class="op">(</span><span class="va">Class</span>, <span class="va">.pred_One</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
+<span class="co">#&gt; # A tibble: 1 × 3</span>
 <span class="co">#&gt;   .metric .estimator .estimate</span>
 <span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;</span>
 <span class="co">#&gt; 1 roc_auc binary         0.862</span>

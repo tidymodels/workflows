@@ -107,7 +107,7 @@ variables object, which can be supplied to add_variables().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.2.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.3.9000</span>
         </div>
       </div>
     </div>
@@ -305,7 +305,7 @@ both the <code>outcomes</code> and <code>predictors</code>.</p></li>
 <span class='va'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span>, <span class='fu'>everything</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>workflow2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>workflow2</span>, <span class='va'>mtcars</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold</a></span><span class='op'>(</span><span class='va'>workflow2</span><span class='op'>)</span><span class='op'>$</span><span class='va'>predictors</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 32 x 10</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 32 × 10</span>
 #&gt;      cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>     6  160    110  3.9   2.62  16.5     0     1     4     4

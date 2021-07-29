@@ -231,11 +231,11 @@ test_that("can update a formula", {
   wf3 <- update_variables(wf1, variables = workflow_variables(cyl, mpg))
 
   expect_identical(
-    pull_workflow_preprocessor(wf2),
+    extract_preprocessor(wf2),
     new_workflow_variables(outcomes = quo(cyl), predictors = quo(mpg))
   )
   expect_identical(
-    pull_workflow_preprocessor(wf3),
+    extract_preprocessor(wf3),
     new_workflow_variables(outcomes = quo(cyl), predictors = quo(mpg))
   )
 })

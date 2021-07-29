@@ -4,7 +4,8 @@
 #'
 #' `r lifecycle::badge("soft-deprecated")`
 #'
-#' Please use the `extract_*()` functions instead of these (e.g. [extract_mold()]).
+#' Please use the `extract_*()` functions instead of these
+#' (e.g. [extract_mold()]).
 #'
 #' These functions extract various elements from a workflow object. If they do
 #' not exist yet, an error is thrown.
@@ -30,6 +31,7 @@
 #' section.
 #'
 #' @name workflow-extractors
+#' @keywords internal
 #' @examples
 #' library(parsnip)
 #' library(recipes)
@@ -81,78 +83,38 @@ NULL
 #' @export
 pull_workflow_preprocessor <- function(x) {
   lifecycle::deprecate_soft("0.2.3", "pull_workflow_preprocessor()", "extract_preprocessor()")
-
   validate_is_workflow(x)
-
-  if (has_preprocessor_formula(x)) {
-    return(x$pre$actions$formula$formula)
-  }
-
-  if (has_preprocessor_recipe(x)) {
-    return(x$pre$actions$recipe$recipe)
-  }
-
-  if (has_preprocessor_variables(x)) {
-    return(x$pre$actions$variables$variables)
-  }
-
-  abort("The workflow does not have a preprocessor.")
+  extract_preprocessor(x)
 }
 
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_spec <- function(x) {
   lifecycle::deprecate_soft("0.2.3", "pull_workflow_spec()", "extract_spec_parsnip()")
-
   validate_is_workflow(x)
-
-  if (has_spec(x)) {
-    return(x$fit$actions$model$spec)
-  }
-
-  abort("The workflow does not have a model spec.")
+  extract_spec_parsnip(x)
 }
 
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_fit <- function(x) {
   lifecycle::deprecate_soft("0.2.3", "pull_workflow_fit()", "extract_fit_parsnip()")
-
   validate_is_workflow(x)
-
-  if (has_fit(x)) {
-    return(x$fit$fit)
-  }
-
-  abort("The workflow does not have a model fit. Have you called `fit()` yet?")
+  extract_fit_parsnip(x)
 }
 
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_mold <- function(x) {
   lifecycle::deprecate_soft("0.2.3", "pull_workflow_mold()", "extract_mold()")
-
   validate_is_workflow(x)
-
-  if (has_mold(x)) {
-    return(x$pre$mold)
-  }
-
-  abort("The workflow does not have a mold. Have you called `fit()` yet?")
+  extract_mold(x)
 }
 
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_prepped_recipe <- function(x) {
   lifecycle::deprecate_soft("0.2.3", "pull_workflow_prepped_recipe()", "extract_recipe()")
-
   validate_is_workflow(x)
-
-  if (!has_preprocessor_recipe(x)) {
-    abort("The workflow must have a recipe preprocessor.")
-  }
-
-  mold <- pull_workflow_mold(x)
-
-  mold$blueprint$recipe
+  extract_recipe(x)
 }

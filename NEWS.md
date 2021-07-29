@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Internally cleaned up remaining usage of soft-deprecated `pull_*()` functions.
+
 # workflows 0.2.3
 
 * `workflow()` has gained new `preprocessor` and `spec` arguments for adding

@@ -6,4 +6,6 @@ Model: linear_reg()
 -- Model -----------------------------------------------------------------------
 Linear Regression Model Specification (regression)
 
+Computational engine: lm 
+
 

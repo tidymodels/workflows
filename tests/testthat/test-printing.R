@@ -30,6 +30,7 @@ test_that("can print workflow with variables", {
 
 test_that("can print workflow with model", {
   model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
 
   verify_output(
     test_path("out/test-print-workflow-model.txt"),

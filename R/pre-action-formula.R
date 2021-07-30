@@ -66,8 +66,11 @@ remove_formula <- function(x) {
     rlang::warn("The workflow has no formula preprocessor to remove.")
   }
 
+  actions <- x$pre$actions
+  actions[["formula"]] <- NULL
+
   new_workflow(
-    pre = new_stage_pre(),
+    pre = new_stage_pre(actions = actions),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
     trained = FALSE

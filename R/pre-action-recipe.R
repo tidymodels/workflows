@@ -65,8 +65,11 @@ remove_recipe <- function(x) {
     rlang::warn("The workflow has no recipe preprocessor to remove.")
   }
 
+  actions <- x$pre$actions
+  actions[["recipe"]] <- NULL
+
   new_workflow(
-    pre = new_stage_pre(),
+    pre = new_stage_pre(actions = actions),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
     trained = FALSE

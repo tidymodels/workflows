@@ -36,6 +36,8 @@ new_stage <- function(actions = list(), ..., subclass = character()) {
     abort("`actions` must be uniquely named.", .internal = TRUE)
   }
 
+  actions <- unname_empty(actions)
+
   fields <- list2(...)
 
   if (!is_uniquely_named(fields)) {
@@ -58,3 +60,17 @@ has_action <- function(stage, name) {
 }
 
 # ------------------------------------------------------------------------------
+
+unname_empty <- function(x) {
+  # This is for standardizing length 0 named lists to unnamed lists.
+  # It is mainly useful for making objects identical in tests.
+  if (!is_empty(x)) {
+    return(x)
+  }
+
+  if (is_null(names(x))) {
+    return(x)
+  }
+
+  unname(x)
+}

@@ -76,6 +76,16 @@ test_that("remove a formula after model fit", {
   expect_equal(workflow_no_formula$pre, workflow_removed_formula$pre)
 })
 
+test_that("removing a formula doesn't remove case weights", {
+  wf <- workflow()
+  wf <- add_formula(wf, mpg ~ .)
+  wf <- add_case_weights(wf, disp)
+
+  wf <- remove_formula(wf)
+
+  expect_identical(names(wf$pre$actions), "case_weights")
+})
+
 test_that("update a formula", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)

@@ -230,6 +230,16 @@ test_that("can remove variables after model fit", {
   expect_equal(wf$fit, wf2$fit)
 })
 
+test_that("removing variables doesn't remove case weights", {
+  wf <- workflow()
+  wf <- add_variables(wf, mpg, cyl)
+  wf <- add_case_weights(wf, disp)
+
+  wf <- remove_variables(wf)
+
+  expect_identical(names(wf$pre$actions), "case_weights")
+})
+
 test_that("can update a formula", {
   wf <- workflow()
   wf1 <- add_variables(wf, mpg, cyl)

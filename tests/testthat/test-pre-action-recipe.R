@@ -56,6 +56,18 @@ test_that("remove a recipe after model fit", {
   expect_equal(workflow_no_recipe$pre, workflow_removed_recipe$pre)
 })
 
+test_that("removing a formula doesn't remove case weights", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+
+  wf <- workflow()
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, disp)
+
+  wf <- remove_recipe(wf)
+
+  expect_identical(names(wf$pre$actions), "case_weights")
+})
+
 test_that("update a recipe", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
   rec2 <- recipes::recipe(mpg ~ disp, mtcars)

@@ -69,6 +69,10 @@ has_preprocessor_variables <- function(x) {
   "variables" %in% names(x$pre$actions)
 }
 
+has_case_weights <- function(x) {
+  "case_weights" %in% names(x$pre$actions)
+}
+
 has_mold <- function(x) {
   !is.null(x$pre$mold)
 }

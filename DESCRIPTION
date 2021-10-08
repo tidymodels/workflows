@@ -20,7 +20,7 @@ Depends:
 Imports: 
     cli (>= 2.0.0),
     ellipsis (>= 0.2.0),
-    generics (>= 0.1.0),
+    generics (>= 0.1.0.9000),
     glue,
     hardhat (>= 0.1.6),
     lifecycle (>= 1.0.0),
@@ -41,7 +41,7 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Config/Needs/website:
     discrim,
@@ -52,3 +52,5 @@ Config/Needs/website:
     tidyr,
     tidyverse/tidytemplate,
     yardstick
+Remotes: 
+    r-lib/generics

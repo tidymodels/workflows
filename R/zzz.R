@@ -21,6 +21,11 @@
     # `required_pkgs.workflow()` moved from tune to workflows
     vctrs::s3_register("generics::required_pkgs", "workflow", required_pkgs_workflow)
   }
+
+  if (has_at_least_version("tune", "0.1.6.9001")) {
+    # `tune_args.model_spec()` moved from tune to parsnip
+    vctrs::s3_register("generics::tune_args", "workflow", tune_args_workflow)
+  }
 }
 
 # nocov end

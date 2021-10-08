@@ -22,3 +22,6 @@ hardhat::extract_mold
 #' @export
 hardhat::extract_preprocessor
 #'
+#' @importFrom generics tune_args
+#' @export
+generics::tune_args

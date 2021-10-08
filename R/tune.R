@@ -27,3 +27,19 @@ required_pkgs_workflow <- function(x, infra = TRUE, ...) {
   out <- unique(out)
   out
 }
+
+# @export - lazily and conditionally registered in .onLoad()
+tune_args_workflow <- function(object, ...) {
+  model <- extract_spec_parsnip(object)
+
+  param_data <- tune_args(model)
+
+  if (has_preprocessor_recipe(object)) {
+    recipe <- extract_preprocessor(object)
+    recipe_param_data <- tune_args(recipe)
+    param_data <- dplyr::bind_rows(param_data, recipe_param_data)
+  }
+
+  param_data
+}
+

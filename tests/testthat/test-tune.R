@@ -1,6 +1,4 @@
 test_that("can compute required packages of a workflow - formula", {
-  skip_if_not_installed("tune")
-
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
 
@@ -12,7 +10,6 @@ test_that("can compute required packages of a workflow - formula", {
 })
 
 test_that("can compute required packages of a workflow - recipes", {
-  skip_if_not_installed("tune")
   skip_if_not_installed("recipes")
 
   mod <- parsnip::linear_reg()

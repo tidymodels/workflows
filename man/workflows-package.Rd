@@ -8,10 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Managing both a 'parsnip' model and a preprocessor, such as a
-    model formula or recipe from 'recipes', can often be challenging. The goal
-    of 'workflows' is to streamline this process by bundling the model alongside
-    the preprocessor, all within the same object.
+Managing both a 'parsnip' model and a preprocessor, such as a model formula or recipe from 'recipes', can often be challenging. The goal of 'workflows' is to streamline this process by bundling the model alongside the preprocessor, all within the same object.
 }
 \seealso{
 Useful links:

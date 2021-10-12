@@ -1,9 +1,0 @@
-> add_variables(workflow(), y, c(x1, x2))
-== Workflow ====================================================================
-Preprocessor: Variables
-Model: None
-
--- Preprocessor ----------------------------------------------------------------
-Outcomes: y
-Predictors: c(x1, x2)
-

@@ -1,5 +1,5 @@
-# @export - lazily and conditionally registered in .onLoad()
-required_pkgs_workflow <- function(x, infra = TRUE, ...) {
+# Lazily registered in .onLoad()
+required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out <- character()
 
   if (has_spec(x)) {

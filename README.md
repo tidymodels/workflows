@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/workflows/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflows?branch=master)
+coverage](https://codecov.io/gh/tidymodels/workflows/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/workflows?branch=master)
 [![R-CMD-check](https://github.com/tidymodels/workflows/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflows/actions)
 <!-- badges: end -->
 

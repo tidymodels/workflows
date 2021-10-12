@@ -4,14 +4,14 @@
 
 ## revdepcheck results
 
-We checked 10 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 21 reverse dependencies (20 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 1 new problems
+ * We saw 0 new problems
  * We failed to check 0 packages
  
-### New problems
+## Submission 0.2.4
 
-* finetune has an overly strict test that expects silence. We have soft-deprecated the `pull_*()` functions in workflows, and now throw a warning during the testing process when they are called. This warning causes that finetune test to fail. We will quickly fix the call to the `pull_*()` functions upstream in tune, and that should fix finetune. We maintain all of the previously mentioned packages.
+This is a patch release mainly intended to fix a lazy S3 registration issue for `generics::required_pkgs()`.
  
 ## Submission 0.2.3
 

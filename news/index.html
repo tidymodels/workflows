@@ -94,7 +94,7 @@
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
         </div>
       </div>
     </div>
@@ -135,6 +135,16 @@
       <small>Source: <a href='https://github.com/tidymodels/workflows/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="workflows-024" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.4">
+<a href="#workflows-024" class="anchor"></a>workflows 0.2.4<small> 2021-10-12 </small>
+</h1>
+<ul>
+<li><p><code><a href="../reference/add_model.html">add_model()</a></code> and <code><a href="../reference/add_model.html">update_model()</a></code> now use <code>...</code> to separate the required arguments from the optional arguments, forcing optional arguments to be named. This change was made to make it easier for us to extend these functions with new arguments in the future.</p></li>
+<li><p>The workflows method for <code><a href="https://generics.r-lib.org/reference/required_pkgs.html">generics::required_pkgs()</a></code> is now registered unconditionally (<a href='https://github.com/tidymodels/workflows/issues/121'>#121</a>).</p></li>
+<li><p>Internally cleaned up remaining usage of soft-deprecated <code>pull_*()</code> functions.</p></li>
+</ul>
+</div>
     <div id="workflows-023" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.3">
 <a href="#workflows-023" class="anchor"></a>workflows 0.2.3<small> 2021-07-15 </small>

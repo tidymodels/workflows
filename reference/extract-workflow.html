@@ -111,7 +111,7 @@ whether the fitted or original recipe is returned.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
         </div>
       </div>
     </div>
@@ -215,19 +215,18 @@ fitted recipe should be returned. This argument should be named.</p></td>
 section.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions supersede the <code>pull_*()</code> functions.</p>
-<p>Extracting the underlying engine fit can be helpful for describing the
+    <p>Extracting the underlying engine fit can be helpful for describing the
 model (via <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>, <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code>, <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>, etc.) or for variable
 importance/explainers.</p>
 <p>However, users should not invoke the <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code> method on an extracted
 model. There may be preprocessing operations that <code>workflows</code> has executed on
 the data prior to giving it to the model. Bypassing these can lead to errors
 or silently generating incorrect predictions.</p>
-<p><em>Good</em>:<div class="r"></p><pre>   <span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
+<p><em>Good</em>:<div class="sourceCode r"></p><pre><span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
 </pre><p></div></p>
-<p><em>Bad</em>:<div class="r"></p><pre>   <span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_engine</a></span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
-   <span class='co'># or</span>
-   <span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
+<p><em>Bad</em>:<div class="sourceCode r"></p><pre><span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_engine</a></span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
+<span class='co'># or</span>
+<span class='va'>workflow_fit</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>new_data</span><span class='op'>)</span>
 </pre><p></div></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -254,7 +253,7 @@ or silently generating incorrect predictions.</p>
 <span class='co'># The preprocessor is a recipe, formula, or a list holding the</span>
 <span class='co'># tidyselect expressions identifying the outcomes/predictors</span>
 <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>recipe_wf</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Data Recipe
+</div><div class='output co'>#&gt; Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -266,16 +265,16 @@ or silently generating incorrect predictions.</p>
 #&gt; 
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x56548d7e4620&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x556c84659188&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x56548d7e4620</span>
+#&gt; env:  <span style='color: #0000BB;'>0x556c84659188</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x56548d7e4620</span>
+#&gt; env:  <span style='color: #0000BB;'>0x556c84659188</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>
@@ -310,7 +309,7 @@ or silently generating incorrect predictions.</p>
 <span class='co'># for use on new data at `predict()` time.</span>
 <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold</a></span><span class='op'>(</span><span class='va'>fit_recipe_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $predictors
-#&gt; <span style='color: #949494;'># A tibble: 32 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 2</span>
 #&gt;      cyl  disp
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>     6  5.08
@@ -326,7 +325,7 @@ or silently generating incorrect predictions.</p>
 #&gt; <span style='color: #949494;'># … with 22 more rows</span>
 #&gt; 
 #&gt; $outcomes
-#&gt; <span style='color: #949494;'># A tibble: 32 x 1</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 1</span>
 #&gt;      mpg
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>  21  
@@ -357,7 +356,7 @@ or silently generating incorrect predictions.</p>
 #&gt; </div><div class='input'>
 <span class='co'># A useful shortcut is to extract the fitted recipe from the workflow</span>
 <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_recipe</a></span><span class='op'>(</span><span class='va'>fit_recipe_wf</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Data Recipe
+</div><div class='output co'>#&gt; Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 

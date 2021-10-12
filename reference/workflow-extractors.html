@@ -51,7 +51,8 @@
 
 <meta property="og:title" content="Extract elements of a workflow — workflow-extractors" />
 <meta property="og:description" content="
-Please use the extract_*() functions instead of these (e.g. extract_mold()).
+Please use the extract_*() functions instead of these
+(e.g. extract_mold()).
 These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.
 pull_workflow_preprocessor() returns the formula, recipe, or variable
@@ -109,7 +110,7 @@ extracted from the mold object returned from pull_workflow_mold().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
         </div>
       </div>
     </div>
@@ -153,7 +154,8 @@ extracted from the mold object returned from pull_workflow_mold().
 
     <div class="ref-description">
     <p><a href='https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated'><img src='figures/lifecycle-soft-deprecated.svg' alt='[Soft-deprecated]' /></a></p>
-<p>Please use the <code>extract_*()</code> functions instead of these (e.g. <code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold()</a></code>).</p>
+<p>Please use the <code>extract_*()</code> functions instead of these
+(e.g. <code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold()</a></code>).</p>
 <p>These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.</p><ul>
 <li><p><code>pull_workflow_preprocessor()</code> returns the formula, recipe, or variable
@@ -218,7 +220,7 @@ section.</p>
 <span class='co'># tidyselect expressions identifying the outcomes/predictors</span>
 <span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>recipe_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
-#&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; Data Recipe
+#&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 
@@ -231,17 +233,17 @@ section.</p>
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x56548db3a000&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x556c849060b8&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x56548db3a000</span>
+#&gt; env:  <span style='color: #0000BB;'>0x556c849060b8</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x56548db3a000</span>
+#&gt; env:  <span style='color: #0000BB;'>0x556c849060b8</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>
@@ -256,7 +258,7 @@ section.</p>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_fit_parsnip()` instead.</span></div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  2ms 
+#&gt; Fit time:  3ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)
@@ -271,7 +273,7 @@ section.</p>
 <span class='fu'>pull_workflow_mold</span><span class='op'>(</span><span class='va'>fit_recipe_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_mold()` instead.</span></div><div class='output co'>#&gt; $predictors
-#&gt; <span style='color: #949494;'># A tibble: 32 x 2</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 2</span>
 #&gt;      cyl  disp
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>     6  5.08
@@ -287,7 +289,7 @@ section.</p>
 #&gt; <span style='color: #949494;'># … with 22 more rows</span>
 #&gt; 
 #&gt; $outcomes
-#&gt; <span style='color: #949494;'># A tibble: 32 x 1</span>
+#&gt; <span style='color: #949494;'># A tibble: 32 × 1</span>
 #&gt;      mpg
 #&gt;    <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'> 1</span>  21  
@@ -319,7 +321,7 @@ section.</p>
 <span class='co'># A useful shortcut is to extract the prepped recipe from the workflow</span>
 <span class='fu'>pull_workflow_prepped_recipe</span><span class='op'>(</span><span class='va'>fit_recipe_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.</span>
-#&gt; <span class='warning'>Please use `extract_recipe()` instead.</span></div><div class='output co'>#&gt; Data Recipe
+#&gt; <span class='warning'>Please use `extract_recipe()` instead.</span></div><div class='output co'>#&gt; Recipe
 #&gt; 
 #&gt; Inputs:
 #&gt; 

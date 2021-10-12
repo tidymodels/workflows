@@ -15,12 +15,23 @@ test_that("can compute required packages of a workflow - recipes", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
 
+  step <- recipes::step("workflows_test")
+
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
-  rec <- recipes::step_ica(rec, cyl)
+  rec <- recipes::add_step(rec, step)
+
+  required_pkgs_step_workflows_test <- function(x, ...) {
+    "pkg"
+  }
+  vctrs::s3_register(
+    "generics::required_pkgs",
+    "step_workflows_test",
+    required_pkgs_step_workflows_test
+  )
 
   workflow <- workflow()
   workflow <- add_recipe(workflow, rec)
   workflow <- add_model(workflow, mod)
 
-  expect_true("dimRed" %in% generics::required_pkgs(workflow))
+  expect_true("pkg" %in% generics::required_pkgs(workflow))
 })

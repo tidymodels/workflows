@@ -9,18 +9,15 @@
 
   vctrs::s3_register("generics::required_pkgs", "workflow")
 
-  # Can't use `rlang::is_installed()` at all, as that doesn't work when
-  # called from `.onLoad()` for some reason. Instead, rely on `packageVersion()`
-  # erroring when the package isn't installed.
-  has_at_least_version <- function(pkg, version) {
-    tryCatch(
-      expr = utils::packageVersion(pkg) >= version,
-      error = function(cnd) FALSE
-    )
-  }
+  # - If tune isn't installed, register the method (`packageVersion()` will error here)
+  # - If tune >= 0.1.6.9001 is installed, register the method
+  should_register_tune_args_method <- tryCatch(
+    expr = utils::packageVersion("tune") >= "0.1.6.9001",
+    error = function(cnd) TRUE
+  )
 
   if (has_at_least_version("tune", "0.1.6.9001")) {
-    # `tune_args.model_spec()` moved from tune to parsnip
+    # `tune_args.workflow()` moved from tune to workflows
     vctrs::s3_register("generics::tune_args", "workflow", tune_args_workflow)
   }
 }

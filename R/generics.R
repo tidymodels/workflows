@@ -28,11 +28,11 @@ required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out
 }
 
-# @export - lazily and conditionally registered in .onLoad()
+# Lazily registered in .onLoad()
 tune_args_workflow <- function(object, ...) {
   model <- extract_spec_parsnip(object)
 
-  param_data <- tune_args(model)
+  param_data <- generics::tune_args(model)
 
   if (has_preprocessor_recipe(object)) {
     recipe <- extract_preprocessor(object)

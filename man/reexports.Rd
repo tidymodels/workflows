@@ -9,7 +9,6 @@
 \alias{extract_fit_engine}
 \alias{extract_mold}
 \alias{extract_preprocessor}
-\alias{tune_args}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -17,8 +16,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{generics}{\code{\link[generics]{tune_args}}}
-
   \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}}
 }}
 

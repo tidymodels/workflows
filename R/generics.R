@@ -36,8 +36,8 @@ tune_args_workflow <- function(object, ...) {
 
   if (has_preprocessor_recipe(object)) {
     recipe <- extract_preprocessor(object)
-    recipe_param_data <- tune_args(recipe)
     param_data <- dplyr::bind_rows(param_data, recipe_param_data)
+    recipe_param_data <- generics::tune_args(recipe)
   }
 
   param_data

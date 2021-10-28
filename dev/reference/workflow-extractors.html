@@ -233,17 +233,17 @@ section.</p>
 #&gt; Log transformation on disp</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>formula_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; mpg ~ cyl + log(disp)
-#&gt; &lt;environment: 0x564e7e5dbe88&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
+#&gt; &lt;environment: 0x5646eaa44aa0&gt;</div><div class='input'><span class='fu'>pull_workflow_preprocessor</span><span class='op'>(</span><span class='va'>variable_wf</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_preprocessor()` instead.</span></div><div class='output co'>#&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^mpg</span>
-#&gt; env:  <span style='color: #0000BB;'>0x564e7e5dbe88</span>
+#&gt; env:  <span style='color: #0000BB;'>0x5646eaa44aa0</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(cyl, disp)</span>
-#&gt; env:  <span style='color: #0000BB;'>0x564e7e5dbe88</span>
+#&gt; env:  <span style='color: #0000BB;'>0x5646eaa44aa0</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"</div><div class='input'>
@@ -258,7 +258,7 @@ section.</p>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
 #&gt; <span class='warning'>Please use `extract_fit_parsnip()` instead.</span></div><div class='output co'>#&gt; parsnip model object
 #&gt; 
-#&gt; Fit time:  1ms 
+#&gt; Fit time:  3ms 
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = ..y ~ ., data = data)

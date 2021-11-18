@@ -43,3 +43,17 @@ tune_args_workflow <- function(object, ...) {
   param_data
 }
 
+# Lazily registered in .onLoad()
+tunable_workflow <- function(x, ...) {
+  model <- extract_spec_parsnip(x)
+  param_data <- generics::tunable(model)
+
+  if (has_preprocessor_recipe(x)) {
+    recipe <- extract_preprocessor(x)
+    recipe_param_data <- generics::tunable(recipe)
+
+    param_data <- vctrs::vec_rbind(param_data, recipe_param_data)
+  }
+
+  param_data
+}

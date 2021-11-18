@@ -20,6 +20,17 @@
     # `tune_args.workflow()` moved from tune to workflows
     vctrs::s3_register("generics::tune_args", "workflow", tune_args_workflow)
   }
+
+  should_register_tunable_method <- tryCatch(
+    expr = utils::packageVersion("tune") >= "0.1.6.9002",
+    error = function(cnd) TRUE
+  )
+
+  if (should_register_tunable_method) {
+    # `tunable.workflow()` moved from tune to workflows
+    vctrs::s3_register("generics::tunable", "workflow", tunable_workflow)
+  }
+
 }
 
 # nocov end

@@ -107,7 +107,7 @@ formula will need to be refit.
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9001</span>
         </div>
       </div>
     </div>
@@ -234,17 +234,17 @@ that is what is passed to <code><a href='https://rdrr.io/r/stats/lm.html'>lm()</
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>penguins</span><span class='op'>)</span>
 
-<span class='va'>lm_mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='va'>lm_mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span>
 
-<span class='va'>lm_wflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='va'>lm_wflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>lm_mod</span><span class='op'>)</span>
 
-<span class='va'>pre_encoded</span> <span class='op'>&lt;-</span> <span class='va'>lm_wflow</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+<span class='va'>pre_encoded</span> <span class='op'>&lt;-</span> <span class='va'>lm_wflow</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
-<span class='va'>pre_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded</span> <span class='op'>%&gt;%</span> 
+<span class='va'>pre_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>pre_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>pre_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
@@ -287,14 +287,14 @@ blueprint. The blueprint can specify how factors are encoded and whether
 intercepts are included. As an example, if you use a formula and would
 like the data to be passed to a model untouched:<div class="sourceCode r"></p><pre><span class='va'>minimal</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/default_formula_blueprint.html'>default_formula_blueprint</a></span><span class='op'>(</span>indicators <span class='op'>=</span> <span class='st'>"none"</span>, intercept <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='va'>un_encoded</span> <span class='op'>&lt;-</span> <span class='va'>lm_wflow</span> <span class='op'>%&gt;%</span> 
+<span class='va'>un_encoded</span> <span class='op'>&lt;-</span> <span class='va'>lm_wflow</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'>add_formula</span><span class='op'>(</span>
     <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span>, 
     blueprint <span class='op'>=</span> <span class='va'>minimal</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
-<span class='va'>un_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded</span> <span class='op'>%&gt;%</span> 
+<span class='va'>un_encoded_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>un_encoded_fit</span> <span class='op'>&lt;-</span> <span class='va'>un_encoded_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
@@ -334,18 +334,18 @@ ANOVA tests groups of parameters to get column-level p-values:<div class="source
 customized. In this case, the <code>formula</code> argument of <code><a href='add_model.html'>add_model()</a></code> can be
 used. To demonstrate, a spline function will be used for the bill depth:<div class="sourceCode r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>splines</span><span class='op'>)</span>
 
-<span class='va'>custom_formula</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>custom_formula</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span>
     <span class='va'>lm_mod</span>, 
     formula <span class='op'>=</span> <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/splines/ns.html'>ns</a></span><span class='op'>(</span><span class='va'>bill_depth_mm</span>, <span class='fl'>3</span><span class='op'>)</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'>add_formula</span><span class='op'>(</span>
     <span class='va'>body_mass_g</span> <span class='op'>~</span> <span class='va'>species</span> <span class='op'>+</span> <span class='va'>island</span> <span class='op'>+</span> <span class='va'>bill_depth_mm</span>, 
     blueprint <span class='op'>=</span> <span class='va'>minimal</span>
-  <span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span><span class='op'>)</span>
 
-<span class='va'>custom_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_formula</span> <span class='op'>%&gt;%</span> 
+<span class='va'>custom_parsnip_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_formula</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
   <span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>custom_fit</span> <span class='op'>&lt;-</span> <span class='va'>custom_parsnip_fit</span><span class='op'>$</span><span class='va'>fit</span>
@@ -379,26 +379,29 @@ the corresponding model fit is removed.<div class="sourceCode r"></p><pre><span 
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span><span class='op'>)</span>
-<span class='va'>workflow</span>
-</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
-#&gt; <span style='font-style: italic;'>Model:</span> None
-#&gt; 
-#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; mpg ~ cyl</div><div class='input'>
-<span class='fu'>remove_formula</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span> None
-#&gt; <span style='font-style: italic;'>Model:</span> None</div><div class='input'>
-<span class='fu'>update_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>disp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
-#&gt; <span style='font-style: italic;'>Model:</span> None
-#&gt; 
-#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; mpg ~ disp</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>workflow</span> <span class='op'>&lt;-</span> <span class='fu'>add_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>workflow</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ══ Workflow ════════════════════════════════════════════════════════════════════</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Preprocessor:</span> Formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Model:</span> None</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Preprocessor ────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mpg ~ cyl</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>remove_formula</span><span class='op'>(</span><span class='va'>workflow</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ══ Workflow ════════════════════════════════════════════════════════════════════</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Preprocessor:</span> None</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Model:</span> None</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>update_formula</span><span class='op'>(</span><span class='va'>workflow</span>, <span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>disp</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ══ Workflow ════════════════════════════════════════════════════════════════════</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Preprocessor:</span> Formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Model:</span> None</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Preprocessor ────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mpg ~ disp</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

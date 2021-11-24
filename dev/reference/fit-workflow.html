@@ -100,7 +100,7 @@ Fitting the underlying parsnip model using parsnip::fit.model_spec().
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9000</span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9001</span>
         </div>
       </div>
     </div>
@@ -207,14 +207,14 @@ baths:<div class="sourceCode r"></p><pre><span class='fu'><a href='https://rdrr.
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"Sacramento"</span><span class='op'>)</span>
 
-<span class='va'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>price</span> <span class='op'>~</span> <span class='va'>type</span> <span class='op'>+</span> <span class='va'>sqft</span> <span class='op'>+</span> <span class='va'>beds</span> <span class='op'>+</span> <span class='va'>baths</span><span class='op'>)</span>
 </pre><p></div></p>
-<p>This first model does create dummy/indicator variables:<div class="sourceCode r"></p><pre><span class='va'>lm_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<p>This first model does create dummy/indicator variables:<div class="sourceCode r"></p><pre><span class='va'>lm_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span>
 
-<span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>lm_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>base_wf</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>lm_spec</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
@@ -241,12 +241,12 @@ predictor <code>type</code> of the real estate properties was converted to two
 binary predictors, <code>typeMulti_Family</code> and <code>typeResidential</code>. (The third
 type, for condos, does not need its own column because it is the
 baseline level).</p>
-<p>This second model does not create dummy/indicator variables:<div class="sourceCode r"></p><pre><span class='va'>rf_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/rand_forest.html'>rand_forest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<p>This second model does not create dummy/indicator variables:<div class="sourceCode r"></p><pre><span class='va'>rf_spec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/rand_forest.html'>rand_forest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_args.html'>set_mode</a></span><span class='op'>(</span><span class='st'>"regression"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span>
 
-<span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>base_wf</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>rf_spec</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>Sacramento</span><span class='op'>)</span>
 </pre><p></div></p><pre><span class='co'>## == Workflow [trained] ================================================</span>
 <span class='co'>## Preprocessor: Formula</span>
@@ -290,61 +290,63 @@ behavior from the model’s computational engine.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
-
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span>
-
-<span class='va'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-
-<span class='va'>formula_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
-#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
-#&gt; 
-#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; mpg ~ cyl + log(disp)
-#&gt; 
-#&gt; ── Model ───────────────────────────────────────────────────────────────────────
-#&gt; 
-#&gt; Call:
-#&gt; stats::lm(formula = ..y ~ ., data = data)
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          cyl  `log(disp)`  
-#&gt;     67.6674      -0.1755      -8.7971  
-#&gt; </div><div class='input'>
-<span class='va'>recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>disp</span>, <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
-
-<span class='va'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>recipe</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════
-#&gt; <span style='font-style: italic;'>Preprocessor:</span> Recipe
-#&gt; <span style='font-style: italic;'>Model:</span> linear_reg()
-#&gt; 
-#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
-#&gt; 1 Recipe Step
-#&gt; 
-#&gt; • step_log()
-#&gt; 
-#&gt; ── Model ───────────────────────────────────────────────────────────────────────
-#&gt; 
-#&gt; Call:
-#&gt; stats::lm(formula = ..y ~ ., data = data)
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          cyl         disp  
-#&gt;     67.6674      -0.1755      -8.7971  
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://parsnip.tidymodels.org'>parsnip</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/recipes'>recipes</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>linear_reg</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://parsnip.tidymodels.org/reference/set_engine.html'>set_engine</a></span><span class='op'>(</span><span class='st'>"lm"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>base_wf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow.html'>workflow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_model.html'>add_model</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>formula_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_formula.html'>add_formula</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>formula_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ══ Workflow [trained] ══════════════════════════════════════════════════════════</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Preprocessor:</span> Formula</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Model:</span> linear_reg()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Preprocessor ────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> mpg ~ cyl + log(disp)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Model ───────────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> stats::lm(formula = ..y ~ ., data = data)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          cyl  `log(disp)`  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     67.6674      -0.1755      -8.7971  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>recipe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://recipes.tidymodels.org/reference/recipe.html'>recipe</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>disp</span>, <span class='va'>mtcars</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://recipes.tidymodels.org/reference/step_log.html'>step_log</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>recipe_wf</span> <span class='op'>&lt;-</span> <span class='va'>base_wf</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='add_recipe.html'>add_recipe</a></span><span class='op'>(</span><span class='va'>recipe</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://generics.r-lib.org/reference/fit.html'>fit</a></span><span class='op'>(</span><span class='va'>recipe_wf</span>, <span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ══ Workflow [trained] ══════════════════════════════════════════════════════════</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Preprocessor:</span> Recipe</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='font-style: italic;'>Model:</span> linear_reg()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Preprocessor ────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 Recipe Step</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> • step_log()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ── Model ───────────────────────────────────────────────────────────────────────</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Call:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> stats::lm(formula = ..y ~ ., data = data)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Coefficients:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> (Intercept)          cyl         disp  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     67.6674      -0.1755      -8.7971  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

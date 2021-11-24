@@ -21,6 +21,8 @@
     vctrs::s3_register("generics::tune_args", "workflow", tune_args_workflow)
   }
 
+  # - If tune isn't installed, register the method (`packageVersion()` will error here)
+  # - If tune >= 0.1.6.9002 is installed, register the method
   should_register_tunable_method <- tryCatch(
     expr = utils::packageVersion("tune") >= "0.1.6.9002",
     error = function(cnd) TRUE

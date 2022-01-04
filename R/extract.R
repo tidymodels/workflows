@@ -23,6 +23,10 @@
 #' - `extract_recipe()` returns the recipe. The `estimated` argument specifies
 #'    whether the fitted or original recipe is returned.
 #'
+#' - `extract_parameter_dials()` returns a single dials parameter object.
+#'
+#' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
+#'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
@@ -172,4 +176,27 @@ extract_preprocessor.workflow <- function(x, ...) {
     return(x$pre$actions$variables$variables)
   }
   abort("The workflow does not have a preprocessor.")
+}
+
+#' @export
+#' @rdname extract-workflow
+extract_parameter_set_dials.workflow <- function(x, ...) {
+  model <- extract_spec_parsnip(x)
+  param_data <- extract_parameter_set_dials(model)
+
+  if (has_preprocessor_recipe(x)) {
+    recipe <- extract_preprocessor(x)
+    recipe_param_data <- extract_parameter_set_dials(recipe)
+
+    param_data <- vctrs::vec_rbind(param_data, recipe_param_data)
+  }
+
+  dials::parameters_constr(
+    param_data$name,
+    param_data$id,
+    param_data$source,
+    param_data$component,
+    param_data$component_id,
+    param_data$object
+  )
 }

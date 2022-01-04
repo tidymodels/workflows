@@ -8,6 +8,7 @@
 \alias{extract_fit_engine.workflow}
 \alias{extract_mold.workflow}
 \alias{extract_preprocessor.workflow}
+\alias{extract_parameter_set_dials.workflow}
 \title{Extract elements of a workflow}
 \usage{
 \method{extract_spec_parsnip}{workflow}(x, ...)
@@ -21,6 +22,8 @@
 \method{extract_mold}{workflow}(x, ...)
 
 \method{extract_preprocessor}{workflow}(x, ...)
+
+\method{extract_parameter_set_dials}{workflow}(x, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -51,6 +54,8 @@ including either the prepped recipe, the formula terms object, or
 variable selectors.
 \item \code{extract_recipe()} returns the recipe. The \code{estimated} argument specifies
 whether the fitted or original recipe is returned.
+\item \code{extract_parameter_dials()} returns a single dials parameter object.
+\item \code{extract_parameter_set_dials()} returns a set of dials parameter objects.
 }
 }
 \details{

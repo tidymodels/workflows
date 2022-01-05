@@ -3,6 +3,9 @@
 * New `extract_parameter_set_dials()` method to extract parameter sets from 
   `workflow` objects.
 
+* New `extract_parameter_dials()` method to extract a single parameter from 
+  `workflow` objects.
+
 
 # workflows 0.2.4
 

@@ -31,7 +31,7 @@
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned. This argument should be named.
-#'
+#' @param id A single string for the `id` of the parameter.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -199,4 +199,10 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
     param_data$component_id,
     param_data$object
   )
+}
+
+#' @export
+#' @rdname extract-workflow
+extract_parameter_dials.workflow <- function(x, id, ...) {
+  extract_parameter_dials(extract_parameter_set_dials(x), id)
 }

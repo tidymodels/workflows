@@ -31,7 +31,7 @@ Imports:
 Suggests: 
     butcher (>= 0.1.3),
     covr,
-    dials,
+    dials (>= 0.0.10.9001),
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
@@ -54,4 +54,5 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes: 
+    tidymodels/dials@extract-parameters,
     tidymodels/hardhat

@@ -9,6 +9,7 @@
 \alias{extract_mold.workflow}
 \alias{extract_preprocessor.workflow}
 \alias{extract_parameter_set_dials.workflow}
+\alias{extract_parameter_dials.workflow}
 \title{Extract elements of a workflow}
 \usage{
 \method{extract_spec_parsnip}{workflow}(x, ...)
@@ -24,6 +25,8 @@
 \method{extract_preprocessor}{workflow}(x, ...)
 
 \method{extract_parameter_set_dials}{workflow}(x, ...)
+
+\method{extract_parameter_dials}{workflow}(x, id, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -32,6 +35,8 @@
 
 \item{estimated}{A logical for whether the original (unfit) recipe or the
 fitted recipe should be returned. This argument should be named.}
+
+\item{id}{A single string for the \code{id} of the parameter.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description

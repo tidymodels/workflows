@@ -24,7 +24,7 @@ Imports:
     glue,
     hardhat (>= 0.1.6.9000),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.1.5),
+    parsnip (>= 0.1.7.9005),
     rlang (>= 0.4.1),
     tidyselect (>= 1.1.0),
     vctrs (>= 0.3.6)
@@ -35,7 +35,7 @@ Suggests:
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
-    recipes,
+    recipes (>= 0.1.17.9001),
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 
@@ -55,4 +55,6 @@ Config/Needs/website:
     yardstick
 Remotes: 
     tidymodels/dials@extract-parameter,
-    tidymodels/hardhat
+    tidymodels/hardhat,
+    tidymodels/parsnip@extract-parameters,
+    tidymodels/recipes@extract-parameters

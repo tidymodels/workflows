@@ -22,7 +22,7 @@ Imports:
     ellipsis (>= 0.2.0),
     generics (>= 0.1.0.9000),
     glue,
-    hardhat (>= 0.1.6.9000),
+    hardhat (>= 0.1.6.9001),
     lifecycle (>= 1.0.0),
     parsnip (>= 0.1.7.9005),
     rlang (>= 0.4.1),
@@ -55,6 +55,6 @@ Config/Needs/website:
     yardstick
 Remotes: 
     tidymodels/dials@extract-parameter,
-    tidymodels/hardhat,
+    tidymodels/hardhat@add-tune,
     tidymodels/parsnip@extract-parameters,
     tidymodels/recipes@extract-parameters

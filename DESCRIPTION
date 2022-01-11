@@ -24,6 +24,7 @@ Imports:
     glue,
     hardhat (>= 0.1.6.9001),
     lifecycle (>= 1.0.0),
+    purrr,
     parsnip (>= 0.1.7.9005),
     rlang (>= 0.4.1),
     tidyselect (>= 1.1.0),

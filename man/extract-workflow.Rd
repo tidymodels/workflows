@@ -26,7 +26,7 @@
 
 \method{extract_parameter_set_dials}{workflow}(x, ...)
 
-\method{extract_parameter_dials}{workflow}(x, id, ...)
+\method{extract_parameter_dials}{workflow}(x, parameter, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -36,7 +36,7 @@
 \item{estimated}{A logical for whether the original (unfit) recipe or the
 fitted recipe should be returned. This argument should be named.}
 
-\item{id}{A single string for the \code{id} of the parameter.}
+\item{parameter}{A single string for the parameter ID.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description

@@ -55,6 +55,6 @@ Config/Needs/website:
     yardstick
 Remotes: 
     tidymodels/dials@extract-parameter,
-    tidymodels/hardhat@add-tune,
+    tidymodels/hardhat,
     tidymodels/parsnip@extract-parameters,
     tidymodels/recipes@extract-parameters

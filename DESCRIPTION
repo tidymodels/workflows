@@ -46,11 +46,15 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Config/Needs/website:
+    tidymodels/dials,
     discrim,
     dplyr,
     earth,
     ggplot2,
+    tidymodels/hardhat,
     mda,
+    tidymodels/parsnip,
+    tidymodels/recipes,
     tidyr,
     tidyverse/tidytemplate,
     yardstick

@@ -55,7 +55,7 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes: 
-    tidymodels/dials@extract-parameter,
+    tidymodels/dials,
     tidymodels/hardhat,
-    tidymodels/parsnip@extract-parameters,
-    tidymodels/recipes@extract-parameters
+    tidymodels/parsnip,
+    tidymodels/recipes

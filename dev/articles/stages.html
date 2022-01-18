@@ -36,6 +36,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -50,8 +52,8 @@
       <div class="navbar-brand-container">
         <a class="navbar-brand" href="../index.html">workflows</a>
         <div class="info hidden-xs hidden-sm">
-          <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9001</span>
+          <span class="partof">part of <a href="https://tidymodels.org" class="external-link">tidymodels</a></span>
+          <span class="version version-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.2.4.9002</span>
         </div>
       </div>
     </div>
@@ -70,7 +72,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
         <li>
-  <a href="https://github.com/tidymodels/workflows/">
+  <a href="https://github.com/tidymodels/workflows/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,13 +87,13 @@
 
       
 
-      </header><script src="stages_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Workflow Stages</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/tidymodels/workflows/blob/master/vignettes/stages.Rmd"><code>vignettes/stages.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/workflows/blob/HEAD/vignettes/stages.Rmd" class="external-link"><code>vignettes/stages.Rmd</code></a></small>
       <div class="hidden name"><code>stages.Rmd</code></div>
 
     </div>
@@ -99,25 +101,25 @@
     
     
 <p>Workflows encompasses the three main stages of the modeling <em>process</em>: pre-processing of data, model fitting, and post-processing of results. This page enumerates the possible operations for each stage that have been implemented to date.</p>
-<div id="pre-processing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pre-processing" class="anchor"></a>Pre-processing</h2>
+<div class="section level2">
+<h2 id="pre-processing">Pre-processing<a class="anchor" aria-label="anchor" href="#pre-processing"></a>
+</h2>
 <p>The two elements allowed for pre-processing are:</p>
 <ul>
-<li><p>A standard <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models">model formula</a> via <code><a href="../reference/add_formula.html">add_formula()</a></code>.</p></li>
+<li><p>A standard <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models" class="external-link">model formula</a> via <code><a href="../reference/add_formula.html">add_formula()</a></code>.</p></li>
 <li><p>A recipe object via <code><a href="../reference/add_recipe.html">add_recipe()</a></code>.</p></li>
 </ul>
 <p>You can use one or the other but not both.</p>
 </div>
-<div id="model-fitting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-fitting" class="anchor"></a>Model Fitting</h2>
+<div class="section level2">
+<h2 id="model-fitting">Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"></a>
+</h2>
 <p><code>parsnip</code> model specifications are the only option here, specified via <code><a href="../reference/add_model.html">add_model()</a></code>.</p>
-<p>When using a preprocessor, you may need an additional formula for special model terms (e.g. for mixed models or generalized linear models). In these cases, specify that formula using <code><a href="../reference/add_model.html">add_model()</a></code>’s <code>formula</code> argument, which will be passed to the underlying model when <code><a href="https://generics.r-lib.org/reference/fit.html">fit()</a></code> is called.</p>
+<p>When using a preprocessor, you may need an additional formula for special model terms (e.g. for mixed models or generalized linear models). In these cases, specify that formula using <code><a href="../reference/add_model.html">add_model()</a></code>’s <code>formula</code> argument, which will be passed to the underlying model when <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> is called.</p>
 </div>
-<div id="post-processing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#post-processing" class="anchor"></a>Post-processing</h2>
+<div class="section level2">
+<h2 id="post-processing">Post-processing<a class="anchor" aria-label="anchor" href="#post-processing"></a>
+</h2>
 <p>Some examples of post-processing the model predictions would be: adding a probability threshold for two-class problems, calibration of probability estimates, truncating the possible range of predictions, and so on.</p>
 <p>None of these are currently implemented but will be in coming versions.</p>
 </div>
@@ -139,8 +141,8 @@
 
 <div class="author">
   <p>
-    Developed by Davis Vaughan.
-    Site built by <a href="https://pkgdown.r-lib.org">pkgdown</a>.
+    Developed by .
+    Site built by <a href="https://pkgdown.r-lib.org" class="external-link">pkgdown</a>.
   </p>
 </div>
 
@@ -149,6 +151,8 @@
 
   
 
+
+  
 
   </body>
 </html>

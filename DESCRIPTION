@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 0.2.4.9001
+Version: 0.2.4.9002
 Authors@R: 
     c(person(given = "Davis",
              family = "Vaughan",
@@ -22,19 +22,21 @@ Imports:
     ellipsis (>= 0.2.0),
     generics (>= 0.1.0.9000),
     glue,
-    hardhat (>= 0.1.6),
+    hardhat (>= 0.1.6.9001),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.1.5),
+    purrr,
+    parsnip (>= 0.1.7.9005),
     rlang (>= 0.4.1),
     tidyselect (>= 1.1.0),
     vctrs (>= 0.3.6)
 Suggests: 
     butcher (>= 0.1.3),
     covr,
+    dials (>= 0.0.10.9001),
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
-    recipes,
+    recipes (>= 0.1.17.9001),
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 
@@ -52,3 +54,8 @@ Config/Needs/website:
     tidyr,
     tidyverse/tidytemplate,
     yardstick
+Remotes: 
+    tidymodels/dials,
+    tidymodels/hardhat,
+    tidymodels/parsnip,
+    tidymodels/recipes

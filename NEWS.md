@@ -1,5 +1,9 @@
 # workflows (development version)
 
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods 
+  to extract parameter sets and single parameters from `workflow` objects.
+
+
 # workflows 0.2.4
 
 * `add_model()` and `update_model()` now use `...` to separate the required

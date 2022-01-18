@@ -28,8 +28,11 @@ function cannot be passed here (see \code{opts}). There are some
 \code{parsnip} related options that can be passed, depending on the
 value of \code{type}. Possible arguments are:
 \itemize{
-\item \code{level}: for \code{type}s of "conf_int" and "pred_int" this
-is the parameter for the tail area of the intervals
+\item \code{interval}: for \code{type}s of "survival" and "quantile", should
+interval estimates be added, if available? Options are \code{"none"}
+and \code{"confidence"}.
+\item \code{level}: for \code{type}s of "conf_int", "pred_int", and "survival"
+this is the parameter for the tail area of the intervals
 (e.g. confidence level for confidence intervals).
 Default value is 0.95.
 \item \code{std_error}: add the standard error of fit or prediction (on

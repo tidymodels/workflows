@@ -6,7 +6,7 @@ test_that("can add a formula to a workflow", {
 })
 
 test_that("formula is validated", {
-  expect_error(add_formula(workflow(), 1), "`formula` must be a formula")
+  expect_snapshot(error = TRUE, add_formula(workflow(), 1))
 })
 
 test_that("cannot add a formula if a recipe already exists", {
@@ -15,14 +15,14 @@ test_that("cannot add a formula if a recipe already exists", {
   workflow <- workflow()
   workflow <- add_recipe(workflow, rec)
 
-  expect_error(add_formula(workflow, mpg ~ cyl), "cannot be added when a recipe already exists")
+  expect_snapshot(error = TRUE, add_formula(workflow, mpg ~ cyl))
 })
 
 test_that("cannot add a formula if variables already exist", {
   workflow <- workflow()
   workflow <- add_variables(workflow, y, x)
 
-  expect_error(add_formula(workflow, mpg ~ cyl), "cannot be added when variables already exist")
+  expect_snapshot(error = TRUE, add_formula(workflow, mpg ~ cyl))
 })
 
 test_that("formula preprocessing is executed upon `fit()`", {
@@ -50,7 +50,7 @@ test_that("cannot add two formulas", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 
-  expect_error(add_formula(workflow, mpg ~ cyl), "`formula` action has already been added")
+  expect_snapshot(error = TRUE, add_formula(workflow, mpg ~ cyl))
 })
 
 test_that("remove a formula", {
@@ -125,8 +125,5 @@ test_that("can only use a 'formula_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_error(
-    add_formula(workflow, mpg ~ cyl, blueprint = blueprint),
-    "must be a hardhat 'formula_blueprint'"
-  )
+  expect_snapshot(error = TRUE, add_formula(workflow, mpg ~ cyl, blueprint = blueprint))
 })

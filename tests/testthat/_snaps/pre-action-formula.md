@@ -11,7 +11,7 @@
     Code
       add_formula(workflow, mpg ~ cyl)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_formula()`:
       ! A formula cannot be added when a recipe already exists.
 
 # cannot add a formula if variables already exist
@@ -19,7 +19,7 @@
     Code
       add_formula(workflow, mpg ~ cyl)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_formula()`:
       ! A formula cannot be added when variables already exist.
 
 # cannot add two formulas

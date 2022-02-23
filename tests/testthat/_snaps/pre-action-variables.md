@@ -3,7 +3,7 @@
     Code
       add_variables(wf, y, x)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_variables()`:
       ! Variables cannot be added when a recipe already exists.
 
 # cannot add variables if a formula already exist
@@ -11,7 +11,7 @@
     Code
       add_variables(wf, y, x)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_variables()`:
       ! Variables cannot be added when a formula already exists.
 
 # cannot add two variables

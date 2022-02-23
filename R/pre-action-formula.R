@@ -97,14 +97,14 @@ fit.action_formula <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-check_conflicts.action_formula <- function(action, x) {
+check_conflicts.action_formula <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {
-    abort("A formula cannot be added when a recipe already exists.")
+    abort("A formula cannot be added when a recipe already exists.", call = call)
   }
   if (has_action(pre, "variables")) {
-    abort("A formula cannot be added when variables already exist.")
+    abort("A formula cannot be added when variables already exist.", call = call)
   }
 
   invisible(action)

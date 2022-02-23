@@ -11,7 +11,7 @@
     Code
       add_recipe(workflow, rec)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_recipe()`:
       ! A recipe cannot be added when a formula already exists.
 
 # cannot add a recipe if variables already exist
@@ -19,7 +19,7 @@
     Code
       add_recipe(workflow, rec)
     Condition
-      Error in `check_conflicts()`:
+      Error in `add_recipe()`:
       ! A recipe cannot be added when variables already exist.
 
 # cannot add two recipe

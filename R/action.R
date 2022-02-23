@@ -1,7 +1,7 @@
 add_action <- function(x, action, name, ..., call = caller_env()) {
   validate_is_workflow(x, call = call)
 
-  check_conflicts(action, x)
+  check_conflicts(action, x, call = call)
 
   add_action_impl(x, action, name)
 }
@@ -44,11 +44,12 @@ add_action_to_stage <- function(stage, action, name) {
 # with the current action. For instance, we can't have a formula action with
 # a recipe action
 
-check_conflicts <- function(action, x) {
+check_conflicts <- function(action, x, ..., call = caller_env()) {
+  check_dots_empty()
   UseMethod("check_conflicts")
 }
 
-check_conflicts.default <- function(action, x) {
+check_conflicts.default <- function(action, x, ..., call = caller_env()) {
   invisible(action)
 }
 

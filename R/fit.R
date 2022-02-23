@@ -161,7 +161,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-validate_has_preprocessor <- function(x) {
+validate_has_preprocessor <- function(x, ..., call = caller_env()) {
+  check_dots_empty()
+
   has_preprocessor <-
     has_preprocessor_formula(x) ||
     has_preprocessor_recipe(x) ||
@@ -170,7 +172,8 @@ validate_has_preprocessor <- function(x) {
   if (!has_preprocessor) {
     glubort(
       "The workflow must have formula, recipe, or variables preprocessor. ",
-      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
+      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`.",
+      .call = call
     )
   }
 

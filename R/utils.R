@@ -6,8 +6,8 @@ is_uniquely_named <- function(x) {
   }
 }
 
-glubort <- function (..., .sep = "", .envir = parent.frame()) {
-  abort(glue::glue(..., .sep = .sep, .envir = .envir))
+glubort <- function (..., .sep = "", .envir = caller_env(), .call = .envir) {
+  abort(glue::glue(..., .sep = .sep, .envir = .envir), call = .call)
 }
 
 is_model_fit <- function(x) {
@@ -46,9 +46,11 @@ vec_index_is_empty <- function (x) {
 
 # ------------------------------------------------------------------------------
 
-validate_is_workflow <- function(x, arg = "`x`") {
+validate_is_workflow <- function(x, ..., arg = "`x`", call = caller_env()) {
+  check_dots_empty()
+
   if (!is_workflow(x)) {
-    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")
+    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.", .call = call)
   }
 
   invisible(x)

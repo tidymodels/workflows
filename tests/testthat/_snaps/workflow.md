@@ -27,7 +27,7 @@
     Code
       workflow(spec = 1)
     Condition
-      Error in `new_action_model()`:
+      Error in `add_model()`:
       ! `spec` must be a `model_spec`.
 
 # preprocessor is validated

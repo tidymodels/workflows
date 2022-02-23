@@ -3,7 +3,7 @@
     Code
       add_model(workflow(), 1)
     Condition
-      Error in `new_action_model()`:
+      Error in `add_model()`:
       ! `spec` must be a `model_spec`.
 
 # cannot add two models

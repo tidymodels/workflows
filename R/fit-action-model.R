@@ -132,13 +132,15 @@ fit_from_formula <- function(spec, mold, control_parsnip, formula) {
 
 # ------------------------------------------------------------------------------
 
-new_action_model <- function(spec, formula) {
+new_action_model <- function(spec, formula, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (!is_model_spec(spec)) {
-    abort("`spec` must be a `model_spec`.")
+    abort("`spec` must be a `model_spec`.", call = call)
   }
 
   if (!is.null(formula) && !is_formula(formula)) {
-    abort("`formula` must be a formula, or `NULL`.")
+    abort("`formula` must be a formula, or `NULL`.", call = call)
   }
 
   new_action_fit(spec = spec, formula = formula, subclass = "action_model")

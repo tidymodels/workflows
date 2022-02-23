@@ -27,13 +27,15 @@ print.control_workflow <- function(x, ...) {
   invisible()
 }
 
-check_control_parsnip <- function(x) {
+check_control_parsnip <- function(x, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (is.null(x)) {
     x <- parsnip::control_parsnip()
   }
 
   if (!inherits(x, "control_parsnip")) {
-    abort("`control_parsnip` must be a 'control_parsnip' object.")
+    abort("`control_parsnip` must be a 'control_parsnip' object.", call = call)
   }
 
   x

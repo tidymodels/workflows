@@ -35,7 +35,7 @@
     Code
       workflow(preprocessor = 1)
     Condition
-      Error in `add_preprocessor()`:
+      Error in `workflow()`:
       ! `preprocessor` must be a formula, recipe, or a set of workflow variables.
 
 # constructor validates input

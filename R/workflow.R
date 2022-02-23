@@ -74,7 +74,9 @@ workflow <- function(preprocessor = NULL, spec = NULL) {
   out
 }
 
-add_preprocessor <- function(x, preprocessor) {
+add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (is_formula(preprocessor)) {
     return(add_formula(x, preprocessor))
   }
@@ -87,7 +89,10 @@ add_preprocessor <- function(x, preprocessor) {
     return(add_variables(x, variables = preprocessor))
   }
 
-  abort("`preprocessor` must be a formula, recipe, or a set of workflow variables.")
+  abort(
+    "`preprocessor` must be a formula, recipe, or a set of workflow variables.",
+    call = call
+  )
 }
 
 # ------------------------------------------------------------------------------

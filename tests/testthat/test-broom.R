@@ -3,19 +3,19 @@
 
 test_that("can't tidy the model of an unfit workflow", {
   x <- workflow()
-  expect_error(tidy(x), "does not have a model fit")
+  expect_snapshot(error = TRUE, tidy(x))
 })
 
 test_that("can't tidy the recipe of an unfit workflow", {
   x <- workflow()
 
-  expect_error(tidy(x, what = "recipe"), "must have a recipe preprocessor")
+  expect_snapshot(error = TRUE, tidy(x, what = "recipe"))
 
   rec <- recipes::recipe(y ~ x, data.frame(y = 1, x = 1))
 
   x <- add_recipe(x, rec)
 
-  expect_error(tidy(x, what = "recipe"), "does not have a mold")
+  expect_snapshot(error = TRUE, tidy(x, what = "recipe"))
 })
 
 test_that("can tidy workflow model or recipe", {
@@ -137,5 +137,6 @@ test_that("augment fails if it can't preprocess `new_data`", {
 
   wf <- fit(wf, df)
 
-  expect_error(augment(wf, new_data), class = "vctrs_error_incompatible_type")
+  # vctrs type error
+  expect_error(augment(wf, new_data))
 })

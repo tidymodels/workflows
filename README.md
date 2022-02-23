@@ -7,7 +7,7 @@
 
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/workflows/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/workflows?branch=main)
-[![R-CMD-check](https://github.com/tidymodels/workflows/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflows/actions)
+[![R-CMD-check](https://github.com/tidymodels/workflows/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/workflows/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## What is a workflow?

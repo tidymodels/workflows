@@ -9,7 +9,7 @@ test_that("can add a model to a workflow", {
 })
 
 test_that("model is validated", {
-  expect_error(add_model(workflow(), 1), "`spec` must be a `model_spec`")
+  expect_snapshot(error = TRUE, add_model(workflow(), 1))
 })
 
 test_that("cannot add two models", {
@@ -19,7 +19,7 @@ test_that("cannot add two models", {
   workflow <- workflow()
   workflow <- add_model(workflow, mod)
 
-  expect_error(add_model(workflow, mod), "`model` action has already been added")
+  expect_snapshot(error = TRUE, add_model(workflow, mod))
 })
 
 test_that("can provide a model formula override", {

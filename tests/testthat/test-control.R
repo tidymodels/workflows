@@ -7,8 +7,7 @@ test_that("default parsnip control is created", {
 })
 
 test_that("parsnip control is validated", {
-  expect_error(
-    control_workflow(control_parsnip = 1),
-    "must be a 'control_parsnip' object"
-  )
+  expect_snapshot(error = TRUE, {
+    control_workflow(control_parsnip = 1)
+  })
 })

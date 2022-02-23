@@ -8,7 +8,7 @@ test_that("can add a recipe to a workflow", {
 })
 
 test_that("recipe is validated", {
-  expect_error(add_recipe(workflow(), 1), "`recipe` must be a recipe")
+  expect_snapshot(error = TRUE, add_recipe(workflow(), 1))
 })
 
 test_that("cannot add a recipe if a formula already exists", {
@@ -17,7 +17,7 @@ test_that("cannot add a recipe if a formula already exists", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 
-  expect_error(add_recipe(workflow, rec), "cannot be added when a formula already exists")
+  expect_snapshot(error = TRUE, add_recipe(workflow, rec))
 })
 
 test_that("cannot add a recipe if variables already exist", {
@@ -26,7 +26,7 @@ test_that("cannot add a recipe if variables already exist", {
   workflow <- workflow()
   workflow <- add_variables(workflow, y, x)
 
-  expect_error(add_recipe(workflow, rec), "cannot be added when variables already exist")
+  expect_snapshot(error = TRUE, add_recipe(workflow, rec))
 })
 
 test_that("remove a recipe", {
@@ -123,7 +123,7 @@ test_that("cannot add two recipe", {
   workflow <- workflow()
   workflow <- add_recipe(workflow, rec)
 
-  expect_error(add_recipe(workflow, rec), "`recipe` action has already been added")
+  expect_snapshot(error = TRUE, add_recipe(workflow, rec))
 })
 
 test_that("can pass a blueprint through to hardhat::mold()", {
@@ -151,8 +151,5 @@ test_that("can only use a 'recipe_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_error(
-    add_recipe(workflow, rec, blueprint = blueprint),
-    "must be a hardhat 'recipe_blueprint'"
-  )
+  expect_snapshot(error = TRUE, add_recipe(workflow, rec, blueprint = blueprint))
 })

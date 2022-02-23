@@ -16,7 +16,7 @@ test_that("attaches the butcher class", {
 
 test_that("fails if not a fitted workflow", {
   skip_if_not_installed("butcher")
-  expect_error(butcher::butcher(workflow()))
+  expect_snapshot(error = TRUE, butcher::butcher(workflow()))
 })
 
 test_that("can axe the call", {

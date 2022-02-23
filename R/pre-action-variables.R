@@ -203,14 +203,14 @@ fit.action_variables <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-check_conflicts.action_variables <- function(action, x) {
+check_conflicts.action_variables <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {
-    abort("Variables cannot be added when a recipe already exists.")
+    abort("Variables cannot be added when a recipe already exists.", call = call)
   }
   if (has_action(pre, "formula")) {
-    abort("Variables cannot be added when a formula already exists.")
+    abort("Variables cannot be added when a formula already exists.", call = call)
   }
 
   invisible(action)
@@ -218,10 +218,12 @@ check_conflicts.action_variables <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_variables <- function(variables, blueprint) {
+new_action_variables <- function(variables, blueprint, ..., call = caller_env()) {
+  check_dots_empty()
+
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_xy_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'xy_blueprint'.")
+    abort("`blueprint` must be a hardhat 'xy_blueprint'.", call = call)
   }
 
   new_action_pre(
@@ -251,10 +253,10 @@ workflow_variables <- function(outcomes, predictors) {
 
 new_workflow_variables <- function(outcomes, predictors) {
   if (!is_quosure(outcomes)) {
-    abort("`outcomes` must be a quosure.")
+    abort("`outcomes` must be a quosure.", .internal = TRUE)
   }
   if (!is_quosure(predictors)) {
-    abort("`predictors` must be a quosure.")
+    abort("`predictors` must be a quosure.", .internal = TRUE)
   }
 
   data <- list(

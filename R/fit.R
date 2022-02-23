@@ -161,7 +161,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 # ------------------------------------------------------------------------------
 
-validate_has_preprocessor <- function(x) {
+validate_has_preprocessor <- function(x, ..., call = caller_env()) {
+  check_dots_empty()
+
   has_preprocessor <-
     has_preprocessor_formula(x) ||
     has_preprocessor_recipe(x) ||
@@ -170,20 +172,24 @@ validate_has_preprocessor <- function(x) {
   if (!has_preprocessor) {
     glubort(
       "The workflow must have formula, recipe, or variables preprocessor. ",
-      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
+      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`.",
+      .call = call
     )
   }
 
   invisible(x)
 }
 
-validate_has_model <- function(x) {
+validate_has_model <- function(x, ..., call = caller_env()) {
+  check_dots_empty()
+
   has_model <- has_action(x$fit, "model")
 
   if (!has_model) {
     glubort(
       "The workflow must have a model. ",
-      "Provide one with `add_model()`."
+      "Provide one with `add_model()`.",
+      .call = call
     )
   }
 
@@ -205,7 +211,7 @@ finalize_blueprint <- function(workflow) {
   } else if (has_preprocessor_variables(workflow)) {
     finalize_blueprint_variables(workflow)
   } else {
-    abort("Internal error: `workflow` should have a preprocessor at this point.")
+    abort("`workflow` should have a preprocessor at this point.", .internal = TRUE)
   }
 }
 
@@ -225,10 +231,10 @@ finalize_blueprint_formula <- function(workflow) {
   intercept <- tbl_encodings$compute_intercept
 
   if (!is_string(indicators)) {
-    abort("Internal error: `indicators` encoding from parsnip should be a string.")
+    abort("`indicators` encoding from parsnip should be a string.", .internal = TRUE)
   }
   if (!is_bool(intercept)) {
-    abort("Internal error: `intercept` encoding from parsnip should be a bool.")
+    abort("`intercept` encoding from parsnip should be a bool.", .internal = TRUE)
   }
 
   # Use model specific information to construct the blueprint
@@ -255,7 +261,7 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   out <- tbl_encodings[indicator_spec, , drop = FALSE]
 
   if (nrow(out) != 1L) {
-    abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
+    abort("Exactly 1 model/engine/mode combination must be located.", .internal = TRUE)
   }
 
   out

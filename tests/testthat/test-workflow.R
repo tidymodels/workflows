@@ -23,9 +23,9 @@ test_that("workflow must be the first argument when adding actions", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
   mod <- parsnip::linear_reg()
 
-  expect_error(add_formula(1, mpg ~ cyl), "must be a workflow")
-  expect_error(add_recipe(1, rec), "must be a workflow")
-  expect_error(add_model(1, mod), "must be a workflow")
+  expect_snapshot(error = TRUE, add_formula(1, mpg ~ cyl))
+  expect_snapshot(error = TRUE, add_recipe(1, rec))
+  expect_snapshot(error = TRUE, add_model(1, mod))
 })
 
 test_that("can add a model spec directly to a workflow", {
@@ -61,11 +61,11 @@ test_that("preprocessor is validated", {
 # new_workflow()
 
 test_that("constructor validates input", {
-  expect_error(new_workflow(pre = 1), "must be a `stage`")
-  expect_error(new_workflow(fit = 1), "must be a `stage`")
-  expect_error(new_workflow(post = 1), "must be a `stage`")
+  expect_snapshot(error = TRUE, new_workflow(pre = 1))
+  expect_snapshot(error = TRUE, new_workflow(fit = 1))
+  expect_snapshot(error = TRUE, new_workflow(post = 1))
 
-  expect_error(new_workflow(trained = 1), "must be a single logical value")
+  expect_snapshot(error = TRUE, new_workflow(trained = 1))
 })
 
 # ------------------------------------------------------------------------------

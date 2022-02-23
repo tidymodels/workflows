@@ -15,7 +15,7 @@ test_that("can predict from a workflow", {
 })
 
 test_that("workflow must have been `fit()` before prediction can be done", {
-  expect_error(predict(workflow(), mtcars), "Workflow has not yet been trained")
+  expect_snapshot(error = TRUE, predict(workflow(), mtcars))
 })
 
 test_that("formula preprocessing is done to the `new_data`", {
@@ -91,7 +91,8 @@ test_that("`new_data` must have all of the original predictors", {
   cars_no_cyl <- mtcars
   cars_no_cyl$cyl <- NULL
 
-  expect_error(predict(fit_workflow, cars_no_cyl), "missing: 'cyl'")
+  # This error comes from hardhat, so we don't snapshot it
+  expect_error(predict(fit_workflow, cars_no_cyl))
 })
 
 test_that("blueprint will get passed on to hardhat::forge()", {
@@ -146,6 +147,7 @@ test_that("monitoring: known that parsnip removes blueprint intercept for some m
   fit_with_intercept <- fit(workflow_with_intercept, mtcars)
 
   # `parsnip:::prepare_data()` will remove the intercept, so it won't be
-  # there when the `lm()` `predict()` method is called.
+  # there when the `lm()` `predict()` method is called. We don't own this
+  # error though.
   expect_error(predict(fit_with_intercept, mtcars))
 })

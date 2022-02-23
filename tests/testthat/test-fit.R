@@ -46,7 +46,7 @@ test_that("missing `data` argument has a nice error", {
   workflow <- add_formula(workflow, mpg ~ cyl)
   workflow <- add_model(workflow, mod)
 
-  expect_error(fit(workflow), "`data` must be provided to fit a workflow")
+  expect_snapshot(error = TRUE, fit(workflow))
 })
 
 test_that("invalid `control` argument has a nice error", {
@@ -59,10 +59,9 @@ test_that("invalid `control` argument has a nice error", {
 
   control <- parsnip::control_parsnip()
 
-  expect_error(
-    fit(workflow, mtcars, control = control),
-    "`control` must be a workflows control object created by `control_workflow[(][)]`."
-  )
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars, control = control)
+  })
 })
 
 test_that("cannot fit without a pre stage", {
@@ -72,14 +71,18 @@ test_that("cannot fit without a pre stage", {
   workflow <- workflow()
   workflow <- add_model(workflow, mod)
 
-  expect_error(fit(workflow, mtcars), "formula, recipe, or variables")
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars)
+  })
 })
 
 test_that("cannot fit without a fit stage", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
 
-  expect_error(fit(workflow, mtcars), "must have a model")
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars)
+  })
 })
 
 # ------------------------------------------------------------------------------
@@ -203,6 +206,6 @@ test_that("can `predict()` from workflow fit from individual pieces", {
   workflow_fit <- fit(workflow, mtcars)
   expect <- predict(workflow_fit, mtcars)
 
-  expect_error(predict(workflow_model, mtcars), "has not yet been trained")
+  expect_snapshot(error = TRUE, predict(workflow_model, mtcars))
   expect_identical(predict(workflow_final, mtcars), expect)
 })

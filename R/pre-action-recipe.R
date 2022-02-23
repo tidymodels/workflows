@@ -95,14 +95,14 @@ fit.action_recipe <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-check_conflicts.action_recipe <- function(action, x) {
+check_conflicts.action_recipe <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 
   if (has_action(pre, "formula")) {
-    abort("A recipe cannot be added when a formula already exists.")
+    abort("A recipe cannot be added when a formula already exists.", call = call)
   }
   if (has_action(pre, "variables")) {
-    abort("A recipe cannot be added when variables already exist.")
+    abort("A recipe cannot be added when variables already exist.", call = call)
   }
 
   invisible(action)
@@ -110,14 +110,16 @@ check_conflicts.action_recipe <- function(action, x) {
 
 # ------------------------------------------------------------------------------
 
-new_action_recipe <- function(recipe, blueprint) {
+new_action_recipe <- function(recipe, blueprint, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (!is_recipe(recipe)) {
-    abort("`recipe` must be a recipe.")
+    abort("`recipe` must be a recipe.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_recipe_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'recipe_blueprint'.")
+    abort("`blueprint` must be a hardhat 'recipe_blueprint'.", call = call)
   }
 
   new_action_pre(

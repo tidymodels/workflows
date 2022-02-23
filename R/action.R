@@ -1,33 +1,32 @@
-add_action <- function(x, action, name) {
-  if (!is_workflow(x)) {
-    abort("`x` must be a workflow.")
-  }
+add_action <- function(x, action, name, ..., call = caller_env()) {
+  validate_is_workflow(x, call = call)
 
-  check_conflicts(action, x)
+  check_conflicts(action, x, call = call)
 
-  add_action_impl(x, action, name)
+  add_action_impl(x, action, name, call = call)
 }
 
 # ------------------------------------------------------------------------------
 
-add_action_impl <- function(x, action, name) {
+add_action_impl <- function(x, action, name, ..., call = caller_env()) {
+  check_dots_empty()
   UseMethod("add_action_impl", action)
 }
 
-add_action_impl.action_pre <- function(x, action, name) {
-  check_singleton(x$pre$actions, name)
+add_action_impl.action_pre <- function(x, action, name, ..., call = caller_env()) {
+  check_singleton(x$pre$actions, name, call = call)
   x$pre <- add_action_to_stage(x$pre, action, name)
   x
 }
 
-add_action_impl.action_fit <- function(x, action, name) {
-  check_singleton(x$fit$actions, name)
+add_action_impl.action_fit <- function(x, action, name, ..., call = caller_env()) {
+  check_singleton(x$fit$actions, name, call = call)
   x$fit <- add_action_to_stage(x$fit, action, name)
   x
 }
 
-add_action_impl.action_post <- function(x, action, name) {
-  check_singleton(x$post$actions, name)
+add_action_impl.action_post <- function(x, action, name, ..., call = caller_env()) {
+  check_singleton(x$post$actions, name, call = call)
   x$post <- add_action_to_stage(x$post, action, name)
   x
 }
@@ -45,20 +44,24 @@ add_action_to_stage <- function(stage, action, name) {
 # with the current action. For instance, we can't have a formula action with
 # a recipe action
 
-check_conflicts <- function(action, x) {
+check_conflicts <- function(action, x, ..., call = caller_env()) {
+  check_dots_empty()
   UseMethod("check_conflicts")
 }
 
-check_conflicts.default <- function(action, x) {
+check_conflicts.default <- function(action, x, ..., call = caller_env()) {
   invisible(action)
 }
 
 # ------------------------------------------------------------------------------
 
-check_singleton <- function(actions, name) {
+check_singleton <- function(actions, name, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (name %in% names(actions)) {
-    glubort("A `{name}` action has already been added to this workflow.")
+    glubort("A `{name}` action has already been added to this workflow.", .call = call)
   }
+
   invisible(actions)
 }
 
@@ -97,7 +100,7 @@ new_action <- function(..., subclass = character()) {
   data <- list2(...)
 
   if (!is_uniquely_named(data)) {
-    abort("All elements of `...` must be uniquely named.")
+    abort("All elements of `...` must be uniquely named.", .internal = TRUE)
   }
 
   structure(data, class = c(subclass, "action"))

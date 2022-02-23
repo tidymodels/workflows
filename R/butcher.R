@@ -100,8 +100,10 @@ add_butcher_class <- function(x) {
 # predictors/outcomes when butchering. This does a direct replacement, with
 # no resetting of `trained` or any stages.
 
-replace_workflow_preprocessor <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_preprocessor <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   if (has_preprocessor_formula(x)) {
     x$pre$actions$formula$formula <- value
@@ -110,17 +112,22 @@ replace_workflow_preprocessor <- function(x, value) {
   } else if (has_preprocessor_variables(x)) {
     x$pre$actions$variables$variables <- value
   } else {
-    abort("The workflow does not have a preprocessor.")
+    abort("The workflow does not have a preprocessor.", call = call)
   }
 
   x
 }
 
-replace_workflow_fit <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_fit <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   if (!has_fit(x)) {
-    abort("The workflow does not have a model fit. Have you called `fit()` yet?")
+    abort(
+      "The workflow does not have a model fit. Have you called `fit()` yet?",
+      call = call
+    )
   }
 
   x$fit$fit <- value
@@ -128,42 +135,50 @@ replace_workflow_fit <- function(x, value) {
   x
 }
 
-replace_workflow_predictors <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_predictors <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   mold <- extract_mold(x)
   mold$predictors <- value
 
-  replace_workflow_mold(x, mold)
+  replace_workflow_mold(x, mold, call = call)
 }
 
-replace_workflow_outcomes <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_outcomes <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   mold <- extract_mold(x)
   mold$outcomes <- value
 
-  replace_workflow_mold(x, mold)
+  replace_workflow_mold(x, mold, call = call)
 }
 
-replace_workflow_prepped_recipe <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_prepped_recipe <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   if (!has_preprocessor_recipe(x)) {
-    abort("The workflow must have a recipe preprocessor.")
+    abort("The workflow must have a recipe preprocessor.", call = call)
   }
 
   mold <- extract_mold(x)
   mold$blueprint$recipe <- value
 
-  replace_workflow_mold(x, mold)
+  replace_workflow_mold(x, mold, call = call)
 }
 
-replace_workflow_mold <- function(x, value) {
-  validate_is_workflow(x)
+replace_workflow_mold <- function(x, value, ..., call = caller_env()) {
+  check_dots_empty()
+
+  validate_is_workflow(x, call = call)
 
   if (!has_mold(x)) {
-    abort("The workflow does not have a mold. Have you called `fit()` yet?")
+    abort("The workflow does not have a mold. Have you called `fit()` yet?", call = call)
   }
 
   x$pre$mold <- value

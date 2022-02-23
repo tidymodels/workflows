@@ -180,13 +180,16 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
   invisible(x)
 }
 
-validate_has_model <- function(x) {
+validate_has_model <- function(x, ..., call = caller_env()) {
+  check_dots_empty()
+
   has_model <- has_action(x$fit, "model")
 
   if (!has_model) {
     glubort(
       "The workflow must have a model. ",
-      "Provide one with `add_model()`."
+      "Provide one with `add_model()`.",
+      .call = call
     )
   }
 

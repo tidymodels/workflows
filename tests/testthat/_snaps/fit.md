@@ -27,7 +27,7 @@
     Code
       fit(workflow, mtcars)
     Condition
-      Error in `validate_has_model()`:
+      Error in `.fit_pre()`:
       ! The workflow must have a model. Provide one with `add_model()`.
 
 # can `predict()` from workflow fit from individual pieces

@@ -102,7 +102,7 @@ add_variables <- function(x,
                           ...,
                           blueprint = NULL,
                           variables = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
 
   if (is_null(variables)) {
     variables <- workflow_variables({{ outcomes }}, {{ predictors }})
@@ -145,7 +145,7 @@ update_variables <- function(x,
                              ...,
                              blueprint = NULL,
                              variables = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
 
   x <- remove_variables(x)
 

@@ -17,7 +17,6 @@ Depends:
     R (>= 3.2)
 Imports: 
     cli (>= 2.0.0),
-    ellipsis (>= 0.2.0),
     generics (>= 0.1.2),
     glue,
     hardhat (>= 0.2.0),

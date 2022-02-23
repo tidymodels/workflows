@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Removed ellipsis dependency in favor of equivalent functions in rlang.
+
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods 
   to extract parameter sets and single parameters from `workflow` objects.
 

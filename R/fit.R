@@ -53,7 +53,7 @@
 #'
 #' fit(recipe_wf, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
 
   if (is_missing(data)) {
     abort("`data` must be provided to fit a workflow.")

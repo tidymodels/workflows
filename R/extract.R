@@ -121,7 +121,7 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 #' @export
 #' @rdname extract-workflow
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   if (!is_bool(estimated)) {
     abort("`estimated` must be a single `TRUE` or `FALSE`.")
   }

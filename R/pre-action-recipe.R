@@ -50,7 +50,7 @@
 #'
 #' update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
 add_recipe <- function(x, recipe, ..., blueprint = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   validate_recipes_available()
   action <- new_action_recipe(recipe, blueprint)
   add_action(x, action, "recipe")
@@ -76,7 +76,7 @@ remove_recipe <- function(x) {
 #' @rdname add_recipe
 #' @export
 update_recipe <- function(x, recipe, ..., blueprint = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   x <- remove_recipe(x)
   add_recipe(x, recipe, blueprint = blueprint)
 }

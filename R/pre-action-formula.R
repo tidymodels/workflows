@@ -52,7 +52,7 @@
 #'
 #' update_formula(workflow, mpg ~ disp)
 add_formula <- function(x, formula, ..., blueprint = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   action <- new_action_formula(formula, blueprint)
   add_action(x, action, "formula")
 }
@@ -77,7 +77,7 @@ remove_formula <- function(x) {
 #' @rdname add_formula
 #' @export
 update_formula <- function(x, formula, ..., blueprint = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   x <- remove_formula(x)
   add_formula(x, formula, blueprint = blueprint)
 }

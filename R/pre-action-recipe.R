@@ -110,14 +110,16 @@ check_conflicts.action_recipe <- function(action, x, ..., call = caller_env()) {
 
 # ------------------------------------------------------------------------------
 
-new_action_recipe <- function(recipe, blueprint) {
+new_action_recipe <- function(recipe, blueprint, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (!is_recipe(recipe)) {
-    abort("`recipe` must be a recipe.")
+    abort("`recipe` must be a recipe.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_recipe_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'recipe_blueprint'.")
+    abort("`blueprint` must be a hardhat 'recipe_blueprint'.", call = call)
   }
 
   new_action_pre(

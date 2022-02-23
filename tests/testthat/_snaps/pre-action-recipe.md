@@ -3,7 +3,7 @@
     Code
       add_recipe(workflow(), 1)
     Condition
-      Error in `new_action_recipe()`:
+      Error in `add_recipe()`:
       ! `recipe` must be a recipe.
 
 # cannot add a recipe if a formula already exists
@@ -35,6 +35,6 @@
     Code
       add_recipe(workflow, rec, blueprint = blueprint)
     Condition
-      Error in `new_action_recipe()`:
+      Error in `add_recipe()`:
       ! `blueprint` must be a hardhat 'recipe_blueprint'.
 

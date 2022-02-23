@@ -112,14 +112,16 @@ check_conflicts.action_formula <- function(action, x, ..., call = caller_env()) 
 
 # ------------------------------------------------------------------------------
 
-new_action_formula <- function(formula, blueprint) {
+new_action_formula <- function(formula, blueprint, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (!is_formula(formula)) {
-    abort("`formula` must be a formula.")
+    abort("`formula` must be a formula.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_formula_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'formula_blueprint'.")
+    abort("`blueprint` must be a hardhat 'formula_blueprint'.", call = call)
   }
 
   new_action_pre(

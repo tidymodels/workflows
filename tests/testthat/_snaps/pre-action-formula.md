@@ -3,7 +3,7 @@
     Code
       add_formula(workflow(), 1)
     Condition
-      Error in `new_action_formula()`:
+      Error in `add_formula()`:
       ! `formula` must be a formula.
 
 # cannot add a formula if a recipe already exists
@@ -35,6 +35,6 @@
     Code
       add_formula(workflow, mpg ~ cyl, blueprint = blueprint)
     Condition
-      Error in `new_action_formula()`:
+      Error in `add_formula()`:
       ! `blueprint` must be a hardhat 'formula_blueprint'.
 

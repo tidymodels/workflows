@@ -11,6 +11,6 @@
     Code
       add_model(workflow, mod)
     Condition
-      Error in `add_action()`:
+      Error in `add_model()`:
       ! A `model` action has already been added to this workflow.
 

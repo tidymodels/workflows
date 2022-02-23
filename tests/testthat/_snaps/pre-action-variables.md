@@ -19,7 +19,7 @@
     Code
       add_variables(workflow, mpg, cyl)
     Condition
-      Error in `add_action()`:
+      Error in `add_variables()`:
       ! A `variables` action has already been added to this workflow.
 
 ---
@@ -27,7 +27,7 @@
     Code
       add_variables(workflow, variables = workflow_variables(mpg, cyl))
     Condition
-      Error in `add_action()`:
+      Error in `add_variables()`:
       ! A `variables` action has already been added to this workflow.
 
 # can only use a 'xy_blueprint' blueprint

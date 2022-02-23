@@ -27,7 +27,7 @@
     Code
       add_formula(workflow, mpg ~ cyl)
     Condition
-      Error in `add_action()`:
+      Error in `add_formula()`:
       ! A `formula` action has already been added to this workflow.
 
 # can only use a 'formula_blueprint' blueprint

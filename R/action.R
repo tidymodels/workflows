@@ -3,7 +3,7 @@ add_action <- function(x, action, name, ..., call = caller_env()) {
 
   check_conflicts(action, x, call = call)
 
-  add_action_impl(x, action, name)
+  add_action_impl(x, action, name, call = call)
 }
 
 # ------------------------------------------------------------------------------

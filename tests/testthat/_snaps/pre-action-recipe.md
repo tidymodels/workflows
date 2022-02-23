@@ -27,7 +27,7 @@
     Code
       add_recipe(workflow, rec)
     Condition
-      Error in `add_action()`:
+      Error in `add_recipe()`:
       ! A `recipe` action has already been added to this workflow.
 
 # can only use a 'recipe_blueprint' blueprint

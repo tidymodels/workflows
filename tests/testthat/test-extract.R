@@ -38,17 +38,11 @@ test_that("can extract a variables preprocessor", {
 })
 
 test_that("error if no preprocessor", {
-  expect_error(
-    extract_preprocessor(workflow()),
-    "does not have a preprocessor"
-  )
+  expect_snapshot(error = TRUE, extract_preprocessor(workflow()))
 })
 
 test_that("error if not a workflow", {
-  expect_error(
-    extract_preprocessor(1),
-    "no applicable method"
-  )
+  expect_snapshot(error = TRUE, extract_preprocessor(1))
 })
 
 # ------------------------------------------------------------------------------
@@ -67,17 +61,11 @@ test_that("can extract a model spec", {
 })
 
 test_that("error if no spec", {
-  expect_error(
-    extract_spec_parsnip(workflow()),
-    "does not have a model spec"
-  )
+  expect_snapshot(error = TRUE, extract_spec_parsnip(workflow()))
 })
 
 test_that("error if not a workflow", {
-  expect_error(
-    extract_spec_parsnip(1),
-    "no applicable method for"
-  )
+  expect_snapshot(error = TRUE, extract_spec_parsnip(1))
 })
 
 # ------------------------------------------------------------------------------
@@ -100,17 +88,11 @@ test_that("can extract a parsnip model fit", {
 })
 
 test_that("error if no parsnip fit", {
-  expect_error(
-    extract_fit_parsnip(workflow()),
-    "does not have a model fit. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, extract_fit_parsnip(workflow()))
 })
 
 test_that("error if not a workflow", {
-  expect_error(
-    extract_fit_parsnip(1),
-    "no applicable method for"
-  )
+  expect_snapshot(error = TRUE, extract_fit_parsnip(1))
 })
 
 # ------------------------------------------------------------------------------
@@ -154,17 +136,11 @@ test_that("can extract a mold", {
 })
 
 test_that("error if no mold", {
-  expect_error(
-    extract_mold(workflow()),
-    "does not have a mold. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, extract_mold(workflow()))
 })
 
 test_that("error if not a workflow", {
-  expect_error(
-    extract_mold(1),
-    "no applicable method"
-  )
+  expect_snapshot(error = TRUE, extract_mold(1))
 })
 
 # ------------------------------------------------------------------------------
@@ -190,18 +166,11 @@ test_that("can extract a prepped recipe", {
   )
 
   expect_snapshot(error = TRUE, extract_recipe(workflow, FALSE))
-
-  expect_error(
-    extract_recipe(workflow, estimated = "yes please"),
-    "`estimated` must be a single `TRUE` or `FALSE`"
-  )
+  expect_snapshot(error = TRUE, extract_recipe(workflow, estimated = "yes please"))
 })
 
 test_that("error if no recipe preprocessor", {
-  expect_error(
-    extract_recipe(workflow()),
-    "must have a recipe preprocessor"
-  )
+  expect_snapshot(error = TRUE, extract_recipe(workflow()))
 })
 
 test_that("error if no mold", {
@@ -210,17 +179,11 @@ test_that("error if no mold", {
   workflow <- workflow()
   workflow <- add_recipe(workflow, recipe)
 
-  expect_error(
-    extract_recipe(workflow),
-    "does not have a mold. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, extract_recipe(workflow))
 })
 
 test_that("error if not a workflow", {
-  expect_error(
-    extract_recipe(1),
-    "no applicable method for"
-  )
+  expect_snapshot(error = TRUE, extract_recipe(1))
 })
 
 # ------------------------------------------------------------------------------

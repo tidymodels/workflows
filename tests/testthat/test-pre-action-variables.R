@@ -24,14 +24,14 @@ test_that("cannot add variables if a recipe already exists", {
   wf <- workflow()
   wf <- add_recipe(wf, rec)
 
-  expect_error(add_variables(wf, y, x), "cannot be added when a recipe already exists")
+  expect_snapshot(error = TRUE, add_variables(wf, y, x))
 })
 
 test_that("cannot add variables if a formula already exist", {
   wf <- workflow()
   wf <- add_formula(wf, mpg ~ cyl)
 
-  expect_error(add_variables(wf, y, x), "cannot be added when a formula already exists")
+  expect_snapshot(error = TRUE, add_variables(wf, y, x))
 })
 
 test_that("works with fit()", {
@@ -163,7 +163,8 @@ test_that("`outcomes` are removed from set of possible `predictors` (#72)", {
 
   workflow2 <- add_variables(workflow, mpg, mpg)
 
-  expect_error(.fit_pre(workflow2, mtcars), class = "vctrs_error_subscript_oob")
+  # vctrs subscript error
+  expect_error(.fit_pre(workflow2, mtcars))
 })
 
 test_that("selecting no `outcomes` doesn't break selection of `predictors`", {
@@ -196,8 +197,8 @@ test_that("cannot add two variables", {
   workflow <- workflow()
   workflow <- add_variables(workflow, mpg, cyl)
 
-  expect_error(add_variables(workflow, mpg, cyl), "`variables` action has already been added")
-  expect_error(add_variables(workflow, variables = workflow_variables(mpg, cyl)), "`variables` action has already been added")
+  expect_snapshot(error = TRUE, add_variables(workflow, mpg, cyl))
+  expect_snapshot(error = TRUE, add_variables(workflow, variables = workflow_variables(mpg, cyl)))
 })
 
 test_that("can remove variables", {
@@ -245,10 +246,7 @@ test_that("can only use a 'xy_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_error(
-    add_variables(workflow, mpg, cyl, blueprint = blueprint),
-    "must be a hardhat 'xy_blueprint'"
-  )
+  expect_snapshot(error = TRUE, add_variables(workflow, mpg, cyl, blueprint = blueprint))
 })
 
 test_that("can pass a blueprint through to hardhat::mold()", {

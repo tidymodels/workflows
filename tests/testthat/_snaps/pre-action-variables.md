@@ -35,6 +35,6 @@
     Code
       add_variables(workflow, mpg, cyl, blueprint = blueprint)
     Condition
-      Error in `new_action_variables()`:
+      Error in `add_variables()`:
       ! `blueprint` must be a hardhat 'xy_blueprint'.
 

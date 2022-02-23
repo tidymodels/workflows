@@ -218,10 +218,12 @@ check_conflicts.action_variables <- function(action, x, ..., call = caller_env()
 
 # ------------------------------------------------------------------------------
 
-new_action_variables <- function(variables, blueprint) {
+new_action_variables <- function(variables, blueprint, ..., call = caller_env()) {
+  check_dots_empty()
+
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_xy_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'xy_blueprint'.")
+    abort("`blueprint` must be a hardhat 'xy_blueprint'.", call = call)
   }
 
   new_action_pre(

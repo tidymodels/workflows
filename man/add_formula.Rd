@@ -214,7 +214,8 @@ Finally, when a formula is updated or removed from a fitted workflow,
 the corresponding model fit is removed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
 
 try(extract_fit_parsnip(custom_formula_no_fit))
-}\if{html}{\out{</div>}}\preformatted{## Error : The workflow does not have a model fit. Have you called `fit()` yet?
+}\if{html}{\out{</div>}}\preformatted{## Error in extract_fit_parsnip(custom_formula_no_fit) : 
+##   The workflow does not have a model fit. Have you called `fit()` yet?
 }
 }
 }

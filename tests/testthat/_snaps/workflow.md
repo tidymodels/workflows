@@ -2,15 +2,17 @@
 
     Code
       workflow(spec = 1)
-    Error <rlang_error>
-      `spec` must be a `model_spec`.
+    Condition
+      Error in `new_action_model()`:
+      ! `spec` must be a `model_spec`.
 
 # preprocessor is validated
 
     Code
       workflow(preprocessor = 1)
-    Error <rlang_error>
-      `preprocessor` must be a formula, recipe, or a set of workflow variables.
+    Condition
+      Error in `add_preprocessor()`:
+      ! `preprocessor` must be a formula, recipe, or a set of workflow variables.
 
 # input must be a workflow
 

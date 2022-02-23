@@ -88,6 +88,6 @@ has_blueprint <- function(x) {
   } else if (has_preprocessor_variables(x)) {
     !is.null(x$pre$actions$variables$blueprint)
   } else {
-    abort("Internal error: `x` must have a preprocessor to check for a blueprint.")
+    abort("`x` must have a preprocessor to check for a blueprint.", .internal = TRUE)
   }
 }

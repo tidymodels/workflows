@@ -35,7 +35,7 @@ tidy.workflow <- function(x, what = "model", ...) {
     return(out)
   }
 
-  abort("Internal error: `what` must be 'model' or 'recipe'.")
+  abort("`what` must be 'model' or 'recipe'.", .internal = TRUE)
 }
 
 # ------------------------------------------------------------------------------

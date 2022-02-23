@@ -106,7 +106,7 @@ fit.action_model <- function(object, workflow, control) {
   mold <- workflow$pre$mold
 
   if (is.null(mold)) {
-    abort("Internal error: No mold exists. `workflow` pre stage has not been run.")
+    abort("No mold exists. `workflow` pre stage has not been run.", .internal = TRUE)
   }
 
   if (is.null(formula)) {

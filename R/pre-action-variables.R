@@ -253,10 +253,10 @@ workflow_variables <- function(outcomes, predictors) {
 
 new_workflow_variables <- function(outcomes, predictors) {
   if (!is_quosure(outcomes)) {
-    abort("`outcomes` must be a quosure.")
+    abort("`outcomes` must be a quosure.", .internal = TRUE)
   }
   if (!is_quosure(predictors)) {
-    abort("`predictors` must be a quosure.")
+    abort("`predictors` must be a quosure.", .internal = TRUE)
   }
 
   data <- list(

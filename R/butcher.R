@@ -112,7 +112,7 @@ replace_workflow_preprocessor <- function(x, value, ..., call = caller_env()) {
   } else if (has_preprocessor_variables(x)) {
     x$pre$actions$variables$variables <- value
   } else {
-    abort("The workflow does not have a preprocessor.")
+    abort("The workflow does not have a preprocessor.", call = call)
   }
 
   x
@@ -124,7 +124,10 @@ replace_workflow_fit <- function(x, value, ..., call = caller_env()) {
   validate_is_workflow(x, call = call)
 
   if (!has_fit(x)) {
-    abort("The workflow does not have a model fit. Have you called `fit()` yet?")
+    abort(
+      "The workflow does not have a model fit. Have you called `fit()` yet?",
+      call = call
+    )
   }
 
   x$fit$fit <- value

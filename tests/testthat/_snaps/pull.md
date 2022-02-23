@@ -2,7 +2,8 @@
 
     Code
       x <- pull_workflow_preprocessor(workflow)
-    Warning <lifecycle_warning_deprecated>
+    Condition
+      Warning:
       `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.
       Please use `extract_preprocessor()` instead.
 
@@ -10,7 +11,8 @@
 
     Code
       x <- pull_workflow_spec(workflow)
-    Warning <lifecycle_warning_deprecated>
+    Condition
+      Warning:
       `pull_workflow_spec()` was deprecated in workflows 0.2.3.
       Please use `extract_spec_parsnip()` instead.
 
@@ -18,7 +20,8 @@
 
     Code
       x <- pull_workflow_fit(workflow)
-    Warning <lifecycle_warning_deprecated>
+    Condition
+      Warning:
       `pull_workflow_fit()` was deprecated in workflows 0.2.3.
       Please use `extract_fit_parsnip()` instead.
 
@@ -26,7 +29,8 @@
 
     Code
       x <- pull_workflow_mold(workflow)
-    Warning <lifecycle_warning_deprecated>
+    Condition
+      Warning:
       `pull_workflow_mold()` was deprecated in workflows 0.2.3.
       Please use `extract_mold()` instead.
 
@@ -34,7 +38,8 @@
 
     Code
       x <- pull_workflow_prepped_recipe(workflow)
-    Warning <lifecycle_warning_deprecated>
+    Condition
+      Warning:
       `pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.
       Please use `extract_recipe()` instead.
 

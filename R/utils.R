@@ -18,12 +18,13 @@ is_model_spec <- function(x) {
   inherits(x, "model_spec")
 }
 
-validate_recipes_available <- function() {
+validate_recipes_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
   if (!requireNamespace("recipes", quietly = TRUE)) {
-    abort(
-      "The `recipes` package must be available to add a recipe."
-    )
+    abort("The `recipes` package must be available to add a recipe.", call = call)
   }
+
   invisible()
 }
 

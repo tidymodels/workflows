@@ -44,19 +44,13 @@ test_that("can pull a variables preprocessor", {
 test_that("error if no preprocessor", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_preprocessor(workflow()),
-    "does not have a preprocessor"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_preprocessor(workflow()))
 })
 
 test_that("error if not a workflow", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_preprocessor(1),
-    "must be a workflow"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_preprocessor(1))
 })
 
 test_that("`pull_workflow_preprocessor()` is soft-deprecated", {
@@ -86,19 +80,13 @@ test_that("can pull a model spec", {
 test_that("error if no spec", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_spec(workflow()),
-    "does not have a model spec"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_spec(workflow()))
 })
 
 test_that("error if not a workflow", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_spec(1),
-    "must be a workflow"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_spec(1))
 })
 
 test_that("`pull_workflow_spec()` is soft-deprecated", {
@@ -134,19 +122,13 @@ test_that("can pull a model fit", {
 test_that("error if no fit", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_fit(workflow()),
-    "does not have a model fit. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_fit(workflow()))
 })
 
 test_that("error if not a workflow", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_fit(1),
-    "must be a workflow"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_fit(1))
 })
 
 test_that("`pull_workflow_fit()` is soft-deprecated", {
@@ -188,19 +170,13 @@ test_that("can pull a mold", {
 test_that("error if no mold", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_mold(workflow()),
-    "does not have a mold. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_mold(workflow()))
 })
 
 test_that("error if not a workflow", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_mold(1),
-    "must be a workflow"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_mold(1))
 })
 
 test_that("`pull_workflow_mold()` is soft-deprecated", {
@@ -244,10 +220,7 @@ test_that("can pull a prepped recipe", {
 test_that("error if no recipe preprocessor", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_prepped_recipe(workflow()),
-    "must have a recipe preprocessor"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_prepped_recipe(workflow()))
 })
 
 test_that("error if no mold", {
@@ -258,19 +231,13 @@ test_that("error if no mold", {
   workflow <- workflow()
   workflow <- add_recipe(workflow, recipe)
 
-  expect_error(
-    pull_workflow_prepped_recipe(workflow),
-    "does not have a mold. Have you called `fit[(][)]` yet?"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_prepped_recipe(workflow))
 })
 
 test_that("error if not a workflow", {
   local_lifecycle_quiet()
 
-  expect_error(
-    pull_workflow_prepped_recipe(1),
-    "must be a workflow"
-  )
+  expect_snapshot(error = TRUE, pull_workflow_prepped_recipe(1))
 })
 
 test_that("`pull_workflow_prepped_recipe()` is soft-deprecated", {

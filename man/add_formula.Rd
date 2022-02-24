@@ -215,7 +215,8 @@ the corresponding model fit is removed.\if{html}{\out{<div class="sourceCode r">
 
 try(extract_fit_parsnip(custom_formula_no_fit))
 }\if{html}{\out{</div>}}\preformatted{## Error in extract_fit_parsnip(custom_formula_no_fit) : 
-##   The workflow does not have a model fit. Have you called `fit()` yet?
+##   Can't extract a model fit from an untrained workflow.
+## i Do you need to call `fit()`?
 }
 }
 }

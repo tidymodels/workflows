@@ -170,11 +170,11 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
     has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
-    glubort(
-      "The workflow must have formula, recipe, or variables preprocessor. ",
-      "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`.",
-      .call = call
+    message <- c(
+      "The workflow must have a formula, recipe, or variables preprocessor.",
+      i = "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
     )
+    abort(message, call = call)
   }
 
   invisible(x)
@@ -186,11 +186,11 @@ validate_has_model <- function(x, ..., call = caller_env()) {
   has_model <- has_action(x$fit, "model")
 
   if (!has_model) {
-    glubort(
-      "The workflow must have a model. ",
-      "Provide one with `add_model()`.",
-      .call = call
+    message <- c(
+      "The workflow must have a model.",
+      i = "Provide one with `add_model()`."
     )
+    abort(message, call = call)
   }
 
   invisible(x)

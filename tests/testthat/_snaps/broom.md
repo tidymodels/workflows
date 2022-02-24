@@ -4,7 +4,8 @@
       tidy(x)
     Condition
       Error in `extract_fit_parsnip()`:
-      ! The workflow does not have a model fit. Have you called `fit()` yet?
+      ! Can't extract a model fit from an untrained workflow.
+      i Do you need to call `fit()`?
 
 # can't tidy the recipe of an unfit workflow
 
@@ -20,13 +21,16 @@
       tidy(x, what = "recipe")
     Condition
       Error in `extract_mold()`:
-      ! The workflow does not have a mold. Have you called `fit()` yet?
+      ! Can't extract a mold from an untrained workflow.
+      i Do you need to call `fit()`?
 
 # can't glance at the model of an unfit workflow
 
-    The workflow does not have a model fit. Have you called `fit()` yet?
+    Can't extract a model fit from an untrained workflow.
+    i Do you need to call `fit()`?
 
 # can't augment with the model of an unfit workflow
 
-    The workflow does not have a model fit. Have you called `fit()` yet?
+    Can't extract a model fit from an untrained workflow.
+    i Do you need to call `fit()`?
 

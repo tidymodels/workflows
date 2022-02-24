@@ -145,7 +145,10 @@ extract_fit_parsnip.workflow <- function(x, ...) {
   if (has_fit(x)) {
     return(x$fit$fit)
   }
-  abort("The workflow does not have a model fit. Have you called `fit()` yet?")
+  abort(c(
+    "Can't extract a model fit from an untrained workflow.",
+    i = "Do you need to call `fit()`?"
+  ))
 }
 
 #' @export
@@ -160,7 +163,10 @@ extract_mold.workflow <- function(x, ...) {
   if (has_mold(x)) {
     return(x$pre$mold)
   }
-  abort("The workflow does not have a mold. Have you called `fit()` yet?")
+  abort(c(
+    "Can't extract a mold from an untrained workflow.",
+    i = "Do you need to call `fit()`?"
+  ))
 }
 
 #' @export

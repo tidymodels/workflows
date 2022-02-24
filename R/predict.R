@@ -52,7 +52,10 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   workflow <- object
 
   if (!is_trained_workflow(workflow)) {
-    abort("Workflow has not yet been trained. Do you need to call `fit()`?")
+    abort(c(
+      "Can't predict on an untrained workflow.",
+      i = "Do you need to call `fit()`?"
+    ))
   }
 
   fit <- extract_fit_parsnip(workflow)

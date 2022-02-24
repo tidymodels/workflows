@@ -20,7 +20,8 @@
       fit(workflow, mtcars)
     Condition
       Error in `.fit_pre()`:
-      ! The workflow must have formula, recipe, or variables preprocessor. Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`.
+      ! The workflow must have a formula, recipe, or variables preprocessor.
+      i Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`.
 
 # cannot fit without a fit stage
 
@@ -28,7 +29,8 @@
       fit(workflow, mtcars)
     Condition
       Error in `.fit_pre()`:
-      ! The workflow must have a model. Provide one with `add_model()`.
+      ! The workflow must have a model.
+      i Provide one with `add_model()`.
 
 # can `predict()` from workflow fit from individual pieces
 
@@ -36,5 +38,6 @@
       predict(workflow_model, mtcars)
     Condition
       Error in `predict()`:
-      ! Workflow has not yet been trained. Do you need to call `fit()`?
+      ! Can't predict on an untrained workflow.
+      i Do you need to call `fit()`?
 

@@ -287,7 +287,8 @@ used. To demonstrate, a spline function will be used for the bill depth:</p><div
 the corresponding model fit is removed.</p><div class="sourceCode r"><pre><code><span class="va">custom_formula_no_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_formula.html">update_formula</a></span><span class="op">(</span><span class="va">custom_formula</span>, <span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">species</span><span class="op">)</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">custom_formula_no_fit</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error in extract_fit_parsnip(custom_formula_no_fit) : </span>
-<span class="co">##   The workflow does not have a model fit. Have you called `fit()` yet?</span></code></pre></div>
+<span class="co">##   Can't extract a model fit from an untrained workflow.</span>
+<span class="co">## i Do you need to call `fit()`?</span></code></pre></div>
 
 </div>
 

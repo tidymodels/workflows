@@ -124,10 +124,11 @@ replace_workflow_fit <- function(x, value, ..., call = caller_env()) {
   validate_is_workflow(x, call = call)
 
   if (!has_fit(x)) {
-    abort(
-      "The workflow does not have a model fit. Have you called `fit()` yet?",
-      call = call
+    message <- c(
+      "The workflow does not have a model fit.",
+      "Do you need to call `fit()`?"
     )
+    abort(message, call = call)
   }
 
   x$fit$fit <- value

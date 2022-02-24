@@ -60,7 +60,8 @@
       extract_fit_parsnip(workflow())
     Condition
       Error in `extract_fit_parsnip()`:
-      ! The workflow does not have a model fit. Have you called `fit()` yet?
+      ! Can't extract a model fit from an untrained workflow.
+      i Do you need to call `fit()`?
 
 # error if no mold
 
@@ -68,7 +69,8 @@
       extract_mold(workflow())
     Condition
       Error in `extract_mold()`:
-      ! The workflow does not have a mold. Have you called `fit()` yet?
+      ! Can't extract a mold from an untrained workflow.
+      i Do you need to call `fit()`?
 
 ---
 
@@ -76,7 +78,8 @@
       extract_recipe(workflow)
     Condition
       Error in `extract_mold()`:
-      ! The workflow does not have a mold. Have you called `fit()` yet?
+      ! Can't extract a mold from an untrained workflow.
+      i Do you need to call `fit()`?
 
 # can extract a prepped recipe
 

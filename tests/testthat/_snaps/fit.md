@@ -38,5 +38,6 @@
       predict(workflow_model, mtcars)
     Condition
       Error in `predict()`:
-      ! Workflow has not yet been trained. Do you need to call `fit()`?
+      ! Can't predict on an untrained workflow.
+      i Do you need to call `fit()`?
 

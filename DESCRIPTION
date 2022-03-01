@@ -3,7 +3,7 @@ Title: Modeling Workflows
 Version: 0.2.4.9002
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
-    person("RStudio", role = "cph")
+    person("RStudio", role = c("cph", "fnd"))
   )
 Description: Managing both a 'parsnip' model and a preprocessor, such as a
     model formula or recipe from 'recipes', can often be challenging. The

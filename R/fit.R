@@ -133,7 +133,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
   n <- length(workflow[["pre"]]$actions)
 
-  for(i in seq_len(n)) {
+  for (i in seq_len(n)) {
     action <- workflow[["pre"]]$actions[[i]]
 
     # Update both the `workflow` and the `data` as we iterate through pre steps
@@ -166,8 +166,8 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
 
   has_preprocessor <-
     has_preprocessor_formula(x) ||
-    has_preprocessor_recipe(x) ||
-    has_preprocessor_variables(x)
+      has_preprocessor_recipe(x) ||
+      has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
     message <- c(

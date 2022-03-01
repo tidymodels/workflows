@@ -6,7 +6,7 @@ is_uniquely_named <- function(x) {
   }
 }
 
-glubort <- function (..., .sep = "", .envir = caller_env(), .call = .envir) {
+glubort <- function(..., .sep = "", .envir = caller_env(), .call = .envir) {
   abort(glue::glue(..., .sep = .sep, .envir = .envir), call = .call)
 }
 
@@ -31,16 +31,15 @@ validate_recipes_available <- function(..., call = caller_env()) {
 # ------------------------------------------------------------------------------
 
 # https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109
-vec_index_invert <- function (x) {
+vec_index_invert <- function(x) {
   if (vec_index_is_empty(x)) {
     TRUE
-  }
-  else {
+  } else {
     -x
   }
 }
 
-vec_index_is_empty <- function (x) {
+vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
 

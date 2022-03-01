@@ -32,7 +32,6 @@
     # `tunable.workflow()` moved from tune to workflows
     vctrs::s3_register("generics::tunable", "workflow", tunable_workflow)
   }
-
 }
 
 # nocov end

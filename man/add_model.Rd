@@ -175,5 +175,4 @@ remove_model(workflow)
 
 update_model(workflow, regularized_model)
 update_model(fitted, regularized_model)
-
 }

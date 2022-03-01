@@ -42,7 +42,7 @@ new_stage <- function(actions = list(), ..., subclass = character()) {
     abort("`...` must be uniquely named.", .internal = TRUE)
   }
 
-  fields <- list2(actions = actions, !!! fields)
+  fields <- list2(actions = actions, !!!fields)
 
   structure(fields, class = c(subclass, "stage"))
 }

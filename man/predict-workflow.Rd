@@ -63,8 +63,8 @@ library(parsnip)
 library(recipes)
 library(magrittr)
 
-training <- mtcars[1:20,]
-testing <- mtcars[21:32,]
+training <- mtcars[1:20, ]
+testing <- mtcars[21:32, ]
 
 model <- linear_reg() \%>\%
   set_engine("lm")

@@ -87,7 +87,7 @@ axe_fitted.workflow <- function(x, verbose = FALSE, ...) {
 
 # butcher:::add_butcher_class
 add_butcher_class <- function(x) {
-  if(!any(grepl("butcher", class(x)))) {
+  if (!any(grepl("butcher", class(x)))) {
     class(x) <- append(paste0("butchered_", class(x)[1]), class(x))
   }
   x

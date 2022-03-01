@@ -44,4 +44,3 @@ check_control_parsnip <- function(x, ..., call = caller_env()) {
 is_control_workflow <- function(x) {
   inherits(x, "control_workflow")
 }
-

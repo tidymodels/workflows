@@ -48,7 +48,7 @@ test_that("remove a recipe after model fit", {
   workflow_no_recipe <- workflow()
   workflow_no_recipe <- add_model(workflow_no_recipe, lm_model)
 
-  workflow_with_recipe  <- add_recipe(workflow_no_recipe, rec)
+  workflow_with_recipe <- add_recipe(workflow_no_recipe, rec)
   workflow_with_recipe <- fit(workflow_with_recipe, data = mtcars)
 
   workflow_removed_recipe <- remove_recipe(workflow_with_recipe)

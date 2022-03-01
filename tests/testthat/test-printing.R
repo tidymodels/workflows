@@ -41,7 +41,7 @@ test_that("can print workflow with fit model", {
 })
 
 test_that("can print workflow with >10 recipe steps", {
-  rec <- recipes::recipe(mpg~cyl, mtcars)
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
   rec <- recipes::step_log(rec, cyl)
   rec <- recipes::step_log(rec, cyl)
   rec <- recipes::step_log(rec, cyl)

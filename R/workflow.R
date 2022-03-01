@@ -240,8 +240,8 @@ print_preprocessor <- function(x) {
 
   no_preprocessor <-
     !has_preprocessor_formula &&
-    !has_preprocessor_recipe &&
-    !has_preprocessor_variables
+      !has_preprocessor_recipe &&
+      !has_preprocessor_variables
 
   if (no_preprocessor) {
     return(invisible(x))

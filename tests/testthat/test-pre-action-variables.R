@@ -216,7 +216,7 @@ test_that("can remove variables after model fit", {
   wf <- workflow()
   wf <- add_model(wf, lm_model)
 
-  wf1  <- add_variables(wf, mpg, cyl)
+  wf1 <- add_variables(wf, mpg, cyl)
   wf1 <- fit(wf1, data = mtcars)
 
   wf2 <- remove_variables(wf1)

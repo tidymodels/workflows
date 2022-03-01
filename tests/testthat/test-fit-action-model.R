@@ -50,8 +50,8 @@ test_that("remove a model", {
   workflow_no_model <- workflow()
   workflow_no_model <- add_formula(workflow_no_model, mpg ~ cyl)
 
-  workflow_with_model  <- add_model(workflow_no_model, lm_model)
-  workflow_removed_model  <- remove_model(workflow_with_model)
+  workflow_with_model <- add_model(workflow_no_model, lm_model)
+  workflow_removed_model <- remove_model(workflow_with_model)
 
   expect_equal(workflow_no_model$fit, workflow_removed_model$fit)
 })
@@ -63,10 +63,10 @@ test_that("remove a model after model fit", {
   workflow_no_model <- workflow()
   workflow_no_model <- add_formula(workflow_no_model, mpg ~ cyl)
 
-  workflow_with_model  <- add_model(workflow_no_model, lm_model)
+  workflow_with_model <- add_model(workflow_no_model, lm_model)
   workflow_with_model <- fit(workflow_with_model, data = mtcars)
 
-  workflow_removed_model  <- remove_model(workflow_with_model)
+  workflow_removed_model <- remove_model(workflow_with_model)
 
   expect_equal(workflow_no_model$fit, workflow_removed_model$fit)
 })

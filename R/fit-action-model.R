@@ -58,7 +58,6 @@
 #'
 #' update_model(workflow, regularized_model)
 #' update_model(fitted, regularized_model)
-#'
 add_model <- function(x, spec, ..., formula = NULL) {
   check_dots_empty()
   action <- new_action_model(spec, formula)

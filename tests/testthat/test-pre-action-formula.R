@@ -68,7 +68,7 @@ test_that("remove a formula after model fit", {
   workflow_no_formula <- workflow()
   workflow_no_formula <- add_model(workflow_no_formula, lm_model)
 
-  workflow_with_formula  <- add_formula(workflow_no_formula, mpg ~ cyl)
+  workflow_with_formula <- add_formula(workflow_no_formula, mpg ~ cyl)
   workflow_with_formula <- fit(workflow_with_formula, data = mtcars)
 
   workflow_removed_formula <- remove_formula(workflow_with_formula)

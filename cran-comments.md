@@ -12,6 +12,10 @@ Issues with CRAN packages are summarised below.
 
 * workflowsets
   checking tests ... ERROR
+  
+## Submission 0.2.5
+
+This is a small release that adds methods for `extract_parameter_set_dials()` and `extract_parameter_dials()` for workflows objects.
  
 ## Submission 0.2.4
 

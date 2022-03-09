@@ -21,7 +21,7 @@ Imports:
     glue,
     hardhat (>= 0.2.0),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.1.7.9005),
+    parsnip (>= 0.2.0),
     purrr,
     rlang (>= 1.0.1),
     tidyselect (>= 1.1.2),
@@ -38,8 +38,6 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-Remotes: 
-    tidymodels/parsnip
 Config/Needs/website:
     dplyr,
     earth,

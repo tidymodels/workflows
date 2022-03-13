@@ -11,11 +11,11 @@ glubort <- function(..., .sep = "", .envir = caller_env(), .call = .envir) {
 }
 
 is_model_fit <- function(x) {
-  inherits(x, "model_fit")
+  inherits(x, "model_fit") || inherits(x, "cluster_fit")
 }
 
 is_model_spec <- function(x) {
-  inherits(x, "model_spec")
+  inherits(x, "model_spec") || inherits(x, "cluster_spec")
 }
 
 validate_recipes_available <- function(..., call = caller_env()) {

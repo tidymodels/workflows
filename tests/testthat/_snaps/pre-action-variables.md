@@ -14,6 +14,22 @@
       Error in `add_variables()`:
       ! Variables cannot be added when a formula already exists.
 
+# informative error if either `predictors` or `outcomes` aren't provided (#144)
+
+    Code
+      add_variables(workflow(), outcomes = mpg)
+    Condition
+      Error in `workflow_variables()`:
+      ! `predictors` can't be missing.
+
+---
+
+    Code
+      add_variables(workflow(), predictors = mpg)
+    Condition
+      Error in `workflow_variables()`:
+      ! `outcomes` can't be missing.
+
 # cannot add two variables
 
     Code

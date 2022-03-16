@@ -251,12 +251,23 @@ workflow_variables <- function(outcomes, predictors) {
   )
 }
 
-new_workflow_variables <- function(outcomes, predictors) {
+new_workflow_variables <- function(outcomes,
+                                   predictors,
+                                   ...,
+                                   call = caller_env()) {
+  check_dots_empty()
+
   if (!is_quosure(outcomes)) {
     abort("`outcomes` must be a quosure.", .internal = TRUE)
   }
   if (!is_quosure(predictors)) {
     abort("`predictors` must be a quosure.", .internal = TRUE)
+  }
+  if (quo_is_missing(outcomes)) {
+    abort("`outcomes` can't be missing.", call = call)
+  }
+  if (quo_is_missing(predictors)) {
+    abort("`predictors` can't be missing.", call = call)
   }
 
   data <- list(

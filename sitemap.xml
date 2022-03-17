@@ -1,66 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://workflows.tidymodels.org//index.html</loc>
+    <loc>https://workflows.tidymodels.org/404.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/add_formula.html</loc>
+    <loc>https://workflows.tidymodels.org/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/add_model.html</loc>
+    <loc>https://workflows.tidymodels.org/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/add_recipe.html</loc>
+    <loc>https://workflows.tidymodels.org/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/add_variables.html</loc>
+    <loc>https://workflows.tidymodels.org/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/augment.workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/articles/extras/getting-started.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/control_workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/extract-workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/articles/stages.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/fit-workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/authors.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/glance.workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/is_trained_workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/news/index.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/predict-workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/add_formula.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/reexports.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/add_model.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/tidy.workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/add_recipe.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/workflow-butcher.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/add_variables.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/workflow-extractors.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/augment.workflow.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/workflow.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/control_workflow.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/workflows-internals.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/extract-workflow.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//reference/workflows-package.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/fit-workflow.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//articles/extras/getting-started.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/glance.workflow.html</loc>
   </url>
   <url>
-    <loc>https://workflows.tidymodels.org//articles/stages.html</loc>
+    <loc>https://workflows.tidymodels.org/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/is_trained_workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/predict-workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/tidy.workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/workflow-butcher.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/workflow-extractors.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/workflow.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/workflows-internals.html</loc>
+  </url>
+  <url>
+    <loc>https://workflows.tidymodels.org/reference/workflows-package.html</loc>
   </url>
 </urlset>

@@ -1,9 +1,13 @@
 ## revdepcheck results
 
-We checked 21 reverse dependencies (20 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 27 reverse dependencies (25 from CRAN + 2 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
+  
+## Submission 0.2.5
+
+This is a small release that adds methods for `extract_parameter_set_dials()` and `extract_parameter_dials()` for workflows objects.
  
 ## Submission 0.2.4
 

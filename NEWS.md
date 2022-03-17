@@ -1,4 +1,4 @@
-# workflows (development version)
+# workflows 0.2.5
 
 * Improved error message in `workflow_variables()` if either `outcomes` or
   `predictors` are missing (#144).

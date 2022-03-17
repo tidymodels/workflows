@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* Fixed tests that relied on an incorrect assumption about the version of tune
+  that is installed.
+
 # workflows 0.2.5
 
 * Improved error message in `workflow_variables()` if either `outcomes` or

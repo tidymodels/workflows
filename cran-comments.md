@@ -5,6 +5,10 @@ We checked 27 reverse dependencies (25 from CRAN + 2 from Bioconductor), compari
  * We saw 0 new problems
  * We failed to check 0 packages
   
+## Submission 0.2.6
+
+This patch release is intended to fix a bug in the new tests added in 0.2.5. It should fix the failing CRAN check machines.
+  
 ## Submission 0.2.5
 
 This is a small release that adds methods for `extract_parameter_set_dials()` and `extract_parameter_dials()` for workflows objects.

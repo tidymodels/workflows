@@ -92,6 +92,18 @@ test_that("case weights `col` must exist in `data`", {
   expect_error(fit(wf, mtcars))
 })
 
+test_that("case weights `col` can't select >1 columns in `data`", {
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_formula(wf, mpg ~ .)
+  wf <- add_case_weights(wf, c(cyl, disp))
+
+  expect_snapshot(error = TRUE, fit(wf, mtcars))
+})
+
 test_that("case weights must be integer or double", {
   df <- vctrs::data_frame(y = 1, x = 1, weights = "x")
 

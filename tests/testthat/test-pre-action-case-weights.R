@@ -92,6 +92,20 @@ test_that("case weights `col` must exist in `data`", {
   expect_error(fit(wf, mtcars))
 })
 
+test_that("case weights must be integer or double", {
+  df <- vctrs::data_frame(y = 1, x = 1, weights = "x")
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_case_weights(wf, weights)
+
+  expect_snapshot(error = TRUE, fit(wf, df))
+})
+
 # ------------------------------------------------------------------------------
 # remove_case_weights()
 

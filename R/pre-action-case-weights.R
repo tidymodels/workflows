@@ -66,7 +66,7 @@ remove_case_weights <- function(x) {
   validate_is_workflow(x)
 
   if (!has_case_weights(x)) {
-    rlang::warn("The workflow has no case weights specification to remove.")
+    warn("The workflow has no case weights specification to remove.")
   }
 
   actions <- x$pre$actions

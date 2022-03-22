@@ -128,13 +128,13 @@ fit.action_case_weights <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-new_action_case_weights <- function(col, remove) {
+new_action_case_weights <- function(col, remove, ..., call = caller_env()) {
   if (!is_quosure(col)) {
-    abort("`col` must be a quosure.")
+    abort("`col` must be a quosure.", .internal = TRUE)
   }
 
   if (!is_bool(remove)) {
-    abort("`remove` must be a single `TRUE` or `FALSE`.")
+    abort("`remove` must be a single `TRUE` or `FALSE`.", call = call)
   }
 
   new_action_pre(

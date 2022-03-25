@@ -92,7 +92,13 @@ fit.action_formula <- function(object, workflow, data) {
   blueprint <- object$blueprint
 
   # TODO - Strip out the formula environment at some time?
-  workflow$pre$mold <- hardhat::mold(formula, data, blueprint = blueprint)
+  mold <- hardhat::mold(formula, data, blueprint = blueprint)
+
+  workflow$pre <- new_stage_pre(
+    actions = workflow$pre$actions,
+    mold = mold,
+    case_weights = workflow$pre$case_weights
+  )
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)

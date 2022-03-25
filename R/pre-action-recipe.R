@@ -90,7 +90,13 @@ fit.action_recipe <- function(object, workflow, data) {
   recipe <- object$recipe
   blueprint <- object$blueprint
 
-  workflow$pre$mold <- hardhat::mold(recipe, data, blueprint = blueprint)
+  mold <- hardhat::mold(recipe, data, blueprint = blueprint)
+
+  workflow$pre <- new_stage_pre(
+    actions = workflow$pre$actions,
+    mold = mold,
+    case_weights = workflow$pre$case_weights
+  )
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)

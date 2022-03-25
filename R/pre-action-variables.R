@@ -194,10 +194,16 @@ fit.action_variables <- function(object, workflow, data) {
   data_outcomes <- data[outcomes]
   data_predictors <- data_potential_predictors[predictors]
 
-  workflow$pre$mold <- hardhat::mold(
+  mold <- hardhat::mold(
     x = data_predictors,
     y = data_outcomes,
     blueprint = blueprint
+  )
+
+  workflow$pre <- new_stage_pre(
+    actions = workflow$pre$actions,
+    mold = mold,
+    case_weights = workflow$pre$case_weights
   )
 
   # All pre steps return the `workflow` and `data`

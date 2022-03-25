@@ -19,7 +19,7 @@ Imports:
     cli (>= 2.0.0),
     generics (>= 0.1.2),
     glue,
-    hardhat (>= 0.2.0),
+    hardhat (>= 0.2.0.9000),
     lifecycle (>= 1.0.0),
     parsnip (>= 0.2.0),
     rlang (>= 1.0.1),
@@ -35,6 +35,8 @@ Suggests:
     recipes (>= 0.2.0),
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    tidymodels/hardhat
 VignetteBuilder: 
     knitr
 Config/Needs/website:

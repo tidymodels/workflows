@@ -1,6 +1,13 @@
 #' Add case weights to a workflow
 #'
 #' @description
+#' This family of functions revolves around selecting a column of `data` to use
+#' for _case weights_. This column must be one of the allowed case weight types,
+#' such as [hardhat::frequency_weights()] or [hardhat::importance_weights()].
+#' Specifically, it must return `TRUE` from [hardhat::is_case_weights()]. The
+#' underlying model will decide whether or not the type of case weights you have
+#' supplied are applicable or not.
+#'
 #' - `add_case_weights()` specifies the column that will be interpreted as
 #'   case weights in the model. This column must be present in the `data`
 #'   supplied to [fit()][fit.workflow()].
@@ -24,12 +31,17 @@
 #' @param x A workflow
 #'
 #' @param col A single unquoted column name specifying the case weights for
-#'   the model.
+#'   the model. This must be a classed case weights column, as determined by
+#'   [hardhat::is_case_weights()].
 #'
 #' @export
 #' @examples
 #' library(parsnip)
 #' library(magrittr)
+#' library(hardhat)
+#'
+#' mtcars2 <- mtcars
+#' mtcars2$gear <- frequency_weights(mtcars2$gear)
 #'
 #' spec <- linear_reg() %>%
 #'   set_engine("lm")
@@ -39,7 +51,7 @@
 #'   add_formula(mpg ~ .) %>%
 #'   add_model(spec)
 #'
-#' wf <- fit(wf, mtcars)
+#' wf <- fit(wf, mtcars2)
 #'
 #' # Notice that the case weights (gear) aren't included in the predictors
 #' extract_mold(wf)$predictors
@@ -102,6 +114,15 @@ fit.action_case_weights <- function(object, workflow, data) {
   }
 
   case_weights <- data[[loc]]
+
+  if (!hardhat::is_case_weights(case_weights)) {
+    abort(paste0(
+      "`col` must select a classed case weights column, as determined by ",
+      "`hardhat::is_case_weights()`. For example, it could be a column ",
+      "created by `hardhat::frequency_weights()` or ",
+      "`hardhat::importance_weights()`."
+    ))
+  }
 
   # Remove case weights for formula/variable preprocessors so `y ~ .` and
   # `everything()` don't pick up the weights column. Recipe preprocessors

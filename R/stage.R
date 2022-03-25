@@ -3,8 +3,8 @@ new_stage_pre <- function(actions = list(), mold = NULL, case_weights = NULL) {
     abort("`mold` must be a result of calling `hardhat::mold()`.", .internal = TRUE)
   }
 
-  if (!is_null(case_weights) && !is_integer(case_weights) && !is_double(case_weights)) {
-    abort("`case_weights` must be an integer or double vector.")
+  if (!is_null(case_weights) && !hardhat::is_case_weights(case_weights)) {
+    abort("`case_weights` must be a true case weights column.", .internal = TRUE)
   }
 
   new_stage(

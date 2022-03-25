@@ -16,9 +16,16 @@ update_case_weights(x, col)
 \item{x}{A workflow}
 
 \item{col}{A single unquoted column name specifying the case weights for
-the model.}
+the model. This must be a classed case weights column, as determined by
+\code{\link[hardhat:is_case_weights]{hardhat::is_case_weights()}}.}
 }
 \description{
+This family of functions revolves around selecting a column of \code{data} to use
+for \emph{case weights}. This column must be one of the allowed case weight types,
+such as \code{\link[hardhat:frequency_weights]{hardhat::frequency_weights()}} or \code{\link[hardhat:importance_weights]{hardhat::importance_weights()}}.
+Specifically, it must return \code{TRUE} from \code{\link[hardhat:is_case_weights]{hardhat::is_case_weights()}}. The
+underlying model will decide whether or not the type of case weights you have
+supplied are applicable or not.
 \itemize{
 \item \code{add_case_weights()} specifies the column that will be interpreted as
 case weights in the model. This column must be present in the \code{data}
@@ -42,6 +49,10 @@ can utilize case weights.
 \examples{
 library(parsnip)
 library(magrittr)
+library(hardhat)
+
+mtcars2 <- mtcars
+mtcars2$gear <- frequency_weights(mtcars2$gear)
 
 spec <- linear_reg() \%>\%
   set_engine("lm")
@@ -51,7 +62,7 @@ wf <- workflow() \%>\%
   add_formula(mpg ~ .) \%>\%
   add_model(spec)
 
-wf <- fit(wf, mtcars)
+wf <- fit(wf, mtcars2)
 
 # Notice that the case weights (gear) aren't included in the predictors
 extract_mold(wf)$predictors

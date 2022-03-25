@@ -31,23 +31,23 @@ test_that("case weights + variables removes weights before variables evaluation"
   expect_false("disp" %in% names(wf$pre$mold$predictors))
 })
 
-test_that("case weights can be retained for usage in a recipe with `remove = FALSE`", {
+test_that("case weights + recipe retains weights for use in recipe", {
   spec <- parsnip::linear_reg()
   spec <- parsnip::set_engine(spec, "lm")
 
   rec <- recipes::recipe(mpg ~ cyl + disp, mtcars)
-  # Mock step that might use case weights
-  rec <- recipes::step_center(rec, cyl, disp)
+  # Step that might use case weights
+  rec <- recipes::step_center(rec, cyl)
 
   wf <- workflow()
   wf <- add_model(wf, spec)
   wf <- add_recipe(wf, rec)
-  wf <- add_case_weights(wf, disp, remove = FALSE)
+  wf <- add_case_weights(wf, disp)
 
+  # recipe won't run unless the `disp` column is there
   wf <- fit(wf, mtcars)
 
   expect_identical(wf$pre$case_weights, mtcars$disp)
-  expect_true("disp" %in% names(wf$pre$mold$predictors))
 })
 
 test_that("case weights added after preprocessors get reordered", {
@@ -73,10 +73,6 @@ test_that("case weights added after preprocessors get reordered", {
 
   # Order matters
   expect_identical(names(wf$pre$actions), c("case_weights", "variables"))
-})
-
-test_that("`remove` is validated", {
-  expect_snapshot(error = TRUE, add_case_weights(workflow(), foo, remove = 1))
 })
 
 test_that("case weights `col` must exist in `data`", {
@@ -163,10 +159,10 @@ test_that("updating case weights resets model, mold, and case-weights slots", {
 
   wf <- fit(wf, mtcars)
 
-  wf <- update_case_weights(wf, cyl, remove = FALSE)
+  wf <- update_case_weights(wf, cyl)
 
   expect_null(wf$pre$mold)
   expect_null(wf$pre$case_weights)
   expect_null(wf$fit$fit)
-  expect_false(wf$pre$actions$case_weights$remove)
+  expect_identical(wf$pre$actions$case_weights$col, quo(cyl))
 })

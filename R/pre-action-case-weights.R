@@ -11,26 +11,20 @@
 #' - `update_case_weights()` first removes the case weights, then replaces them
 #'   with the new ones.
 #'
-#' @inheritParams rlang::args_dots_empty
+#' @details
+#' For formula and variable preprocessors, the case weights `col` is removed
+#' from the data before the preprocessor is evaluated. This allows you to use
+#' formulas like `y ~ .` or tidyselection like `everything()` without fear of
+#' accidentally selecting the case weights column.
+#'
+#' For recipe preprocessors, the case weights `col` is not removed and is
+#' passed along to the recipe. Typically, your recipe will include steps that
+#' can utilize case weights.
 #'
 #' @param x A workflow
 #'
 #' @param col A single unquoted column name specifying the case weights for
 #'   the model.
-#'
-#' @param remove A single logical specifying whether or not to remove the case
-#'   weights column from the `data` supplied to `fit()` before the preprocessor
-#'   is applied.
-#'
-#'   For formula preprocessors, variables preprocessors, and for recipe
-#'   preprocessors that don't use case weights, this should always be `TRUE`.
-#'   This ensures that formulas such as `y ~ .` won't pick up the case weights
-#'   column as a predictor.
-#'
-#'   For recipe preprocessors that use case weights, if the case weights column
-#'   used in the recipe is the exact same column as `col`, then set `remove =
-#'   FALSE` to retain the case weights column in `data` and pass it on to the
-#'   preprocessor.
 #'
 #' @export
 #' @examples
@@ -52,10 +46,9 @@
 #'
 #' # Strip them out of the workflow, which also resets the model
 #' remove_case_weights(wf)
-add_case_weights <- function(x, col, ..., remove = TRUE) {
-  check_dots_empty()
+add_case_weights <- function(x, col) {
   col <- enquo(col)
-  action <- new_action_case_weights(col, remove)
+  action <- new_action_case_weights(col)
   # Ensures that case-weight actions are always before preprocessor actions
   add_action(x, action, "case_weights")
 }
@@ -82,17 +75,15 @@ remove_case_weights <- function(x) {
 
 #' @rdname add_case_weights
 #' @export
-update_case_weights <- function(x, col, ..., remove = TRUE) {
-  check_dots_empty()
+update_case_weights <- function(x, col) {
   x <- remove_case_weights(x)
-  add_case_weights(x, {{ col }}, remove = remove)
+  add_case_weights(x, {{ col }})
 }
 
 # ------------------------------------------------------------------------------
 
 fit.action_case_weights <- function(object, workflow, data) {
   col <- object$col
-  remove <- object$remove
 
   # `col` is saved as a quosure, so it carries along the evaluation environment
   env <- empty_env()
@@ -112,6 +103,16 @@ fit.action_case_weights <- function(object, workflow, data) {
 
   case_weights <- data[[loc]]
 
+  # Remove case weights for formula/variable preprocessors so `y ~ .` and
+  # `everything()` don't pick up the weights column. Recipe preprocessors
+  # likely need the case weights columns so we don't remove them in that case.
+  # They will be automatically tagged by the recipe with a `"case_weights"`
+  # role, so they won't be considered predictors during `bake()`, meaning
+  # that passing them through should be harmless.
+  remove <-
+    has_preprocessor_formula(workflow) ||
+    has_preprocessor_variables(workflow)
+
   if (remove) {
     data[[loc]] <- NULL
   }
@@ -128,18 +129,13 @@ fit.action_case_weights <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-new_action_case_weights <- function(col, remove, ..., call = caller_env()) {
+new_action_case_weights <- function(col) {
   if (!is_quosure(col)) {
     abort("`col` must be a quosure.", .internal = TRUE)
   }
 
-  if (!is_bool(remove)) {
-    abort("`remove` must be a single `TRUE` or `FALSE`.", call = call)
-  }
-
   new_action_pre(
     col = col,
-    remove = remove,
     subclass = "action_case_weights"
   )
 }

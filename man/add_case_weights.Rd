@@ -6,32 +6,17 @@
 \alias{update_case_weights}
 \title{Add case weights to a workflow}
 \usage{
-add_case_weights(x, col, ..., remove = TRUE)
+add_case_weights(x, col)
 
 remove_case_weights(x)
 
-update_case_weights(x, col, ..., remove = TRUE)
+update_case_weights(x, col)
 }
 \arguments{
 \item{x}{A workflow}
 
 \item{col}{A single unquoted column name specifying the case weights for
 the model.}
-
-\item{...}{These dots are for future extensions and must be empty.}
-
-\item{remove}{A single logical specifying whether or not to remove the case
-weights column from the \code{data} supplied to \code{fit()} before the preprocessor
-is applied.
-
-For formula preprocessors, variables preprocessors, and for recipe
-preprocessors that don't use case weights, this should always be \code{TRUE}.
-This ensures that formulas such as \code{y ~ .} won't pick up the case weights
-column as a predictor.
-
-For recipe preprocessors that use case weights, if the case weights column
-used in the recipe is the exact same column as \code{col}, then set \code{remove = FALSE} to retain the case weights column in \code{data} and pass it on to the
-preprocessor.}
 }
 \description{
 \itemize{
@@ -43,6 +28,16 @@ model has already been fit, then the fit is removed.
 \item \code{update_case_weights()} first removes the case weights, then replaces them
 with the new ones.
 }
+}
+\details{
+For formula and variable preprocessors, the case weights \code{col} is removed
+from the data before the preprocessor is evaluated. This allows you to use
+formulas like \code{y ~ .} or tidyselection like \code{everything()} without fear of
+accidentally selecting the case weights column.
+
+For recipe preprocessors, the case weights \code{col} is not removed and is
+passed along to the recipe. Typically, your recipe will include steps that
+can utilize case weights.
 }
 \examples{
 library(parsnip)

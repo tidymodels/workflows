@@ -1,4 +1,4 @@
-new_stage_pre <- function(actions = list(), mold = NULL, case_weights = NULL) {
+new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights = NULL) {
   if (!is.null(mold) && !is.list(mold)) {
     abort("`mold` must be a result of calling `hardhat::mold()`.", .internal = TRUE)
   }
@@ -15,7 +15,7 @@ new_stage_pre <- function(actions = list(), mold = NULL, case_weights = NULL) {
   )
 }
 
-new_stage_fit <- function(actions = list(), fit = NULL) {
+new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
   if (!is.null(fit) && !is_model_fit(fit)) {
     abort("`fit` must be a `model_fit`.", .internal = TRUE)
   }
@@ -23,7 +23,7 @@ new_stage_fit <- function(actions = list(), fit = NULL) {
   new_stage(actions = actions, fit = fit, subclass = "stage_fit")
 }
 
-new_stage_post <- function(actions = list()) {
+new_stage_post <- function(actions = new_named_list()) {
   new_stage(actions, subclass = "stage_post")
 }
 
@@ -36,7 +36,9 @@ new_stage_post <- function(actions = list()) {
 # - fit
 # - post
 
-new_stage <- function(actions = list(), ..., subclass = character()) {
+new_stage <- function(actions = new_named_list(),
+                      ...,
+                      subclass = character()) {
   if (!is_list_of_actions(actions)) {
     abort("`actions` must be a list of actions.", .internal = TRUE)
   }
@@ -44,8 +46,6 @@ new_stage <- function(actions = list(), ..., subclass = character()) {
   if (!is_uniquely_named(actions)) {
     abort("`actions` must be uniquely named.", .internal = TRUE)
   }
-
-  actions <- unname_empty(actions)
 
   fields <- list2(...)
 
@@ -70,16 +70,9 @@ has_action <- function(stage, name) {
 
 # ------------------------------------------------------------------------------
 
-unname_empty <- function(x) {
-  # This is for standardizing length 0 named lists to unnamed lists.
-  # It is mainly useful for making objects identical in tests.
-  if (!is_empty(x)) {
-    return(x)
-  }
-
-  if (is_null(names(x))) {
-    return(x)
-  }
-
-  unname(x)
+new_named_list <- function() {
+  # To standardize results for testing.
+  # Mainly applicable when `[[<-` removes all elements from a named list and
+  # leaves a named list behind that we want to compare against.
+  set_names(list(), character())
 }

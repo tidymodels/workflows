@@ -34,6 +34,11 @@ test_that("cannot add variables if a formula already exist", {
   expect_snapshot(error = TRUE, add_variables(wf, y, x))
 })
 
+test_that("informative error if either `predictors` or `outcomes` aren't provided (#144)", {
+  expect_snapshot(error = TRUE, add_variables(workflow(), outcomes = mpg))
+  expect_snapshot(error = TRUE, add_variables(workflow(), predictors = mpg))
+})
+
 test_that("works with fit()", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

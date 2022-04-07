@@ -1,5 +1,15 @@
 # workflows (development version)
 
+# workflows 0.2.6
+
+* Fixed tests that relied on an incorrect assumption about the version of tune
+  that is installed.
+
+# workflows 0.2.5
+
+* Improved error message in `workflow_variables()` if either `outcomes` or
+  `predictors` are missing (#144).
+
 * Removed ellipsis dependency in favor of equivalent functions in rlang.
 
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods 

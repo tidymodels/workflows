@@ -36,7 +36,9 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Remotes:
-    tidymodels/hardhat
+    tidymodels/hardhat,
+    tidymodels/parsnip@fix/case-weights-xy,
+    tidymodels/recipes@case-weights
 VignetteBuilder: 
     knitr
 Config/Needs/website:

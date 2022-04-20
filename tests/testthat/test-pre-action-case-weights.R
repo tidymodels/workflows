@@ -1,6 +1,169 @@
 # ------------------------------------------------------------------------------
 # add_case_weights()
 
+test_that("case weights + formula uses weights in the model", {
+  df <- vctrs::data_frame(y = 1, x = 2, w = hardhat::frequency_weights(1))
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(wf$fit$fit$fit$weights, 1L)
+})
+
+test_that("case weights + variables uses weights in the model", {
+  df <- vctrs::data_frame(y = 1, x = 2, w = hardhat::frequency_weights(1))
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_variables(wf, y, x)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(wf$fit$fit$fit$weights, 1L)
+})
+
+test_that("case weights + recipe uses weights in the model", {
+  df <- vctrs::data_frame(y = 1, x = 2, w = hardhat::frequency_weights(1))
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + w, df)
+  # Step that might use case weights
+  rec <- recipes::step_center(rec, x)
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(wf$fit$fit$fit$weights, 1L)
+
+  expect_named(wf$pre$mold$outcomes, "y")
+  expect_named(wf$pre$mold$predictors, "x")
+  expect_named(wf$pre$mold$extras$roles$case_weights, "w")
+})
+
+test_that("case weights are used with model formula override", {
+  df <- vctrs::data_frame(y = 1, x = 2, z = 3, w = hardhat::frequency_weights(1))
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + z + w, df)
+  # Step that might use case weights
+  rec <- recipes::step_center(rec, x)
+
+  wf <- workflow()
+  wf <- add_model(wf, spec, formula = y ~ x)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(wf$fit$fit$fit$weights, 1L)
+
+  # Importantly, supplying a model formula that uses `~ .` doesn't include weights
+  wf <- update_model(wf, spec, formula = y ~ .)
+  wf <- fit(wf, df)
+  expect_named(wf$fit$fit$fit$coefficients, c("(Intercept)", "x", "z"))
+})
+
+test_that("case weights + formula doesn't need case weights at predict time", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 2),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  df$y <- NULL
+  df$w <- NULL
+
+  expect_equal(
+    predict(wf, df)$.pred,
+    c(1/6, 2, 1/6)
+  )
+})
+
+test_that("case weights + variables doesn't need case weights at predict time", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 2),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_variables(wf, y, x)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  df$y <- NULL
+  df$w <- NULL
+
+  expect_equal(
+    predict(wf, df)$.pred,
+    c(1/6, 2, 1/6)
+  )
+})
+
+test_that("case weights + recipe doesn't need case weights at predict time", {
+  skip("Until hardhat ignores case weight roles at predict time by default")
+
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 2),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + w, df)
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  df$y <- NULL
+  df$w <- NULL
+
+  expect_equal(
+    predict(wf, df)$.pred,
+    c(1/6, 2, 1/6)
+  )
+})
+
 test_that("case weights + formula removes weights before formula evaluation", {
   df <- vctrs::data_frame(y = 1, x = 2, w = hardhat::frequency_weights(1))
 
@@ -54,6 +217,7 @@ test_that("case weights + recipe retains weights for use in recipe", {
   wf <- fit(wf, df)
 
   expect_identical(wf$pre$case_weights, df$w)
+  expect_identical(wf$pre$mold$extras$roles$case_weights$w, df$w)
 })
 
 test_that("case weights added after preprocessors get reordered", {

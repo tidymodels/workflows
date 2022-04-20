@@ -118,14 +118,25 @@ fit.action_model <- function(object, workflow, control) {
 }
 
 fit_from_xy <- function(spec, mold, case_weights, control_parsnip) {
-  # TODO: Pass `case_weights` through when parsnip supports them
-  fit_xy(spec, x = mold$predictors, y = mold$outcomes, control = control_parsnip)
+  fit_xy(
+    spec,
+    x = mold$predictors,
+    y = mold$outcomes,
+    case_weights = case_weights,
+    control = control_parsnip
+  )
 }
 
 fit_from_formula <- function(spec, mold, case_weights, control_parsnip, formula) {
-  # TODO: Pass `case_weights` through when parsnip supports them
   data <- cbind(mold$outcomes, mold$predictors)
-  fit(spec, formula = formula, data = data, control = control_parsnip)
+
+  fit(
+    spec,
+    formula = formula,
+    data = data,
+    case_weights = case_weights,
+    control = control_parsnip
+  )
 }
 
 extract_mold0 <- function(workflow) {

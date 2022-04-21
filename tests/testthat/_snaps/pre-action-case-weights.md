@@ -1,3 +1,19 @@
+# case weights + recipe can optionally require case weights at predict time
+
+    Code
+      predict(wf, df)
+    Condition
+      Error in `glubort()`:
+      ! The following required columns are missing: 'w'.
+
+# case weights + recipe can optionally require extra roles at predict time
+
+    Code
+      predict(wf, df)
+    Condition
+      Error in `glubort()`:
+      ! The following required columns are missing: 'w'.
+
 # case weights `col` can't select >1 columns in `data`
 
     Code

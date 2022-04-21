@@ -135,8 +135,6 @@ test_that("case weights + variables doesn't need case weights at predict time", 
 })
 
 test_that("case weights + recipe doesn't need case weights at predict time", {
-  skip("Until hardhat ignores case weight roles at predict time by default")
-
   df <- vctrs::data_frame(
     y = c(1, 2, 0),
     x = c(2, 5, 2),
@@ -162,6 +160,89 @@ test_that("case weights + recipe doesn't need case weights at predict time", {
     predict(wf, df)$.pred,
     c(1/6, 2, 1/6)
   )
+})
+
+test_that("case weights + recipe can optionally require case weights at predict time", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 2),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + w, df)
+
+  bp <- hardhat::default_recipe_blueprint(bake_dependent_roles = "case_weights")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec, blueprint = bp)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(
+    wf$pre$mold$extras$roles$case_weights$w,
+    df$w
+  )
+
+  df$y <- NULL
+
+  expect_equal(
+    predict(wf, df)$.pred,
+    c(1/6, 2, 1/6)
+  )
+
+  df$w <- NULL
+
+  expect_snapshot(error = TRUE, {
+    predict(wf, df)
+  })
+})
+
+test_that("case weights + recipe can optionally require extra roles at predict time", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 2),
+    w = c(2, 5, 10)
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  # In this recipe, `w` is used as some `id` role that is actually required at
+  # `bake()` time
+  rec <- recipes::recipe(y ~ x + w, df)
+  rec <- recipes::update_role(rec, w, new_role = "id")
+  rec <- recipes::step_center(rec, w)
+
+  bp <- hardhat::default_recipe_blueprint(bake_dependent_roles = "id")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec, blueprint = bp)
+
+  wf <- fit(wf, df)
+
+  expect_identical(
+    wf$pre$mold$extras$roles$id$w,
+    df$w - mean(df$w)
+  )
+
+  df$y <- NULL
+
+  expect_equal(
+    predict(wf, df)$.pred,
+    c(1/2, 2, 1/2)
+  )
+
+  df$w <- NULL
+
+  expect_snapshot(error = TRUE, {
+    predict(wf, df)
+  })
 })
 
 test_that("case weights + formula removes weights before formula evaluation", {

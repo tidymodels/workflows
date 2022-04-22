@@ -39,10 +39,7 @@ VignetteBuilder:
     knitr
 Config/Needs/website:
     dplyr,
-    earth,
     ggplot2,
-    mda,
-    tidymodels/discrim,
     tidyr,
     tidyverse/tidytemplate,
     yardstick

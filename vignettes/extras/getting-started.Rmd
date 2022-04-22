@@ -229,37 +229,6 @@ pca_glm_probs %>% roc_auc(Class, .pred_One)
 
 These results are almost identical to the transformed model.
 
-## A different model
-
-Let's try a flexible discriminant analysis model (with MARS functions) using the `discrim` package. Would a different model work better? 
-
-```{r fda}
-library(discrim)
-
-discrim_mod <- 
-  discrim_flexible() %>%
-  set_engine("earth") %>%
-  set_mode("classification") 
-
-discrim_wflow <- 
-  workflow() %>% 
-  add_recipe(trans_recipe) %>% 
-  add_model(discrim_mod) %>% 
-  fit(data = bivariate_train)
-
-discrim_probs <-
-  predict(discrim_wflow, bivariate_val, type = "prob") %>%
-  bind_cols(bivariate_val)
-
-discrim_roc <- 
-  discrim_probs %>% 
-  roc_curve(Class, .pred_One)
-
-discrim_probs %>% roc_auc(Class, .pred_One)
-```
-
-Not this one, at least.
-
 ## The test set
 
 Based on these results, the model with the logistic regression model with inverse terms is probably our best bet. Using the test set:

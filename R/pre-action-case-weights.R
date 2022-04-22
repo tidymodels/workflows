@@ -97,21 +97,7 @@ update_case_weights <- function(x, col) {
 fit.action_case_weights <- function(object, workflow, data) {
   col <- object$col
 
-  # `col` is saved as a quosure, so it carries along the evaluation environment
-  env <- empty_env()
-
-  loc <- tidyselect::eval_select(
-    expr = col,
-    data = data,
-    env = env
-  )
-
-  if (length(loc) != 1L) {
-    abort(paste0(
-      "`col` must specify exactly one column from ",
-      "`data` to extract case weights from."
-    ))
-  }
+  loc <- eval_select_case_weights(col, data)
 
   case_weights <- data[[loc]]
 
@@ -165,4 +151,29 @@ new_action_case_weights <- function(col) {
 
 extract_case_weights_col <- function(x) {
   x$pre$actions$case_weights$col
+}
+
+eval_select_case_weights <- function(col, data, ..., call = caller_env()) {
+  check_dots_empty()
+
+  # `col` is saved as a quosure, so it carries along the evaluation environment
+  env <- empty_env()
+
+  loc <- tidyselect::eval_select(
+    expr = col,
+    data = data,
+    env = env,
+    error_call = call
+  )
+
+  if (length(loc) != 1L) {
+    message <- paste0(
+      "`col` must specify exactly one column from ",
+      "`data` to extract case weights from."
+    )
+
+    abort(message, call = call)
+  }
+
+  loc
 }

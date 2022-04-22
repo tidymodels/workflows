@@ -245,6 +245,107 @@ test_that("case weights + recipe can optionally require extra roles at predict t
   })
 })
 
+test_that("case weights + recipe updates the case weights if the recipe filters rows", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 3),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  # The filter drops one of the rows, so the case weights need to be updated accordingly
+  rec <- recipes::recipe(y ~ x + w, df)
+  rec <- recipes::step_filter(rec, x > 2)
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  wf <- fit(wf, df)
+
+  expect_identical(
+    wf$pre$case_weights,
+    df$w[c(2, 3)]
+  )
+  expect_identical(
+    wf$pre$mold$extras$roles$case_weights$w,
+    df$w[c(2, 3)]
+  )
+})
+
+test_that("case weights + recipe doesn't allow the recipe to drop the case weights column", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 3),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + w, df)
+  rec <- recipes::step_mutate(rec, w = NULL)
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  expect_snapshot(error = TRUE, {
+    fit(wf, df)
+  })
+})
+
+test_that("case weights + recipe doesn't allow the recipe to adjust the case weights column class", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 3),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  rec <- recipes::recipe(y ~ x + w, df)
+  rec <- recipes::step_mutate(rec, w = unclass(w))
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  expect_snapshot(error = TRUE, {
+    fit(wf, df)
+  })
+})
+
+test_that("case weights + recipe doesn't allow the recipe to change the name of the case weights column", {
+  df <- vctrs::data_frame(
+    y = c(1, 2, 0),
+    x = c(2, 5, 3),
+    w = hardhat::frequency_weights(c(2, 5, 10))
+  )
+
+  spec <- parsnip::linear_reg()
+  spec <- parsnip::set_engine(spec, "lm")
+
+  # Adds a new case weights column, but removes the old one
+  rec <- recipes::recipe(y ~ x + w, df)
+  rec <- recipes::step_mutate(rec, w2 = w, w = NULL, role = "case_weights")
+
+  wf <- workflow()
+  wf <- add_model(wf, spec)
+  wf <- add_recipe(wf, rec)
+  wf <- add_case_weights(wf, w)
+
+  expect_snapshot(error = TRUE, {
+    fit(wf, df)
+  })
+})
+
 test_that("case weights + formula removes weights before formula evaluation", {
   df <- vctrs::data_frame(y = 1, x = 2, w = hardhat::frequency_weights(1))
 

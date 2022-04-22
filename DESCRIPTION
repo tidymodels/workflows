@@ -21,7 +21,7 @@ Imports:
     glue,
     hardhat (>= 0.2.0.9000),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.2.0),
+    parsnip (>= 0.2.1.9001),
     rlang (>= 1.0.1),
     tidyselect (>= 1.1.2),
     vctrs (>= 0.3.8)
@@ -32,7 +32,7 @@ Suggests:
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
-    recipes (>= 0.2.0),
+    recipes (>= 0.2.0.9001),
     rmarkdown,
     testthat (>= 3.0.0)
 Remotes:

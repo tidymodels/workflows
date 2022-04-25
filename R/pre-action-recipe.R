@@ -65,8 +65,11 @@ remove_recipe <- function(x) {
     rlang::warn("The workflow has no recipe preprocessor to remove.")
   }
 
+  actions <- x$pre$actions
+  actions[["recipe"]] <- NULL
+
   new_workflow(
-    pre = new_stage_pre(),
+    pre = new_stage_pre(actions = actions),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
     trained = FALSE
@@ -87,7 +90,17 @@ fit.action_recipe <- function(object, workflow, data) {
   recipe <- object$recipe
   blueprint <- object$blueprint
 
-  workflow$pre$mold <- hardhat::mold(recipe, data, blueprint = blueprint)
+  mold <- hardhat::mold(recipe, data, blueprint = blueprint)
+
+  if (has_case_weights(workflow)) {
+    workflow <- update_retained_case_weights(workflow, mold)
+  }
+
+  workflow$pre <- new_stage_pre(
+    actions = workflow$pre$actions,
+    mold = mold,
+    case_weights = workflow$pre$case_weights
+  )
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)
@@ -135,4 +148,57 @@ is_recipe <- function(x) {
 
 is_recipe_blueprint <- function(x) {
   inherits(x, "recipe_blueprint")
+}
+
+update_retained_case_weights <- function(workflow,
+                                         mold,
+                                         ...,
+                                         call = caller_env()) {
+  # If the workflow was using case weights, then we retained these case weights
+  # in the `$pre$case_weights` slot. However, when a recipe is used we also
+  # pass the case weights on to the recipe. It is possible for the recipe to
+  # change the number of rows in the data (with a filter or upsample, for
+  # example), in which case we need to update the case weights column that we
+  # retain in the workflow. We also do quite a few checks to ensure that the
+  # recipe doesn't modify or rename the case weights column in any other way.
+
+  col <- extract_case_weights_col(workflow)
+
+  if (!is_quosure(col)) {
+    abort(
+      "`col` must be a quosure selecting the case weights column.",
+      .internal = TRUE,
+      call = call
+    )
+  }
+
+  case_weights_roles <- mold$extras$roles$case_weights
+
+  if (!is.data.frame(case_weights_roles)) {
+    message <- c(
+      'No columns with a `"case_weights"` role exist in the data after processing the recipe.',
+      i = "Did you remove or modify the case weights while processing the recipe?"
+    )
+    abort(message, call = call)
+  }
+
+  loc <- eval_select_case_weights(col, case_weights_roles, call = call)
+
+  case_weights <- case_weights_roles[[loc]]
+
+  if (!hardhat::is_case_weights(case_weights)) {
+    message <- c(
+      paste0(
+        'The column with a recipes role of `"case_weights"` must be a ',
+        "classed case weights column, as determined by ",
+        "`hardhat::is_case_weights()`."
+      ),
+      i = "Did you modify the case weights while processing the recipe?"
+    )
+    abort(message, call = call)
+  }
+
+  workflow$pre$case_weights <- case_weights
+
+  workflow
 }

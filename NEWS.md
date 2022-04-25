@@ -1,5 +1,9 @@
 # workflows (development version)
 
+* New `add_case_weights()`, `update_case_weights()`, and `remove_case_weights()`
+  for specifying a column to use as case weights which will be passed on to the
+  underlying parsnip model (#118).
+
 # workflows 0.2.6
 
 * Fixed tests that relied on an incorrect assumption about the version of tune

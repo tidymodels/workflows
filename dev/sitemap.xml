@@ -31,6 +31,9 @@
     <loc>https://workflows.tidymodels.org/dev/news/index.html</loc>
   </url>
   <url>
+    <loc>https://workflows.tidymodels.org/dev/reference/add_case_weights.html</loc>
+  </url>
+  <url>
     <loc>https://workflows.tidymodels.org/dev/reference/add_formula.html</loc>
   </url>
   <url>

@@ -66,8 +66,11 @@ remove_formula <- function(x) {
     rlang::warn("The workflow has no formula preprocessor to remove.")
   }
 
+  actions <- x$pre$actions
+  actions[["formula"]] <- NULL
+
   new_workflow(
-    pre = new_stage_pre(),
+    pre = new_stage_pre(actions = actions),
     fit = new_stage_fit(actions = x$fit$actions),
     post = new_stage_post(actions = x$post$actions),
     trained = FALSE
@@ -89,7 +92,13 @@ fit.action_formula <- function(object, workflow, data) {
   blueprint <- object$blueprint
 
   # TODO - Strip out the formula environment at some time?
-  workflow$pre$mold <- hardhat::mold(formula, data, blueprint = blueprint)
+  mold <- hardhat::mold(formula, data, blueprint = blueprint)
+
+  workflow$pre <- new_stage_pre(
+    actions = workflow$pre$actions,
+    mold = mold,
+    case_weights = workflow$pre$case_weights
+  )
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)

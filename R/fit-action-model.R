@@ -102,16 +102,13 @@ fit.action_model <- function(object, workflow, control) {
   spec <- object$spec
   formula <- object$formula
 
-  mold <- workflow$pre$mold
-
-  if (is.null(mold)) {
-    abort("No mold exists. `workflow` pre stage has not been run.", .internal = TRUE)
-  }
+  mold <- extract_mold0(workflow)
+  case_weights <- extract_case_weights0(workflow)
 
   if (is.null(formula)) {
-    fit <- fit_from_xy(spec, mold, control_parsnip)
+    fit <- fit_from_xy(spec, mold, case_weights, control_parsnip)
   } else {
-    fit <- fit_from_formula(spec, mold, control_parsnip, formula)
+    fit <- fit_from_formula(spec, mold, case_weights, control_parsnip, formula)
   }
 
   workflow$fit$fit <- fit
@@ -120,13 +117,50 @@ fit.action_model <- function(object, workflow, control) {
   workflow
 }
 
-fit_from_xy <- function(spec, mold, control_parsnip) {
-  fit_xy(spec, x = mold$predictors, y = mold$outcomes, control = control_parsnip)
+fit_from_xy <- function(spec, mold, case_weights, control_parsnip) {
+  fit_xy(
+    spec,
+    x = mold$predictors,
+    y = mold$outcomes,
+    case_weights = case_weights,
+    control = control_parsnip
+  )
 }
 
-fit_from_formula <- function(spec, mold, control_parsnip, formula) {
+fit_from_formula <- function(spec, mold, case_weights, control_parsnip, formula) {
   data <- cbind(mold$outcomes, mold$predictors)
-  fit(spec, formula = formula, data = data, control = control_parsnip)
+
+  fit(
+    spec,
+    formula = formula,
+    data = data,
+    case_weights = case_weights,
+    control = control_parsnip
+  )
+}
+
+extract_mold0 <- function(workflow) {
+  mold <- workflow$pre$mold
+
+  if (is.null(mold)) {
+    abort("No mold exists. `workflow` pre stage has not been run.", .internal = TRUE)
+  }
+
+  mold
+}
+
+extract_case_weights0 <- function(workflow) {
+  if (!has_case_weights(workflow)) {
+    return(NULL)
+  }
+
+  case_weights <- workflow$pre$case_weights
+
+  if (is_null(case_weights)) {
+    abort("No case weights exist. `workflow` pre stage has not been run.", .internal = TRUE)
+  }
+
+  case_weights
 }
 
 # ------------------------------------------------------------------------------

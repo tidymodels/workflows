@@ -10,13 +10,13 @@ test_that("can create a basic workflow", {
   expect_s3_class(workflow$fit, "stage_fit")
   expect_s3_class(workflow$post, "stage_post")
 
-  expect_equal(workflow$pre$actions, list())
+  expect_equal(workflow$pre$actions, new_named_list())
   expect_equal(workflow$pre$mold, NULL)
 
-  expect_equal(workflow$fit$actions, list())
+  expect_equal(workflow$fit$actions, new_named_list())
   expect_equal(workflow$fit$fit, NULL)
 
-  expect_equal(workflow$post$actions, list())
+  expect_equal(workflow$post$actions, new_named_list())
 })
 
 test_that("workflow must be the first argument when adding actions", {

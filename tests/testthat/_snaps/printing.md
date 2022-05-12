@@ -152,3 +152,36 @@
       * ...
       * and 2 more steps.
 
+# can print workflow with just case weights
+
+    Code
+      workflow
+    Output
+      == Workflow ====================================================================
+      Preprocessor: None
+      Model: None
+      
+      -- Case Weights ----------------------------------------------------------------
+      disp
+
+# can print workflow with case weights, preprocessor, and model
+
+    Code
+      workflow
+    Output
+      == Workflow ====================================================================
+      Preprocessor: Formula
+      Model: linear_reg()
+      
+      -- Preprocessor ----------------------------------------------------------------
+      mpg ~ .
+      
+      -- Case Weights ----------------------------------------------------------------
+      disp
+      
+      -- Model -----------------------------------------------------------------------
+      Linear Regression Model Specification (regression)
+      
+      Computational engine: lm 
+      
+

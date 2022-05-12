@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 0.2.6.9000
+Version: 0.2.6.9001
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = c("cph", "fnd"))
@@ -19,9 +19,9 @@ Imports:
     cli (>= 2.0.0),
     generics (>= 0.1.2),
     glue,
-    hardhat (>= 0.2.0),
+    hardhat (>= 0.2.0.9000),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.2.0),
+    parsnip (>= 0.2.1.9001),
     rlang (>= 1.0.1),
     tidyselect (>= 1.1.2),
     vctrs (>= 0.3.8)
@@ -32,17 +32,18 @@ Suggests:
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
-    recipes (>= 0.2.0),
+    recipes (>= 0.2.0.9001),
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    tidymodels/hardhat,
+    tidymodels/parsnip@feature/case-weights,
+    tidymodels/recipes@case-weights
 VignetteBuilder: 
     knitr
 Config/Needs/website:
     dplyr,
-    earth,
     ggplot2,
-    mda,
-    tidymodels/discrim,
     tidyr,
     tidyverse/tidytemplate,
     yardstick

@@ -1,12 +1,21 @@
-new_stage_pre <- function(actions = list(), mold = NULL) {
+new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights = NULL) {
   if (!is.null(mold) && !is.list(mold)) {
     abort("`mold` must be a result of calling `hardhat::mold()`.", .internal = TRUE)
   }
 
-  new_stage(actions = actions, mold = mold, subclass = "stage_pre")
+  if (!is_null(case_weights) && !hardhat::is_case_weights(case_weights)) {
+    abort("`case_weights` must be a true case weights column.", .internal = TRUE)
+  }
+
+  new_stage(
+    actions = actions,
+    mold = mold,
+    case_weights = case_weights,
+    subclass = "stage_pre"
+  )
 }
 
-new_stage_fit <- function(actions = list(), fit = NULL) {
+new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
   if (!is.null(fit) && !is_model_fit(fit)) {
     abort("`fit` must be a `model_fit`.", .internal = TRUE)
   }
@@ -14,7 +23,7 @@ new_stage_fit <- function(actions = list(), fit = NULL) {
   new_stage(actions = actions, fit = fit, subclass = "stage_fit")
 }
 
-new_stage_post <- function(actions = list()) {
+new_stage_post <- function(actions = new_named_list()) {
   new_stage(actions, subclass = "stage_post")
 }
 
@@ -27,7 +36,9 @@ new_stage_post <- function(actions = list()) {
 # - fit
 # - post
 
-new_stage <- function(actions = list(), ..., subclass = character()) {
+new_stage <- function(actions = new_named_list(),
+                      ...,
+                      subclass = character()) {
   if (!is_list_of_actions(actions)) {
     abort("`actions` must be a list of actions.", .internal = TRUE)
   }
@@ -58,3 +69,10 @@ has_action <- function(stage, name) {
 }
 
 # ------------------------------------------------------------------------------
+
+new_named_list <- function() {
+  # To standardize results for testing.
+  # Mainly applicable when `[[<-` removes all elements from a named list and
+  # leaves a named list behind that we want to compare against.
+  set_names(list(), character())
+}

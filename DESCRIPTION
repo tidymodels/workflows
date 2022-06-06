@@ -37,8 +37,8 @@ Suggests:
     testthat (>= 3.0.0)
 Remotes:
     tidymodels/hardhat,
-    tidymodels/parsnip@feature/case-weights,
-    tidymodels/recipes@case-weights
+    tidymodels/parsnip,
+    tidymodels/recipes
 VignetteBuilder: 
     knitr
 Config/Needs/website:

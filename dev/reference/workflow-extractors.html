@@ -99,53 +99,56 @@ extracted from the mold object returned from <code>pull_workflow_mold()</code>.<
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">pull_workflow_spec</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">pull_workflow_fit</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pull_workflow_spec</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pull_workflow_fit</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A workflow</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The extracted value from the workflow, <code>x</code>, as described in the description
+    
+
+<p>The extracted value from the workflow, <code>x</code>, as described in the description
 section.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"lm"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_log.html" class="external-link">step_log</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">base_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow.html">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="add_model.html">add_model</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">recipe_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_recipe.html">add_recipe</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">recipe</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">formula_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_formula.html">add_formula</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">variable_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_variables.html">add_variables</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">mpg</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">disp</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fit_recipe_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">recipe_wf</span>, <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit_formula_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">formula_wf</span>, <span class="va">mtcars</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The preprocessor is a recipes, formula, or a list holding the</span></span>
-<span class="r-in"><span class="co"># tidyselect expressions identifying the outcomes/predictors</span></span>
-<span class="r-in"><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">recipe_wf</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">linear_reg</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://parsnip.tidymodels.org/reference/set_engine.html" class="external-link">set_engine</a></span><span class="op">(</span><span class="st">"lm"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">recipe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipe</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="va">disp</span>, <span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_log.html" class="external-link">step_log</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">base_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow.html">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="add_model.html">add_model</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">recipe_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_recipe.html">add_recipe</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">recipe</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">formula_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_formula.html">add_formula</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">disp</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">variable_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_variables.html">add_variables</a></span><span class="op">(</span><span class="va">base_wf</span>, <span class="va">mpg</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">disp</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fit_recipe_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">recipe_wf</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_formula_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">formula_wf</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The preprocessor is a recipes, formula, or a list holding the</span></span></span>
+<span class="r-in"><span><span class="co"># tidyselect expressions identifying the outcomes/predictors</span></span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
@@ -159,37 +162,37 @@ section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Operations:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Log transformation on disp</span>
-<span class="r-in"><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">formula_wf</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">formula_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ cyl + log(disp)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55cfde5df540&gt;</span>
-<span class="r-in"><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">variable_wf</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55dd29baa030&gt;</span>
+<span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">variable_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $outcomes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^mpg</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55cfde5df540</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55dd29baa030</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^c(cyl, disp)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55cfde5df540</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55dd29baa030</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "workflow_variables"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The `spec` is the parsnip spec before it has been fit.</span></span>
-<span class="r-in"><span class="co"># The `fit` is the fit parsnip model.</span></span>
-<span class="r-in"><span class="fu">pull_workflow_spec</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The `spec` is the parsnip spec before it has been fit.</span></span></span>
+<span class="r-in"><span><span class="co"># The `fit` is the fit parsnip model.</span></span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_spec</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_spec()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_spec_parsnip()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">pull_workflow_fit</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_fit</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_fit_parsnip()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> parsnip model object</span>
@@ -202,11 +205,11 @@ section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)          cyl  `log(disp)`  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     67.6674      -0.1755      -8.7971  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The mold is returned from `hardhat::mold()`, and contains the</span></span>
-<span class="r-in"><span class="co"># predictors, outcomes, and information about the preprocessing</span></span>
-<span class="r-in"><span class="co"># for use on new data at `predict()` time.</span></span>
-<span class="r-in"><span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The mold is returned from `hardhat::mold()`, and contains the</span></span></span>
+<span class="r-in"><span><span class="co"># predictors, outcomes, and information about the preprocessing</span></span></span>
+<span class="r-in"><span><span class="co"># for use on new data at `predict()` time.</span></span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_mold()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
@@ -255,9 +258,9 @@ section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># A useful shortcut is to extract the prepped recipe from the workflow</span></span>
-<span class="r-in"><span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># A useful shortcut is to extract the prepped recipe from the workflow</span></span></span>
+<span class="r-in"><span><span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_recipe()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
@@ -273,12 +276,12 @@ section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Operations:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Log transformation on disp [trained]</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># That is identical to</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span><span class="op">$</span><span class="va">blueprint</span><span class="op">$</span><span class="va">recipe</span>,</span>
-<span class="r-in">  <span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># That is identical to</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span><span class="op">$</span><span class="va">blueprint</span><span class="op">$</span><span class="va">recipe</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_mold()` instead.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.</span>
@@ -297,7 +300,7 @@ section.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>

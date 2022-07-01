@@ -1,10 +1,10 @@
 pandoc: 2.14.2
-pkgdown: 2.0.3
+pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   getting-started: extras/getting-started.html
   stages: stages.html
-last_built: 2022-06-06T15:17Z
+last_built: 2022-07-01T17:32Z
 urls:
   reference: https://workflows.tidymodels.org/reference
   article: https://workflows.tidymodels.org/articles

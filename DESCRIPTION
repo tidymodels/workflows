@@ -19,7 +19,7 @@ Imports:
     cli (>= 2.0.0),
     generics (>= 0.1.2),
     glue,
-    hardhat (>= 0.2.0.9000),
+    hardhat (>= 1.0.0),
     lifecycle (>= 1.0.0),
     parsnip (>= 0.2.1.9001),
     rlang (>= 1.0.1),
@@ -36,9 +36,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Remotes:
-    tidymodels/hardhat,
-    tidymodels/parsnip@feature/case-weights,
-    tidymodels/recipes@case-weights
+    tidymodels/parsnip,
+    tidymodels/recipes
 VignetteBuilder: 
     knitr
 Config/Needs/website:

@@ -70,7 +70,9 @@ how the underlying model package works.
 To demonstrate, the example below uses \code{lm()} to fit a model. The
 formula given to \code{add_formula()} is used to create the model matrix and
 that is what is passed to \code{lm()} with a simple formula of
-\code{body_mass_g ~ .}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(parsnip)
+\code{body_mass_g ~ .}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(parsnip)
 library(workflows)
 library(magrittr)
 library(modeldata)
@@ -95,7 +97,9 @@ pre_encoded_fit <- pre_encoded_parsnip_fit$fit
 
 # The `lm()` formula is *not* the same as the `add_formula()` formula: 
 pre_encoded_fit
-}\if{html}{\out{</div>}}\preformatted{## 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
@@ -104,11 +108,15 @@ pre_encoded_fit
 ##        -1009.943             1.328          2236.865  
 ##      islandDream   islandTorgersen     bill_depth_mm  
 ##            9.221           -18.433           256.913
-}
+}\if{html}{\out{</div>}}
 
 This can affect how the results are analyzed. For example, to get
-sequential hypothesis tests, each individual term is tested:\if{html}{\out{<div class="sourceCode r">}}\preformatted{anova(pre_encoded_fit)
-}\if{html}{\out{</div>}}\preformatted{## Analysis of Variance Table
+sequential hypothesis tests, each individual term is tested:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{anova(pre_encoded_fit)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Analysis of Variance Table
 ## 
 ## Response: ..y
 ##                   Df    Sum Sq   Mean Sq  F value Pr(>F)    
@@ -120,7 +128,7 @@ sequential hypothesis tests, each individual term is tested:\if{html}{\out{<div 
 ## Residuals        336  44378805    132080                    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Overriding the default encodings}{
@@ -128,7 +136,9 @@ sequential hypothesis tests, each individual term is tested:\if{html}{\out{<div 
 Users can override the model-specific encodings by using a hardhat
 blueprint. The blueprint can specify how factors are encoded and whether
 intercepts are included. As an example, if you use a formula and would
-like the data to be passed to a model untouched:\if{html}{\out{<div class="sourceCode r">}}\preformatted{minimal <- default_formula_blueprint(indicators = "none", intercept = FALSE)
+like the data to be passed to a model untouched:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{minimal <- default_formula_blueprint(indicators = "none", intercept = FALSE)
 
 un_encoded <- lm_wflow \%>\% 
   add_formula(
@@ -143,7 +153,9 @@ un_encoded_parsnip_fit <- un_encoded \%>\%
 un_encoded_fit <- un_encoded_parsnip_fit$fit
 
 un_encoded_fit
-}\if{html}{\out{</div>}}\preformatted{## 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
 ## 
@@ -152,12 +164,16 @@ un_encoded_fit
 ##        -1009.943           256.913             1.328  
 ##    speciesGentoo       islandDream   islandTorgersen  
 ##         2236.865             9.221           -18.433
-}
+}\if{html}{\out{</div>}}
 
 While this looks the same, the raw columns were given to \code{lm()} and that
 function created the dummy variables. Because of this, the sequential
-ANOVA tests groups of parameters to get column-level p-values:\if{html}{\out{<div class="sourceCode r">}}\preformatted{anova(un_encoded_fit)
-}\if{html}{\out{</div>}}\preformatted{## Analysis of Variance Table
+ANOVA tests groups of parameters to get column-level p-values:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{anova(un_encoded_fit)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Analysis of Variance Table
 ## 
 ## Response: ..y
 ##                Df    Sum Sq  Mean Sq F value Pr(>F)    
@@ -167,14 +183,16 @@ ANOVA tests groups of parameters to get column-level p-values:\if{html}{\out{<di
 ## Residuals     336  44378805   132080                   
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Overriding the default model formula}{
 
 Additionally, the formula passed to the underlying model can also be
 customized. In this case, the \code{formula} argument of \code{add_model()} can be
-used. To demonstrate, a spline function will be used for the bill depth:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(splines)
+used. To demonstrate, a spline function will be used for the bill depth:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(splines)
 
 custom_formula <- workflow() \%>\%
   add_model(
@@ -193,7 +211,9 @@ custom_parsnip_fit <- custom_formula \%>\%
 custom_fit <- custom_parsnip_fit$fit
 
 custom_fit
-}\if{html}{\out{</div>}}\preformatted{## 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## 
 ## Call:
 ## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, 
 ##     3), data = data)
@@ -205,19 +225,23 @@ custom_fit
 ##                 2.425                -12.002               1476.386  
 ## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  
 ##              3187.839               1686.996
-}
+}\if{html}{\out{</div>}}
 }
 
 \subsection{Altering the formula}{
 
 Finally, when a formula is updated or removed from a fitted workflow,
-the corresponding model fit is removed.\if{html}{\out{<div class="sourceCode r">}}\preformatted{custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
+the corresponding model fit is removed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{custom_formula_no_fit <- update_formula(custom_formula, body_mass_g ~ species)
 
 try(extract_fit_parsnip(custom_formula_no_fit))
-}\if{html}{\out{</div>}}\preformatted{## Error in extract_fit_parsnip(custom_formula_no_fit) : 
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error in extract_fit_parsnip(custom_formula_no_fit) : 
 ##   Can't extract a model fit from an untrained workflow.
 ## i Do you need to call `fit()`?
-}
+}\if{html}{\out{</div>}}
 }
 }
 

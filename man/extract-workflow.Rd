@@ -73,10 +73,14 @@ model. There may be preprocessing operations that \code{workflows} has executed 
 the data prior to giving it to the model. Bypassing these can lead to errors
 or silently generating incorrect predictions.
 
-\emph{Good}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% predict(new_data)
+\emph{Good}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% predict(new_data)
 }\if{html}{\out{</div>}}
 
-\emph{Bad}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
+\emph{Bad}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
 # or
 workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
 }\if{html}{\out{</div>}}

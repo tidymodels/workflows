@@ -55,7 +55,9 @@ estate prices, the \code{type} variable has three levels: \code{"Residential"},
 \code{"Condo"}, and \code{"Multi-Family"}. This base \code{workflow()} contains a
 formula added via \code{\link[=add_formula]{add_formula()}} to predict property
 price from property type, square footage, number of beds, and number of
-baths:\if{html}{\out{<div class="sourceCode r">}}\preformatted{set.seed(123)
+baths:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{set.seed(123)
 
 library(parsnip)
 library(recipes)
@@ -68,13 +70,17 @@ base_wf <- workflow() \%>\%
   add_formula(price ~ type + sqft + beds + baths)
 }\if{html}{\out{</div>}}
 
-This first model does create dummy/indicator variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+This first model does create dummy/indicator variables:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
   set_engine("lm")
 
 base_wf \%>\%
   add_model(lm_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: linear_reg()
 ## 
@@ -91,7 +97,7 @@ base_wf \%>\%
 ##          32919.4          -21995.8           33688.6  
 ##             sqft              beds             baths  
 ##            156.2          -29788.0            8730.0
-}
+}\if{html}{\out{</div>}}
 
 There are \strong{five} independent variables in the fitted model for this
 OLS linear regression. With this model type and engine, the factor
@@ -100,14 +106,18 @@ binary predictors, \code{typeMulti_Family} and \code{typeResidential}. (The thir
 type, for condos, does not need its own column because it is the
 baseline level).
 
-This second model does not create dummy/indicator variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
+This second model does not create dummy/indicator variables:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
   set_mode("regression") \%>\%
   set_engine("ranger")
 
 base_wf \%>\%
   add_model(rf_spec) \%>\%
   fit(Sacramento)
-}\if{html}{\out{</div>}}\preformatted{## == Workflow [trained] ================================================
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: rand_forest()
 ## 
@@ -130,7 +140,7 @@ base_wf \%>\%
 ## Splitrule:                        variance 
 ## OOB prediction error (MSE):       7058847504 
 ## R squared (OOB):                  0.5894647
-}
+}\if{html}{\out{</div>}}
 
 Note that there are \strong{four} independent variables in the fitted model
 for this ranger random forest. With this model type and engine,

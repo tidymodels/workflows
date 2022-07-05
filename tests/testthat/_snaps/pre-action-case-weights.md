@@ -3,15 +3,15 @@
     Code
       predict(wf, df)
     Condition
-      Error in `glubort()`:
+      Error in `validate_column_names()`:
       ! The following required columns are missing: 'w'.
 
-# case weights + recipe can optionally require extra roles at predict time
+# case weights + recipe requires extra roles at predict time by default
 
     Code
       predict(wf, df)
     Condition
-      Error in `glubort()`:
+      Error in `validate_column_names()`:
       ! The following required columns are missing: 'w'.
 
 # case weights + recipe doesn't allow the recipe to drop the case weights column

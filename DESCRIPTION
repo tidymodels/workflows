@@ -19,9 +19,9 @@ Imports:
     cli (>= 2.0.0),
     generics (>= 0.1.2),
     glue,
-    hardhat (>= 1.0.0),
+    hardhat (>= 1.2.0),
     lifecycle (>= 1.0.0),
-    parsnip (>= 0.2.1.9001),
+    parsnip (>= 1.0.0),
     rlang (>= 1.0.1),
     tidyselect (>= 1.1.2),
     vctrs (>= 0.3.8)
@@ -32,12 +32,9 @@ Suggests:
     knitr,
     magrittr,
     modeldata (>= 0.0.2),
-    recipes (>= 0.2.0.9001),
+    recipes (>= 1.0.0),
     rmarkdown,
     testthat (>= 3.0.0)
-Remotes:
-    tidymodels/parsnip,
-    tidymodels/recipes
 VignetteBuilder: 
     knitr
 Config/Needs/website:

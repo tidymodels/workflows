@@ -2,8 +2,8 @@
 
 ## Failed to check (2)
 
-|package     |version |error |warning |note |
-|:-----------|:-------|:-----|:-------|:----|
-|bayesmodels |?       |      |        |     |
-|rebook      |?       |      |        |     |
+|package |version |error |warning |note |
+|:-------|:-------|:-----|:-------|:----|
+|NA      |?       |      |        |     |
+|NA      |?       |      |        |     |
 

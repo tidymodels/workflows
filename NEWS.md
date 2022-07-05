@@ -4,6 +4,8 @@
   for specifying a column to use as case weights which will be passed on to the
   underlying parsnip model (#118).
 
+* R >=3.4.0 is now required, in line with the rest of the tidyverse.
+
 # workflows 0.2.6
 
 * Fixed tests that relied on an incorrect assumption about the version of tune

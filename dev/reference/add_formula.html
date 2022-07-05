@@ -154,7 +154,8 @@ how the underlying model package works.</p><div class="section">
 <p>To demonstrate, the example below uses <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> to fit a model. The
 formula given to <code>add_formula()</code> is used to create the model matrix and
 that is what is passed to <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> with a simple formula of
-<code>body_mass_g ~ .</code>:</p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span></span>
+<code>body_mass_g ~ .</code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/parsnip" class="external-link">parsnip</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/workflows" class="external-link">workflows</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://modeldata.tidymodels.org" class="external-link">modeldata</a></span><span class="op">)</span></span>
@@ -178,30 +179,31 @@ that is what is passed to <code><a href="https://rdrr.io/r/stats/lm.html" class=
 <span><span class="va">pre_encoded_fit</span> <span class="op">&lt;-</span> <span class="va">pre_encoded_parsnip_fit</span><span class="op">$</span><span class="va">fit</span></span>
 <span></span>
 <span><span class="co"># The `lm()` formula is *not* the same as the `add_formula()` formula: </span></span>
-<span><span class="va">pre_encoded_fit</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Call:</span></span>
-<span><span class="co">## stats::lm(formula = ..y ~ ., data = data)</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Coefficients:</span></span>
-<span><span class="co">##      (Intercept)  speciesChinstrap     speciesGentoo  </span></span>
-<span><span class="co">##        -1009.943             1.328          2236.865  </span></span>
-<span><span class="co">##      islandDream   islandTorgersen     bill_depth_mm  </span></span>
-<span><span class="co">##            9.221           -18.433           256.913</span></span></code></pre></div>
-
+<span><span class="va">pre_encoded_fit</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)  speciesChinstrap     speciesGentoo  </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##        -1009.943             1.328          2236.865  </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      islandDream   islandTorgersen     bill_depth_mm  </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##            9.221           -18.433           256.913</span></span></code></pre><p></p></div>
 <p>This can affect how the results are analyzed. For example, to get
-sequential hypothesis tests, each individual term is tested:</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">pre_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## Analysis of Variance Table</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Response: ..y</span></span>
-<span><span class="co">##                   Df    Sum Sq   Mean Sq  F value Pr(&gt;F)    </span></span>
-<span><span class="co">## speciesChinstrap   1  18642821  18642821 141.1482 &lt;2e-16 ***</span></span>
-<span><span class="co">## speciesGentoo      1 128221393 128221393 970.7875 &lt;2e-16 ***</span></span>
-<span><span class="co">## islandDream        1     13399     13399   0.1014 0.7503    </span></span>
-<span><span class="co">## islandTorgersen    1       255       255   0.0019 0.9650    </span></span>
-<span><span class="co">## bill_depth_mm      1  28051023  28051023 212.3794 &lt;2e-16 ***</span></span>
-<span><span class="co">## Residuals        336  44378805    132080                    </span></span>
-<span><span class="co">## ---</span></span>
-<span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
-
+sequential hypothesis tests, each individual term is tested:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">pre_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                   Df    Sum Sq   Mean Sq  F value Pr(&gt;F)    </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## speciesChinstrap   1  18642821  18642821 141.1482 &lt;2e-16 ***</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## speciesGentoo      1 128221393 128221393 970.7875 &lt;2e-16 ***</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## islandDream        1     13399     13399   0.1014 0.7503    </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## islandTorgersen    1       255       255   0.0019 0.9650    </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_depth_mm      1  28051023  28051023 212.3794 &lt;2e-16 ***</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals        336  44378805    132080                    </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -211,7 +213,8 @@ sequential hypothesis tests, each individual term is tested:</p><div class="sour
 <p>Users can override the model-specific encodings by using a hardhat
 blueprint. The blueprint can specify how factors are encoded and whether
 intercepts are included. As an example, if you use a formula and would
-like the data to be passed to a model untouched:</p><div class="sourceCode r"><pre><code><span><span class="va">minimal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/default_formula_blueprint.html" class="external-link">default_formula_blueprint</a></span><span class="op">(</span>indicators <span class="op">=</span> <span class="st">"none"</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+like the data to be passed to a model untouched:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">minimal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://hardhat.tidymodels.org/reference/default_formula_blueprint.html" class="external-link">default_formula_blueprint</a></span><span class="op">(</span>indicators <span class="op">=</span> <span class="st">"none"</span>, intercept <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">un_encoded</span> <span class="op">&lt;-</span> <span class="va">lm_wflow</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="../reference/add_formula.html">add_formula</a></span><span class="op">(</span></span>
@@ -225,29 +228,30 @@ like the data to be passed to a model untouched:</p><div class="sourceCode r"><p
 <span></span>
 <span><span class="va">un_encoded_fit</span> <span class="op">&lt;-</span> <span class="va">un_encoded_parsnip_fit</span><span class="op">$</span><span class="va">fit</span></span>
 <span></span>
-<span><span class="va">un_encoded_fit</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Call:</span></span>
-<span><span class="co">## stats::lm(formula = ..y ~ ., data = data)</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Coefficients:</span></span>
-<span><span class="co">##      (Intercept)     bill_depth_mm  speciesChinstrap  </span></span>
-<span><span class="co">##        -1009.943           256.913             1.328  </span></span>
-<span><span class="co">##    speciesGentoo       islandDream   islandTorgersen  </span></span>
-<span><span class="co">##         2236.865             9.221           -18.433</span></span></code></pre></div>
-
+<span><span class="va">un_encoded_fit</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)     bill_depth_mm  speciesChinstrap  </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##        -1009.943           256.913             1.328  </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo       islandDream   islandTorgersen  </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##         2236.865             9.221           -18.433</span></span></code></pre><p></p></div>
 <p>While this looks the same, the raw columns were given to <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and that
 function created the dummy variables. Because of this, the sequential
-ANOVA tests groups of parameters to get column-level p-values:</p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">un_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## Analysis of Variance Table</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Response: ..y</span></span>
-<span><span class="co">##                Df    Sum Sq  Mean Sq F value Pr(&gt;F)    </span></span>
-<span><span class="co">## bill_depth_mm   1  48840779 48840779 369.782 &lt;2e-16 ***</span></span>
-<span><span class="co">## species         2 126067249 63033624 477.239 &lt;2e-16 ***</span></span>
-<span><span class="co">## island          2     20864    10432   0.079 0.9241    </span></span>
-<span><span class="co">## Residuals     336  44378805   132080                   </span></span>
-<span><span class="co">## ---</span></span>
-<span><span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
-
+ANOVA tests groups of parameters to get column-level p-values:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">un_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                Df    Sum Sq  Mean Sq F value Pr(&gt;F)    </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_depth_mm   1  48840779 48840779 369.782 &lt;2e-16 ***</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## species         2 126067249 63033624 477.239 &lt;2e-16 ***</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## island          2     20864    10432   0.079 0.9241    </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals     336  44378805   132080                   </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -256,7 +260,8 @@ ANOVA tests groups of parameters to get column-level p-values:</p><div class="so
 
 <p>Additionally, the formula passed to the underlying model can also be
 customized. In this case, the <code>formula</code> argument of <code><a href="add_model.html">add_model()</a></code> can be
-used. To demonstrate, a spline function will be used for the bill depth:</p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span></span>
+used. To demonstrate, a spline function will be used for the bill depth:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">custom_formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/workflow.html">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/add_model.html">add_model</a></span><span class="op">(</span></span>
@@ -274,19 +279,19 @@ used. To demonstrate, a spline function will be used for the bill depth:</p><div
 <span></span>
 <span><span class="va">custom_fit</span> <span class="op">&lt;-</span> <span class="va">custom_parsnip_fit</span><span class="op">$</span><span class="va">fit</span></span>
 <span></span>
-<span><span class="va">custom_fit</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## </span></span>
-<span><span class="co">## Call:</span></span>
-<span><span class="co">## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, </span></span>
-<span><span class="co">##     3), data = data)</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Coefficients:</span></span>
-<span><span class="co">##           (Intercept)       speciesChinstrap          speciesGentoo  </span></span>
-<span><span class="co">##              1959.090                  8.534               2352.137  </span></span>
-<span><span class="co">##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  </span></span>
-<span><span class="co">##                 2.425                -12.002               1476.386  </span></span>
-<span><span class="co">## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  </span></span>
-<span><span class="co">##              3187.839               1686.996</span></span></code></pre></div>
-
+<span><span class="va">custom_fit</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     3), data = data)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           (Intercept)       speciesChinstrap          speciesGentoo  </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##              1959.090                  8.534               2352.137  </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 2.425                -12.002               1476.386  </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              3187.839               1686.996</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -294,12 +299,13 @@ used. To demonstrate, a spline function will be used for the bill depth:</p><div
 
 
 <p>Finally, when a formula is updated or removed from a fitted workflow,
-the corresponding model fit is removed.</p><div class="sourceCode r"><pre><code><span><span class="va">custom_formula_no_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_formula.html">update_formula</a></span><span class="op">(</span><span class="va">custom_formula</span>, <span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">species</span><span class="op">)</span></span>
+the corresponding model fit is removed.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">custom_formula_no_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_formula.html">update_formula</a></span><span class="op">(</span><span class="va">custom_formula</span>, <span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">species</span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">custom_formula_no_fit</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div><div class="sourceCode"><pre><code><span><span class="co">## Error in extract_fit_parsnip(custom_formula_no_fit) : </span></span>
-<span><span class="co">##   Can't extract a model fit from an untrained workflow.</span></span>
-<span><span class="co">## i Do you need to call `fit()`?</span></span></code></pre></div>
-
+<span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">custom_formula_no_fit</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in extract_fit_parsnip(custom_formula_no_fit) : </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   Can't extract a model fit from an untrained workflow.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## i Do you need to call `fit()`?</span></span></code></pre><p></p></div>
 </div>
 
     </div>

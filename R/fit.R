@@ -253,7 +253,7 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   spec_cls <- class(spec)[[1]]
 
   if (inherits(spec, "cluster_spec")) {
-    tbl_encodings <- celery::get_encoding_celery(spec_cls)
+    tbl_encodings <- tidyclust::get_encoding_tidyclust(spec_cls)
   } else {
     tbl_encodings <- parsnip::get_encoding(spec_cls)
   }

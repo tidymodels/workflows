@@ -1,13 +1,13 @@
-# bayesmodels
+# NA
 
 <details>
 
 * Version: NA
 * GitHub: NA
-* Source code: https://github.com/cran/bayesmodels
-* Number of recursive dependencies: 252
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
 
-Run `cloud_details(, "bayesmodels")` for more info
+Run `cloud_details(, "NA")` for more info
 
 </details>
 
@@ -33,16 +33,16 @@ Run `cloud_details(, "bayesmodels")` for more info
 
 
 ```
-# rebook
+# NA
 
 <details>
 
 * Version: NA
 * GitHub: NA
-* Source code: https://github.com/cran/rebook
-* Number of recursive dependencies: 71
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
 
-Run `cloud_details(, "rebook")` for more info
+Run `cloud_details(, "NA")` for more info
 
 </details>
 

@@ -1,8 +1,12 @@
 # workflows (development version)
 
+# workflows 1.0.0
+
 * New `add_case_weights()`, `update_case_weights()`, and `remove_case_weights()`
   for specifying a column to use as case weights which will be passed on to the
   underlying parsnip model (#118).
+
+* R >=3.4.0 is now required, in line with the rest of the tidyverse.
 
 # workflows 0.2.6
 

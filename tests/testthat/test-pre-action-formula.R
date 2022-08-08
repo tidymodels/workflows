@@ -130,6 +130,25 @@ test_that("can pass a blueprint through to hardhat::mold()", {
   expect_true(workflow$pre$mold$blueprint$intercept)
 })
 
+test_that("can't pass an `offset()` through `add_formula()` (#162)", {
+  df <- vctrs::data_frame(
+    y = c(1.5, 2.5, 3.5, 1, 3),
+    x = c(2, 6, 7, 3, 6),
+    o = c(1.1, 2, 3, .5, 2)
+  )
+
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model)
+  workflow <- add_formula(workflow, y ~ x + offset(o))
+
+  expect_snapshot(error = TRUE, {
+    fit(workflow, data = df)
+  })
+})
+
 test_that("can only use a 'formula_blueprint' blueprint", {
   blueprint <- hardhat::default_recipe_blueprint()
 

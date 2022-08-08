@@ -1,5 +1,9 @@
 # workflows (development version)
 
+* `butcher::axe_fitted()` now axes the recipe preprocessor that is stored inside
+  a workflow, which will reduce the size of the `template` data frame that is
+  stored in the recipe (#147).
+
 * `add_model()` now errors informatively if you try to add a model specification
   that contains an unknown mode (#160).
 

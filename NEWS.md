@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* `add_model()` now errors informatively if you try to add a model specification
+  that contains an unknown mode (#160).
+
 * `add_formula()` no longer silently ignores offsets supplied with `offset()`.
   Instead, it now errors at `fit()` time with a message that encourages you to
   use a model formula through `add_model(formula = )` instead (#162).

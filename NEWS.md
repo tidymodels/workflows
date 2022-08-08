@@ -1,5 +1,9 @@
 # workflows (development version)
 
+* `broom::augment()` now works correctly in the edge case where you had supplied
+  a hardhat blueprint with `composition` set to either `"matrix"` or
+  `"dgCMatrix"` (#148).
+
 * `butcher::axe_fitted()` now axes the recipe preprocessor that is stored inside
   a workflow, which will reduce the size of the `template` data frame that is
   stored in the recipe (#147).

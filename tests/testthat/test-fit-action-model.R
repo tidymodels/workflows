@@ -12,6 +12,16 @@ test_that("model is validated", {
   expect_snapshot(error = TRUE, add_model(workflow(), 1))
 })
 
+test_that("model must contain a known mode (#160)", {
+  mod <- parsnip::decision_tree()
+
+  workflow <- workflow()
+
+  expect_snapshot(error = TRUE, {
+    add_model(workflow, mod)
+  })
+})
+
 test_that("cannot add two models", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

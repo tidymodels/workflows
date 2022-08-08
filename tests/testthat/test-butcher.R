@@ -51,6 +51,33 @@ test_that("can axe the fitted bits", {
   expect_identical(fit$fit$fit$fit$fitted.values, numeric())
 })
 
+test_that("can axe the `$template` in a recipe preprocessor through `axe_fitted()` (#147)", {
+  skip_if_not_installed("butcher")
+
+  model <- parsnip::linear_reg()
+  model <- parsnip::set_engine(model, "lm")
+
+  rec <- recipes::recipe(mpg ~ cyl + disp, mtcars)
+  rec <- recipes::step_center(rec, cyl, disp)
+
+  wf <- workflow()
+  wf <- add_model(wf, model)
+  wf <- add_recipe(wf, rec)
+
+  fit <- fit(wf, mtcars)
+  fit <- butcher::axe_fitted(fit)
+
+  # `axe_fitted()` is run on the un-fitted recipe to remove the `$template`
+  expect_identical(
+    fit$pre$actions$recipe$recipe$template,
+    vctrs::vec_ptype(rec$template)
+  )
+
+  # `hardhat:::compost()` removed the template from the fitted recipe when
+  # `hardhat::mold()` was run
+  expect_null(fit$pre$mold$blueprint$recipe$template)
+})
+
 test_that("axing the data removes the outcomes/predictors", {
   skip_if_not_installed("butcher")
 

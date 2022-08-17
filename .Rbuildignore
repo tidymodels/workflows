@@ -14,3 +14,4 @@
 ^CODE_OF_CONDUCT\.md$
 ^revdep$
 ^CRAN-SUBMISSION$
+^MAINTENANCE\.md$

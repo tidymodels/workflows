@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Simon Couch is now the maintainer (#170).
+
 * `broom::augment()` now works correctly in the edge case where you had supplied
   a hardhat blueprint with `composition` set to either `"matrix"` or
   `"dgCMatrix"` (#148).

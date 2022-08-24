@@ -2,7 +2,9 @@ Package: workflows
 Title: Modeling Workflows
 Version: 1.0.0.9000
 Authors@R: c(
-    person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
+    person("Davis", "Vaughan", , "davis@rstudio.com", role = "aut"),
+    person("Simon", "Couch", , "simon.couch@rstudio.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5676-5107")),
     person("RStudio", role = c("cph", "fnd"))
   )
 Description: Managing both a 'parsnip' model and a preprocessor, such as a

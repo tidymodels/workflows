@@ -29,15 +29,22 @@ In this `bivariate` data set, there are two predictors that can be used to diffe
 
 There are three partitions of the original data: training (n = 1009), validation (n = 300), and testing (n = 710). We will work with the training set the most, use the validation set to compare models during the development process, and then use the test set once we think that we have a good algorithm for making predictions.
 
+```{r}
+library(modeldata)
+
+# This gives us access to the 3 partitions:
+# - `bivariate_train`: Training set
+# - `bivariate_val`: Validation set
+# - `bivariate_test`: Test set
+data("bivariate")
+```
+
 Here is the training set:
 
 ```{r plot-data, message = FALSE}
 library(workflows)
-library(modeldata)
 library(ggplot2)
 library(dplyr)
-
-data("bivariate")
 
 ggplot(bivariate_train, aes(x = A, y = B, col = Class)) + 
   geom_point(alpha = .3) + 
@@ -151,16 +158,7 @@ trans_recipe <-
   step_BoxCox(all_predictors())
 ```
 
-Creating the recipe only makes an object with the instructions; it does not carry out the instructions (e.g. estimate the transformation parameter). The general process to use a recipe with a model would be to:
-
-```{r rec-prep}
-# estimate the required parameters via `prep()`:
-updated_rec <- prep(trans_recipe)
-```
-
-Now we have all of the ingredients to execute the data pre-processing. To get the pre-processed version of the training set, `juice()` can be used to return a data frame with the transformed predictors, and these can be passed on to `fit()`.
-
-`workflows` eliminates the multiple steps between creating the recipe and getting the fitted model. Internally, it prepares the recipe so that you don't have to:
+Creating the recipe only makes an object with the instructions; it does not carry out the instructions (e.g. estimate the transformation parameter). To actually execute the recipe, we add it to our workflow with `add_recipe()` and then call `fit()`. Fitting the workflow evaluates both the model and the recipe.
 
 ```{r rec-trans}
 trans_glm <-
@@ -191,7 +189,7 @@ autoplot(simple_glm_roc) +
   )
 ```
 
-That is a potential, if not slight, improvement.
+That is a potential, if slight, improvement.
 
 The Box-Cox procedure recommended transformations that are pretty close to the inverse.
 

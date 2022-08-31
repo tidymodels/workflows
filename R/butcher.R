@@ -80,6 +80,15 @@ axe_fitted.workflow <- function(x, verbose = FALSE, ...) {
   fit <- extract_fit_parsnip(x)
   fit <- butcher::axe_fitted(fit, verbose = verbose, ...)
   x <- replace_workflow_fit(x, fit)
+
+  if (has_preprocessor_recipe(x)) {
+    # hardhat already removes the `$template` from the fitted recipe that we get
+    # back from `extract_recipe()`, so we only axe the preprocessor recipe here.
+    preprocessor <- extract_preprocessor(x)
+    preprocessor <- butcher::axe_fitted(preprocessor, verbose = verbose, ...)
+    x <- replace_workflow_preprocessor(x, preprocessor)
+  }
+
   add_butcher_class(x)
 }
 

@@ -12,6 +12,16 @@ test_that("model is validated", {
   expect_snapshot(error = TRUE, add_model(workflow(), 1))
 })
 
+test_that("model must contain a known mode (#160)", {
+  mod <- parsnip::decision_tree()
+
+  workflow <- workflow()
+
+  expect_snapshot(error = TRUE, {
+    add_model(workflow, mod)
+  })
+})
+
 test_that("cannot add two models", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
@@ -42,6 +52,26 @@ test_that("can provide a model formula override", {
   )
 })
 
+test_that("model formula override can contain `offset()` (#162)", {
+  df <- vctrs::data_frame(
+    y = c(1.5, 2.5, 3.5, 1, 3),
+    x = c(2, 6, 7, 3, 6),
+    o = c(1.1, 2, 3, .5, 2)
+  )
+
+  lm_model <- parsnip::linear_reg()
+  lm_model <- parsnip::set_engine(lm_model, "lm")
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, lm_model, formula = y ~ x + offset(o))
+  workflow <- add_variables(workflow, y, c(x, o))
+
+  result <- fit(workflow, data = df)
+  lm_result <- hardhat::extract_fit_engine(result)
+
+  expect_named(lm_result$coefficients, c("(Intercept)", "x"))
+  expect_identical(attr(lm_result$terms, "offset"), 3L)
+})
 
 test_that("remove a model", {
   lm_model <- parsnip::linear_reg()

@@ -172,6 +172,20 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
     abort("`spec` must be a `model_spec`.", call = call)
   }
 
+  mode <- spec$mode
+
+  if (is_string(mode, string = "unknown")) {
+    message <- c(
+      "`spec` must have a known mode.",
+      i = paste0(
+        "Set the mode of `spec` by using `parsnip::set_mode()` or by setting ",
+        "the mode directly in the parsnip specification function."
+      )
+    )
+
+    abort(message, call = call)
+  }
+
   if (!is.null(formula) && !is_formula(formula)) {
     abort("`formula` must be a formula, or `NULL`.", call = call)
   }

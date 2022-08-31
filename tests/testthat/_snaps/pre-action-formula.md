@@ -30,6 +30,15 @@
       Error in `add_formula()`:
       ! A `formula` action has already been added to this workflow.
 
+# can't pass an `offset()` through `add_formula()` (#162)
+
+    Code
+      fit(workflow, data = df)
+    Condition
+      Error in `fit()`:
+      ! Can't use an offset in the formula supplied to `add_formula()`.
+      i Instead, specify offsets through a model formula in `add_model(formula = )`.
+
 # can only use a 'formula_blueprint' blueprint
 
     Code

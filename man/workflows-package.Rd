@@ -20,7 +20,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Davis Vaughan \email{davis@rstudio.com}
+\strong{Maintainer}: Simon Couch \email{simonpatrickcouch@gmail.com} (\href{https://orcid.org/0000-0001-5676-5107}{ORCID})
+
+Authors:
+\itemize{
+  \item Davis Vaughan \email{davis@rstudio.com}
+}
 
 Other contributors:
 \itemize{

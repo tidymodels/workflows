@@ -94,6 +94,8 @@ fit.action_formula <- function(object, workflow, data) {
   # TODO - Strip out the formula environment at some time?
   mold <- hardhat::mold(formula, data, blueprint = blueprint)
 
+  check_for_offset(mold)
+
   workflow$pre <- new_stage_pre(
     actions = workflow$pre$actions,
     mold = mold,
@@ -102,6 +104,26 @@ fit.action_formula <- function(object, workflow, data) {
 
   # All pre steps return the `workflow` and `data`
   list(workflow = workflow, data = data)
+}
+
+check_for_offset <- function(mold, ..., call = caller_env()) {
+  check_dots_empty()
+
+  # `hardhat::mold()` specially detects offsets in the formula preprocessor and
+  # places them in an "extras" slot. This is useful for modeling package
+  # authors, but we don't want users to provide an offset in the formula
+  # supplied to `add_formula()` because "extra" columns aren't passed on to
+  # parsnip. They should use a model formula instead (#162).
+  offset <- mold$extras$offset
+
+  if (!is.null(offset)) {
+    message <- c(
+      "Can't use an offset in the formula supplied to `add_formula()`.",
+      i = "Instead, specify offsets through a model formula in `add_model(formula = )`."
+    )
+
+    abort(message, call = call)
+  }
 }
 
 # ------------------------------------------------------------------------------

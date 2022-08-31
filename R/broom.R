@@ -138,6 +138,7 @@ augment.workflow <- function(x, new_data, ...) {
 
   # `augment.model_fit()` requires the pre-processed `new_data`
   predictors <- forge_predictors(new_data, x)
+  predictors <- prepare_augment_predictors(predictors)
   predictors_and_predictions <- augment(fit, predictors, ...)
 
   prediction_columns <- setdiff(
@@ -151,4 +152,20 @@ augment.workflow <- function(x, new_data, ...) {
   out <- vctrs::vec_cbind(new_data, predictions)
 
   out
+}
+
+prepare_augment_predictors <- function(x) {
+  # `augment()` works best with a data frame of predictors,
+  # so we need to undo any matrix/sparse matrix compositions that
+  # were returned from `hardhat::forge()` (#148)
+  if (is.data.frame(x)) {
+    x
+  } else if (is.matrix(x)) {
+    as.data.frame(x)
+  } else if (inherits(x, "dgCMatrix")) {
+    x <- as.matrix(x)
+    as.data.frame(x)
+  } else {
+    abort("Unknown predictor type returned by `forge_predictors()`.", .internal = TRUE)
+  }
 }

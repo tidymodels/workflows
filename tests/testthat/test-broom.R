@@ -140,3 +140,55 @@ test_that("augment fails if it can't preprocess `new_data`", {
   # vctrs type error
   expect_error(augment(wf, new_data))
 })
+
+test_that("augment works with matrix compositions (#148)", {
+  skip_if_not_installed("broom")
+
+  df <- data.frame(y = c(2, 3, 4), x = c(1, 5, 2), z = c(6, 8, 10))
+  new_data <- data.frame(x = 1:3, z = 4:6)
+
+  bp <- hardhat::default_formula_blueprint(composition = "matrix")
+
+  lm_spec <- parsnip::linear_reg()
+  lm_spec <- parsnip::set_engine(lm_spec, "lm")
+
+  wf <- workflow()
+  wf <- add_formula(wf, y ~ x + z, blueprint = bp)
+  wf <- add_model(wf, lm_spec)
+
+  wf <- fit(wf, df)
+
+  out <- augment(wf, new_data = new_data)
+
+  expect_s3_class(out, "tbl_df")
+  expect_named(out, c("x", "z", ".pred"))
+})
+
+test_that("augment works with sparse matrix compositions (#148)", {
+  skip_if_not_installed("broom")
+
+  # These two dependencies aren't in Suggests, so mainly we just run this test
+  # locally. They are only used for broom tests, and we don't want to bloat
+  # Suggests just for broom support.
+  skip_if_not_installed("Matrix")
+  # A parsnip engine that supports sparse matrices
+  skip_if_not_installed("ranger")
+
+  df <- data.frame(y = c(2, 3, 4), x = c(1, 5, 2), z = c(6, 8, 10))
+  new_data <- data.frame(x = 1:3, z = 4:6)
+
+  bp <- hardhat::default_formula_blueprint(composition = "dgCMatrix")
+
+  spec <- parsnip::rand_forest(mode = "regression", engine = "ranger")
+
+  wf <- workflow()
+  wf <- add_formula(wf, y ~ x + z, blueprint = bp)
+  wf <- add_model(wf, spec)
+
+  wf <- fit(wf, df)
+
+  out <- augment(wf, new_data = new_data)
+
+  expect_s3_class(out, "tbl_df")
+  expect_named(out, c("x", "z", ".pred"))
+})

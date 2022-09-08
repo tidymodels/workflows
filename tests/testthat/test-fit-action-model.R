@@ -22,6 +22,18 @@ test_that("model must contain a known mode (#160)", {
   })
 })
 
+test_that("prompt on spec without a loaded implementation (#174)", {
+  mod <- parsnip::bag_tree() %>%
+    parsnip::set_engine("rpart") %>%
+    parsnip::set_mode("regression")
+
+  workflow <- workflow()
+
+  expect_snapshot({
+    add_model(workflow, mod)
+  })
+})
+
 test_that("cannot add two models", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

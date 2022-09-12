@@ -250,13 +250,8 @@ finalize_blueprint_formula <- function(workflow) {
 
 pull_workflow_spec_encoding_tbl <- function(workflow) {
   spec <- extract_spec_parsnip(workflow)
-  spec_cls <- class(spec)[[1]]
 
-  if (inherits(spec, "cluster_spec")) {
-    tbl_encodings <- tidyclust::get_encoding_tidyclust(spec_cls)
-  } else {
-    tbl_encodings <- parsnip::get_encoding(spec_cls)
-  }
+  tbl_encodings <- get_encodings(spec)
 
   indicator_engine <- tbl_encodings$engine == spec$engine
   indicator_mode <- tbl_encodings$mode == spec$mode
@@ -269,6 +264,34 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   }
 
   out
+}
+
+get_encodings <- function(spec) {
+  model_env_ns <-
+    switch(
+      class(spec)[[2]],
+      "model_spec" = "parsnip",
+      "cluster_spec" = "tidyclust"
+    )
+
+  model_env <- utils::getFromNamespace(model_env_ns, ns = model_env_ns)
+
+  res <-
+    try(
+      rlang::env_get(model_env, paste0(class(spec)[[1]], "_encoding"), default = NULL),
+      silent = TRUE
+    )
+
+  if (inherits(res, "try-error")) {
+    res <-
+      rlang::env_get(model_env, class(spec)[[1]]) %>%
+      dplyr::mutate(model = model, predictor_indicators = "traditional",
+                    compute_intercept = TRUE, remove_intercept = TRUE, allow_sparse_x = FALSE) %>%
+      dplyr::select(model, engine, mode, predictor_indicators,
+                    compute_intercept, remove_intercept)
+  }
+
+  res
 }
 
 finalize_blueprint_variables <- function(workflow) {

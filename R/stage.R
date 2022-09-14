@@ -16,7 +16,7 @@ new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights 
 }
 
 new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
-  if (!is.null(fit) && !is_model_fit(fit)) {
+  if (!is.null(fit) && !is_model_fit(fit) && !is_unsupervised_fit(fit)) {
     abort("`fit` must be a `model_fit`.", .internal = TRUE)
   }
 

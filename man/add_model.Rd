@@ -2,15 +2,21 @@
 % Please edit documentation in R/fit-action-model.R
 \name{add_model}
 \alias{add_model}
+\alias{add_model.model_spec}
 \alias{remove_model}
+\alias{remove_model.model_spec}
 \alias{update_model}
 \title{Add a model to a workflow}
 \usage{
-add_model(x, spec, ..., formula = NULL)
+add_model(x, spec, ...)
+
+\method{add_model}{model_spec}(x, spec, ..., formula = NULL)
 
 remove_model(x)
 
-update_model(x, spec, ..., formula = NULL)
+\method{remove_model}{model_spec}(x)
+
+update_model(x, spec, ...)
 }
 \arguments{
 \item{x}{A workflow.}

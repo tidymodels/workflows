@@ -58,15 +58,31 @@
 #'
 #' update_model(workflow, regularized_model)
 #' update_model(fitted, regularized_model)
-add_model <- function(x, spec, ..., formula = NULL) {
+add_model <- function(x, spec, ...) {
+  UseMethod("add_model", spec)
+}
+
+#' @rdname add_model
+#' @export
+add_model.model_spec <- function(x, spec, ..., formula = NULL) {
   check_dots_empty()
   action <- new_action_model(spec, formula)
   add_action(x, action, "model")
 }
 
+add_model.default <- function(x, spec, ...) {
+  abort("`spec` must be a `model_spec`.", call = caller_env(0))
+}
+
 #' @rdname add_model
 #' @export
 remove_model <- function(x) {
+  UseMethod("remove_model", extract_spec_parsnip(x))
+}
+
+#' @rdname add_model
+#' @export
+remove_model.model_spec <- function(x) {
   validate_is_workflow(x)
 
   if (!has_spec(x)) {
@@ -84,7 +100,12 @@ remove_model <- function(x) {
 
 #' @rdname add_model
 #' @export
-update_model <- function(x, spec, ..., formula = NULL) {
+update_model <- function(x, spec, ...) {
+  UseMethod("update_model", object = spec)
+}
+
+#' @export
+update_model.model_spec <- function(x, spec, ..., formula = NULL) {
   check_dots_empty()
   x <- remove_model(x)
   add_model(x, spec, formula = formula)
@@ -167,10 +188,6 @@ extract_case_weights0 <- function(workflow) {
 
 new_action_model <- function(spec, formula, ..., call = caller_env()) {
   check_dots_empty()
-
-  if (!is_model_spec(spec)) {
-    abort("`spec` must be a `model_spec`.", call = call)
-  }
 
   mode <- spec$mode
 

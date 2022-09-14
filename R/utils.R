@@ -18,6 +18,14 @@ is_model_spec <- function(x) {
   inherits(x, "model_spec")
 }
 
+is_unsupervised_fit <- function(x) {
+  inherits(x, "cluster_fit")
+}
+
+is_unsupervised_spec <- function(x) {
+  inherits(x, "cluster_spec")
+}
+
 validate_recipes_available <- function(..., call = caller_env()) {
   check_dots_empty()
 

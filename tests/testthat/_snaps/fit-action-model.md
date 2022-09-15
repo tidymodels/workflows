@@ -19,29 +19,21 @@
 
     Code
       add_model(workflow, mod)
-    Message
-      ! parsnip could not locate an implementation for `bag_tree` regression model specifications using the `rpart` engine.
+    Condition
+      Error in `add_model()`:
+      ! parsnip could not locate an implementation for `bag_tree` regression model specifications.
       i The parsnip extension package baguette implements support for this specification.
       i Please install (if needed) and load to continue.
-    Output
-      == Workflow ====================================================================
-      Preprocessor: None
-      Model: bag_tree()
-      
-      -- Model -----------------------------------------------------------------------
-    Message
-      ! parsnip could not locate an implementation for `bag_tree` regression model specifications using the `rpart` engine.
+
+---
+
+    Code
+      workflow(spec = mod)
+    Condition
+      Error in `add_model()`:
+      ! parsnip could not locate an implementation for `bag_tree` regression model specifications.
       i The parsnip extension package baguette implements support for this specification.
       i Please install (if needed) and load to continue.
-    Output
-      Bagged Decision Tree Model Specification (regression)
-      
-      Main Arguments:
-        cost_complexity = 0
-        min_n = 2
-      
-      Computational engine: rpart 
-      
 
 # cannot add two models
 

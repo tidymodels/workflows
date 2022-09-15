@@ -191,7 +191,11 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
   }
 
   if (!parsnip::spec_is_loaded(spec = spec)) {
-    parsnip::prompt_missing_implementation(spec = spec, prompt = cli::cli_inform)
+    parsnip::prompt_missing_implementation(
+      spec = spec,
+      prompt = cli::cli_abort,
+      call = call
+    )
   }
 
   new_action_fit(spec = spec, formula = formula, subclass = "action_model")

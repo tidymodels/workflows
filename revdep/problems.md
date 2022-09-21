@@ -103,13 +103,13 @@ Run `cloud_details(, "modeltime.resample")` for more info
     Error(s) in re-building vignettes:
     --- re-building ‘getting-started.Rmd’ using rmarkdown
     ── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──
-    ✔ broom        1.0.0          ✔ recipes      1.0.1     
-    ✔ dials        1.0.0          ✔ rsample      1.1.0     
-    ✔ dplyr        1.0.9          ✔ tibble       3.1.8     
-    ✔ ggplot2      3.3.6          ✔ tidyr        1.2.0     
-    ✔ infer        1.0.3          ✔ tune         1.0.0     
-    ✔ modeldata    1.0.0          ✔ workflows    1.0.0.9000
-    ✔ parsnip      1.0.1          ✔ workflowsets 1.0.0     
+    ✔ broom        1.0.1      ✔ recipes      1.0.1 
+    ✔ dials        1.0.0      ✔ rsample      1.1.0 
+    ✔ dplyr        1.0.10     ✔ tibble       3.1.8 
+    ✔ ggplot2      3.3.6      ✔ tidyr        1.2.1 
+    ✔ infer        1.0.3      ✔ tune         1.0.0 
+    ✔ modeldata    1.0.1      ✔ workflows    1.1.0 
+    ✔ parsnip      1.0.1      ✔ workflowsets 1.0.0 
     ...
     Error: processing vignette 'panel-data.Rmd' failed with diagnostics:
     `spec` must have a known mode.

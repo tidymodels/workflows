@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">workflows</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,8 +50,9 @@
       <small>Source: <a href="https://github.com/tidymodels/workflows/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2"><h2 class="pkg-version" data-toc-text="development version" id="workflows-development-version">workflows (development version)<a class="anchor" aria-label="anchor" href="#workflows-development-version"></a></h2></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="workflows-development-version">workflows (development version)<a class="anchor" aria-label="anchor" href="#workflows-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.1.0" id="workflows-110">workflows 1.1.0<a class="anchor" aria-label="anchor" href="#workflows-110"></a></h2><p class="text-muted">CRAN release: 2022-09-26</p>
 <ul><li><p>Simon Couch is now the maintainer (<a href="https://github.com/tidymodels/workflows/issues/170" class="external-link">#170</a>).</p></li>
 <li><p><code><a href="../reference/add_model.html">add_model()</a></code> now errors if you try to add a model specification that contains an unknown mode. This is a breaking change, as previously in some cases it would successfully “guess” the mode. This change brings workflows more in line with <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">parsnip::fit()</a></code> and <code><a href="https://generics.r-lib.org/reference/fit_xy.html" class="external-link">parsnip::fit_xy()</a></code> (<a href="https://github.com/tidymodels/workflows/issues/160" class="external-link">#160</a>, tidymodels/parsnip#801).</p></li>
 <li><p><code>broom::augment()</code> now works correctly in the edge case where you had supplied a hardhat blueprint with <code>composition</code> set to either <code>"matrix"</code> or <code>"dgCMatrix"</code> (<a href="https://github.com/tidymodels/workflows/issues/148" class="external-link">#148</a>).</p></li>

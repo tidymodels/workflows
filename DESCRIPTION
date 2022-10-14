@@ -25,7 +25,7 @@ Imports:
     lifecycle (>= 1.0.3),
     parsnip (>= 1.0.0),
     rlang (>= 1.0.3),
-    tidyselect (>= 1.1.2),
+    tidyselect (>= 1.2.0),
     vctrs (>= 0.4.1)
 Suggests: 
     butcher (>= 0.2.0),

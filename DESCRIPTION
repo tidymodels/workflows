@@ -22,11 +22,11 @@ Imports:
     generics (>= 0.1.2),
     glue (>= 1.6.2),
     hardhat (>= 1.2.0),
-    lifecycle (>= 1.0.1),
+    lifecycle (>= 1.0.3),
     modelenv,
     parsnip (>= 1.0.0),
     rlang (>= 1.0.3),
-    tidyselect (>= 1.1.2),
+    tidyselect (>= 1.2.0),
     vctrs (>= 0.4.1)
 Suggests: 
     butcher (>= 0.2.0),

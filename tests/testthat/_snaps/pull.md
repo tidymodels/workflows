@@ -53,7 +53,7 @@
     Condition
       Warning:
       `pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.
-      Please use `extract_preprocessor()` instead.
+      i Please use `extract_preprocessor()` instead.
 
 # error if no spec
 
@@ -70,7 +70,7 @@
     Condition
       Warning:
       `pull_workflow_spec()` was deprecated in workflows 0.2.3.
-      Please use `extract_spec_parsnip()` instead.
+      i Please use `extract_spec_parsnip()` instead.
 
 # error if no fit
 
@@ -88,7 +88,7 @@
     Condition
       Warning:
       `pull_workflow_fit()` was deprecated in workflows 0.2.3.
-      Please use `extract_fit_parsnip()` instead.
+      i Please use `extract_fit_parsnip()` instead.
 
 # error if no mold
 
@@ -115,7 +115,7 @@
     Condition
       Warning:
       `pull_workflow_mold()` was deprecated in workflows 0.2.3.
-      Please use `extract_mold()` instead.
+      i Please use `extract_mold()` instead.
 
 # error if no recipe preprocessor
 
@@ -132,5 +132,5 @@
     Condition
       Warning:
       `pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.
-      Please use `extract_recipe()` instead.
+      i Please use `extract_recipe()` instead.
 

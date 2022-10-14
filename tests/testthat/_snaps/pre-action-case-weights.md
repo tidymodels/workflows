@@ -37,7 +37,7 @@
     Code
       fit(wf, df)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `fit()`:
       ! Can't subset columns that don't exist.
       x Column `w` doesn't exist.
 

@@ -228,17 +228,17 @@ autoplot(simple_glm_roc) +
   geom_path(
     data = ratio_glm_roc, 
     aes(x = 1 - specificity, y = sensitivity), 
-    col = "green"
+    col = "#FDE725FF"
   ) + 
   geom_path(
     data = trans_glm_roc, 
     aes(x = 1 - specificity, y = sensitivity), 
-    col = "blue"
+    col = "#21908CFF"
   ) +
   geom_path(
     data = pca_glm_roc, 
     aes(x = 1 - specificity, y = sensitivity),
-    col = "red"
+    col = "#bc3754"
   )
 ```
 

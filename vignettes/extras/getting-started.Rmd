@@ -223,23 +223,6 @@ pca_glm_roc <-
   roc_curve(Class, .pred_One)
 
 pca_glm_probs %>% roc_auc(Class, .pred_One)
-
-autoplot(simple_glm_roc) + 
-  geom_path(
-    data = ratio_glm_roc, 
-    aes(x = 1 - specificity, y = sensitivity), 
-    col = "#FDE725FF"
-  ) + 
-  geom_path(
-    data = trans_glm_roc, 
-    aes(x = 1 - specificity, y = sensitivity), 
-    col = "#21908CFF"
-  ) +
-  geom_path(
-    data = pca_glm_roc, 
-    aes(x = 1 - specificity, y = sensitivity),
-    col = "#bc3754"
-  )
 ```
 
 These results are almost identical to the transformed model.

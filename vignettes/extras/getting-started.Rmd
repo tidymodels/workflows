@@ -243,6 +243,6 @@ test_roc <-
 # A little more optimistic than the validation set
 test_probs %>% roc_auc(Class, .pred_One)
 
-autoplot(simple_glm_roc) 
+autoplot(test_roc) 
 ```
 

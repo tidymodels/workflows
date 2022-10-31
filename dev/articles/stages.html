@@ -90,13 +90,17 @@
 
     
     
-<p>Workflows encompasses the three main stages of the modeling <em>process</em>: pre-processing of data, model fitting, and post-processing of results. This page enumerates the possible operations for each stage that have been implemented to date.</p>
+<p>Workflows encompasses the three main stages of the modeling
+<em>process</em>: pre-processing of data, model fitting, and
+post-processing of results. This page enumerates the possible operations
+for each stage that have been implemented to date.</p>
 <div class="section level2">
 <h2 id="pre-processing">Pre-processing<a class="anchor" aria-label="anchor" href="#pre-processing"></a>
 </h2>
 <p>The two elements allowed for pre-processing are:</p>
 <ul>
-<li><p>A standard <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models" class="external-link">model formula</a> via <code><a href="../reference/add_formula.html">add_formula()</a></code>.</p></li>
+<li><p>A standard <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models" class="external-link">model
+formula</a> via <code><a href="../reference/add_formula.html">add_formula()</a></code>.</p></li>
 <li><p>A recipe object via <code><a href="../reference/add_recipe.html">add_recipe()</a></code>.</p></li>
 </ul>
 <p>You can use one or the other but not both.</p>
@@ -104,14 +108,23 @@
 <div class="section level2">
 <h2 id="model-fitting">Model Fitting<a class="anchor" aria-label="anchor" href="#model-fitting"></a>
 </h2>
-<p><code>parsnip</code> model specifications are the only option here, specified via <code><a href="../reference/add_model.html">add_model()</a></code>.</p>
-<p>When using a preprocessor, you may need an additional formula for special model terms (e.g. for mixed models or generalized linear models). In these cases, specify that formula using <code><a href="../reference/add_model.html">add_model()</a></code>’s <code>formula</code> argument, which will be passed to the underlying model when <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> is called.</p>
+<p><code>parsnip</code> model specifications are the only option here,
+specified via <code><a href="../reference/add_model.html">add_model()</a></code>.</p>
+<p>When using a preprocessor, you may need an additional formula for
+special model terms (e.g. for mixed models or generalized linear
+models). In these cases, specify that formula using
+<code><a href="../reference/add_model.html">add_model()</a></code>’s <code>formula</code> argument, which will be
+passed to the underlying model when <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> is called.</p>
 </div>
 <div class="section level2">
 <h2 id="post-processing">Post-processing<a class="anchor" aria-label="anchor" href="#post-processing"></a>
 </h2>
-<p>Some examples of post-processing the model predictions would be: adding a probability threshold for two-class problems, calibration of probability estimates, truncating the possible range of predictions, and so on.</p>
-<p>None of these are currently implemented but will be in coming versions.</p>
+<p>Some examples of post-processing the model predictions would be:
+adding a probability threshold for two-class problems, calibration of
+probability estimates, truncating the possible range of predictions, and
+so on.</p>
+<p>None of these are currently implemented but will be in coming
+versions.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

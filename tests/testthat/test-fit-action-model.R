@@ -23,8 +23,6 @@ test_that("model must contain a known mode (#160)", {
 })
 
 test_that("prompt on spec without a loaded implementation (#174)", {
-  skip_if(packageVersion("parsnip") < "1.0.2.9003")
-
   mod <- parsnip::bag_tree() %>%
     parsnip::set_mode("regression")
 

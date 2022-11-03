@@ -24,7 +24,7 @@ Imports:
     hardhat (>= 1.2.0),
     lifecycle (>= 1.0.3),
     modelenv (>= 0.1.0),
-    parsnip (>= 1.0.0),
+    parsnip (>= 1.0.2.9003),
     rlang (>= 1.0.3),
     tidyselect (>= 1.2.0),
     vctrs (>= 0.4.1)
@@ -38,6 +38,8 @@ Suggests:
     recipes (>= 1.0.0),
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    tidymodels/parsnip
 VignetteBuilder: 
     knitr
 Config/Needs/website:

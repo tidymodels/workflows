@@ -190,7 +190,7 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
     abort("`formula` must be a formula, or `NULL`.", call = call)
   }
 
-  if (!parsnip::spec_is_loaded(spec = spec)) {
+  if (!parsnip::spec_is_loaded(spec = spec) && inherits(spec, "model_spec")) {
     parsnip::prompt_missing_implementation(
       spec = spec,
       prompt = cli::cli_abort,

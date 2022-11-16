@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 1.1.0.9000
+Version: 1.1.2
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@rstudio.com", role = "aut"),
     person("Simon", "Couch", , "simonpatrickcouch@gmail.com", role = c("aut", "cre"),

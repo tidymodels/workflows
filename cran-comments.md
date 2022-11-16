@@ -1,15 +1,4 @@
-## Known problems
+We checked 29 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
-All 3 broken packages are from the same maintainer. He was notified of this issue two weeks ago.
-
-* modeltime
-  * Description: Error in tests
-  * Link: https://github.com/business-science/modeltime/pull/198
-  
-* modeltime.ensemble
-  * Description: Error in tests
-  * Link: See modeltime
-  
-* modeltime.resample
-  * Description: Error in vignettes
-  * Link: See modeltime
+ * We saw 0 new problems
+ * We failed to check 0 packages

@@ -40,7 +40,7 @@ extracted from the mold object returned from pull_workflow_mold().
     
     <a class="navbar-brand me-2" href="../index.html">workflows</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,7 +150,7 @@ section.</p>
 <span class="r-in"><span><span class="co"># tidyselect expressions identifying the outcomes/predictors</span></span></span>
 <span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Inputs:</span>
@@ -163,22 +163,18 @@ section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Log transformation on disp</span>
 <span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">formula_wf</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ cyl + log(disp)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5641b363db98&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55abe3ff06a0&gt;</span>
 <span class="r-in"><span><span class="fu">pull_workflow_preprocessor</span><span class="op">(</span><span class="va">variable_wf</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_preprocessor()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_preprocessor()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $outcomes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^mpg</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x5641b363db98</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55abe3ff06a0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^c(cyl, disp)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x5641b363db98</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55abe3ff06a0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "workflow_variables"</span>
@@ -187,14 +183,14 @@ section.</p>
 <span class="r-in"><span><span class="co"># The `fit` is the fit parsnip model.</span></span></span>
 <span class="r-in"><span><span class="fu">pull_workflow_spec</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_spec()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_spec_parsnip()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `extract_spec_parsnip()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">pull_workflow_fit</span><span class="op">(</span><span class="va">fit_formula_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_fit()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_fit_parsnip()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `extract_fit_parsnip()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> parsnip model object</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -211,7 +207,7 @@ section.</p>
 <span class="r-in"><span><span class="co"># for use on new data at `predict()` time.</span></span></span>
 <span class="r-in"><span><span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_mold()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `extract_mold()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 32 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      cyl  disp</span>
@@ -262,7 +258,7 @@ section.</p>
 <span class="r-in"><span><span class="co"># A useful shortcut is to extract the prepped recipe from the workflow</span></span></span>
 <span class="r-in"><span><span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_recipe()` instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `extract_recipe()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Recipe</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Inputs:</span>
@@ -282,10 +278,6 @@ section.</p>
 <span class="r-in"><span>  <span class="fu">pull_workflow_mold</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span><span class="op">$</span><span class="va">blueprint</span><span class="op">$</span><span class="va">recipe</span>,</span></span>
 <span class="r-in"><span>  <span class="fu">pull_workflow_prepped_recipe</span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_mold()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_mold()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`pull_workflow_prepped_recipe()` was deprecated in workflows 0.2.3.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `extract_recipe()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>

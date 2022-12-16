@@ -10,6 +10,7 @@
 \alias{extract_preprocessor.workflow}
 \alias{extract_parameter_set_dials.workflow}
 \alias{extract_parameter_dials.workflow}
+\alias{extract_fit_time.workflow}
 \title{Extract elements of a workflow}
 \usage{
 \method{extract_spec_parsnip}{workflow}(x, ...)
@@ -27,6 +28,8 @@
 \method{extract_parameter_set_dials}{workflow}(x, ...)
 
 \method{extract_parameter_dials}{workflow}(x, parameter, ...)
+
+\method{extract_fit_time}{workflow}(x, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -61,6 +64,7 @@ variable selectors.
 whether the fitted or original recipe is returned.
 \item \code{extract_parameter_dials()} returns a single dials parameter object.
 \item \code{extract_parameter_set_dials()} returns a set of dials parameter objects.
+\item \code{extract_fit_time()} returns a tibble with fit times.
 }
 }
 \details{

@@ -27,6 +27,8 @@
 #'
 #' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
 #'
+#' - `extract_fit_time()` returns a tibble with fit times.
+#'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
@@ -211,4 +213,18 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
 #' @rdname extract-workflow
 extract_parameter_dials.workflow <- function(x, parameter, ...) {
   extract_parameter_dials(extract_parameter_set_dials(x), parameter)
+}
+
+#' @export
+#' @rdname extract-workflow
+extract_fit_time.workflow <- function(x, ...) {
+  if (has_preprocessor_recipe(x)) {
+    preprocessor <- extract_fit_time(extract_recipe(x))
+    preprocessor <- vctrs::vec_cbind(stage = "preprocess", preprocessor)
+  }
+
+  model <- extract_fit_time(extract_fit_parsnip(x))
+  model <- vctrs::vec_cbind(stage = "model", model)
+
+  vctrs::vec_rbind(preprocessor, model)
 }

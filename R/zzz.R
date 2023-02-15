@@ -12,12 +12,6 @@ tune_contains_tunable_method <- NULL
   vctrs::s3_register("butcher::axe_data", "workflow")
   vctrs::s3_register("butcher::axe_env", "workflow")
   vctrs::s3_register("butcher::axe_fitted", "workflow")
-
-  vctrs::s3_register("generics::required_pkgs", "workflow")
-
-  vctrs::s3_register("generics::tune_args", "workflow", tune_args_workflow)
-
-  vctrs::s3_register("generics::tunable", "workflow", tunable_workflow)
 }
 
 # nocov end

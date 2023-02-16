@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* The workflows methods for `generics::tune_args()` and `generics::tunable()`
+  are now registered unconditionally (#192).
+
 # workflows 1.1.2
 
 * Tightens integration with parsnip's machinery for checking that needed 

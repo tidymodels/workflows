@@ -1,8 +1,4 @@
-#' @importFrom generics required_pkgs
-#' @export
-generics::required_pkgs
-
-#' @export
+# Lazily registered in .onLoad()
 required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out <- character()
 
@@ -32,10 +28,6 @@ required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out
 }
 
-#' @importFrom generics tune_args
-#' @export
-generics::tune_args
-
 #' @export
 tune_args.workflow <- function(object, ...) {
   model <- extract_spec_parsnip(object)
@@ -50,10 +42,6 @@ tune_args.workflow <- function(object, ...) {
 
   param_data
 }
-
-#' @importFrom generics tunable
-#' @export
-generics::tunable
 
 #' @export
 tunable.workflow <- function(x, ...) {

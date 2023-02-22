@@ -1,4 +1,4 @@
-# workflows (development version)
+# workflows 1.1.3
 
 * The workflows methods for `generics::tune_args()` and `generics::tunable()`
   are now registered unconditionally (#192).

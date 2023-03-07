@@ -2,10 +2,10 @@ Package: workflows
 Title: Modeling Workflows
 Version: 1.1.3.9000
 Authors@R: c(
-    person("Davis", "Vaughan", , "davis@rstudio.com", role = "aut"),
-    person("Simon", "Couch", , "simonpatrickcouch@gmail.com", role = c("aut", "cre"),
+    person("Davis", "Vaughan", , "davis@posit.co", role = "aut"),
+    person("Simon", "Couch", , "simon.couch@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5676-5107")),
-    person("RStudio", role = c("cph", "fnd"))
+    person(given = "Posit, PBC", role = c("cph", "fnd"))
   )
 Description: Managing both a 'parsnip' model and a preprocessor, such as a
     model formula or recipe from 'recipes', can often be challenging. The

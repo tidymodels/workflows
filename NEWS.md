@@ -1,5 +1,7 @@
 # workflows (development version)
 
+* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
+
 # workflows 1.1.3
 
 * The workflows methods for `generics::tune_args()` and `generics::tunable()`

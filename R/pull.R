@@ -82,7 +82,7 @@ NULL
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_preprocessor <- function(x) {
-  lifecycle::deprecate_soft("0.2.3", "pull_workflow_preprocessor()", "extract_preprocessor()")
+  lifecycle::deprecate_warn("0.2.3", "pull_workflow_preprocessor()", "extract_preprocessor()")
   validate_is_workflow(x)
   extract_preprocessor(x)
 }
@@ -90,7 +90,7 @@ pull_workflow_preprocessor <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_spec <- function(x) {
-  lifecycle::deprecate_soft("0.2.3", "pull_workflow_spec()", "extract_spec_parsnip()")
+  lifecycle::deprecate_warn("0.2.3", "pull_workflow_spec()", "extract_spec_parsnip()")
   validate_is_workflow(x)
   extract_spec_parsnip(x)
 }
@@ -98,7 +98,7 @@ pull_workflow_spec <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_fit <- function(x) {
-  lifecycle::deprecate_soft("0.2.3", "pull_workflow_fit()", "extract_fit_parsnip()")
+  lifecycle::deprecate_warn("0.2.3", "pull_workflow_fit()", "extract_fit_parsnip()")
   validate_is_workflow(x)
   extract_fit_parsnip(x)
 }
@@ -106,7 +106,7 @@ pull_workflow_fit <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_mold <- function(x) {
-  lifecycle::deprecate_soft("0.2.3", "pull_workflow_mold()", "extract_mold()")
+  lifecycle::deprecate_warn("0.2.3", "pull_workflow_mold()", "extract_mold()")
   validate_is_workflow(x)
   extract_mold(x)
 }
@@ -114,7 +114,7 @@ pull_workflow_mold <- function(x) {
 #' @rdname workflow-extractors
 #' @export
 pull_workflow_prepped_recipe <- function(x) {
-  lifecycle::deprecate_soft("0.2.3", "pull_workflow_prepped_recipe()", "extract_recipe()")
+  lifecycle::deprecate_warn("0.2.3", "pull_workflow_prepped_recipe()", "extract_recipe()")
   validate_is_workflow(x)
   extract_recipe(x)
 }

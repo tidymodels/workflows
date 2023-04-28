@@ -35,7 +35,7 @@ weight_propensity.workflow <- function(object,
 
   data$.wts <-
     hardhat::importance_weights(
-      wt_fn(preds, data[[outcome_name]], ...)
+      wt_fn(preds, data[[outcome_name]], .treated = .treated, ...)
     )
 
   data

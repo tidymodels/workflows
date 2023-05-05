@@ -163,7 +163,7 @@ test_that("augment works with matrix compositions (#148)", {
   out <- augment(wf, new_data = new_data)
 
   expect_s3_class(out, "tbl_df")
-  expect_named(out, c("x", "z", ".pred"))
+  expect_named(out, c(".pred", "x", "z"))
 })
 
 test_that("augment works with sparse matrix compositions (#148)", {
@@ -192,5 +192,5 @@ test_that("augment works with sparse matrix compositions (#148)", {
   out <- augment(wf, new_data = new_data)
 
   expect_s3_class(out, "tbl_df")
-  expect_named(out, c("x", "z", ".pred"))
+  expect_named(out, c(".pred", "x", "z"))
 })

@@ -2,6 +2,8 @@
 
 * Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
 
+* `add_recipe()` will now error informatively when supplied a trained recipe (#179).
+
 * `augment.workflow()` gained an `eval_time` argument, enabling augmenting
   censored regression models (#200).
 

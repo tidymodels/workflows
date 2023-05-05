@@ -22,6 +22,14 @@
       Error in `add_recipe()`:
       ! A recipe cannot be added when variables already exist.
 
+# cannot add a recipe if recipes is trained
+
+    Code
+      add_recipe(workflow, rec)
+    Condition
+      Error in `add_recipe()`:
+      ! Can't add a trained recipe to a workflow.
+
 # cannot add two recipe
 
     Code

@@ -93,7 +93,8 @@ parsnip model.</p></li>
 
 <dt>new_data</dt>
 <dd><p>A data frame containing the new predictors to preprocess
-and predict on</p></dd>
+and predict on. If using a recipe preprocessor, you should not call
+<code><a href="https://recipes.tidymodels.org/reference/bake.html" class="external-link">recipes::bake()</a></code> on <code>new_data</code> before passing to this function.</p></dd>
 
 
 <dt>type</dt>

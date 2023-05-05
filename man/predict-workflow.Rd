@@ -11,7 +11,8 @@
 \item{object}{A workflow that has been fit by \code{\link[=fit.workflow]{fit.workflow()}}}
 
 \item{new_data}{A data frame containing the new predictors to preprocess
-and predict on}
+and predict on. If using a recipe preprocessor, you should not call
+\code{\link[recipes:bake]{recipes::bake()}} on \code{new_data} before passing to this function.}
 
 \item{type}{A single character value or \code{NULL}. Possible values
 are \code{"numeric"}, \code{"class"}, \code{"prob"}, \code{"conf_int"}, \code{"pred_int"},

@@ -40,7 +40,7 @@ the standard error of fit or prediction (on the scale of the
 linear predictors). Default value is \code{FALSE}.
 \item \code{quantile}: for \code{type} equal to \code{quantile}, the quantiles of the
 distribution. Default is \code{(1:9)/10}.
-\item \code{time}: for \code{type} equal to \code{"survival"} or \code{"hazard"}, the
+\item \code{eval_time}: for \code{type} equal to \code{"survival"} or \code{"hazard"}, the
 time points at which the survival probability or hazard is estimated.
 }}
 }

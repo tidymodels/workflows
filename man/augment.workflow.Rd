@@ -4,12 +4,16 @@
 \alias{augment.workflow}
 \title{Augment data with predictions}
 \usage{
-\method{augment}{workflow}(x, new_data, ...)
+\method{augment}{workflow}(x, new_data, eval_time = NULL, ...)
 }
 \arguments{
 \item{x}{A workflow}
 
 \item{new_data}{A data frame of predictors}
+
+\item{eval_time}{For censored regression models, a vector of time points at
+which the survival probability is estimated. See
+\code{\link[parsnip:augment]{parsnip::augment.model_fit()}} for more details.}
 
 \item{...}{Arguments passed on to methods}
 }

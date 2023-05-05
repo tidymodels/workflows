@@ -46,6 +46,8 @@ Config/Needs/website:
     tidyr,
     tidyverse/tidytemplate,
     yardstick
+Remotes:
+    tidymodels/parsnip#960
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

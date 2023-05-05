@@ -153,7 +153,7 @@ augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   predictions <- predictors_and_predictions[prediction_columns]
 
   # Return original `new_data` with new prediction columns
-  out <- vctrs::vec_cbind(new_data, predictions)
+  out <- vctrs::vec_cbind(predictions, new_data)
 
   out
 }

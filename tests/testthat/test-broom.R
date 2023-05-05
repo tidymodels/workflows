@@ -100,6 +100,8 @@ test_that("can augment using a fitted workflow's model", {
 
   # at least 1 prediction specific column should be added
   expect_true(ncol(x) > ncol(df))
+
+  expect_named(x, c(".pred", "y", "x"))
 })
 
 test_that("augment returns `new_data`, not the pre-processed version of `new_data`", {

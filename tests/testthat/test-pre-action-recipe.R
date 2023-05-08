@@ -30,7 +30,7 @@ test_that("cannot add a recipe if variables already exist", {
 })
 
 test_that("cannot add a recipe if recipe is trained", {
-  rec <- recipes::recipe(mpg ~ cyl, mtcars) %>% prep()
+  rec <- recipes::recipe(mpg ~ cyl, mtcars) %>% recipes::prep()
 
   workflow <- workflow()
 

@@ -29,6 +29,14 @@ test_that("cannot add a recipe if variables already exist", {
   expect_snapshot(error = TRUE, add_recipe(workflow, rec))
 })
 
+test_that("cannot add a recipe if recipe is trained", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars) %>% recipes::prep()
+
+  workflow <- workflow()
+
+  expect_snapshot(error = TRUE, add_recipe(workflow, rec))
+})
+
 test_that("remove a recipe", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
 

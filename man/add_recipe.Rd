@@ -15,7 +15,9 @@ update_recipe(x, recipe, ..., blueprint = NULL)
 \arguments{
 \item{x}{A workflow}
 
-\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
+\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}. The recipe
+should not have been trained already with \code{\link[recipes:prep]{recipes::prep()}}; workflows
+will handle training internally.}
 
 \item{...}{Not used.}
 

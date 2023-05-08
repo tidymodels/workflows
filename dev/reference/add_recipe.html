@@ -104,7 +104,9 @@ recipe will need to be refit.</p></li>
 
 
 <dt>recipe</dt>
-<dd><p>A recipe created using <code><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipes::recipe()</a></code></p></dd>
+<dd><p>A recipe created using <code><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipes::recipe()</a></code>. The recipe
+should not have been trained already with <code><a href="https://recipes.tidymodels.org/reference/prep.html" class="external-link">recipes::prep()</a></code>; workflows
+will handle training internally.</p></dd>
 
 
 <dt>...</dt>

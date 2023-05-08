@@ -53,6 +53,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="workflows-development-version">workflows (development version)<a class="anchor" aria-label="anchor" href="#workflows-development-version"></a></h2>
 <ul><li><p>Each of the <code>pull_*()</code> functions soft-deprecated in workflows v0.2.3 now warn on every usage.</p></li>
+<li><p><code><a href="../reference/add_recipe.html">add_recipe()</a></code> will now error informatively when supplied a trained recipe (<a href="https://github.com/tidymodels/workflows/issues/179" class="external-link">#179</a>).</p></li>
 <li><p><code><a href="../reference/augment.workflow.html">augment.workflow()</a></code> gained an <code>eval_time</code> argument, enabling augmenting censored regression models (<a href="https://github.com/tidymodels/workflows/issues/200" class="external-link">#200</a>).</p></li>
 <li><p>The prediction columns are now appended to the LHS rather than RHS of <code>new_data</code> in <code><a href="../reference/augment.workflow.html">augment.workflow()</a></code>, following analogous changes in parsnip (<a href="https://github.com/tidymodels/workflows/issues/200" class="external-link">#200</a>).</p></li>
 </ul></div>

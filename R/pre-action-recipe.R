@@ -20,7 +20,7 @@
 #' @param x A workflow
 #'
 #' @param recipe A recipe created using [recipes::recipe()]. The recipe
-#'    should have been trained already with [recipes::prep()]; workflows
+#'    should not have been trained already with [recipes::prep()]; workflows
 #'    will handle training internally.
 #'
 #' @param ... Not used.

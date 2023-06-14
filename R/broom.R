@@ -109,6 +109,10 @@ glance.workflow <- function(x, ...) {
 #'
 #' @return `new_data` with new prediction specific columns.
 #'
+#' @param eval_time For censored regression models, a vector of time points at
+#' which the survival probability is estimated. See
+#' [parsnip::augment.model_fit()] for more details.
+#'
 #' @export
 #' @examples
 #' if (rlang::is_installed("broom")) {
@@ -133,13 +137,13 @@ glance.workflow <- function(x, ...) {
 #' augment(wf_fit, attrition)
 #'
 #' }
-augment.workflow <- function(x, new_data, ...) {
+augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   fit <- extract_fit_parsnip(x)
 
   # `augment.model_fit()` requires the pre-processed `new_data`
   predictors <- forge_predictors(new_data, x)
   predictors <- prepare_augment_predictors(predictors)
-  predictors_and_predictions <- augment(fit, predictors, ...)
+  predictors_and_predictions <- augment(fit, predictors, eval_time = eval_time, ...)
 
   prediction_columns <- setdiff(
     names(predictors_and_predictions),
@@ -149,7 +153,7 @@ augment.workflow <- function(x, new_data, ...) {
   predictions <- predictors_and_predictions[prediction_columns]
 
   # Return original `new_data` with new prediction columns
-  out <- vctrs::vec_cbind(new_data, predictions)
+  out <- vctrs::vec_cbind(predictions, new_data)
 
   out
 }

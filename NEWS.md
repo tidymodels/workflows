@@ -1,5 +1,20 @@
 # workflows (development version)
 
+* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
+
+* `add_recipe()` will now error informatively when supplied a trained recipe (#179).
+
+* `augment.workflow()` gained an `eval_time` argument, enabling augmenting
+  censored regression models (#200).
+
+* The prediction columns are now appended to the LHS rather than RHS of 
+  `new_data` in `augment.workflow()`, following analogous changes in parsnip (#200).
+
+# workflows 1.1.3
+
+* The workflows methods for `generics::tune_args()` and `generics::tunable()`
+  are now registered unconditionally (#192).
+
 # workflows 1.1.2
 
 * Tightens integration with parsnip's machinery for checking that needed 

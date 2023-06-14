@@ -19,7 +19,9 @@
 #'
 #' @param x A workflow
 #'
-#' @param recipe A recipe created using [recipes::recipe()]
+#' @param recipe A recipe created using [recipes::recipe()]. The recipe
+#'    should not have been trained already with [recipes::prep()]; workflows
+#'    will handle training internally.
 #'
 #' @param ... Not used.
 #'
@@ -128,6 +130,10 @@ new_action_recipe <- function(recipe, blueprint, ..., call = caller_env()) {
 
   if (!is_recipe(recipe)) {
     abort("`recipe` must be a recipe.", call = call)
+  }
+
+  if (recipes::fully_trained(recipe)) {
+    abort("Can't add a trained recipe to a workflow.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time

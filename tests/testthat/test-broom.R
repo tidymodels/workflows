@@ -100,6 +100,8 @@ test_that("can augment using a fitted workflow's model", {
 
   # at least 1 prediction specific column should be added
   expect_true(ncol(x) > ncol(df))
+
+  expect_named(x, c(".pred", "y", "x"))
 })
 
 test_that("augment returns `new_data`, not the pre-processed version of `new_data`", {
@@ -161,7 +163,7 @@ test_that("augment works with matrix compositions (#148)", {
   out <- augment(wf, new_data = new_data)
 
   expect_s3_class(out, "tbl_df")
-  expect_named(out, c("x", "z", ".pred"))
+  expect_named(out, c(".pred", "x", "z"))
 })
 
 test_that("augment works with sparse matrix compositions (#148)", {
@@ -190,5 +192,5 @@ test_that("augment works with sparse matrix compositions (#148)", {
   out <- augment(wf, new_data = new_data)
 
   expect_s3_class(out, "tbl_df")
-  expect_named(out, c("x", "z", ".pred"))
+  expect_named(out, c(".pred", "x", "z"))
 })

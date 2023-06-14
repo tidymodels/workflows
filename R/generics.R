@@ -28,8 +28,8 @@ required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out
 }
 
-# Lazily registered in .onLoad()
-tune_args_workflow <- function(object, ...) {
+#' @export
+tune_args.workflow <- function(object, ...) {
   model <- extract_spec_parsnip(object)
 
   param_data <- generics::tune_args(model)
@@ -43,8 +43,8 @@ tune_args_workflow <- function(object, ...) {
   param_data
 }
 
-# Lazily registered in .onLoad()
-tunable_workflow <- function(x, ...) {
+#' @export
+tunable.workflow <- function(x, ...) {
   model <- extract_spec_parsnip(x)
   param_data <- generics::tunable(model)
 

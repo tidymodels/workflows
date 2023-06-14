@@ -190,7 +190,6 @@ test_that("error if not a workflow", {
 # extract_parameter_set_dials()
 
 test_that("extract parameter set from workflow with tunable recipe", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
@@ -213,7 +212,6 @@ test_that("extract parameter set from workflow with tunable recipe", {
 })
 
 test_that("extract parameter set from workflow with tunable model", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_rm(date, ends_with("away"))
@@ -229,7 +227,6 @@ test_that("extract parameter set from workflow with tunable model", {
 })
 
 test_that("extract parameter set from workflow with tunable recipe and model", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
@@ -260,7 +257,6 @@ test_that("extract parameter set from workflow with tunable recipe and model", {
 # extract_parameter_dials()
 
 test_that("extract single parameter from workflow with tunable recipe", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
@@ -296,7 +292,6 @@ test_that("extract single parameter from workflow with tunable recipe", {
 })
 
 test_that("extract single parameter from workflow with tunable model", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_rm(date, ends_with("away"))
@@ -316,7 +311,6 @@ test_that("extract single parameter from workflow with tunable model", {
 })
 
 test_that("extract single parameter from workflow with tunable recipe and model", {
-  skip_if(tune_contains_tunable_method, message = "`tunable.model_spec()` is in tune")
 
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%

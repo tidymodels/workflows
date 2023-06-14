@@ -17,7 +17,8 @@
 #' @param object A workflow that has been fit by [fit.workflow()]
 #'
 #' @param new_data A data frame containing the new predictors to preprocess
-#'   and predict on
+#'   and predict on. If using a recipe preprocessor, you should not call
+#'   [recipes::bake()] on `new_data` before passing to this function.
 #'
 #' @return
 #' A data frame of model predictions, with as many rows as `new_data` has.

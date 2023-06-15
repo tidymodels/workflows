@@ -29,7 +29,7 @@
 
 \method{extract_parameter_dials}{workflow}(x, parameter, ...)
 
-\method{extract_fit_time}{workflow}(x, ...)
+\method{extract_fit_time}{workflow}(x, summarize = TRUE, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -40,6 +40,9 @@
 fitted recipe should be returned. This argument should be named.}
 
 \item{parameter}{A single string for the parameter ID.}
+
+\item{summarize}{A logical for whether the time taken should be returned as a
+single row, or multiple rows.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description

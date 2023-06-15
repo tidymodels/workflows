@@ -34,6 +34,8 @@
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned. This argument should be named.
 #' @param parameter A single string for the parameter ID.
+#' @param summarize A logical for whether the time taken should be returned as a
+#' single row, or multiple rows.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -217,14 +219,23 @@ extract_parameter_dials.workflow <- function(x, parameter, ...) {
 
 #' @export
 #' @rdname extract-workflow
-extract_fit_time.workflow <- function(x, ...) {
+extract_fit_time.workflow <- function(x, summarize = TRUE, ...) {
   if (has_preprocessor_recipe(x)) {
-    preprocessor <- extract_fit_time(extract_recipe(x))
+    preprocessor <- extract_fit_time(extract_recipe(x), summarize = summarize)
     preprocessor <- vctrs::vec_cbind(stage = "preprocess", preprocessor)
   }
 
   model <- extract_fit_time(extract_fit_parsnip(x))
   model <- vctrs::vec_cbind(stage = "model", model)
 
-  vctrs::vec_rbind(preprocessor, model)
+  res <- vctrs::vec_rbind(preprocessor, model)
+
+  if (summarize) {
+    res$stage = "workflow"
+    res$id = "workflow"
+    res$time = sum(res$time)
+    res <- res[1, ]
+  }
+
+  res
 }

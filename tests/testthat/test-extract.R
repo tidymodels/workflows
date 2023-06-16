@@ -358,6 +358,7 @@ test_that("extract single parameter from workflow with tunable recipe and model"
 # extract_recipe()
 
 test_that("extract_fit_time() works", {
+  skip_if_not_installed("recipes")
   rec_spec <- recipes::recipe(mpg ~ ., data = mtcars) %>%
     recipes::step_scale(recipes::all_numeric_predictors(), id = "scale") %>%
     recipes::step_center(recipes::all_numeric_predictors(), id = "center")

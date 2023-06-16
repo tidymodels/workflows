@@ -27,15 +27,15 @@
 #'
 #' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
 #'
-#' - `extract_fit_time()` returns a tibble with fit times.
+#' - `extract_fit_time()` returns a tibble with elapsed fit times.
 #'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned. This argument should be named.
 #' @param parameter A single string for the parameter ID.
-#' @param summarize A logical for whether the time taken should be returned as a
-#' single row, or multiple rows.
+#' @param summarize A logical for whether the elapsed fit time should be returned as a
+#' single row or multiple rows.
 #' @param ... Not currently used.
 #'
 #' @details

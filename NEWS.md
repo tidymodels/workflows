@@ -10,6 +10,8 @@
 * The prediction columns are now appended to the LHS rather than RHS of 
   `new_data` in `augment.workflow()`, following analogous changes in parsnip (#200).
 
+* New `extract_fit_time()` method has been added that return the time it took to train the workflow. (#191)
+
 # workflows 1.1.3
 
 * The workflows methods for `generics::tune_args()` and `generics::tunable()`

@@ -353,3 +353,40 @@ test_that("extract single parameter from workflow with tunable recipe and model"
     NA
   )
 })
+
+# ------------------------------------------------------------------------------
+# extract_recipe()
+
+test_that("extract_fit_time() works", {
+  rec_spec <- recipes::recipe(mpg ~ ., data = mtcars) %>%
+    recipes::step_scale(recipes::all_numeric_predictors(), id = "scale") %>%
+    recipes::step_center(recipes::all_numeric_predictors(), id = "center")
+
+  lm_spec <- parsnip::linear_reg()
+
+  wf <- workflow(rec_spec, lm_spec) %>% fit(mtcars)
+
+  res <- extract_fit_time(wf)
+
+  expect_s3_class(res, "tbl_df")
+  expect_identical(names(res), c("stage", "process_id", "time"))
+  expect_identical(res$stage, "workflow")
+  expect_identical(res$process_id, "workflow")
+  expect_true(is.double(res$time))
+  expect_true(res$time >= 0)
+
+  res <- extract_fit_time(wf, summarize = FALSE)
+
+  expect_s3_class(res, "tbl_df")
+  expect_identical(names(res), c("stage", "process_id", "time"))
+  expect_identical(
+    res$stage,
+    c("preprocess", "preprocess", "preprocess", "preprocess", "model")
+  )
+  expect_identical(
+    res$process_id,
+    c("prep.scale", "bake.scale", "prep.center", "bake.center", "linear_reg")
+  )
+  expect_true(is.double(res$time))
+  expect_true(all(res$time >= 0))
+})

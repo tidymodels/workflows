@@ -41,8 +41,8 @@ fitted recipe should be returned. This argument should be named.}
 
 \item{parameter}{A single string for the parameter ID.}
 
-\item{summarize}{A logical for whether the time taken should be returned as a
-single row, or multiple rows.}
+\item{summarize}{A logical for whether the elapsed fit time should be returned as a
+single row or multiple rows.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description
@@ -67,7 +67,7 @@ variable selectors.
 whether the fitted or original recipe is returned.
 \item \code{extract_parameter_dials()} returns a single dials parameter object.
 \item \code{extract_parameter_set_dials()} returns a set of dials parameter objects.
-\item \code{extract_fit_time()} returns a tibble with fit times.
+\item \code{extract_fit_time()} returns a tibble with elapsed fit times.
 }
 }
 \details{

@@ -10,6 +10,10 @@
 * The prediction columns are now appended to the LHS rather than RHS of 
   `new_data` in `augment.workflow()`, following analogous changes in parsnip (#200).
 
+* While `augment.workflow()` previously never returned a `.resid` column, the 
+  method will now return residuals under the same conditions that
+  `augment.model_fit()` does.
+
 # workflows 1.1.3
 
 * The workflows methods for `generics::tune_args()` and `generics::tunable()`

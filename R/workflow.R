@@ -6,7 +6,7 @@
 #' preprocessing, specified through [add_recipe()], or the model specification
 #' to fit, specified through [add_model()].
 #'
-#' The `preprocessor` and `spec` arguments allow you add components to a
+#' The `preprocessor` and `spec` arguments allow you to add components to a
 #' workflow quickly, without having to go through the `add_*()` functions, such
 #' as [add_recipe()] or [add_model()]. However, if you need to control any of
 #' the optional arguments to those functions, such as the `blueprint` or the

@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 1.1.3.9000
+Version: 1.1.3.9001
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@posit.co", role = "aut"),
     person("Simon", "Couch", , "simon.couch@posit.co", role = c("aut", "cre"),
@@ -38,6 +38,8 @@ Suggests:
     recipes (>= 1.0.0),
     rmarkdown,
     testthat (>= 3.0.0)
+Remotes:
+    tidymodels/parsnip#955
 VignetteBuilder: 
     knitr
 Config/Needs/website:

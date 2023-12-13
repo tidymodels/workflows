@@ -134,20 +134,21 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   )
 })
 
-test_that("monitoring: known that parsnip removes blueprint intercept for some models (tidymodels/parsnip#353)", {
+test_that("monitoring: no double intercept due to dot expansion in model formula #210", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
 
-  # Pass formula explicitly to keep `lm()` from auto-generating an intercept
+  # model formula includes a dot to mean "everything available after the preprocessing formula
   workflow <- workflow()
-  workflow <- add_model(workflow, mod, formula = mpg ~ . + 0)
+  workflow <- add_model(workflow, mod, formula = mpg ~ .)
 
   blueprint_with_intercept <- hardhat::default_formula_blueprint(intercept = TRUE)
   workflow_with_intercept <- add_formula(workflow, mpg ~ hp + disp, blueprint = blueprint_with_intercept)
   fit_with_intercept <- fit(workflow_with_intercept, mtcars)
 
-  # `parsnip:::prepare_data()` will remove the intercept, so it won't be
-  # there when the `lm()` `predict()` method is called. We don't own this
-  # error though.
-  expect_error(predict(fit_with_intercept, mtcars))
+  # The dot expansion used to include the intercept column, added via the blueprint, as a regular predictor.
+  # `parsnip:::prepare_data()` removed this column, so lm's predict method errored.
+  # Now it gets removed before fitting (lm will handle the intercept itself),
+  # so lm()'s predict method won't error anymore here. (tidymodels/parsnip#1033)
+  expect_no_error(predict(fit_with_intercept, mtcars))
 })

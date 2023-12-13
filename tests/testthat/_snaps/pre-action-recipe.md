@@ -22,7 +22,7 @@
       Error in `add_recipe()`:
       ! A recipe cannot be added when variables already exist.
 
-# cannot add a recipe if recipes is trained
+# cannot add a recipe if recipe is trained
 
     Code
       add_recipe(workflow, rec)

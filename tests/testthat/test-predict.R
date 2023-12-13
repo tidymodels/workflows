@@ -138,7 +138,7 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
 
-  # model formula includes a dot to mean "everything available after the preprocesing formula
+  # model formula includes a dot to mean "everything available after the preprocessing formula
   workflow <- workflow()
   workflow <- add_model(workflow, mod, formula = mpg ~ .)
 
@@ -148,7 +148,7 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
 
   # The dot expansion used to include the intercept column, added via the blueprint, as a regular predictor.
   # `parsnip:::prepare_data()` removed this column, so lm's predict method errored.
-  # Now it get removed before fitting (lm will handle the intercept itself),
-  # so lm()'s predict method won't error anymore here.
+  # Now it gets removed before fitting (lm will handle the intercept itself),
+  # so lm()'s predict method won't error anymore here. (tidymodels/parsnip#1033)
   expect_no_error(predict(fit_with_intercept, mtcars))
 })

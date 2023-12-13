@@ -13,6 +13,7 @@
 #' @importFrom generics tune_args
 #' @importFrom generics tunable
 #' @importFrom lifecycle deprecated
+#' @importFrom parsnip .censoring_weights_graf
 #' @importFrom parsnip fit_xy
 #' @importFrom stats predict
 ## usethis namespace: end

@@ -1,5 +1,8 @@
 # workflows (development version)
 
+* Added a standalone file `standalone-input-names.R` with APIs for returning the
+names of the predictors in the original data given to `fit()`. 
+
 * Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
 
 * `add_recipe()` will now error informatively when supplied a trained recipe (#179).

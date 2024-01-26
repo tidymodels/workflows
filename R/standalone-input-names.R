@@ -18,7 +18,7 @@
 
 check_workflow_fit <- function(x) {
   if (!x$trained) {
-    stop("The workflow should be trainined.")
+    stop("The workflow should be trained.")
   }
   invisible(NULL)
 }
@@ -26,7 +26,7 @@ check_workflow_fit <- function(x) {
 check_recipe_fit <- function(x) {
   is_trained <- vapply(x$steps, function(x) x$trained, logical(1))
   if (!all(is_trained)) {
-    stop("All recipe steps should be trainined.")
+    stop("All recipe steps should be trained.")
   }
   invisible(NULL)
 }

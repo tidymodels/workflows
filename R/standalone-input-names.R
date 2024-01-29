@@ -1,7 +1,7 @@
 # ---
 # repo: tidymodels/workflows
 # file: standalone-input-names.R
-# last-updated: 2024-01-291
+# last-updated: 2024-01-21
 # license: https://unlicense.org
 # requires: cli, rlang
 # ---
@@ -12,8 +12,6 @@
 # ## Changelog
 # 2024-01-21
 # * First version
-# 2024-01-29
-# * Changes after PR review
 
 # nocov start
 

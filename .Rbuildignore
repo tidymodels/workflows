@@ -9,7 +9,6 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-^cran-comments\.md$
 ^CRAN-RELEASE$
 ^CODE_OF_CONDUCT\.md$
 ^revdep$

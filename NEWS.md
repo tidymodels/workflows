@@ -1,4 +1,4 @@
-# workflows (development version)
+# workflows 1.1.4
 
 * While `augment.workflow()` previously never returned a `.resid` column, the 
   method will now return residuals under the same conditions that

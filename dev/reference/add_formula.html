@@ -11,7 +11,7 @@ update_formula() first removes the formula, then replaces the previous
 formula with the new one. Any model that has already been fit based on this
 formula will need to be refit.
 
-"><title>Add formula terms to a workflow — add_formula • workflows</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.8/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Add formula terms to a workflow — add_formula"><meta property="og:description" content="
+"><title>Add formula terms to a workflow — add_formula • workflows</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Add formula terms to a workflow — add_formula"><meta property="og:description" content="
 
 add_formula() specifies the terms of the model through the usage of a
 formula.
@@ -180,30 +180,30 @@ that is what is passed to <code><a href="https://rdrr.io/r/stats/lm.html" class=
 <span></span>
 <span><span class="co"># The `lm()` formula is *not* the same as the `add_formula()` formula: </span></span>
 <span><span class="va">pre_encoded_fit</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)  speciesChinstrap     speciesGentoo  </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##        -1009.943             1.328          2236.865  </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      islandDream   islandTorgersen     bill_depth_mm  </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##            9.221           -18.433           256.913</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">##      (Intercept)  speciesChinstrap     speciesGentoo  </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">##        -1009.943             1.328          2236.865  </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">##      islandDream   islandTorgersen     bill_depth_mm  </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">##            9.221           -18.433           256.913</span></span></code></pre><p></p></div>
 <p>This can affect how the results are analyzed. For example, to get
 sequential hypothesis tests, each individual term is tested:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">pre_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                   Df    Sum Sq   Mean Sq  F value Pr(&gt;F)    </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## speciesChinstrap   1  18642821  18642821 141.1482 &lt;2e-16 ***</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## speciesGentoo      1 128221393 128221393 970.7875 &lt;2e-16 ***</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## islandDream        1     13399     13399   0.1014 0.7503    </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## islandTorgersen    1       255       255   0.0019 0.9650    </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_depth_mm      1  28051023  28051023 212.3794 &lt;2e-16 ***</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals        336  44378805    132080                    </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">##                   Df    Sum Sq   Mean Sq  F value Pr(&gt;F)    </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## speciesChinstrap   1  18642821  18642821 141.1482 &lt;2e-16 ***</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">## speciesGentoo      1 128221393 128221393 970.7875 &lt;2e-16 ***</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## islandDream        1     13399     13399   0.1014 0.7503    </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">## islandTorgersen    1       255       255   0.0019 0.9650    </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">## bill_depth_mm      1  28051023  28051023 212.3794 &lt;2e-16 ***</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">## Residuals        336  44378805    132080                    </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -229,29 +229,29 @@ like the data to be passed to a model untouched:</p>
 <span><span class="va">un_encoded_fit</span> <span class="op">&lt;-</span> <span class="va">un_encoded_parsnip_fit</span><span class="op">$</span><span class="va">fit</span></span>
 <span></span>
 <span><span class="va">un_encoded_fit</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)     bill_depth_mm  speciesChinstrap  </span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##        -1009.943           256.913             1.328  </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo       islandDream   islandTorgersen  </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##         2236.865             9.221           -18.433</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## stats::lm(formula = ..y ~ ., data = data)</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">##      (Intercept)     bill_depth_mm  speciesChinstrap  </span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">##        -1009.943           256.913             1.328  </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">##    speciesGentoo       islandDream   islandTorgersen  </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">##         2236.865             9.221           -18.433</span></span></code></pre><p></p></div>
 <p>While this looks the same, the raw columns were given to <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and that
 function created the dummy variables. Because of this, the sequential
 ANOVA tests groups of parameters to get column-level p-values:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html" class="external-link">anova</a></span><span class="op">(</span><span class="va">un_encoded_fit</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##                Df    Sum Sq  Mean Sq F value Pr(&gt;F)    </span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_depth_mm   1  48840779 48840779 369.782 &lt;2e-16 ***</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## species         2 126067249 63033624 477.239 &lt;2e-16 ***</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## island          2     20864    10432   0.079 0.9241    </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals     336  44378805   132080                   </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## Response: ..y</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">##                Df    Sum Sq  Mean Sq F value Pr(&gt;F)    </span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## bill_depth_mm   1  48840779 48840779 369.782 &lt;2e-16 ***</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">## species         2 126067249 63033624 477.239 &lt;2e-16 ***</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">## island          2     20864    10432   0.079 0.9241    </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">## Residuals     336  44378805   132080                   </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -280,18 +280,18 @@ used. To demonstrate, a spline function will be used for the bill depth:</p>
 <span><span class="va">custom_fit</span> <span class="op">&lt;-</span> <span class="va">custom_parsnip_fit</span><span class="op">$</span><span class="va">fit</span></span>
 <span></span>
 <span><span class="va">custom_fit</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, </span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     3), data = data)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           (Intercept)       speciesChinstrap          speciesGentoo  </span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">##              1959.090                  8.534               2352.137  </span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 2.425                -12.002               1476.386  </span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="do">##              3187.839               1686.996</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## stats::lm(formula = body_mass_g ~ species + island + ns(bill_depth_mm, </span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="do">##     3), data = data)</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="do">##           (Intercept)       speciesChinstrap          speciesGentoo  </span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="do">##              1959.090                  8.534               2352.137  </span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="do">##           islandDream        islandTorgersen  ns(bill_depth_mm, 3)1  </span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="do">##                 2.425                -12.002               1476.386  </span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="do">## ns(bill_depth_mm, 3)2  ns(bill_depth_mm, 3)3  </span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="do">##              3187.839               1686.996</span></span></code></pre><p></p></div>
 </div>
 
 <div class="section">
@@ -303,9 +303,9 @@ the corresponding model fit is removed.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">custom_formula_no_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_formula.html">update_formula</a></span><span class="op">(</span><span class="va">custom_formula</span>, <span class="va">body_mass_g</span> <span class="op">~</span> <span class="va">species</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">custom_formula_no_fit</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in extract_fit_parsnip(custom_formula_no_fit) : </span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   Can't extract a model fit from an untrained workflow.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">## i Do you need to call `fit()`?</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="do">## Error in extract_fit_parsnip(custom_formula_no_fit) : </span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="do">##   Can't extract a model fit from an untrained workflow.</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="do">## i Do you need to call `fit()`?</span></span></code></pre><p></p></div>
 </div>
 
     </div>

@@ -235,7 +235,7 @@ extract_fit_time.workflow <- function(x, summarize = TRUE, ...) {
   if (summarize) {
     res$stage = "workflow"
     res$process_id = "workflow"
-    res$time = sum(res$time)
+    res$elapsed = sum(res$elapsed)
     res <- res[1, ]
   }
 

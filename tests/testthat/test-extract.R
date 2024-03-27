@@ -370,16 +370,16 @@ test_that("extract_fit_time() works", {
   res <- extract_fit_time(wf)
 
   expect_s3_class(res, "tbl_df")
-  expect_identical(names(res), c("stage", "process_id", "time"))
+  expect_identical(names(res), c("stage", "process_id", "elapsed"))
   expect_identical(res$stage, "workflow")
   expect_identical(res$process_id, "workflow")
-  expect_true(is.double(res$time))
-  expect_true(res$time >= 0)
+  expect_true(is.double(res$elapsed))
+  expect_true(res$elapsed >= 0)
 
   res <- extract_fit_time(wf, summarize = FALSE)
 
   expect_s3_class(res, "tbl_df")
-  expect_identical(names(res), c("stage", "process_id", "time"))
+  expect_identical(names(res), c("stage", "process_id", "elapsed"))
   expect_identical(
     res$stage,
     c("preprocess", "preprocess", "preprocess", "preprocess", "model")
@@ -388,6 +388,6 @@ test_that("extract_fit_time() works", {
     res$process_id,
     c("prep.scale", "bake.scale", "prep.center", "bake.center", "linear_reg")
   )
-  expect_true(is.double(res$time))
-  expect_true(all(res$time >= 0))
+  expect_true(is.double(res$elapsed))
+  expect_true(all(res$elapsed >= 0))
 })

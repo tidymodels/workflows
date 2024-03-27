@@ -225,10 +225,12 @@ extract_fit_time.workflow <- function(x, summarize = TRUE, ...) {
     preprocessor <- vctrs::vec_cbind(stage = "preprocess", preprocessor)
   }
 
-  model <- extract_fit_time(extract_fit_parsnip(x))
-  model <- vctrs::vec_cbind(stage = "model", model)
+  res <- extract_fit_time(extract_fit_parsnip(x))
+  res <- vctrs::vec_cbind(stage = "model", res)
 
-  res <- vctrs::vec_rbind(preprocessor, model)
+  if (has_preprocessor_recipe(x)) {
+    res <- vctrs::vec_rbind(preprocessor, res)
+  }
 
   if (summarize) {
     res$stage = "workflow"

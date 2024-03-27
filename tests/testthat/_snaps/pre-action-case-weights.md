@@ -38,7 +38,7 @@
       fit(wf, df)
     Condition
       Error in `fit()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `w` doesn't exist.
 
 # case weights `col` can't select >1 columns in `data`

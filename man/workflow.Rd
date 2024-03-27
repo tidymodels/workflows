@@ -26,7 +26,7 @@ fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
 to fit, specified through \code{\link[=add_model]{add_model()}}.
 
-The \code{preprocessor} and \code{spec} arguments allow you add components to a
+The \code{preprocessor} and \code{spec} arguments allow you to add components to a
 workflow quickly, without having to go through the \verb{add_*()} functions, such
 as \code{\link[=add_recipe]{add_recipe()}} or \code{\link[=add_model]{add_model()}}. However, if you need to control any of
 the optional arguments to those functions, such as the \code{blueprint} or the

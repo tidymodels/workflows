@@ -1,14 +1,23 @@
 # workflows (development version)
 
-* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
+# workflows 1.1.4
 
-* `add_recipe()` will now error informatively when supplied a trained recipe (#179).
+* While `augment.workflow()` previously never returned a `.resid` column, the 
+  method will now return residuals under the same conditions that
+  `augment.model_fit()` does (#201).
 
 * `augment.workflow()` gained an `eval_time` argument, enabling augmenting
-  censored regression models (#200).
+  censored regression models (#200, #213).
 
 * The prediction columns are now appended to the LHS rather than RHS of 
-  `new_data` in `augment.workflow()`, following analogous changes in parsnip (#200).
+  `new_data` in `augment.workflow()`, following analogous changes in 
+   parsnip (#200).
+
+* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 
+  now warn on every usage (#198). 
+  
+* `add_recipe()` will now error informatively when supplied a trained recipe
+  (#179).
 
 * New `extract_fit_time()` method has been added that return the time it took to train the workflow. (#191)
 

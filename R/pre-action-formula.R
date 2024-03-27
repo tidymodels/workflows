@@ -87,7 +87,7 @@ update_formula <- function(x, formula, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_formula <- function(object, workflow, data) {
+fit.action_formula <- function(object, workflow, data, ...) {
   formula <- object$formula
   blueprint <- object$blueprint
 

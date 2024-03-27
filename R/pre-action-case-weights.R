@@ -94,7 +94,7 @@ update_case_weights <- function(x, col) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_case_weights <- function(object, workflow, data) {
+fit.action_case_weights <- function(object, workflow, data, ...) {
   col <- object$col
 
   loc <- eval_select_case_weights(col, data)

@@ -165,7 +165,7 @@ update_variables <- function(x,
 
 # ------------------------------------------------------------------------------
 
-fit.action_variables <- function(object, workflow, data) {
+fit.action_variables <- function(object, workflow, data, ...) {
   variables <- object$variables
   outcomes <- variables$outcomes
   predictors <- variables$predictors

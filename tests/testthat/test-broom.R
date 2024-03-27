@@ -101,7 +101,33 @@ test_that("can augment using a fitted workflow's model", {
   # at least 1 prediction specific column should be added
   expect_true(ncol(x) > ncol(df))
 
-  expect_named(x, c(".pred", "y", "x"))
+  expect_named(x, c(".pred", ".resid", "y", "x"))
+})
+
+test_that("can augment without outcome column", {
+  skip_if_not_installed("broom")
+
+  df <- data.frame(y = c(2, 3, 4), x = c(1, 5, 3))
+  df_new <- df["x"]
+
+  lm_spec <- parsnip::linear_reg()
+  lm_spec <- parsnip::set_engine(lm_spec, "lm")
+
+  wf <- workflow()
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_model(wf, lm_spec)
+
+  wf <- fit(wf, df)
+
+  x <- augment(wf, df_new)
+
+  expect_s3_class(x, "tbl_df")
+  expect_identical(nrow(x), 3L)
+
+  # at least 1 prediction specific column should be added
+  expect_true(ncol(x) > ncol(df_new))
+
+  expect_named(x, c(".pred",  "x"))
 })
 
 test_that("augment returns `new_data`, not the pre-processed version of `new_data`", {

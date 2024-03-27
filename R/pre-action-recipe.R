@@ -88,7 +88,7 @@ update_recipe <- function(x, recipe, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_recipe <- function(object, workflow, data) {
+fit.action_recipe <- function(object, workflow, data, ...) {
   recipe <- object$recipe
   blueprint <- object$blueprint
 

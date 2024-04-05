@@ -27,11 +27,18 @@
 #'
 #' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
 #'
+#' - `extract_fit_time()` returns a tibble with elapsed fit times. The fit
+#'   times correspond to the time for the parsnip engine or recipe steps to fit
+#'   (or their sum if `summarize = TRUE`) and do not include other portions of
+#'   the elapsed time in [workflows::fit.workflow()].
+#'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned. This argument should be named.
 #' @param parameter A single string for the parameter ID.
+#' @param summarize A logical for whether the elapsed fit time should be returned as a
+#' single row or multiple rows.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -211,4 +218,29 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
 #' @rdname extract-workflow
 extract_parameter_dials.workflow <- function(x, parameter, ...) {
   extract_parameter_dials(extract_parameter_set_dials(x), parameter)
+}
+
+#' @export
+#' @rdname extract-workflow
+extract_fit_time.workflow <- function(x, summarize = TRUE, ...) {
+  if (has_preprocessor_recipe(x)) {
+    preprocessor <- extract_fit_time(extract_recipe(x), summarize = summarize)
+    preprocessor <- vctrs::vec_cbind(stage = "preprocess", preprocessor)
+  }
+
+  res <- extract_fit_time(extract_fit_parsnip(x))
+  res <- vctrs::vec_cbind(stage = "model", res)
+
+  if (has_preprocessor_recipe(x)) {
+    res <- vctrs::vec_rbind(preprocessor, res)
+  }
+
+  if (summarize) {
+    res$stage <- "workflow"
+    res$stage_id <- "workflow"
+    res$elapsed <- sum(res$elapsed)
+    res <- res[1, ]
+  }
+
+  res
 }

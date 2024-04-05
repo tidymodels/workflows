@@ -19,6 +19,8 @@
 * `add_recipe()` will now error informatively when supplied a trained recipe
   (#179).
 
+* New `extract_fit_time()` method has been added that return the time it took to train the workflow. (#191)
+
 # workflows 1.1.3
 
 * The workflows methods for `generics::tune_args()` and `generics::tunable()`

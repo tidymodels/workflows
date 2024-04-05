@@ -67,7 +67,10 @@ variable selectors.
 whether the fitted or original recipe is returned.
 \item \code{extract_parameter_dials()} returns a single dials parameter object.
 \item \code{extract_parameter_set_dials()} returns a set of dials parameter objects.
-\item \code{extract_fit_time()} returns a tibble with elapsed fit times.
+\item \code{extract_fit_time()} returns a tibble with elapsed fit times. The fit
+times correspond to the time for the parsnip engine or recipe steps to fit
+(or their sum if \code{summarize = TRUE}) and do not include other portions of
+the elapsed time in \code{\link[=fit.workflow]{fit.workflow()}}.
 }
 }
 \details{

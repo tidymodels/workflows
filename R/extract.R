@@ -27,7 +27,9 @@
 #'
 #' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
 #'
-#' - `extract_fit_time()` returns a tibble with elapsed fit times.
+#' - `extract_fit_time()` returns a tibble with elapsed fit times. The fit times correspond to
+#'   the time for the parsnip engine or recipe steps to fit (or their sum if `summarize = TRUE`)
+#'   and do not include other portions of the elapsed time in [workflows::fit.workflow()].
 #'
 #' @param x A workflow
 #'

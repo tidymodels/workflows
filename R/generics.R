@@ -1,4 +1,3 @@
-# Lazily registered in .onLoad()
 #' @export
 required_pkgs.workflow <- function(x, infra = TRUE, ...) {
   out <- character()

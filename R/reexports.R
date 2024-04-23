@@ -33,3 +33,7 @@ hardhat::extract_parameter_dials
 #' @importFrom hardhat extract_fit_time
 #' @export
 hardhat::extract_fit_time
+
+#' @importFrom generics required_pkgs
+#' @export
+generics::required_pkgs

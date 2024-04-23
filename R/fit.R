@@ -62,9 +62,10 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
+  if (has_post(workflow)) {
+    workflow <- .fit_post(workflow, data)
+  }
   workflow <- .fit_finalize(workflow)
-
-  # TODO: Post-processing before `.fit_finalize()`?
 
   workflow
 }
@@ -151,6 +152,13 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
   fit(action_model, workflow = workflow, control = control)
+}
+
+#' @rdname workflows-internals
+#' @export
+.fit_post <- function(workflow, data) {
+  action_post <- workflow[["post"]][["actions"]][["container"]]
+  fit(action_post, workflow = workflow, data = data)
 }
 
 #' @rdname workflows-internals

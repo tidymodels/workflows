@@ -192,6 +192,23 @@ extract_preprocessor.workflow <- function(x, ...) {
 }
 
 #' @export
+extract_postprocessor <- function(x, ...) {
+  UseMethod("extract_postprocessor")
+}
+
+#' @rdname extract-workflow
+#' @export
+extract_postprocessor.workflow <- function(x, ...) {
+  if (has_post(x)) {
+    # TODO: to mirror the other methods, this should actually live
+    # in x$post$actions$container$container. currently,
+    # x$post$actions$container is the unfitted container.
+    return(x$post$post)
+  }
+  abort("The workflow does not have a postprocessor.")
+}
+
+#' @export
 #' @rdname extract-workflow
 extract_parameter_set_dials.workflow <- function(x, ...) {
   model <- extract_spec_parsnip(x)

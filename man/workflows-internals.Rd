@@ -4,12 +4,15 @@
 \alias{workflows-internals}
 \alias{.fit_pre}
 \alias{.fit_model}
+\alias{.fit_post}
 \alias{.fit_finalize}
 \title{Internal workflow functions}
 \usage{
 .fit_pre(workflow, data)
 
 .fit_model(workflow, control)
+
+.fit_post(workflow, data)
 
 .fit_finalize(workflow)
 }

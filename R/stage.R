@@ -23,8 +23,12 @@ new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
   new_stage(actions = actions, fit = fit, subclass = "stage_fit")
 }
 
-new_stage_post <- function(actions = new_named_list()) {
-  new_stage(actions, subclass = "stage_post")
+new_stage_post <- function(actions = new_named_list(), post = NULL) {
+  if (!is.null(post) && !is_container(post)) {
+    abort("`post` must be a `container`.", .internal = TRUE)
+  }
+
+  new_stage(actions, post = post, subclass = "stage_post")
 }
 
 # ------------------------------------------------------------------------------

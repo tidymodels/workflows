@@ -28,6 +28,16 @@ validate_recipes_available <- function(..., call = caller_env()) {
   invisible()
 }
 
+validate_container_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
+  if (!requireNamespace("container", quietly = TRUE)) {
+    abort("The `container` package must be available to add a container.", call = call)
+  }
+
+  invisible()
+}
+
 # ------------------------------------------------------------------------------
 
 # https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109
@@ -83,6 +93,10 @@ has_spec <- function(x) {
 
 has_fit <- function(x) {
   !is.null(x$fit$fit)
+}
+
+has_post <- function(x) {
+  "container" %in% names(x$post$actions)
 }
 
 has_blueprint <- function(x) {

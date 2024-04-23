@@ -46,7 +46,7 @@ order_stage_fit <- function() {
 }
 
 order_stage_post <- function() {
-  character()
+  "container"
 }
 
 # ------------------------------------------------------------------------------

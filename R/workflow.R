@@ -60,7 +60,7 @@
 #'
 #' fit(wf_variables, attrition)
 #' @export
-workflow <- function(preprocessor = NULL, spec = NULL) {
+workflow <- function(preprocessor = NULL, spec = NULL, postprocessor = NULL) {
   out <- new_workflow()
 
   if (!is_null(preprocessor)) {
@@ -69,6 +69,10 @@ workflow <- function(preprocessor = NULL, spec = NULL) {
 
   if (!is_null(spec)) {
     out <- add_model(out, spec)
+  }
+
+  if (!is_null(postprocessor)) {
+    out <- add_postprocessor(out, postprocessor)
   }
 
   out
@@ -91,6 +95,19 @@ add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
 
   abort(
     "`preprocessor` must be a formula, recipe, or a set of workflow variables.",
+    call = call
+  )
+}
+
+add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
+  check_dots_empty()
+
+  if (is_container(postprocessor)) {
+    return(add_container(x, postprocessor))
+  }
+
+  abort(
+    "`postprocessor` must be a container.",
     call = call
   )
 }

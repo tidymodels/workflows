@@ -4,7 +4,7 @@
 \alias{workflow}
 \title{Create a workflow}
 \usage{
-workflow(preprocessor = NULL, spec = NULL)
+workflow(preprocessor = NULL, spec = NULL, postprocessor = NULL)
 }
 \arguments{
 \item{preprocessor}{An optional preprocessor to add to the workflow. One of:

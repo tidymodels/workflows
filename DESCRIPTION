@@ -19,6 +19,7 @@ Depends:
     R (>= 3.6)
 Imports: 
     cli (>= 3.3.0),
+    container,
     generics (>= 0.1.2),
     glue (>= 1.6.2),
     hardhat (>= 1.3.1.9000),
@@ -49,7 +50,8 @@ Config/Needs/website:
 Remotes:
     tidymodels/hardhat,
     tidymodels/recipes,
-    tidymodels/parsnip
+    tidymodels/parsnip,
+    tidymodels/container#1
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

@@ -87,6 +87,7 @@ update_formula <- function(x, formula, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 fit.action_formula <- function(object, workflow, data, ...) {
   formula <- object$formula
   blueprint <- object$blueprint
@@ -128,6 +129,7 @@ check_for_offset <- function(mold, ..., call = caller_env()) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 check_conflicts.action_formula <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 

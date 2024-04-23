@@ -94,6 +94,7 @@ update_case_weights <- function(x, col) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 fit.action_case_weights <- function(object, workflow, data, ...) {
   col <- object$col
 

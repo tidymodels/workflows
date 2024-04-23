@@ -165,6 +165,7 @@ update_variables <- function(x,
 
 # ------------------------------------------------------------------------------
 
+#' @export
 fit.action_variables <- function(object, workflow, data, ...) {
   variables <- object$variables
   outcomes <- variables$outcomes
@@ -212,6 +213,7 @@ fit.action_variables <- function(object, workflow, data, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 check_conflicts.action_variables <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 

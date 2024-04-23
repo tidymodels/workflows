@@ -13,18 +13,21 @@ add_action_impl <- function(x, action, name, ..., call = caller_env()) {
   UseMethod("add_action_impl", action)
 }
 
+#' @export
 add_action_impl.action_pre <- function(x, action, name, ..., call = caller_env()) {
   check_singleton(x$pre$actions, name, call = call)
   x$pre <- add_action_to_stage(x$pre, action, name, order_stage_pre())
   x
 }
 
+#' @export
 add_action_impl.action_fit <- function(x, action, name, ..., call = caller_env()) {
   check_singleton(x$fit$actions, name, call = call)
   x$fit <- add_action_to_stage(x$fit, action, name, order_stage_fit())
   x
 }
 
+#' @export
 add_action_impl.action_post <- function(x, action, name, ..., call = caller_env()) {
   check_singleton(x$post$actions, name, call = call)
   x$post <- add_action_to_stage(x$post, action, name, order_stage_post())
@@ -74,6 +77,7 @@ check_conflicts <- function(action, x, ..., call = caller_env()) {
   UseMethod("check_conflicts")
 }
 
+#' @export
 check_conflicts.default <- function(action, x, ..., call = caller_env()) {
   invisible(action)
 }

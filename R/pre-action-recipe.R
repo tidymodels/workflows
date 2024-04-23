@@ -88,6 +88,7 @@ update_recipe <- function(x, recipe, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 fit.action_recipe <- function(object, workflow, data, ...) {
   recipe <- object$recipe
   blueprint <- object$blueprint
@@ -110,6 +111,7 @@ fit.action_recipe <- function(object, workflow, data, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 check_conflicts.action_recipe <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 

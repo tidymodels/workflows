@@ -77,6 +77,7 @@ update_container <- function(x, container, ...) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 fit.action_container <- function(object, workflow, data, ...) {
   container <- object$container
 
@@ -121,6 +122,7 @@ mock_trained_workflow <- function(workflow) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 check_conflicts.action_container <- function(action, x, ..., call = caller_env()) {
   post <- x$post
 

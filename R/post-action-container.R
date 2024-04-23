@@ -84,11 +84,6 @@ fit.action_container <- function(object, workflow, data, ...) {
   # mock trained workflow to allow for prediction without a post-processor.
   workflow_mock <- mock_trained_workflow(workflow)
 
-  # TODO:
-  # * if `data` is the same as that inputted to fit, it's just the
-  #   predictors and outcome.
-  # * _could_ just predict on `data` and use that, but overfits(?)
-  # * _could_ require a second dataset, which would suck.
   post <-
     fit(
       object = container,

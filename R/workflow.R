@@ -21,6 +21,10 @@
 #' @param spec An optional parsnip model specification to add to the workflow.
 #'   Passed on to [add_model()].
 #'
+#' @param postprocessor An optional [container::container()] defining
+#'   post-processing steps to add to the workflow. Passed on to
+#'   [add_container()].
+#'
 #' @return
 #' A new `workflow` object.
 #'

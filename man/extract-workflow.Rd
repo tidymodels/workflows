@@ -8,6 +8,7 @@
 \alias{extract_fit_engine.workflow}
 \alias{extract_mold.workflow}
 \alias{extract_preprocessor.workflow}
+\alias{extract_postprocessor}
 \alias{extract_postprocessor.workflow}
 \alias{extract_parameter_set_dials.workflow}
 \alias{extract_parameter_dials.workflow}
@@ -25,6 +26,8 @@
 \method{extract_mold}{workflow}(x, ...)
 
 \method{extract_preprocessor}{workflow}(x, ...)
+
+extract_postprocessor(x, ...)
 
 \method{extract_postprocessor}{workflow}(x, ...)
 

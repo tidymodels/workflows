@@ -36,11 +36,11 @@ container with the new one.
 }
 }
 \examples{
-library(containers)
+library(container)
 library(magrittr)
 
-container <- container(mpg ~ cyl, mtcars) \%>\%
-  step_log(cyl)
+container <- container() \%>\%
+  adjust_probability_threshold(.1)
 
 workflow <- workflow() \%>\%
   add_container(container)
@@ -49,5 +49,5 @@ workflow
 
 remove_container(workflow)
 
-update_container(workflow, container(mpg ~ cyl, mtcars))
+update_container(workflow, container() \%>\% adjust_probability_threshold(.2))
 }

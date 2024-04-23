@@ -16,6 +16,10 @@ workflow(preprocessor = NULL, spec = NULL, postprocessor = NULL)
 
 \item{spec}{An optional parsnip model specification to add to the workflow.
 Passed on to \code{\link[=add_model]{add_model()}}.}
+
+\item{postprocessor}{An optional \code{\link[container:container]{container::container()}} defining
+post-processing steps to add to the workflow. Passed on to
+\code{\link[=add_container]{add_container()}}.}
 }
 \value{
 A new \code{workflow} object.

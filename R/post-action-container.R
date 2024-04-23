@@ -24,11 +24,11 @@
 #'
 #' @export
 #' @examples
-#' library(containers)
+#' library(container)
 #' library(magrittr)
 #'
-#' container <- container(mpg ~ cyl, mtcars) %>%
-#'   step_log(cyl)
+#' container <- container() %>%
+#'   adjust_probability_threshold(.1)
 #'
 #' workflow <- workflow() %>%
 #'   add_container(container)
@@ -37,7 +37,7 @@
 #'
 #' remove_container(workflow)
 #'
-#' update_container(workflow, container(mpg ~ cyl, mtcars))
+#' update_container(workflow, container() %>% adjust_probability_threshold(.2))
 add_container <- function(x, container, ...) {
   check_dots_empty()
   validate_container_available()
@@ -93,10 +93,10 @@ fit.action_container <- function(object, workflow, data, ...) {
       object = container,
       .data = augment(workflow_mock, data),
       outcome = names(extract_mold(workflow_mock)$outcomes),
-      estimate = any_of(c(".pred", ".pred_class")),
+      estimate = tidyselect::any_of(c(".pred", ".pred_class")),
       probabilities = c(
-        contains(".pred_"),
-        -matches("^\\.pred$|^\\.pred_class$")
+        tidyselect::contains(".pred_"),
+        -tidyselect::matches("^\\.pred$|^\\.pred_class$")
       )
     )
 
@@ -152,7 +152,7 @@ is_container <- function(x) {
 }
 
 container_fully_trained <- function(x) {
-  all(map_lgl(post$operations, container_operation_trained))
+  all(map_lgl(x$operations, container_operation_trained))
 }
 
 container_operation_trained <- function(x) {

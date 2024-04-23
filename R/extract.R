@@ -191,6 +191,8 @@ extract_preprocessor.workflow <- function(x, ...) {
   abort("The workflow does not have a preprocessor.")
 }
 
+# TODO: this method should live in hardhat
+#' @rdname extract-workflow
 #' @export
 extract_postprocessor <- function(x, ...) {
   UseMethod("extract_postprocessor")

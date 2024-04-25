@@ -22,7 +22,7 @@ hardhat::extract_mold
 #' @export
 hardhat::extract_preprocessor
 #'
-#' @importFrom hardhat extract_preprocessor
+#' @importFrom hardhat extract_postprocessor
 #' @export
 hardhat::extract_postprocessor
 #'

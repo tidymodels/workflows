@@ -153,5 +153,5 @@ container_fully_trained <- function(x) {
 }
 
 container_operation_trained <- function(x) {
-  isTRUE(x$results$trained)
+  isTRUE(x$trained)
 }

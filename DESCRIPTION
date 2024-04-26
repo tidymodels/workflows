@@ -48,7 +48,7 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes:
-    tidymodels/hardhat#248,
+    tidymodels/hardhat,
     tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/container#12

@@ -62,7 +62,7 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   fit <- extract_fit_parsnip(workflow)
   new_data <- forge_predictors(new_data, workflow)
 
-  if (!has_post(workflow)) {
+  if (!has_postprocessor(workflow)) {
     return(predict(fit, new_data, type = type, opts = opts, ...))
   }
 

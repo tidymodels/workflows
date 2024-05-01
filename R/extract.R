@@ -193,13 +193,22 @@ extract_preprocessor.workflow <- function(x, ...) {
 
 #' @rdname extract-workflow
 #' @export
-extract_postprocessor.workflow <- function(x, ...) {
-  if (has_post(x)) {
-    # TODO: to mirror the other methods, this should actually live
-    # in x$post$actions$container$container. currently,
-    # x$post$actions$container is the unfitted container.
-    return(x$post$post)
+extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
+  if (!is_bool(estimated)) {
+    abort("`estimated` must be a single `TRUE` or `FALSE`.")
   }
+
+  if (estimated) {
+    res <- x$post$fit
+    if (!is.null(res)) {
+      return(res)
+    }
+  }
+
+  if (has_postprocessor(x)) {
+    return(x$post$actions$container$container)
+  }
+
   abort("The workflow does not have a postprocessor.")
 }
 

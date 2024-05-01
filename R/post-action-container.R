@@ -50,7 +50,7 @@ add_container <- function(x, container, ...) {
 remove_container <- function(x) {
   validate_is_workflow(x)
 
-  if (!has_post(x)) {
+  if (!has_postprocessor(x)) {
     rlang::warn("The workflow has no container postprocessor to remove.")
   }
 
@@ -84,7 +84,7 @@ fit.action_container <- function(object, workflow, data, ...) {
   # mock trained workflow to allow for prediction without a post-processor.
   workflow_mock <- mock_trained_workflow(workflow)
 
-  post <-
+  post_fit <-
     fit(
       object = container,
       .data = augment(workflow_mock, data),
@@ -101,7 +101,7 @@ fit.action_container <- function(object, workflow, data, ...) {
     fit = workflow$fit,
     post = new_stage_post(
       actions = workflow$post$actions,
-      post = post
+      fit = post_fit
     )
   )
 }

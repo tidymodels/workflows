@@ -95,7 +95,11 @@ has_fit <- function(x) {
   !is.null(x$fit$fit)
 }
 
-has_post <- function(x) {
+has_postprocessor <- function(x) {
+  has_postprocessor_container(x)
+}
+
+has_postprocessor_container <- function(x) {
   "container" %in% names(x$post$actions)
 }
 

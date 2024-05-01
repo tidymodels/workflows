@@ -62,7 +62,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
-  if (has_post(workflow)) {
+  if (has_postprocessor(workflow)) {
     workflow <- .fit_post(workflow, data)
   }
   workflow <- .fit_finalize(workflow)

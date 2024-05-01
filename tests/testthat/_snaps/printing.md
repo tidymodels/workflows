@@ -185,3 +185,23 @@
       Computational engine: lm 
       
 
+# can print workflow with postprocessor
+
+    Code
+      workflow
+    Output
+      == Workflow ====================================================================
+      Preprocessor: None
+      Model: None
+      Postprocessor: Container
+      
+      -- Postprocessor ---------------------------------------------------------------
+    Message
+      
+      -- Container -------------------------------------------------------------------
+      A regression postprocessor with 0 operations.
+    Output
+      NA
+      NA
+      NA
+

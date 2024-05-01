@@ -209,7 +209,7 @@ print.workflow <- function(x, ...) {
   print_preprocessor(x)
   print_case_weights(x)
   print_model(x)
-  # print_postprocessor(x)
+  print_postprocessor(x)
   invisible(x)
 }
 
@@ -251,6 +251,10 @@ print_header <- function(x) {
 
   spec_msg <- glue::glue("{spec_msg} {spec}")
   cat_line(spec_msg)
+
+  if (has_postprocessor(x)) {
+    cat_line(glue::glue("{cli::style_italic('Postprocessor:')} Container"))
+  }
 
   invisible(x)
 }
@@ -438,6 +442,40 @@ print_fit <- function(x) {
   cat_line("")
   cat_line("...")
   cat_line(extra_output_msg)
+
+  invisible(x)
+}
+
+print_postprocessor <- function(x) {
+  has_postprocessor <- has_postprocessor(x)
+
+  if (!has_postprocessor) {
+    return(invisible(x))
+  }
+
+  # Space between Model section and Postprocessor section
+  cat_line("")
+
+  header <- cli::rule("Postprocessor")
+  cat_line(header)
+
+  if (has_postprocessor_container(x)) {
+    print_postprocessor_container(x)
+  }
+
+  invisible(x)
+}
+
+print_postprocessor_container <- function(x) {
+  container <- extract_postprocessor(x)
+
+  # TODO: currently this function just captures and reprints the container
+  # print method. other workflows methods define their own print methods;
+  # considering doing so or refactoring.
+  # TODO: this snap currently includes some NA return values and marks the
+  # following output as a message rather than output.
+  container_print <- utils::capture.output(container, type = "message")
+  cat_line(container_print[3:length(container_print)])
 
   invisible(x)
 }

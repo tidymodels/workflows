@@ -77,3 +77,61 @@ test_that("update a postprocessor after postprocessor fit", {
   # postprocessor will not affect it (#225)
   expect_equal(workflow_with_post$fit, workflow_with_post_new$fit)
 })
+
+test_that("postprocessor fit aligns with manually fitted version (no calibration)", {
+  skip_if_not_installed("modeldata")
+
+  # create example data
+  y <- seq(0, 7, .1)
+  dat <- data.frame(y = y, x = y + (y-3)^2)
+
+  # construct workflows
+  post <- container::container("regression", "regression")
+  post <- container::adjust_numeric_range(post, 0, 5)
+
+  wflow_simple <- workflow(y ~ ., parsnip::linear_reg())
+  wflow_post <- add_container(wflow_simple, post)
+
+  # train workflow
+  wf_simple_fit <- fit(wflow_simple, dat)
+  wf_post_fit <- fit(wflow_post, dat)
+
+  # ...verify predictions are the same as training the post-proc separately
+  wflow_simple_preds <- augment(wf_simple_fit, dat)
+  post_trained <- fit(post, wflow_simple_preds, y, .pred)
+  wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
+
+  wflow_post_preds <- predict(wf_post_fit, dat)
+
+  expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
+  expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))
+})
+
+test_that("postprocessor fit aligns with manually fitted version (with calibration)", {
+  skip_if_not_installed("modeldata")
+
+  # create example data
+  y <- seq(0, 7, .1)
+  dat <- data.frame(y = y, x = y + (y-3)^2)
+
+  # construct workflows
+  post <- container::container("regression", "regression")
+  post <- container::adjust_numeric_calibration(post, "linear")
+
+  wflow_simple <- workflow(y ~ ., parsnip::linear_reg())
+  wflow_post <- add_container(wflow_simple, post)
+
+  # train workflow
+  wf_simple_fit <- fit(wflow_simple, dat)
+  wf_post_fit <- fit(wflow_post, dat)
+
+  # ...verify predictions are the same as training the post-proc separately
+  wflow_simple_preds <- augment(wf_simple_fit, dat)
+  post_trained <- fit(post, wflow_simple_preds, y, .pred)
+  wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
+
+  wflow_post_preds <- predict(wf_post_fit, dat)
+
+  expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
+  expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))
+})

@@ -149,6 +149,10 @@ is_container <- function(x) {
 }
 
 container_fully_trained <- function(x) {
+  if (length(x$operations) == 0L) {
+    return(FALSE)
+  }
+
   all(map_lgl(x$operations, container_operation_trained))
 }
 

@@ -26,7 +26,7 @@
 
 \method{extract_preprocessor}{workflow}(x, ...)
 
-\method{extract_postprocessor}{workflow}(x, ...)
+\method{extract_postprocessor}{workflow}(x, estimated = TRUE, ...)
 
 \method{extract_parameter_set_dials}{workflow}(x, ...)
 

@@ -27,17 +27,17 @@
 #' library(container)
 #' library(magrittr)
 #'
-#' container <- container() %>%
-#'   adjust_probability_threshold(.1)
+#' container <- container("classification", "binary")
+#' container_1 <- adjust_probability_threshold(container, .1)
 #'
 #' workflow <- workflow() %>%
-#'   add_container(container)
+#'   add_container(container_1)
 #'
 #' workflow
 #'
 #' remove_container(workflow)
 #'
-#' update_container(workflow, container() %>% adjust_probability_threshold(.2))
+#' update_container(workflow, adjust_probability_threshold(container, .2))
 add_container <- function(x, container, ...) {
   check_dots_empty()
   validate_container_available()

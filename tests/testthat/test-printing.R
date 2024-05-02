@@ -81,7 +81,7 @@ test_that("can print workflow with case weights, preprocessor, and model", {
 })
 
 test_that("can print workflow with postprocessor", {
-  post <- container::container("regression", "regression")
+  post <- container::container("regression")
   workflow <- workflow()
   workflow <- add_postprocessor(workflow, post)
 

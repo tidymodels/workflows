@@ -30,7 +30,7 @@ Imports:
     vctrs (>= 0.4.1)
 Suggests: 
     butcher (>= 0.2.0),
-    container,
+    container (>= 0.0.0.9001),
     covr,
     dials (>= 1.0.0),
     knitr,
@@ -51,7 +51,7 @@ Remotes:
     tidymodels/hardhat,
     tidymodels/recipes,
     tidymodels/parsnip,
-    tidymodels/container
+    tidymodels/container#14
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

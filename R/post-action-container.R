@@ -27,7 +27,7 @@
 #' library(container)
 #' library(magrittr)
 #'
-#' container <- container("classification", "binary")
+#' container <- container("binary")
 #' container_1 <- adjust_probability_threshold(container, .1)
 #'
 #' workflow <- workflow() %>%

@@ -1,7 +1,7 @@
 #' Create a workflow
 #'
 #' @description
-#' A `workflow` is a container object that aggregates information required to
+#' A `workflow` is a tailor object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing, specified through [add_recipe()], or the model specification
 #' to fit, specified through [add_model()].
@@ -21,9 +21,9 @@
 #' @param spec An optional parsnip model specification to add to the workflow.
 #'   Passed on to [add_model()].
 #'
-#' @param postprocessor An optional [container::container()] defining
+#' @param postprocessor An optional [tailor::tailor()] defining
 #'   post-processing steps to add to the workflow. Passed on to
-#'   [add_container()].
+#'   [add_tailor()].
 #'
 #' @return
 #' A new `workflow` object.
@@ -106,12 +106,12 @@ add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
 add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
   check_dots_empty()
 
-  if (is_container(postprocessor)) {
-    return(add_container(x, postprocessor))
+  if (is_tailor(postprocessor)) {
+    return(add_tailor(x, postprocessor))
   }
 
   abort(
-    "`postprocessor` must be a container.",
+    "`postprocessor` must be a tailor.",
     call = call
   )
 }
@@ -253,7 +253,7 @@ print_header <- function(x) {
   cat_line(spec_msg)
 
   if (has_postprocessor(x)) {
-    cat_line(glue::glue("{cli::style_italic('Postprocessor:')} Container"))
+    cat_line(glue::glue("{cli::style_italic('Postprocessor:')} tailor"))
   }
 
   invisible(x)
@@ -459,23 +459,23 @@ print_postprocessor <- function(x) {
   header <- cli::rule("Postprocessor")
   cat_line(header)
 
-  if (has_postprocessor_container(x)) {
-    print_postprocessor_container(x)
+  if (has_postprocessor_tailor(x)) {
+    print_postprocessor_tailor(x)
   }
 
   invisible(x)
 }
 
-print_postprocessor_container <- function(x) {
-  container <- extract_postprocessor(x)
+print_postprocessor_tailor <- function(x) {
+  tailor <- extract_postprocessor(x)
 
-  # TODO: currently this function just captures and reprints the container
+  # TODO: currently this function just captures and reprints the tailor
   # print method. other workflows methods define their own print methods;
   # considering doing so or refactoring.
   # TODO: this snap currently includes some NA return values and marks the
   # following output as a message rather than output.
-  container_print <- utils::capture.output(container, type = "message")
-  cat_line(container_print[3:length(container_print)])
+  tailor_print <- utils::capture.output(tailor, type = "message")
+  cat_line(tailor_print[3:length(tailor_print)])
 
   invisible(x)
 }

@@ -28,11 +28,11 @@ validate_recipes_available <- function(..., call = caller_env()) {
   invisible()
 }
 
-validate_container_available <- function(..., call = caller_env()) {
+validate_tailor_available <- function(..., call = caller_env()) {
   check_dots_empty()
 
-  if (!requireNamespace("container", quietly = TRUE)) {
-    abort("The `container` package must be available to add a container.", call = call)
+  if (!requireNamespace("tailor", quietly = TRUE)) {
+    abort("The `tailor` package must be available to add a tailor.", call = call)
   }
 
   invisible()
@@ -96,11 +96,11 @@ has_fit <- function(x) {
 }
 
 has_postprocessor <- function(x) {
-  has_postprocessor_container(x)
+  has_postprocessor_tailor(x)
 }
 
-has_postprocessor_container <- function(x) {
-  "container" %in% names(x$post$actions)
+has_postprocessor_tailor <- function(x) {
+  "tailor" %in% names(x$post$actions)
 }
 
 has_blueprint <- function(x) {

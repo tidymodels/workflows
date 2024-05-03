@@ -206,7 +206,7 @@ extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
   }
 
   if (has_postprocessor(x)) {
-    return(x$post$actions$container$container)
+    return(x$post$actions$tailor$tailor)
   }
 
   abort("The workflow does not have a postprocessor.")

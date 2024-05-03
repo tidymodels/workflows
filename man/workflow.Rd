@@ -17,15 +17,15 @@ workflow(preprocessor = NULL, spec = NULL, postprocessor = NULL)
 \item{spec}{An optional parsnip model specification to add to the workflow.
 Passed on to \code{\link[=add_model]{add_model()}}.}
 
-\item{postprocessor}{An optional \code{\link[container:container]{container::container()}} defining
+\item{postprocessor}{An optional \code{\link[tailor:tailor]{tailor::tailor()}} defining
 post-processing steps to add to the workflow. Passed on to
-\code{\link[=add_container]{add_container()}}.}
+\code{\link[=add_tailor]{add_tailor()}}.}
 }
 \value{
 A new \code{workflow} object.
 }
 \description{
-A \code{workflow} is a container object that aggregates information required to
+A \code{workflow} is a tailor object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
 to fit, specified through \code{\link[=add_model]{add_model()}}.

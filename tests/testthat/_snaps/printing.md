@@ -193,12 +193,12 @@
       == Workflow ====================================================================
       Preprocessor: None
       Model: None
-      Postprocessor: Container
+      Postprocessor: tailor
       
       -- Postprocessor ---------------------------------------------------------------
     Message
       
-      -- Container -------------------------------------------------------------------
+      -- tailor ----------------------------------------------------------------------
       A regression postprocessor with 0 operations.
     Output
       NA

@@ -157,7 +157,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @rdname workflows-internals
 #' @export
 .fit_post <- function(workflow, data) {
-  action_post <- workflow[["post"]][["actions"]][["container"]]
+  action_post <- workflow[["post"]][["actions"]][["tailor"]]
   fit(action_post, workflow = workflow, data = data)
 }
 

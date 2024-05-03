@@ -67,7 +67,7 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   }
 
   # use `augment()` rather than `fit()` to get all possible prediction `type`s.
-  # likely, we actually want container to check for the existence of needed
+  # likely, we actually want tailor to check for the existence of needed
   # columns at predict time and just use `predict()` output here.
   fit_aug <- augment(fit, new_data, opts = opts, ...)
 

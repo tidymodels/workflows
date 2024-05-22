@@ -59,6 +59,11 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     abort("`data` must be provided to fit a workflow.")
   }
 
+  if (should_inner_split(object)) {
+    # todo: make an inner_split here
+    TRUE
+  }
+
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
@@ -68,6 +73,30 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- .fit_finalize(workflow)
 
   workflow
+}
+
+#' @export
+#' @keywords internal
+should_inner_split <- function(workflow) {
+  # todo: test this
+  has_postprocessor(workflow) && postprocessor_requires_training(workflow)
+}
+
+postprocessor_requires_training <- function(workflow) {
+  # todo: make this based on something that an external contributor
+  # would be able to hook into rather than hard-coding the calibration
+  # classes: https://github.com/tidymodels/tune/pull/894/files#r1585259827
+  tailor <- workflow$post$actions$tailor$tailor
+
+  operations_are_calibration <-
+    vapply(
+      tailor$operations,
+      rlang::inherits_any,
+      logical(1),
+      c("numeric_calibration", "probability_calibration")
+    )
+
+  any(operations_are_calibration)
 }
 
 # ------------------------------------------------------------------------------

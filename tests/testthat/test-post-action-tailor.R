@@ -109,6 +109,7 @@ test_that("postprocessor fit aligns with manually fitted version (no calibration
 
 test_that("postprocessor fit aligns with manually fitted version (with calibration)", {
   skip_if_not_installed("modeldata")
+  skip_if_not_installed("rsample")
 
   # create example data
   y <- seq(0, 7, .1)
@@ -122,15 +123,31 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
   wflow_post <- add_tailor(wflow_simple, post)
 
   # train workflow
-  wf_simple_fit <- fit(wflow_simple, dat)
+
+  # first, separate out the same data that workflows ought to internally
+  # when training with a postprocessor that needs estimation
+  mocked_split <-
+    rsample::make_splits(
+      list(analysis = seq_len(nrow(dat)), assessment = integer()),
+      data = dat,
+      class = "mc_split"
+    )
+  set.seed(1)
+  inner_split <- rsample::inner_split(mocked_split, list(prop = 2/3))
+
+  wf_simple_fit <- fit(wflow_simple, rsample::analysis(inner_split))
+
+  # the following fit will do all of this internally
+  set.seed(1)
   wf_post_fit <- fit(wflow_post, dat)
 
-  # ...verify predictions are the same as training the post-proc separately
-  wflow_simple_preds <- augment(wf_simple_fit, dat)
+  # ...verify predictions are the same as training the post-proc separately.
+  # note that this test naughtily re-predicts on the potato set.
+  wflow_simple_preds <- augment(wf_simple_fit, rsample::assessment(inner_split))
   post_trained <- fit(post, wflow_simple_preds, y, .pred)
   wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
 
-  wflow_post_preds <- predict(wf_post_fit, dat)
+  wflow_post_preds <- predict(wf_post_fit, rsample::assessment(inner_split))
 
   expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
   expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))

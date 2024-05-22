@@ -6,7 +6,7 @@
 \alias{update_tailor}
 \title{Add a tailor to a workflow}
 \usage{
-add_tailor(x, tailor, ...)
+add_tailor(x, tailor, prop = NULL, method = NULL, ...)
 
 remove_tailor(x)
 
@@ -18,6 +18,19 @@ update_tailor(x, tailor, ...)
 \item{tailor}{A tailor created using \code{\link[tailor:tailor]{tailor::tailor()}}. The tailor
 should not have been trained already with \code{\link[tailor:reexports]{tailor::fit()}}; workflows
 will handle training internally.}
+
+\item{prop}{The proportion of the data in \code{\link[=fit.workflow]{fit.workflow()}} that should be
+held back specifically for estimating the postprocessor. Only relevant for
+postprocessors that require estimation---see section Data Usage below to
+learn more. Defaults to 2/3.}
+
+\item{method}{The method with which to split the data in \code{\link[=fit.workflow]{fit.workflow()}},
+as a character vector. Only relevant for postprocessors that
+require estimation and not required when resampling the workflow with
+tune. If \code{fit.workflow(data)} arose as \code{training(split_object)}, this argument can
+usually be supplied as \code{class(split_object)}. Defaults to \code{"mc_split"}, which
+randomly samples \code{fit.workflow(data)} into two sets, similarly to
+\code{\link[rsample:initial_split]{rsample::initial_split()}}. See section Data Usage below to learn more.}
 
 \item{...}{Not used.}
 }
@@ -35,6 +48,57 @@ the fitted tailor.
 tailor with the new one.
 }
 }
+\section{Data Usage}{
+
+
+While preprocessors and models are trained on data in the usual sense,
+postprocessors are training on \emph{predictions} on data. When a workflow
+is fitted, the user supplies training data with the \code{data} argument.
+When workflows don't contain a postprocessor that requires training,
+they can use all of the supplied \code{data} to train the preprocessor and model.
+However, in the case where a postprocessor must be trained as well,
+training the preprocessor and model on all of \code{data} would leave no data
+left to train the postprocessor with---if that were the case, workflows
+would need to \code{predict()} from the preprocessor and model on the same \code{data}
+that they were trained on, with the postprocessor then training on those
+predictions. Predictions on data that a model was trained on likely follow
+different distributions than predictions on unseen data; thus, workflows must
+split up the supplied \code{data} into two training sets, where the first is used to
+train the preprocessor and model and the second is passed to that trained
+processor and model to generate predictions, which then form the training data
+for the post-processor.
+
+The arguments \code{prop} and \code{method} parameterize how that data is split up.
+\code{prop} determines the proportion of rows in \code{fit.workflow(data)} that are
+allotted to training the preprocessor and model, while the rest are used to
+train the postprocessor. \code{method} determines how that split occurs; since
+\code{fit.workflow()} just takes in a data frame, the function doesn't have
+any information on how that dataset came to be. For example, \code{data} could
+have been created as:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{split <- rsample::initial_split(some_other_data)
+data <- rsample::training(split)
+}\if{html}{\out{</div>}}
+
+...in which case it's okay to randomly allot some rows of \code{data} to train the
+preprocessor and model and the rest to train the postprocessor. However,
+\code{data} could also have arisen as:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{boots <- rsample::bootstraps(some_other_data)
+split <- rsample::get_rsplit(boots, 1)
+data <- rsample::assessment(split)
+}\if{html}{\out{</div>}}
+
+In this case, some of the rows in \code{data} will be duplicated. Thus, randomly
+allotting some of them to train the preprocessor and model and others to train
+the preprocessor would likely result in the same rows appearing in both
+datasets, resulting in the preprocessor and model generating predictions on
+rows they've seen before. Similarly problematic situations could arise in the
+context of other resampling situations, like time-based splits.
+The \code{method} argument ensures that data is allotted properly (and is
+internally handled by the tune package when resampling workflows).
+}
+
 \examples{
 library(tailor)
 library(magrittr)

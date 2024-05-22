@@ -59,16 +59,34 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     abort("`data` must be provided to fit a workflow.")
   }
 
+  # If `potato` is not overwritten in the following `if` statement, then the
+  # the postprocessor doesn't actually require training and the dataset
+  # passed to `.fit_post()` will have no effect.
+  potato <- data
   if (should_inner_split(object)) {
-    # todo: make an inner_split here
-    TRUE
+    validate_rsample_available()
+
+    mocked_split <-
+      rsample::make_splits(
+        list(analysis = seq_len(nrow(data)), assessment = integer()),
+        data = data,
+        class = object$post$actions$tailor$method %||% "mc_split"
+      )
+
+    inner_split <- rsample::inner_split(
+      mocked_split,
+      list(prop = object$post$actions$tailor$prop %||% 2/3)
+    )
+
+    data <- rsample::analysis(inner_split)
+    potato <- rsample::assessment(inner_split)
   }
 
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
   if (has_postprocessor(workflow)) {
-    workflow <- .fit_post(workflow, data)
+    workflow <- .fit_post(workflow, potato)
   }
   workflow <- .fit_finalize(workflow)
 

@@ -42,7 +42,11 @@ add_tailor <- function(x, tailor, ...) {
   check_dots_empty()
   validate_tailor_available()
   action <- new_action_tailor(tailor)
-  add_action(x, action, "tailor")
+  res <- add_action(x, action, "tailor")
+  if (should_inner_split(res)) {
+    validate_rsample_available()
+  }
+  res
 }
 
 #' @rdname add_tailor

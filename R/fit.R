@@ -76,9 +76,11 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 }
 
 #' @export
+#' @rdname workflows-internals
 #' @keywords internal
 should_inner_split <- function(workflow) {
   # todo: test this
+  # todo: prefix with a dot for consistency with other workflows internals
   has_postprocessor(workflow) && postprocessor_requires_training(workflow)
 }
 

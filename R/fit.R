@@ -66,16 +66,18 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   if (should_inner_split(object)) {
     validate_rsample_available()
 
+    method <- object$post$actions$tailor$method
     mocked_split <-
       rsample::make_splits(
         list(analysis = seq_len(nrow(data)), assessment = integer()),
         data = data,
-        class = object$post$actions$tailor$method %||% "mc_split"
+        class = if (is.null(method)) "mc_split" else method
       )
 
+    prop <- object$post$actions$tailor$prop
     inner_split <- rsample::inner_split(
       mocked_split,
-      list(prop = object$post$actions$tailor$prop %||% 2/3)
+      list(prop = if (is.null(prop)) 2/3 else prop)
     )
 
     data <- rsample::analysis(inner_split)

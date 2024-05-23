@@ -51,7 +51,7 @@ Config/Needs/website:
 Remotes:
     tidymodels/hardhat,
     tidymodels/recipes,
-    tidymodels/rsample#483,
+    tidymodels/rsample,
     tidymodels/parsnip,
     tidymodels/tailor
 Config/testthat/edition: 3

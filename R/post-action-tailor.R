@@ -201,8 +201,7 @@ new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
     abort("`tailor` must be a tailor.", call = call)
   }
 
-  # todo fully_trained() should be from tailor
-  if (tailor_fully_trained(tailor)) {
+  if (tailor::tailor_fully_trained(tailor)) {
     abort("Can't add a trained tailor to a workflow.", call = call)
   }
 
@@ -223,16 +222,4 @@ new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
 
 is_tailor <- function(x) {
   inherits(x, "tailor")
-}
-
-tailor_fully_trained <- function(x) {
-  if (length(x$operations) == 0L) {
-    return(FALSE)
-  }
-
-  all(map_lgl(x$operations, tailor_operation_trained))
-}
-
-tailor_operation_trained <- function(x) {
-  isTRUE(x$trained)
 }

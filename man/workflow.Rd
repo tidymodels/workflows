@@ -25,10 +25,11 @@ post-processing steps to add to the workflow. Passed on to
 A new \code{workflow} object.
 }
 \description{
-A \code{workflow} is a tailor object that aggregates information required to
+A \code{workflow} is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
-to fit, specified through \code{\link[=add_model]{add_model()}}.
+to fit, specified through \code{\link[=add_model]{add_model()}}, or a tailor used in postprocessing,
+specificied through \code{\link[=add_tailor]{add_tailor()}}.
 
 The \code{preprocessor} and \code{spec} arguments allow you to add components to a
 workflow quickly, without having to go through the \verb{add_*()} functions, such

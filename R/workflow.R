@@ -1,10 +1,11 @@
 #' Create a workflow
 #'
 #' @description
-#' A `workflow` is a tailor object that aggregates information required to
+#' A `workflow` is a container object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing, specified through [add_recipe()], or the model specification
-#' to fit, specified through [add_model()].
+#' to fit, specified through [add_model()], or a tailor used in postprocessing,
+#' specificied through [add_tailor()].
 #'
 #' The `preprocessor` and `spec` arguments allow you to add components to a
 #' workflow quickly, without having to go through the `add_*()` functions, such

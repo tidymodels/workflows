@@ -30,12 +30,14 @@ Imports:
     vctrs (>= 0.4.1)
 Suggests: 
     butcher (>= 0.2.0),
+    tailor (>= 0.0.0.9001),
     covr,
     dials (>= 1.0.0),
     knitr,
     magrittr,
     modeldata (>= 1.0.0),
     recipes (>= 1.0.10.9000),
+    rsample (>= 1.2.1.9000),
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 
@@ -49,7 +51,9 @@ Config/Needs/website:
 Remotes:
     tidymodels/hardhat,
     tidymodels/recipes,
-    tidymodels/parsnip
+    tidymodels/rsample,
+    tidymodels/parsnip,
+    tidymodels/tailor
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

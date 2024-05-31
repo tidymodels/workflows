@@ -62,7 +62,17 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   fit <- extract_fit_parsnip(workflow)
   new_data <- forge_predictors(new_data, workflow)
 
-  predict(fit, new_data, type = type, opts = opts, ...)
+  if (!has_postprocessor(workflow)) {
+    return(predict(fit, new_data, type = type, opts = opts, ...))
+  }
+
+  # use `augment()` rather than `fit()` to get all possible prediction `type`s.
+  # likely, we actually want tailor to check for the existence of needed
+  # columns at predict time and just use `predict()` output here.
+  fit_aug <- augment(fit, new_data, opts = opts, ...)
+
+  post <- extract_postprocessor(workflow)
+  predict(post, fit_aug)[post$columns$estimate]
 }
 
 forge_predictors <- function(new_data, workflow) {

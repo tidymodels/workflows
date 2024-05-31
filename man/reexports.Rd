@@ -9,6 +9,7 @@
 \alias{extract_fit_engine}
 \alias{extract_mold}
 \alias{extract_preprocessor}
+\alias{extract_postprocessor}
 \alias{extract_parameter_set_dials}
 \alias{extract_parameter_dials}
 \alias{extract_fit_time}
@@ -22,6 +23,6 @@ below to see their documentation.
 \describe{
   \item{generics}{\code{\link[generics]{required_pkgs}}}
 
-  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_fit_time}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}}
+  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_fit_time}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat:hardhat-extract]{extract_postprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}}
 }}
 

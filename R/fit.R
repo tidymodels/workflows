@@ -59,14 +59,66 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     abort("`data` must be provided to fit a workflow.")
   }
 
+  # If `potato` is not overwritten in the following `if` statement, then the
+  # the postprocessor doesn't actually require training and the dataset
+  # passed to `.fit_post()` will have no effect.
+  potato <- data
+  if (should_inner_split(object)) {
+    validate_rsample_available()
+
+    method <- object$post$actions$tailor$method
+    mocked_split <-
+      rsample::make_splits(
+        list(analysis = seq_len(nrow(data)), assessment = integer()),
+        data = data,
+        class = if (is.null(method)) "mc_split" else method
+      )
+
+    prop <- object$post$actions$tailor$prop
+    inner_split <- rsample::inner_split(
+      mocked_split,
+      list(prop = if (is.null(prop)) 2/3 else prop)
+    )
+
+    data <- rsample::analysis(inner_split)
+    potato <- rsample::assessment(inner_split)
+  }
+
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
+  if (has_postprocessor(workflow)) {
+    workflow <- .fit_post(workflow, potato)
+  }
   workflow <- .fit_finalize(workflow)
 
-  # TODO: Post-processing before `.fit_finalize()`?
-
   workflow
+}
+
+#' @export
+#' @rdname workflows-internals
+#' @keywords internal
+should_inner_split <- function(workflow) {
+  # todo: test this
+  # todo: prefix with a dot for consistency with other workflows internals
+  has_postprocessor(workflow) && postprocessor_requires_training(workflow)
+}
+
+postprocessor_requires_training <- function(workflow) {
+  # todo: make this based on something that an external contributor
+  # would be able to hook into rather than hard-coding the calibration
+  # classes: https://github.com/tidymodels/tune/pull/894/files#r1585259827
+  tailor <- workflow$post$actions$tailor$tailor
+
+  operations_are_calibration <-
+    vapply(
+      tailor$operations,
+      rlang::inherits_any,
+      logical(1),
+      c("numeric_calibration", "probability_calibration")
+    )
+
+  any(operations_are_calibration)
 }
 
 # ------------------------------------------------------------------------------
@@ -151,6 +203,13 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
   fit(action_model, workflow = workflow, control = control)
+}
+
+#' @rdname workflows-internals
+#' @export
+.fit_post <- function(workflow, data) {
+  action_post <- workflow[["post"]][["actions"]][["tailor"]]
+  fit(action_post, workflow = workflow, data = data)
 }
 
 #' @rdname workflows-internals

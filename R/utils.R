@@ -28,6 +28,29 @@ validate_recipes_available <- function(..., call = caller_env()) {
   invisible()
 }
 
+validate_tailor_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
+  if (!requireNamespace("tailor", quietly = TRUE)) {
+    abort("The `tailor` package must be available to add a tailor.", call = call)
+  }
+
+  invisible()
+}
+
+validate_rsample_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
+  if (!requireNamespace("rsample", quietly = TRUE)) {
+    abort(
+      "The `rsample` package must be available to add a tailor that requires training.",
+      call = call
+    )
+  }
+
+  invisible()
+}
+
 # ------------------------------------------------------------------------------
 
 # https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109
@@ -83,6 +106,14 @@ has_spec <- function(x) {
 
 has_fit <- function(x) {
   !is.null(x$fit$fit)
+}
+
+has_postprocessor <- function(x) {
+  has_postprocessor_tailor(x)
+}
+
+has_postprocessor_tailor <- function(x) {
+  "tailor" %in% names(x$post$actions)
 }
 
 has_blueprint <- function(x) {

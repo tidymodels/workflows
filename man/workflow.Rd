@@ -4,7 +4,7 @@
 \alias{workflow}
 \title{Create a workflow}
 \usage{
-workflow(preprocessor = NULL, spec = NULL)
+workflow(preprocessor = NULL, spec = NULL, postprocessor = NULL)
 }
 \arguments{
 \item{preprocessor}{An optional preprocessor to add to the workflow. One of:
@@ -16,6 +16,10 @@ workflow(preprocessor = NULL, spec = NULL)
 
 \item{spec}{An optional parsnip model specification to add to the workflow.
 Passed on to \code{\link[=add_model]{add_model()}}.}
+
+\item{postprocessor}{An optional \code{\link[tailor:tailor]{tailor::tailor()}} defining
+post-processing steps to add to the workflow. Passed on to
+\code{\link[=add_tailor]{add_tailor()}}.}
 }
 \value{
 A new \code{workflow} object.
@@ -24,7 +28,8 @@ A new \code{workflow} object.
 A \code{workflow} is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
-to fit, specified through \code{\link[=add_model]{add_model()}}.
+to fit, specified through \code{\link[=add_model]{add_model()}}, or a tailor used in postprocessing,
+specificied through \code{\link[=add_tailor]{add_tailor()}}.
 
 The \code{preprocessor} and \code{spec} arguments allow you to add components to a
 workflow quickly, without having to go through the \verb{add_*()} functions, such

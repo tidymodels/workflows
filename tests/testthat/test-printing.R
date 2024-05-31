@@ -79,3 +79,11 @@ test_that("can print workflow with case weights, preprocessor, and model", {
 
   expect_snapshot(workflow)
 })
+
+test_that("can print workflow with postprocessor", {
+  post <- tailor::tailor("regression")
+  workflow <- workflow()
+  workflow <- add_postprocessor(workflow, post)
+
+  expect_snapshot(workflow)
+})

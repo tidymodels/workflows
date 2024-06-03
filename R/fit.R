@@ -64,21 +64,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   # passed to `.fit_post()` will have no effect.
   potato <- data
   if (should_inner_split(object)) {
-    validate_rsample_available()
-
-    method <- object$post$actions$tailor$method
-    mocked_split <-
-      rsample::make_splits(
-        list(analysis = seq_len(nrow(data)), assessment = integer()),
-        data = data,
-        class = if (is.null(method)) "mc_split" else method
-      )
-
-    prop <- object$post$actions$tailor$prop
-    inner_split <- rsample::inner_split(
-      mocked_split,
-      list(prop = if (is.null(prop)) 2/3 else prop)
-    )
+    inner_split <- make_inner_split(object, data)
 
     data <- rsample::analysis(inner_split)
     potato <- rsample::assessment(inner_split)
@@ -119,6 +105,24 @@ postprocessor_requires_training <- function(workflow) {
     )
 
   any(operations_are_calibration)
+}
+
+make_inner_split <- function(object, data) {
+  validate_rsample_available()
+
+  method <- object$post$actions$tailor$method
+  mocked_split <-
+    rsample::make_splits(
+      list(analysis = seq_len(nrow(data)), assessment = integer()),
+      data = data,
+      class = if (is.null(method)) "mc_split" else method
+    )
+
+  prop <- object$post$actions$tailor$prop
+  rsample::inner_split(
+    mocked_split,
+    list(prop = if (is.null(prop)) 2/3 else prop)
+  )
 }
 
 # ------------------------------------------------------------------------------

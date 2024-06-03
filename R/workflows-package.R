@@ -7,7 +7,6 @@
 #'
 #' @import rlang
 #' @importFrom generics augment
-#' @importFrom generics fit
 #' @importFrom generics glance
 #' @importFrom generics tidy
 #' @importFrom generics tune_args

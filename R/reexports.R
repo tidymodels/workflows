@@ -41,3 +41,7 @@ hardhat::extract_fit_time
 #' @importFrom generics required_pkgs
 #' @export
 generics::required_pkgs
+
+#' @importFrom generics fit
+#' @export
+generics::fit

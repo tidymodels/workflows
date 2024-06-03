@@ -185,15 +185,6 @@ mock_trained_workflow <- function(workflow) {
 
 # ------------------------------------------------------------------------------
 
-#' @export
-check_conflicts.action_tailor <- function(action, x, ..., call = caller_env()) {
-  post <- x$post
-
-  invisible(action)
-}
-
-# ------------------------------------------------------------------------------
-
 new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
   check_dots_empty()
 

@@ -173,6 +173,52 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
 })
 
 # ------------------------------------------------------------------------------
+# .fit_post()
+test_that(".should_inner_split works", {
+  skip_if_not_installed("tailor")
+
+  expect_false(.should_inner_split(workflow()))
+  expect_false(.should_inner_split(workflow() %>% add_model(parsnip::linear_reg())))
+  expect_false(.should_inner_split(workflow() %>% add_formula(mpg ~ .)))
+  expect_false(.should_inner_split(
+    workflow() %>%
+    add_formula(mpg ~ .) %>%
+    add_model(parsnip::linear_reg())
+  ))
+  expect_false(.should_inner_split(
+    workflow() %>%
+    add_tailor(tailor::tailor())
+  ))
+  expect_false(.should_inner_split(
+    workflow() %>%
+      add_tailor(tailor::tailor() %>% tailor::adjust_probability_threshold(.4))
+  ))
+
+  expect_true(.should_inner_split(
+    workflow() %>%
+      add_tailor(tailor::tailor() %>% tailor::adjust_numeric_calibration())
+  ))
+  expect_true(.should_inner_split(
+    workflow() %>%
+      add_tailor(
+        tailor::tailor() %>%
+        tailor::adjust_numeric_calibration() %>%
+        tailor::adjust_probability_threshold(.4)
+      )
+  ))
+  expect_true(.should_inner_split(
+    workflow() %>%
+      add_formula(mpg ~ .) %>%
+      add_model(parsnip::linear_reg()) %>%
+      add_tailor(
+        tailor::tailor() %>%
+          tailor::adjust_numeric_calibration() %>%
+          tailor::adjust_probability_threshold(.4)
+      )
+  ))
+})
+
+# ------------------------------------------------------------------------------
 # .fit_finalize()
 
 test_that("workflow is marked as 'trained' after going through `.fit_finalize()`", {

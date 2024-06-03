@@ -79,19 +79,19 @@ base_wf \%>\%
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: linear_reg()
-##
+## 
 ## -- Preprocessor ------------------------------------------------------
 ## price ~ type + sqft + beds + baths
-##
+## 
 ## -- Model -------------------------------------------------------------
-##
+## 
 ## Call:
 ## stats::lm(formula = ..y ~ ., data = data)
-##
+## 
 ## Coefficients:
-##      (Intercept)  typeMulti_Family   typeResidential
-##          32919.4          -21995.8           33688.6
-##             sqft              beds             baths
+##      (Intercept)  typeMulti_Family   typeResidential  
+##          32919.4          -21995.8           33688.6  
+##             sqft              beds             baths  
 ##            156.2          -29788.0            8730.0
 }\if{html}{\out{</div>}}
 
@@ -116,25 +116,25 @@ base_wf \%>\%
 \if{html}{\out{<div class="sourceCode">}}\preformatted{## == Workflow [trained] ================================================
 ## Preprocessor: Formula
 ## Model: rand_forest()
-##
+## 
 ## -- Preprocessor ------------------------------------------------------
 ## price ~ type + sqft + beds + baths
-##
+## 
 ## -- Model -------------------------------------------------------------
 ## Ranger result
-##
+## 
 ## Call:
-##  ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1))
-##
-## Type:                             Regression
-## Number of trees:                  500
-## Sample size:                      932
-## Number of independent variables:  4
-## Mtry:                             2
-## Target node size:                 5
-## Variable importance mode:         none
-## Splitrule:                        variance
-## OOB prediction error (MSE):       7058847504
+##  ranger::ranger(x = maybe_data_frame(x), y = y, num.threads = 1,      verbose = FALSE, seed = sample.int(10^5, 1)) 
+## 
+## Type:                             Regression 
+## Number of trees:                  500 
+## Sample size:                      932 
+## Number of independent variables:  4 
+## Mtry:                             2 
+## Target node size:                 5 
+## Variable importance mode:         none 
+## Splitrule:                        variance 
+## OOB prediction error (MSE):       7058847504 
 ## R squared (OOB):                  0.5894647
 }\if{html}{\out{</div>}}
 

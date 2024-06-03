@@ -107,7 +107,7 @@ add_tailor <- function(x, tailor, prop = NULL, method = NULL, ...) {
   validate_tailor_available()
   action <- new_action_tailor(tailor, prop = prop, method = method)
   res <- add_action(x, action, "tailor")
-  if (should_inner_split(res)) {
+  if (.should_inner_split(res)) {
     validate_rsample_available()
   }
   res

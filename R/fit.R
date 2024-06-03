@@ -63,7 +63,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   # the postprocessor doesn't actually require training and the dataset
   # passed to `.fit_post()` will have no effect.
   potato <- data
-  if (should_inner_split(object)) {
+  if (.should_inner_split(object)) {
     inner_split <- make_inner_split(object, data)
 
     data <- rsample::analysis(inner_split)
@@ -84,27 +84,13 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @export
 #' @rdname workflows-internals
 #' @keywords internal
-should_inner_split <- function(workflow) {
+.should_inner_split <- function(workflow) {
   # todo: test this
   # todo: prefix with a dot for consistency with other workflows internals
-  has_postprocessor(workflow) && postprocessor_requires_training(workflow)
-}
-
-postprocessor_requires_training <- function(workflow) {
-  # todo: make this based on something that an external contributor
-  # would be able to hook into rather than hard-coding the calibration
-  # classes: https://github.com/tidymodels/tune/pull/894/files#r1585259827
-  tailor <- workflow$post$actions$tailor$tailor
-
-  operations_are_calibration <-
-    vapply(
-      tailor$operations,
-      rlang::inherits_any,
-      logical(1),
-      c("numeric_calibration", "probability_calibration")
-    )
-
-  any(operations_are_calibration)
+  has_postprocessor(workflow) &&
+  tailor::tailor_requires_fit(
+    extract_postprocessor(workflow, estimated = FALSE)
+  )
 }
 
 make_inner_split <- function(object, data) {

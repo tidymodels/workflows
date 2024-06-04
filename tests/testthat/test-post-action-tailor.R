@@ -55,7 +55,7 @@ test_that("update a postprocessor", {
   workflow <- add_tailor(workflow, post)
   workflow <- update_tailor(workflow, post2)
 
-  expect_length(workflow$post$actions$tailor$tailor$operations, 1)
+  expect_length(workflow$post$actions$tailor$tailor$adjustments, 1)
 })
 
 test_that("update a postprocessor after postprocessor fit", {
@@ -71,7 +71,7 @@ test_that("update a postprocessor after postprocessor fit", {
 
   workflow_with_post_new <- update_tailor(workflow_with_post, post2)
 
-  expect_length(workflow_with_post_new$post$actions$tailor$tailor$operations, 1)
+  expect_length(workflow_with_post_new$post$actions$tailor$tailor$adjustments, 1)
 
   # Note that the fitted model and preprocessor can remain; the new
   # postprocessor will not affect it (#225)

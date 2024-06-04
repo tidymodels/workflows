@@ -90,9 +90,8 @@
 <p>A workflow is an object that can bundle together your pre-processing, modeling, and post-processing requests. For example, if you have a <code>recipe</code> and <code>parsnip</code> model, these can be combined into a workflow. The advantages are:</p>
 <ul>
 <li><p>You don’t have to keep track of separate objects in your workspace.</p></li>
-<li><p>The recipe prepping and model fitting can be executed using a single call to <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code>.</p></li>
+<li><p>The recipe prepping, model fitting, and postprocessor estimation (which may include data splitting) can be executed using a single call to <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code>.</p></li>
 <li><p>If you have custom tuning parameter settings, these can be defined using a simpler interface when combined with <a href="https://github.com/tidymodels/tune" class="external-link">tune</a>.</p></li>
-<li><p>In the future, workflows will be able to add post-processing operations, such as modifying the probability cutoff for two-class models.</p></li>
 </ul>
 </div>
 <div class="section level2">

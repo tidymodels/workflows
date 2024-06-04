@@ -8,7 +8,7 @@
 #'   that might get created after the tailor is used for post-processing, such as
 #'   the fitted tailor.
 #'
-#' - `update_tailor()` first removes the tailor, then replaces the postvious
+#' - `update_tailor()` first removes the tailor, then replaces the previous
 #'   tailor with the new one.
 #'
 #' @param x A workflow

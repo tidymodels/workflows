@@ -22,16 +22,14 @@ The workflow \code{object}, updated with a fit parsnip model in the
 \code{object$fit$fit} slot.
 }
 \description{
-Fitting a workflow currently involves two main steps:
+Fitting a workflow currently involves three main steps:
 \itemize{
 \item Preprocessing the data using a formula preprocessor, or by calling
 \code{\link[recipes:prep]{recipes::prep()}} on a recipe.
 \item Fitting the underlying parsnip model using \code{\link[parsnip:fit]{parsnip::fit.model_spec()}}.
+\item Postprocessing predictions from the model using
+\code{\link[tailor:tailor]{tailor::tailor()}}.
 }
-}
-\details{
-In the future, there will also be \emph{postprocessing} steps that can be added
-after the model has been fit.
 }
 \section{Indicator Variable Details}{
 Some modeling functions in R create indicator/dummy variables from

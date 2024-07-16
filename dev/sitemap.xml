@@ -1,99 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/MAINTENANCE.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/articles/extras/getting-started.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/articles/stages.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_case_weights.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_formula.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_model.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_recipe.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_tailor.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/add_variables.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/augment.workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/control_workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/extract-workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/fit-workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/glance.workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/is_trained_workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/predict-workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/tidy.workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/workflow-butcher.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/workflow-extractors.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/workflow.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/workflows-internals.html</loc>
-  </url>
-  <url>
-    <loc>https://workflows.tidymodels.org/dev/reference/workflows-package.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://workflows.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/CONTRIBUTING.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/LICENSE-text.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/LICENSE.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/MAINTENANCE.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/articles/extras/getting-started.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/articles/index.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/articles/stages.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/authors.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/index.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/news/index.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_case_weights.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_formula.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_model.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_recipe.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_tailor.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/add_variables.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/augment.workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/control_workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/extract-workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/fit-workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/glance.workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/index.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/is_trained_workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/predict-workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/reexports.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/tidy.workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/workflow-butcher.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/workflow-extractors.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/workflow.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/workflows-internals.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/workflows-package.html</loc></url>
 </urlset>
+

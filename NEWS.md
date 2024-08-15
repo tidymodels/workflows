@@ -1,5 +1,6 @@
 # workflows (development version)
 
+* `add_variables()` reference added to `stages` vignette (@brshallo, #190).
 * New `extract_fit_time()` method has been added that return the time it took to train the workflow. (#191)
 
 # workflows 1.1.4

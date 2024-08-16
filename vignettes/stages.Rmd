@@ -21,9 +21,11 @@ Workflows encompasses the three main stages of the modeling _process_: pre-proce
 
 ## Pre-processing
 
-The two elements allowed for pre-processing are:
+The three elements allowed for pre-processing are:
 
  * A standard [model formula](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models) via `add_formula()`.
+ 
+ * A tidyselect interface via `add_variables()` that [strictly preserves the class](https://www.tidyverse.org/blog/2020/09/workflows-0-2-0/) of your columns.
  
  * A recipe object via `add_recipe()`.
  

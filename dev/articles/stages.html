@@ -77,10 +77,12 @@ for each stage that have been implemented to date.</p>
 <div class="section level2">
 <h2 id="pre-processing">Pre-processing<a class="anchor" aria-label="anchor" href="#pre-processing"></a>
 </h2>
-<p>The two elements allowed for pre-processing are:</p>
+<p>The three elements allowed for pre-processing are:</p>
 <ul>
 <li><p>A standard <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Formulae-for-statistical-models" class="external-link">model
 formula</a> via <code><a href="../reference/add_formula.html">add_formula()</a></code>.</p></li>
+<li><p>A tidyselect interface via <code><a href="../reference/add_variables.html">add_variables()</a></code> that <a href="https://www.tidyverse.org/blog/2020/09/workflows-0-2-0/" class="external-link">strictly
+preserves the class</a> of your columns.</p></li>
 <li><p>A recipe object via <code><a href="../reference/add_recipe.html">add_recipe()</a></code>.</p></li>
 </ul>
 <p>You can use one or the other but not both.</p>

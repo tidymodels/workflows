@@ -63,7 +63,7 @@ remove_formula <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_formula(x)) {
-    rlang::warn("The workflow has no formula preprocessor to remove.")
+    cli::cli_warn("The workflow has no formula preprocessor to remove.")
   }
 
   actions <- x$pre$actions

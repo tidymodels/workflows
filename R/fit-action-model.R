@@ -70,7 +70,7 @@ remove_model <- function(x) {
   validate_is_workflow(x)
 
   if (!has_spec(x)) {
-    cli::cli_warn("The workflow has no model to remove.")
+    cli_warn("The workflow has no model to remove.")
   }
 
   new_workflow(

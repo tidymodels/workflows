@@ -64,7 +64,7 @@ remove_recipe <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_recipe(x)) {
-    cli::cli_warn("The workflow has no recipe preprocessor to remove.")
+    cli_warn("The workflow has no recipe preprocessor to remove.")
   }
 
   actions <- x$pre$actions

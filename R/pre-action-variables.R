@@ -126,7 +126,7 @@ remove_variables <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_variables(x)) {
-    cli::cli_warn("The workflow has no variables preprocessor to remove.")
+    cli_warn("The workflow has no variables preprocessor to remove.")
   }
 
   actions <- x$pre$actions

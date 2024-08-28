@@ -90,7 +90,7 @@ check_singleton <- function(actions, name, ..., call = caller_env()) {
   if (name %in% names(actions)) {
     cli_abort(
       "A `{name}` action has already been added to this workflow.",
-      .call = call
+      call = call
     )
   }
 

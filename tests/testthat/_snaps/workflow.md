@@ -4,7 +4,7 @@
       add_formula(1, mpg ~ cyl)
     Condition
       Error in `add_formula()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -12,7 +12,7 @@
       add_recipe(1, rec)
     Condition
       Error in `add_recipe()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -20,7 +20,7 @@
       add_model(1, mod)
     Condition
       Error in `add_model()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 # model spec is validated
 
@@ -28,7 +28,7 @@
       workflow(spec = 1)
     Condition
       Error in `add_model()`:
-      ! `spec` must be a `model_spec`.
+      ! `spec` must be a <model_spec>.
 
 # preprocessor is validated
 
@@ -72,5 +72,5 @@
 
 # input must be a workflow
 
-    `x` must be a workflow, not a numeric.
+    `x` must be a workflow, not a <numeric>.
 

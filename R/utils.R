@@ -77,7 +77,7 @@ validate_is_workflow <- function(x, ..., arg = "`x`", call = caller_env()) {
   if (!is_workflow(x)) {
     cli_abort(
       "{arg} must be a workflow, not a {.cls {class(x)[[1]]}}.",
-      .call = call
+      call = call
     )
   }
 

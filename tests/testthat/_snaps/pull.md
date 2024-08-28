@@ -12,7 +12,7 @@
       pull_workflow_preprocessor(1)
     Condition
       Error in `pull_workflow_preprocessor()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -20,7 +20,7 @@
       pull_workflow_spec(1)
     Condition
       Error in `pull_workflow_spec()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -28,7 +28,7 @@
       pull_workflow_fit(1)
     Condition
       Error in `pull_workflow_fit()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -36,7 +36,7 @@
       pull_workflow_mold(1)
     Condition
       Error in `pull_workflow_mold()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 ---
 
@@ -44,7 +44,7 @@
       pull_workflow_prepped_recipe(1)
     Condition
       Error in `pull_workflow_prepped_recipe()`:
-      ! `x` must be a workflow, not a numeric.
+      ! `x` must be a workflow, not a <numeric>.
 
 # `pull_workflow_preprocessor()` is soft-deprecated
 

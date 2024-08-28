@@ -6,6 +6,7 @@
 ## usethis namespace: start
 #'
 #' @import rlang
+#' @importFrom cli cli_inform cli_warn cli_abort qty
 #' @importFrom generics augment
 #' @importFrom generics glance
 #' @importFrom generics tidy

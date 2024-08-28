@@ -35,7 +35,10 @@ check_control_parsnip <- function(x, ..., call = caller_env()) {
   }
 
   if (!inherits(x, "control_parsnip")) {
-    abort("`control_parsnip` must be a 'control_parsnip' object.", call = call)
+    cli_abort(
+      "{.arg control_parsnip} must be a {.cls control_parsnip} object.",
+      call = call
+    )
   }
 
   x

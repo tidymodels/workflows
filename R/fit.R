@@ -55,7 +55,7 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   check_dots_empty()
 
   if (is_missing(data)) {
-    abort("`data` must be provided to fit a workflow.")
+    cli_abort("{.arg data} must be provided to fit a workflow.")
   }
 
   # If `potato` is not overwritten in the following `if` statement, then the
@@ -220,9 +220,10 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
   if (!has_preprocessor) {
     message <- c(
       "The workflow must have a formula, recipe, or variables preprocessor.",
-      i = "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
+      i = "Provide one with {.fun add_formula}, {.fun add_recipe},
+           or {.fun add_variables}."
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   invisible(x)
@@ -236,9 +237,9 @@ validate_has_model <- function(x, ..., call = caller_env()) {
   if (!has_model) {
     message <- c(
       "The workflow must have a model.",
-      i = "Provide one with `add_model()`."
+      i = "Provide one with {.fun add_model}."
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   invisible(x)
@@ -259,7 +260,10 @@ finalize_blueprint <- function(workflow) {
   } else if (has_preprocessor_variables(workflow)) {
     finalize_blueprint_variables(workflow)
   } else {
-    abort("`workflow` should have a preprocessor at this point.", .internal = TRUE)
+    cli_abort(
+      "{.arg workflow} should have a preprocessor at this point.",
+      .internal = TRUE
+    )
   }
 }
 
@@ -279,10 +283,16 @@ finalize_blueprint_formula <- function(workflow) {
   intercept <- tbl_encodings$compute_intercept
 
   if (!is_string(indicators)) {
-    abort("`indicators` encoding from parsnip should be a string.", .internal = TRUE)
+    cli_abort(
+      "`indicators` encoding from parsnip should be a string.",
+      .internal = TRUE
+    )
   }
   if (!is_bool(intercept)) {
-    abort("`intercept` encoding from parsnip should be a bool.", .internal = TRUE)
+    cli_abort(
+      "`intercept` encoding from parsnip should be a bool.",
+      .internal = TRUE
+    )
   }
 
   # Use model specific information to construct the blueprint
@@ -313,7 +323,10 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   out <- tbl_encodings[indicator_spec, , drop = FALSE]
 
   if (nrow(out) != 1L) {
-    abort("Exactly 1 model/engine/mode combination must be located.", .internal = TRUE)
+    cli_abort(
+      "Exactly 1 model/engine/mode combination must be located.",
+      .internal = TRUE
+    )
   }
 
   out

@@ -70,7 +70,7 @@ remove_model <- function(x) {
   validate_is_workflow(x)
 
   if (!has_spec(x)) {
-    cli::cli_warn("The workflow has no model to remove.")
+    cli_warn("The workflow has no model to remove.")
   }
 
   new_workflow(
@@ -95,7 +95,10 @@ update_model <- function(x, spec, ..., formula = NULL) {
 #' @export
 fit.action_model <- function(object, workflow, control, ...) {
   if (!is_control_workflow(control)) {
-    abort("`control` must be a workflows control object created by `control_workflow()`.")
+    cli_abort(
+      "{.arg control} must be a workflows control object created
+       by {.fun control_workflow}."
+    )
   }
 
   control_parsnip <- control$control_parsnip
@@ -144,7 +147,10 @@ extract_mold0 <- function(workflow) {
   mold <- workflow$pre$mold
 
   if (is.null(mold)) {
-    abort("No mold exists. `workflow` pre stage has not been run.", .internal = TRUE)
+    cli_abort(
+      "No mold exists. `workflow` pre stage has not been run.",
+      .internal = TRUE
+    )
   }
 
   mold
@@ -158,7 +164,10 @@ extract_case_weights0 <- function(workflow) {
   case_weights <- workflow$pre$case_weights
 
   if (is_null(case_weights)) {
-    abort("No case weights exist. `workflow` pre stage has not been run.", .internal = TRUE)
+    cli_abort(
+      "No case weights exist. `workflow` pre stage has not been run.",
+      .internal = TRUE
+    )
   }
 
   case_weights
@@ -170,31 +179,30 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
   check_dots_empty()
 
   if (!is_model_spec(spec)) {
-    abort("`spec` must be a `model_spec`.", call = call)
+    cli_abort("{.arg spec} must be a {.cls model_spec}.", call = call)
   }
 
   mode <- spec$mode
 
   if (is_string(mode, string = "unknown")) {
-    message <- c(
-      "`spec` must have a known mode.",
-      i = paste0(
-        "Set the mode of `spec` by using `parsnip::set_mode()` or by setting ",
-        "the mode directly in the parsnip specification function."
+    message <-
+      c(
+      "{.arg spec} must have a known mode.",
+      i = "Set the mode of `spec` by using {.fun parsnip::set_mode} or by setting
+           the mode directly in the parsnip specification function."
       )
-    )
 
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   if (!is.null(formula) && !is_formula(formula)) {
-    abort("`formula` must be a formula, or `NULL`.", call = call)
+    cli_abort("{.arg formula} must be a formula, or {.code NULL}.", call = call)
   }
 
   if (!parsnip::spec_is_loaded(spec = spec) && inherits(spec, "model_spec")) {
     parsnip::prompt_missing_implementation(
       spec = spec,
-      prompt = cli::cli_abort,
+      prompt = cli_abort,
       call = call
     )
   }

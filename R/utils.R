@@ -6,10 +6,6 @@ is_uniquely_named <- function(x) {
   }
 }
 
-glubort <- function(..., .sep = "", .envir = caller_env(), .call = .envir) {
-  abort(glue::glue(..., .sep = .sep, .envir = .envir), call = .call)
-}
-
 is_model_fit <- function(x) {
   inherits(x, "model_fit") || modelenv::is_unsupervised_fit(x)
 }
@@ -22,7 +18,10 @@ validate_recipes_available <- function(..., call = caller_env()) {
   check_dots_empty()
 
   if (!requireNamespace("recipes", quietly = TRUE)) {
-    abort("The `recipes` package must be available to add a recipe.", call = call)
+    cli_abort(
+      "The {.pkg recipes} package must be available to add a recipe.",
+      call = call
+    )
   }
 
   invisible()
@@ -32,7 +31,10 @@ validate_tailor_available <- function(..., call = caller_env()) {
   check_dots_empty()
 
   if (!requireNamespace("tailor", quietly = TRUE)) {
-    abort("The `tailor` package must be available to add a tailor.", call = call)
+    cli_abort(
+      "The {.pkg tailor} package must be available to add a tailor.",
+      call = call
+    )
   }
 
   invisible()
@@ -42,8 +44,9 @@ validate_rsample_available <- function(..., call = caller_env()) {
   check_dots_empty()
 
   if (!requireNamespace("rsample", quietly = TRUE)) {
-    abort(
-      "The `rsample` package must be available to add a tailor that requires training.",
+    cli_abort(
+      "The {.pkg rsample} package must be available to add a tailor that
+       requires training.",
       call = call
     )
   }
@@ -72,7 +75,10 @@ validate_is_workflow <- function(x, ..., arg = "`x`", call = caller_env()) {
   check_dots_empty()
 
   if (!is_workflow(x)) {
-    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.", .call = call)
+    cli_abort(
+      "{arg} must be a workflow, not a {.cls {class(x)[[1]]}}.",
+      call = call
+    )
   }
 
   invisible(x)
@@ -124,6 +130,9 @@ has_blueprint <- function(x) {
   } else if (has_preprocessor_variables(x)) {
     !is.null(x$pre$actions$variables$blueprint)
   } else {
-    abort("`x` must have a preprocessor to check for a blueprint.", .internal = TRUE)
+    cli_abort(
+      "{.arg x} must have a preprocessor to check for a blueprint.",
+      .internal = TRUE
+    )
   }
 }

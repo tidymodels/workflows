@@ -88,7 +88,10 @@ check_singleton <- function(actions, name, ..., call = caller_env()) {
   check_dots_empty()
 
   if (name %in% names(actions)) {
-    glubort("A `{name}` action has already been added to this workflow.", .call = call)
+    cli_abort(
+      "A `{name}` action has already been added to this workflow.",
+      call = call
+    )
   }
 
   invisible(actions)
@@ -129,7 +132,7 @@ new_action <- function(..., subclass = character()) {
   data <- list2(...)
 
   if (!is_uniquely_named(data)) {
-    abort("All elements of `...` must be uniquely named.", .internal = TRUE)
+    cli_abort("All elements of `...` must be uniquely named.", .internal = TRUE)
   }
 
   structure(data, class = c(subclass, "action"))

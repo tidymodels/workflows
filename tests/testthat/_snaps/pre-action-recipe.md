@@ -44,5 +44,5 @@
       add_recipe(workflow, rec, blueprint = blueprint)
     Condition
       Error in `add_recipe()`:
-      ! `blueprint` must be a hardhat 'recipe_blueprint'.
+      ! `blueprint` must be a hardhat <recipe_blueprint>.
 

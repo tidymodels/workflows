@@ -14,9 +14,9 @@ required_pkgs.workflow <- function(x, infra = TRUE, ...) {
     # This also has the side effect of loading recipes, ensuring that its
     # S3 methods for `required_pkgs()` are registered
     if (!is_installed("recipes")) {
-      glubort(
-        "The recipes package must be installed to compute the ",
-        "`required_pkgs()` of a workflow with a recipe preprocessor."
+      cli_abort(
+        "The {.pkg recipes} package must be installed to compute the
+         {.fun required_pkgs} of a workflow with a recipe preprocessor."
       )
     }
 

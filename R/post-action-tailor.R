@@ -119,7 +119,7 @@ remove_tailor <- function(x) {
   validate_is_workflow(x)
 
   if (!has_postprocessor(x)) {
-    cli::cli_warn("The workflow has no tailor postprocessor to remove.")
+    cli_warn("The workflow has no tailor postprocessor to remove.")
   }
 
   actions <- x$post$actions
@@ -189,16 +189,16 @@ new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
   check_dots_empty()
 
   if (!is_tailor(tailor)) {
-    abort("`tailor` must be a tailor.", call = call)
+    cli_abort("{.arg tailor} must be a tailor.", call = call)
   }
 
   if (tailor::tailor_fully_trained(tailor)) {
-    abort("Can't add a trained tailor to a workflow.", call = call)
+    cli_abort("Can't add a trained tailor to a workflow.", call = call)
   }
 
   if (!is.null(prop) &&
       (!rlang::is_double(prop, n = 1) || prop <= 0 || prop >= 1)) {
-    abort("`prop` must be a numeric on (0, 1).", call = call)
+    cli_abort("{.arg prop} must be a numeric on (0, 1).", call = call)
   }
 
   # todo: test method

@@ -35,7 +35,7 @@ tidy.workflow <- function(x, what = "model", ...) {
     return(out)
   }
 
-  abort("`what` must be 'model' or 'recipe'.", .internal = TRUE)
+  cli_abort("{.arg what} must be {.val model} or {.val recipe}.", .internal = TRUE)
 }
 
 # ------------------------------------------------------------------------------
@@ -184,6 +184,9 @@ prepare_augment_new_data <- function(x) {
     x <- as.matrix(x)
     as.data.frame(x)
   } else {
-    abort("Unknown predictor type returned by `forge_predictors()`.", .internal = TRUE)
+    cli_abort(
+      "Unknown predictor type returned by {.fun forge_predictors}.",
+      .internal = TRUE
+    )
   }
 }

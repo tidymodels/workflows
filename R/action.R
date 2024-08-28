@@ -129,7 +129,7 @@ new_action <- function(..., subclass = character()) {
   data <- list2(...)
 
   if (!is_uniquely_named(data)) {
-    abort("All elements of `...` must be uniquely named.", .internal = TRUE)
+    cli_abort("All elements of `...` must be uniquely named.", .internal = TRUE)
   }
 
   structure(data, class = c(subclass, "action"))

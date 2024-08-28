@@ -122,7 +122,7 @@ extract_spec_parsnip.workflow <- function(x, ...) {
   if (has_spec(x)) {
     return(x$fit$actions$model$spec)
   }
-  abort("The workflow does not have a model spec.")
+  cli_abort("The workflow does not have a model spec.")
 }
 
 #' @export
@@ -130,10 +130,10 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
   check_dots_empty()
   if (!is_bool(estimated)) {
-    abort("`estimated` must be a single `TRUE` or `FALSE`.")
+    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
   }
   if (!has_preprocessor_recipe(x)) {
-    abort("The workflow must have a recipe preprocessor.")
+    cli_abort("The workflow must have a recipe preprocessor.")
   }
 
   if (estimated) {
@@ -152,9 +152,9 @@ extract_fit_parsnip.workflow <- function(x, ...) {
   if (has_fit(x)) {
     return(x$fit$fit)
   }
-  abort(c(
+  cli_abort(c(
     "Can't extract a model fit from an untrained workflow.",
-    i = "Do you need to call `fit()`?"
+    i = "Do you need to call {.fun fit}?"
   ))
 }
 
@@ -170,9 +170,9 @@ extract_mold.workflow <- function(x, ...) {
   if (has_mold(x)) {
     return(x$pre$mold)
   }
-  abort(c(
+  cli_abort(c(
     "Can't extract a mold from an untrained workflow.",
-    i = "Do you need to call `fit()`?"
+    i = "Do you need to call {.fun fit}?"
   ))
 }
 
@@ -188,14 +188,14 @@ extract_preprocessor.workflow <- function(x, ...) {
   if (has_preprocessor_variables(x)) {
     return(x$pre$actions$variables$variables)
   }
-  abort("The workflow does not have a preprocessor.")
+  cli_abort("The workflow does not have a preprocessor.")
 }
 
 #' @rdname extract-workflow
 #' @export
 extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
   if (!is_bool(estimated)) {
-    abort("`estimated` must be a single `TRUE` or `FALSE`.")
+    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
   }
 
   if (estimated) {
@@ -209,7 +209,7 @@ extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
     return(x$post$actions$tailor$tailor)
   }
 
-  abort("The workflow does not have a postprocessor.")
+  cli_abort("The workflow does not have a postprocessor.")
 }
 
 #' @export

@@ -1,10 +1,16 @@
 new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights = NULL) {
   if (!is.null(mold) && !is.list(mold)) {
-    abort("`mold` must be a result of calling `hardhat::mold()`.", .internal = TRUE)
+    cli_abort(
+      "{.arg mold} must be a result of calling {.fun hardhat::mold}.",
+      .internal = TRUE
+    )
   }
 
   if (!is_null(case_weights) && !hardhat::is_case_weights(case_weights)) {
-    abort("`case_weights` must be a true case weights column.", .internal = TRUE)
+    cli_abort(
+      "{.arg case_weights} must be a true case weights column.",
+      .internal = TRUE
+    )
   }
 
   new_stage(
@@ -17,7 +23,7 @@ new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights 
 
 new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
   if (!is.null(fit) && !is_model_fit(fit)) {
-    abort("`fit` must be a `model_fit`.", .internal = TRUE)
+    cli_abort("{.arg fit} must be a {.cls model_fit}.", .internal = TRUE)
   }
 
   new_stage(actions = actions, fit = fit, subclass = "stage_fit")
@@ -25,7 +31,7 @@ new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
 
 new_stage_post <- function(actions = new_named_list(), fit = NULL) {
   if (!is.null(fit) && !is_tailor(fit)) {
-    abort("`fit` must be a fitted `tailor`.", .internal = TRUE)
+    cli_abort("{.arg fit} must be a fitted {.cls tailor}.", .internal = TRUE)
   }
 
   new_stage(actions, fit = fit, subclass = "stage_post")
@@ -44,17 +50,17 @@ new_stage <- function(actions = new_named_list(),
                       ...,
                       subclass = character()) {
   if (!is_list_of_actions(actions)) {
-    abort("`actions` must be a list of actions.", .internal = TRUE)
+    cli_abort("{.arg actions} must be a list of actions.", .internal = TRUE)
   }
 
   if (!is_uniquely_named(actions)) {
-    abort("`actions` must be uniquely named.", .internal = TRUE)
+    cli_abort("{.arg actions} must be uniquely named.", .internal = TRUE)
   }
 
   fields <- list2(...)
 
   if (!is_uniquely_named(fields)) {
-    abort("`...` must be uniquely named.", .internal = TRUE)
+    cli_abort("`...` must be uniquely named.", .internal = TRUE)
   }
 
   fields <- list2(actions = actions, !!!fields)

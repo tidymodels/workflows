@@ -53,9 +53,9 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   workflow <- object
 
   if (!is_trained_workflow(workflow)) {
-    abort(c(
+    cli_abort(c(
       "Can't predict on an untrained workflow.",
-      i = "Do you need to call `fit()`?"
+      "i" = "Do you need to call {.fun fit}?"
     ))
   }
 

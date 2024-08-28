@@ -121,7 +121,7 @@ replace_workflow_preprocessor <- function(x, value, ..., call = caller_env()) {
   } else if (has_preprocessor_variables(x)) {
     x$pre$actions$variables$variables <- value
   } else {
-    abort("The workflow does not have a preprocessor.", call = call)
+    cli_abort("The workflow does not have a preprocessor.", call = call)
   }
 
   x
@@ -135,9 +135,9 @@ replace_workflow_fit <- function(x, value, ..., call = caller_env()) {
   if (!has_fit(x)) {
     message <- c(
       "The workflow does not have a model fit.",
-      "Do you need to call `fit()`?"
+      "i" = "Do you need to call {.fun fit}?"
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   x$fit$fit <- value
@@ -173,7 +173,7 @@ replace_workflow_prepped_recipe <- function(x, value, ..., call = caller_env()) 
   validate_is_workflow(x, call = call)
 
   if (!has_preprocessor_recipe(x)) {
-    abort("The workflow must have a recipe preprocessor.", call = call)
+    cli_abort("The workflow must have a recipe preprocessor.", call = call)
   }
 
   mold <- extract_mold(x)
@@ -188,7 +188,13 @@ replace_workflow_mold <- function(x, value, ..., call = caller_env()) {
   validate_is_workflow(x, call = call)
 
   if (!has_mold(x)) {
-    abort("The workflow does not have a mold. Have you called `fit()` yet?", call = call)
+    cli_abort(
+      c(
+        "The workflow does not have a mold.",
+        "i" = "Have you called {.fun fit} yet?"
+      ),
+      call = call
+    )
   }
 
   x$pre$mold <- value

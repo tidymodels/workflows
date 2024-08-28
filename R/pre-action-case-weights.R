@@ -103,11 +103,12 @@ fit.action_case_weights <- function(object, workflow, data, ...) {
   case_weights <- data[[loc]]
 
   if (!hardhat::is_case_weights(case_weights)) {
-    abort(paste0(
-      "`col` must select a classed case weights column, as determined by ",
-      "`hardhat::is_case_weights()`. For example, it could be a column ",
-      "created by `hardhat::frequency_weights()` or ",
-      "`hardhat::importance_weights()`."
+    cli_abort(c(
+      "{.arg col} must select a classed case weights column, as determined by
+       {.fun hardhat::is_case_weights}.",
+      "i" = "For example, it could be a column created by
+             {.fun hardhat::frequency_weights} or
+             {.fun hardhat::importance_weights}."
     ))
   }
 
@@ -139,7 +140,7 @@ fit.action_case_weights <- function(object, workflow, data, ...) {
 
 new_action_case_weights <- function(col) {
   if (!is_quosure(col)) {
-    abort("`col` must be a quosure.", .internal = TRUE)
+    cli_abort("{.arg col} must be a quosure.", .internal = TRUE)
   }
 
   new_action_pre(
@@ -169,11 +170,11 @@ eval_select_case_weights <- function(col, data, ..., call = caller_env()) {
 
   if (length(loc) != 1L) {
     message <- paste0(
-      "`col` must specify exactly one column from ",
-      "`data` to extract case weights from."
+      "{.arg col} must specify exactly one column from
+       {.arg data} to extract case weights from."
     )
 
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   loc

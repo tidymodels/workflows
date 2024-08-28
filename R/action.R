@@ -88,7 +88,10 @@ check_singleton <- function(actions, name, ..., call = caller_env()) {
   check_dots_empty()
 
   if (name %in% names(actions)) {
-    glubort("A `{name}` action has already been added to this workflow.", .call = call)
+    cli_abort(
+      "A `{name}` action has already been added to this workflow.",
+      .call = call
+    )
   }
 
   invisible(actions)

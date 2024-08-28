@@ -6,10 +6,6 @@ is_uniquely_named <- function(x) {
   }
 }
 
-glubort <- function(..., .sep = "", .envir = caller_env(), .call = .envir) {
-  abort(glue::glue(..., .sep = .sep, .envir = .envir), call = .call)
-}
-
 is_model_fit <- function(x) {
   inherits(x, "model_fit") || modelenv::is_unsupervised_fit(x)
 }
@@ -79,7 +75,10 @@ validate_is_workflow <- function(x, ..., arg = "`x`", call = caller_env()) {
   check_dots_empty()
 
   if (!is_workflow(x)) {
-    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.", .call = call)
+    cli_abort(
+      "{arg} must be a workflow, not a {.cls {class(x)[[1]]}}.",
+      .call = call
+    )
   }
 
   invisible(x)

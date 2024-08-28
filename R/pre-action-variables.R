@@ -109,9 +109,9 @@ add_variables <- function(x,
   }
 
   if (!is_workflow_variables(variables)) {
-    glubort(
-      "`variables` must be a 'workflow_variables' object ",
-      "created from `workflow_variables()`."
+    cli_abort(
+      "{.arg variables} must be a {.cls workflow_variables} object
+       created from {.fun workflow_variables}."
     )
   }
 

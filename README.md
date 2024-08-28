@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' alt = 'A teal-colored hexagonal logo. The word WORKFLOWS is centered inside of a diagram of circular cycle, with a magrittr pipe on the top and a directed graph on the bottom.' align="right" height="139" /></a>
 
 <!-- badges: start -->
 

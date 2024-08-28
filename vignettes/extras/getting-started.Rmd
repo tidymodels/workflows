@@ -41,7 +41,7 @@ data("bivariate")
 
 Here is the training set:
 
-```{r plot-data, message = FALSE}
+```{r plot-data, message = FALSE, fig.alt = "A ggplot dotplot with predictor 'A' on the x axis and 'B' on the y, demonstrating a positive, linear, moderately strong correlation. Dots are colored according to two classes, red for 'One' and blue for 'Two', and the red dots tend to have slightly larger values of 'B' for given values of 'A', though the separation is far from perfect."}
 library(workflows)
 library(ggplot2)
 library(dplyr)
@@ -53,7 +53,7 @@ ggplot(bivariate_train, aes(x = A, y = B, col = Class)) +
 
 Both predictors have positive values and their distributions are right-skewed. There seems to be a separation of the classes, but only when the variables are used together. For example, when the predictors are visualized individually, there is little evidence in separation of the classes.  
 
-```{r plot-marginals}
+```{r plot-marginals, fig.alt = "A pair of boxplots showing the same predictors, this time one at a time. The predictors on their own do little to separate the two outcome classes."}
 library(tidyr)
 
 bivariate_train %>% 
@@ -98,7 +98,7 @@ simple_glm <-
 
 To evaluate this model, the ROC curve will be computed along with its corresponding AUC.
 
-```{r simple-roc}
+```{r simple-roc, fig.alt = "A ggplot2 line plot, with 1 minus specificity on the x axis, sensitivity on the y, and a dotted line tracing the y equals x line. A solid line is shown always above the dotted line, with greatest separation from it towards the center of the plot."}
 library(yardstick)
 
 simple_glm_probs <-
@@ -118,7 +118,7 @@ This seems reasonable. One potential issue is that the two predictors have a hig
 
 Since there are two correlated predictors with skewed distributions and strictly positive values, it might be intuitive to use their ratio instead of the pair. We'll try that next by recycling the initial workflow and just adding a different formula:
 
-```{r ratios}
+```{r ratios, fig.alt = "The same plot as before, this time with a yellow line also added to the plot. The yellow line roughly traces the solid black one, except that it's y values are slightly higher than those of the solid black line towards the left portion of the plot and vice versa for the other portion."}
 ratio_glm <-
   glm_workflow %>%
   add_formula(Class ~ I(A/B)) %>% 
@@ -160,7 +160,7 @@ trans_recipe <-
 
 Creating the recipe only makes an object with the instructions; it does not carry out the instructions (e.g. estimate the transformation parameter). To actually execute the recipe, we add it to our workflow with `add_recipe()` and then call `fit()`. Fitting the workflow evaluates both the model and the recipe.
 
-```{r rec-trans}
+```{r rec-trans, fig.alt = "The same plot as above, but with another line, shown in green, added to the plot. Its y values are nearly always consistently higher than the existing black and yellow lines."}
 trans_glm <-
   glm_workflow %>%
   add_recipe(trans_recipe) %>% 
@@ -195,7 +195,7 @@ The Box-Cox procedure recommended transformations that are pretty close to the i
 
 The model above creates a class boundary for these data:
 
-```{r plot-inverse}
+```{r plot-inverse, fig.alt = "A dotplot like that shown early on in the article, plotting the inverse of the previous two predictors and the same binary outcome variable. A boundary between the two outcome classes seems a bit more evident in this plot than before."}
 ggplot(bivariate_train, aes(x = 1/A, y = 1/B, col = Class)) + 
   geom_point(alpha = .3) + 
   coord_equal(ratio = 1/12)
@@ -231,7 +231,7 @@ These results are almost identical to the transformed model.
 
 Based on these results, the model with the logistic regression model with inverse terms is probably our best bet. Using the test set:
 
-```{r test-set}
+```{r test-set, fig.alt = "An ROC curve plot like before, back to showing just one solid black line, representing what had been shown as green in the previous plot. There's quite a bit of separation between this line and the identity, showing a model that's similarly as performant as it was on the training set."}
 test_probs <- 
   predict(trans_glm, bivariate_test, type = "prob") %>%
   bind_cols(bivariate_test)

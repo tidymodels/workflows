@@ -27,6 +27,7 @@ Imports:
     parsnip (>= 1.2.1.9000),
     rlang (>= 1.0.3),
     tidyselect (>= 1.2.0),
+    sparsevctrs (>= 0.1.0.9000),
     vctrs (>= 0.4.1)
 Suggests: 
     butcher (>= 0.2.0),
@@ -35,6 +36,7 @@ Suggests:
     dials (>= 1.0.0),
     knitr,
     magrittr,
+    Matrix,
     modeldata (>= 1.0.0),
     recipes (>= 1.0.10.9000),
     rsample (>= 1.2.1.9000),
@@ -51,7 +53,8 @@ Config/Needs/website:
 Remotes:
     tidymodels/rsample,
     tidymodels/parsnip,
-    tidymodels/tailor
+    tidymodels/tailor,
+    r-lib/sparsevctrs
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

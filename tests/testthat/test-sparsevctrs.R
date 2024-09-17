@@ -18,9 +18,7 @@ test_that("sparse tibble can be passed to `fit() - recipe", {
     add_recipe(rec) %>%
     add_model(spec)
   
-  expect_no_error(
-    wf_fit <- fit(wf_spec, hotel_data)
-  )
+  expect_no_condition(wf_fit <- fit(wf_spec, hotel_data))
 })
 
 test_that("sparse tibble can be passed to `fit() - formula", {

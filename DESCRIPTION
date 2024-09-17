@@ -28,7 +28,8 @@ Imports:
     rlang (>= 1.0.3),
     tidyselect (>= 1.2.0),
     sparsevctrs (>= 0.1.0.9000),
-    vctrs (>= 0.4.1)
+    vctrs (>= 0.4.1),
+    withr
 Suggests: 
     butcher (>= 0.2.0),
     tailor (>= 0.0.0.9001),

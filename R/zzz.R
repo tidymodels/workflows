@@ -10,4 +10,6 @@
   vctrs::s3_register("butcher::axe_fitted", "workflow")
 }
 
+dummy_withr <- function() withr::defer
+
 # nocov end

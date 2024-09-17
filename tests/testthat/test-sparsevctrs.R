@@ -1,8 +1,12 @@
 test_that("sparse tibble can be passed to `fit() - recipe", {
   skip_if_not_installed("xgboost")
-
+  
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  # materialize outcome
+  hotel_data$avg_price_per_room <- hotel_data$avg_price_per_room[]
+  
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   spec <- parsnip::boost_tree() %>%
     parsnip::set_mode("regression") %>%
@@ -21,6 +25,7 @@ test_that("sparse tibble can be passed to `fit() - recipe", {
 
 test_that("sparse tibble can be passed to `fit() - formula", {
   skip_if_not_installed("xgboost")
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
@@ -33,10 +38,9 @@ test_that("sparse tibble can be passed to `fit() - formula", {
     add_formula(avg_price_per_room ~ .) %>%
     add_model(spec)
   
-  expect_no_error({
-    Sys.sleep(10)
+  expect_snapshot(
+    error = TRUE,
     wf_fit <- fit(wf_spec, hotel_data)
-  }
   )
 })
 
@@ -45,6 +49,10 @@ test_that("sparse tibble can be passed to `fit() - xy", {
 
   hotel_data <- sparse_hotel_rates()
   hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  # materialize outcome
+  hotel_data$avg_price_per_room <- hotel_data$avg_price_per_room[]
+  
+  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   spec <- parsnip::boost_tree() %>%
     parsnip::set_mode("regression") %>%

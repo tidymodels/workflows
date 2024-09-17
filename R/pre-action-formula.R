@@ -92,6 +92,13 @@ fit.action_formula <- function(object, workflow, data, ...) {
   formula <- object$formula
   blueprint <- object$blueprint
 
+  if (is_sparse_tibble(data)) {
+    cli::cli_abort(
+      "Sparse data cannot be used with formula interface. Please use 
+     {.fn add_recipe} or {.fn add_variables} instead."
+    )
+  }
+
   # TODO - Strip out the formula environment at some time?
   mold <- hardhat::mold(formula, data, blueprint = blueprint)
 

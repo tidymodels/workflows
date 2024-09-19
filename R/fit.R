@@ -105,10 +105,10 @@ make_inner_split <- function(object, data) {
 
   # add_tailor(prop) is the proportion to train the postprocessor, while
   # rsample::mc_cv(prop) is the proportion to train the model (#247)
-  prop <- 1 - object$post$actions$tailor$prop
+  prop <- object$post$actions$tailor$prop
   rsample::inner_split(
     mocked_split,
-    list(prop = if (is.null(prop)) 2/3 else prop)
+    list(prop = if (is.null(prop)) 2/3 else 1 - prop)
   )
 }
 

@@ -20,7 +20,7 @@
 #' @param prop The proportion of the data in [fit.workflow()] that should be
 #' held back specifically for estimating the postprocessor. Only relevant for
 #' postprocessors that require estimation---see section Data Usage below to
-#' learn more. Defaults to 2/3.
+#' learn more. Defaults to 1/3.
 #'
 #' @param method The method with which to split the data in [fit.workflow()],
 #' as a character vector. Only relevant for postprocessors that

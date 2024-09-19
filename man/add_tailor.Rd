@@ -22,7 +22,7 @@ will handle training internally.}
 \item{prop}{The proportion of the data in \code{\link[=fit.workflow]{fit.workflow()}} that should be
 held back specifically for estimating the postprocessor. Only relevant for
 postprocessors that require estimation---see section Data Usage below to
-learn more. Defaults to 2/3.}
+learn more. Defaults to 1/3.}
 
 \item{method}{The method with which to split the data in \code{\link[=fit.workflow]{fit.workflow()}},
 as a character vector. Only relevant for postprocessors that

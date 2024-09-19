@@ -83,8 +83,8 @@ tailor with the new one.</p></li>
 
 
 <dt id="arg-tailor">tailor<a class="anchor" aria-label="anchor" href="#arg-tailor"></a></dt>
-<dd><p>A tailor created using <code><a href="https://rdrr.io/pkg/tailor/man/tailor.html" class="external-link">tailor::tailor()</a></code>. The tailor
-should not have been trained already with <code><a href="https://rdrr.io/pkg/tailor/man/reexports.html" class="external-link">tailor::fit()</a></code>; workflows
+<dd><p>A tailor created using <code><a href="https://tailor.tidymodels.org/reference/tailor.html" class="external-link">tailor::tailor()</a></code>. The tailor
+should not have been trained already with <code><a href="https://tailor.tidymodels.org/reference/reexports.html" class="external-link">tailor::fit()</a></code>; workflows
 will handle training internally.</p></dd>
 
 
@@ -164,8 +164,8 @@ internally handled by the tune package when resampling workflows).</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/tailor" class="external-link">tailor</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">tailor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tailor/man/tailor.html" class="external-link">tailor</a></span><span class="op">(</span><span class="st">"binary"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">tailor_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tailor/man/adjust_probability_threshold.html" class="external-link">adjust_probability_threshold</a></span><span class="op">(</span><span class="va">tailor</span>, <span class="fl">.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tailor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tailor.tidymodels.org/reference/tailor.html" class="external-link">tailor</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tailor_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tailor.tidymodels.org/reference/adjust_probability_threshold.html" class="external-link">adjust_probability_threshold</a></span><span class="op">(</span><span class="va">tailor</span>, <span class="fl">.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow.html">workflow</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">add_tailor</span><span class="op">(</span><span class="va">tailor_1</span><span class="op">)</span></span></span>
@@ -191,7 +191,7 @@ internally handled by the tune package when resampling workflows).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> None</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">update_tailor</span><span class="op">(</span><span class="va">workflow</span>, <span class="fu"><a href="https://rdrr.io/pkg/tailor/man/adjust_probability_threshold.html" class="external-link">adjust_probability_threshold</a></span><span class="op">(</span><span class="va">tailor</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">update_tailor</span><span class="op">(</span><span class="va">workflow</span>, <span class="fu"><a href="https://tailor.tidymodels.org/reference/adjust_probability_threshold.html" class="external-link">adjust_probability_threshold</a></span><span class="op">(</span><span class="va">tailor</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> None</span>

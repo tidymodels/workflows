@@ -103,7 +103,7 @@ internally handled by the tune package when resampling workflows).
 library(tailor)
 library(magrittr)
 
-tailor <- tailor("binary")
+tailor <- tailor()
 tailor_1 <- adjust_probability_threshold(tailor, .1)
 
 workflow <- workflow() \%>\%

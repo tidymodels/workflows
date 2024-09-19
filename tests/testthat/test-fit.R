@@ -203,7 +203,7 @@ test_that(".should_inner_split works", {
       add_tailor(
         tailor::tailor() %>%
         tailor::adjust_numeric_calibration() %>%
-        tailor::adjust_probability_threshold(.4)
+        tailor::adjust_numeric_range(lower_limit = 1)
       )
   ))
   expect_true(.should_inner_split(
@@ -213,7 +213,7 @@ test_that(".should_inner_split works", {
       add_tailor(
         tailor::tailor() %>%
           tailor::adjust_numeric_calibration() %>%
-          tailor::adjust_probability_threshold(.4)
+          tailor::adjust_numeric_range(lower_limit = 1)
       )
   ))
 })

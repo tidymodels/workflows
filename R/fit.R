@@ -84,8 +84,6 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @rdname workflows-internals
 #' @keywords internal
 .should_inner_split <- function(workflow) {
-  # todo: test this
-  # todo: prefix with a dot for consistency with other workflows internals
   has_postprocessor(workflow) &&
   tailor::tailor_requires_fit(
     extract_postprocessor(workflow, estimated = FALSE)

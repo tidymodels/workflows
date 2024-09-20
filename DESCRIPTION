@@ -38,6 +38,7 @@ Suggests:
     knitr,
     magrittr,
     Matrix,
+    methods,
     modeldata (>= 1.0.0),
     recipes (>= 1.0.10.9000),
     rsample (>= 1.2.1.9000),

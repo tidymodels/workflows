@@ -1,14 +1,8 @@
-skip("Sparse vector materialized errors")
-
 test_that("sparse tibble can be passed to `fit() - recipe", {
   skip_if_not_installed("glmnet")
-
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
-  # materialize outcome
-  hotel_data$avg_price_per_room <- hotel_data$avg_price_per_room[]
-
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
+
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   spec <- parsnip::linear_reg(penalty = 0) %>%
     parsnip::set_mode("regression") %>%
@@ -27,8 +21,7 @@ test_that("sparse tibble can be passed to `fit() - formula", {
   skip_if_not_installed("glmnet")
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   spec <- parsnip::linear_reg(penalty = 0) %>%
     parsnip::set_mode("regression") %>%
@@ -46,13 +39,9 @@ test_that("sparse tibble can be passed to `fit() - formula", {
 
 test_that("sparse tibble can be passed to `fit() - xy", {
   skip_if_not_installed("glmnet")
-
-  hotel_data <- sparse_hotel_rates()
-  hotel_data <- sparsevctrs::coerce_to_sparse_tibble(hotel_data)
-  # materialize outcome
-  hotel_data$avg_price_per_room <- hotel_data$avg_price_per_room[]
-
   withr::local_options("sparsevctrs.verbose_materialize" = 3)
+
+  hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
   spec <- parsnip::linear_reg(penalty = 0) %>%
     parsnip::set_mode("regression") %>%

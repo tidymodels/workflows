@@ -218,6 +218,40 @@ test_that(".should_inner_split works", {
   ))
 })
 
+test_that("`make_inner_split()` works", {
+  tlr <-
+    tailor::tailor() %>%
+    tailor::adjust_numeric_calibration() %>%
+    tailor::adjust_numeric_range(lower_limit = 1)
+
+  wflow <-
+    workflow() %>%
+    add_formula(mpg ~ .) %>%
+    add_model(parsnip::linear_reg()) %>%
+    add_tailor(tlr)
+
+  # defaults to 1/3 allotted to calibration via `mc_split`s
+  inner_splt <- make_inner_split(wflow, data.frame(x = 1:36))
+  expect_s3_class(inner_splt, c("mc_split_inner", "mc_split"))
+  expect_equal(nrow(rsample::analysis(inner_splt)), 24)
+  expect_equal(nrow(rsample::assessment(inner_splt)), 12)
+
+  # respects `add_tailor(prop)`
+  wflow <- wflow %>% remove_tailor() %>% add_tailor(tlr, prop = 1/2)
+  inner_splt <- make_inner_split(wflow, data.frame(x = 1:36))
+  expect_s3_class(inner_splt, c("mc_split_inner", "mc_split"))
+  expect_equal(nrow(rsample::analysis(inner_splt)), 18)
+  expect_equal(nrow(rsample::assessment(inner_splt)), 18)
+
+  # respects `add_tailor(method)`
+  skip("currently errors re: passing `prop` to `bootstraps()`")
+  wflow <- wflow %>% remove_tailor() %>% add_tailor(tlr, method = "boot_split")
+  inner_splt <- make_inner_split(wflow, data.frame(x = 1:36))
+  expect_s3_class(inner_splt, "boot_split")
+  expect_equal(nrow(rsample::analysis(inner_splt)), 18)
+  expect_equal(nrow(rsample::assessment(inner_splt)), 18)
+})
+
 # ------------------------------------------------------------------------------
 # .fit_finalize()
 

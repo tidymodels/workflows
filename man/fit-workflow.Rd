@@ -127,8 +127,8 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7061174475 
-## R squared (OOB):                  0.5893294
+## OOB prediction error (MSE):       7058847504 
+## R squared (OOB):                  0.5894647
 }\if{html}{\out{</div>}}
 
 Note that there are \strong{four} independent variables in the fitted model

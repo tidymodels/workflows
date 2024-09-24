@@ -43,13 +43,6 @@ the workflow.
 \code{add_model()} is a required step to construct a minimal workflow.
 }
 \section{Indicator Variable Details}{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{## Warning: package 'recipes' was built under R version 4.3.3
-
-## Warning: package 'dplyr' was built under R version 4.3.3
-
-## Warning: package 'modeldata' was built under R version 4.3.3
-}\if{html}{\out{</div>}}
-
 Some modeling functions in R create indicator/dummy variables from
 categorical data when you use a model formula, and some do not. When you
 specify and fit a model with a \code{workflow()}, parsnip and workflows match
@@ -145,8 +138,8 @@ base_wf \%>\%
 ## Target node size:                 5 
 ## Variable importance mode:         none 
 ## Splitrule:                        variance 
-## OOB prediction error (MSE):       7061174475 
-## R squared (OOB):                  0.5893294
+## OOB prediction error (MSE):       7058847504 
+## R squared (OOB):                  0.5894647
 }\if{html}{\out{</div>}}
 
 Note that there are \strong{four} independent variables in the fitted model

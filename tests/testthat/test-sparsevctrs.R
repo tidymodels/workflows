@@ -62,7 +62,7 @@ test_that("sparse tibble can be passed to `fit() - xy", {
 
 test_that("sparse matrices can be passed to `fit() - recipe", {
   skip_if_not_installed("glmnet")
-  # Make materialization of sparse vectors throw an message
+  # Make materialization of sparse vectors throw a message
   # https://r-lib.github.io/sparsevctrs/dev/reference/sparsevctrs_options.html
   withr::local_options("sparsevctrs.verbose_materialize" = 1)
 
@@ -103,7 +103,7 @@ test_that("sparse matrices can be passed to `fit() - formula", {
 
 test_that("sparse matrices can be passed to `fit() - xy", {
   skip_if_not_installed("glmnet")
-  # Make materialization of sparse vectors throw an message
+  # Make materialization of sparse vectors throw a message
   # https://r-lib.github.io/sparsevctrs/dev/reference/sparsevctrs_options.html
   withr::local_options("sparsevctrs.verbose_materialize" = 1)
 

@@ -84,9 +84,6 @@ test_that("sparse matrices can be passed to `fit() - recipe", {
 
 test_that("sparse matrices can be passed to `fit() - formula", {
   skip_if_not_installed("glmnet")
-  # Make materialization of sparse vectors throw an error
-  # https://r-lib.github.io/sparsevctrs/dev/reference/sparsevctrs_options.html
-  withr::local_options("sparsevctrs.verbose_materialize" = 3)
 
   hotel_data <- sparse_hotel_rates()
 

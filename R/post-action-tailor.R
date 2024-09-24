@@ -109,6 +109,17 @@ add_tailor <- function(x, tailor, prop = NULL, method = NULL, ...) {
   res <- add_action(x, action, "tailor")
   if (.should_inner_split(res)) {
     validate_rsample_available()
+  } else {
+    if (!is_null(prop)) {
+      cli_abort(
+        "{.arg prop} will be ignored as {.arg tailor} does not require training."
+      )
+    }
+    if (!is_null(method)) {
+      cli_abort(
+        "{.arg method} will be ignored as {.arg tailor} does not require training."
+      )
+    }
   }
   res
 }

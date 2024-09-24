@@ -78,6 +78,25 @@ test_that("update a postprocessor after postprocessor fit", {
   expect_equal(workflow_with_post$fit, workflow_with_post_new$fit)
 })
 
+test_that("warns when supplied arguments that will be ignored", {
+  expect_snapshot(
+    error = TRUE,
+    add_tailor(
+      workflow(),
+      tailor::adjust_probability_threshold(tailor::tailor(), .2),
+      prop = .2
+    )
+  )
+  expect_snapshot(
+    error = TRUE,
+    add_tailor(
+      workflow(),
+      tailor::adjust_probability_threshold(tailor::tailor(), .2),
+      method = "mc_split"
+    )
+  )
+})
+
 test_that("postprocessor fit aligns with manually fitted version (no calibration)", {
   skip_if_not_installed("modeldata")
 

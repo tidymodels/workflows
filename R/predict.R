@@ -59,6 +59,10 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
     ))
   }
 
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(new_data)
+  }
+
   fit <- extract_fit_parsnip(workflow)
   new_data <- forge_predictors(new_data, workflow)
 

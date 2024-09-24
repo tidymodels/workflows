@@ -35,6 +35,7 @@ Suggests:
     tailor (>= 0.0.0.9001),
     covr,
     dials (>= 1.0.0),
+    glmnet,
     knitr,
     magrittr,
     Matrix,
@@ -54,6 +55,7 @@ Config/Needs/website:
     yardstick
 Remotes:
     tidymodels/rsample,
+    tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/tailor,
     r-lib/sparsevctrs

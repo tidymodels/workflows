@@ -64,9 +64,9 @@ that they were trained on, with the postprocessor then training on those
 predictions. Predictions on data that a model was trained on likely follow
 different distributions than predictions on unseen data; thus, workflows must
 split up the supplied \code{data} into two training sets, where the first is used to
-train the preprocessor and model and the second is passed to that trained
-processor and model to generate predictions, which then form the training data
-for the post-processor.
+train the preprocessor and model and the second, called the "calibration set,"
+is passed to that trained postprocessor and model to generate predictions,
+which then form the training data for the postprocessor.
 
 The arguments \code{prop} and \code{method} parameterize how that data is split up.
 \code{prop} determines the proportion of rows in \code{fit.workflow(data)} that are

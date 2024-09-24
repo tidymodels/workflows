@@ -142,7 +142,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
   wf_post_fit <- fit(wflow_post, dat)
 
   # ...verify predictions are the same as training the post-proc separately.
-  # note that this test naughtily re-predicts on the potato set.
+  # note that this test naughtily re-predicts on the calibration set.
   wflow_simple_preds <- augment(wf_simple_fit, rsample::assessment(inner_split))
   post_trained <- fit(post, wflow_simple_preds, y, .pred)
   wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
@@ -188,7 +188,7 @@ test_that("postprocessor fit uses correct data (with calibration, non-default `p
   wf_post_fit <- fit(wflow_post, dat)
 
   # ...verify predictions are the same as training the post-proc separately.
-  # note that this test naughtily re-predicts on the potato set.
+  # note that this test naughtily re-predicts on the calibration set.
   wflow_simple_preds <- augment(wf_simple_fit, rsample::assessment(inner_split))
   post_trained <- fit(post, wflow_simple_preds, y, .pred)
   wflow_manual_preds <- predict(post_trained, wflow_simple_preds)

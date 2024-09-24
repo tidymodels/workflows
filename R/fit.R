@@ -58,22 +58,22 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     cli_abort("{.arg data} must be provided to fit a workflow.")
   }
 
-  # If `potato` is not overwritten in the following `if` statement, then the
+  # If `calibration` is not overwritten in the following `if` statement, then the
   # the postprocessor doesn't actually require training and the dataset
   # passed to `.fit_post()` will have no effect.
-  potato <- data
+  calibration <- data
   if (.should_inner_split(object)) {
     inner_split <- make_inner_split(object, data)
 
     data <- rsample::analysis(inner_split)
-    potato <- rsample::assessment(inner_split)
+    calibration <- rsample::assessment(inner_split)
   }
 
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
   if (has_postprocessor(workflow)) {
-    workflow <- .fit_post(workflow, potato)
+    workflow <- .fit_post(workflow, calibration)
   }
   workflow <- .fit_finalize(workflow)
 

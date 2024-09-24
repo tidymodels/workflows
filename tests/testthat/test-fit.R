@@ -230,7 +230,7 @@ test_that("`make_inner_split()` works", {
     add_model(parsnip::linear_reg()) %>%
     add_tailor(tlr)
 
-  # defaults to 1/3 allotted to potato via `mc_split`s
+  # defaults to 1/3 allotted to calibration via `mc_split`s
   inner_splt <- make_inner_split(wflow, data.frame(x = 1:36))
   expect_s3_class(inner_splt, c("mc_split_inner", "mc_split"))
   expect_equal(nrow(rsample::analysis(inner_splt)), 24)

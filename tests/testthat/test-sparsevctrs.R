@@ -146,9 +146,9 @@ test_that("sparse tibble can be passed to `predict()`", {
 
 test_that("sparse matrix can be passed to `predict()`", {
   skip_if_not_installed("glmnet")
-  # Make materialization of sparse vectors throw a message
+  # Make materialization of sparse vectors throw a warning
   # https://r-lib.github.io/sparsevctrs/dev/reference/sparsevctrs_options.html
-  withr::local_options("sparsevctrs.verbose_materialize" = 1)
+  withr::local_options("sparsevctrs.verbose_materialize" = 2)
 
   hotel_data <- sparse_hotel_rates()
 
@@ -162,7 +162,10 @@ test_that("sparse matrix can be passed to `predict()`", {
     add_recipe(rec) %>%
     add_model(spec)
 
-  wf_fit <- fit(wf_spec, hotel_data)
+  # We know that this will cause 1 warning due to the outcome
+  suppressWarnings(
+    wf_fit <- fit(wf_spec, hotel_data)
+  )
   
-  expect_no_error(predict(wf_fit, hotel_data))
+  expect_no_warning(predict(wf_fit, hotel_data))
 })

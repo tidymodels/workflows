@@ -28,3 +28,10 @@
     Output
       sparsevctrs: Sparse vector materialized
 
+# sparse matrix can be passed to `predict()
+
+    Code
+      wf_fit <- fit(wf_spec, hotel_data)
+    Output
+      sparsevctrs: Sparse vector materialized
+

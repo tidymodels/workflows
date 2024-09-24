@@ -58,6 +58,10 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     cli_abort("{.arg data} must be provided to fit a workflow.")
   }
 
+  if (is_sparse_matrix(data)) {
+    data <- sparsevctrs::coerce_to_sparse_tibble(data)
+  }
+
   # If `calibration` is not overwritten in the following `if` statement, then the
   # the postprocessor doesn't actually require training and the dataset
   # passed to `.fit_post()` will have no effect.

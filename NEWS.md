@@ -7,6 +7,10 @@
 
 * New `extract_fit_time()` method has been added that return the time it took to train the workflow (#191).
 
+* `fit()` can now take dgCMatrix and sparse tibbles as data values when `add_recipe()` or `add_variables()` is used (#245, #258).
+
+* `predict()` can now take dgCMatrix and sparse tibble input for `new_data` argument (#261).
+
 # workflows 1.1.4
 
 * While `augment.workflow()` previously never returned a `.resid` column, the 

@@ -44,7 +44,7 @@
 #' be used to train the postprocessor.
 #'
 #' In some situations, randomly splitting `fit.workflow(data)` (with
-#' [rsample::initial_split()], for example) is sufficient to prevent data
+#' `rsample::initial_split()`, for example) is sufficient to prevent data
 #' leakage. However, `fit.workflow(data)` could also have arisen as:
 #'
 #' ```
@@ -59,7 +59,7 @@
 #' datasets, resulting in the preprocessor and model generating predictions on
 #' rows they've seen before. Similarly problematic situations could arise in the
 #' context of other resampling situations, like time-based splits.
-#' In general, use the [rsample::inner_split()] function to prevent data
+#' In general, use the `rsample::inner_split()` function to prevent data
 #' leakage when resampling; when workflows with postprocessors that require
 #' training are passed to the tune package, this is handled internally.
 #'

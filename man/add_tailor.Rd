@@ -63,7 +63,7 @@ to train the preprocessor and model while \code{fit.workflow(calibration)} will
 be used to train the postprocessor.
 
 In some situations, randomly splitting \code{fit.workflow(data)} (with
-\code{\link[rsample:initial_split]{rsample::initial_split()}}, for example) is sufficient to prevent data
+\code{rsample::initial_split()}, for example) is sufficient to prevent data
 leakage. However, \code{fit.workflow(data)} could also have arisen as:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{boots <- rsample::bootstraps(some_other_data)
@@ -77,7 +77,7 @@ the preprocessor would likely result in the same rows appearing in both
 datasets, resulting in the preprocessor and model generating predictions on
 rows they've seen before. Similarly problematic situations could arise in the
 context of other resampling situations, like time-based splits.
-In general, use the \code{\link[rsample:inner_split]{rsample::inner_split()}} function to prevent data
+In general, use the \code{rsample::inner_split()} function to prevent data
 leakage when resampling; when workflows with postprocessors that require
 training are passed to the tune package, this is handled internally.
 }

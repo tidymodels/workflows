@@ -109,7 +109,6 @@ test_that("postprocessor fit aligns with manually fitted version (no calibration
 
 test_that("postprocessor fit aligns with manually fitted version (with calibration)", {
   skip_if_not_installed("modeldata")
-  skip_if_not_installed("rsample")
 
   # create example data
   y <- seq(0, 7, .1)

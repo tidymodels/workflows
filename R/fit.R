@@ -16,9 +16,13 @@
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
-#'   workflow
+#'   preprocessor and model.
 #'
 #' @param ... Not used
+#'
+#' @param calibration A data frame of predictors and outcomes to use when
+#'   fitting the postprocessor. See the "Data Usage" section of [add_tailor()]
+#'   for more information.
 #'
 #' @param control A [control_workflow()] object
 #'
@@ -51,12 +55,14 @@
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
-fit.workflow <- function(object, data, ..., control = control_workflow()) {
+fit.workflow <- function(object, data, ..., calibration = NULL, control = control_workflow()) {
   check_dots_empty()
 
   if (is_missing(data)) {
     cli_abort("{.arg data} must be provided to fit a workflow.")
   }
+
+  validate_has_calibration(object, calibration)
 
   if (is_sparse_matrix(data)) {
     data <- sparsevctrs::coerce_to_sparse_tibble(data)
@@ -65,9 +71,11 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
-  # if (has_postprocessor(workflow)) {
-  #   workflow <- .fit_post(workflow, calibration)
-  # }
+  if (has_postprocessor(workflow)) {
+    # if (is.null(calibration)), then the tailor doesn't have a calibrator
+    # and training the tailor on `data` will not leak data
+    workflow <- .fit_post(workflow, calibration %||% data)
+  }
   workflow <- .fit_finalize(workflow)
 
   workflow
@@ -213,6 +221,27 @@ validate_has_model <- function(x, ..., call = caller_env()) {
       i = "Provide one with {.fun add_model}."
     )
     cli_abort(message, call = call)
+  }
+
+  invisible(x)
+}
+
+validate_has_calibration <- function(x, calibration,
+                                     x_arg = caller_arg(x), call = caller_env()) {
+  if (.should_inner_split(x) && is.null(calibration)) {
+    cli::cli_abort(
+      "{.arg {x_arg}} requires a {.arg calibration} set to train but none
+       was supplied.",
+      call = call
+    )
+  }
+
+  if (!.should_inner_split(x) && !is.null(calibration)) {
+    cli::cli_abort(
+      "{.arg {x_arg}} does not require a {.arg calibration} set to train
+       but one was supplied.",
+      call = call
+    )
   }
 
   invisible(x)

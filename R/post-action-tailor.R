@@ -17,28 +17,16 @@
 #'   should not have been trained already with [tailor::fit()]; workflows
 #'   will handle training internally.
 #'
-#' @param prop The proportion of the data in [fit.workflow()] that should be
-#' held back specifically for estimating the postprocessor. Only relevant for
-#' postprocessors that require estimation---see section Data Usage below to
-#' learn more. Defaults to 1/3.
-#'
-#' @param method The method with which to split the data in [fit.workflow()],
-#' as a character vector. Only relevant for postprocessors that
-#' require estimation and not required when resampling the workflow with
-#' tune. If `fit.workflow(data)` arose as `training(split_object)`, this argument can
-#' usually be supplied as `class(split_object)`. Defaults to `"mc_split"`, which
-#' randomly samples `fit.workflow(data)` into two sets, similarly to
-#' [rsample::initial_split()]. See section Data Usage below to learn more.
-#'
 #' @section Data Usage:
 #'
 #' While preprocessors and models are trained on data in the usual sense,
 #' postprocessors are training on _predictions_ on data. When a workflow
-#' is fitted, the user supplies training data with the `data` argument.
+#' is fitted, the user typically supplies training data with the `data` argument.
 #' When workflows don't contain a postprocessor that requires training,
-#' they can use all of the supplied `data` to train the preprocessor and model.
-#' However, in the case where a postprocessor must be trained as well,
-#' training the preprocessor and model on all of `data` would leave no data
+#' users can pass all of the available data to the `data` argument to train the
+#' preprocessor and model. However, in the case where a postprocessor must be
+#' trained as well, allotting all of the available data to the `data` argument
+#' to train the preprocessor and model would leave no data
 #' left to train the postprocessor with---if that were the case, workflows
 #' would need to `predict()` from the preprocessor and model on the same `data`
 #' that they were trained on, with the postprocessor then training on those
@@ -49,22 +37,15 @@
 #' is passed to that trained postprocessor and model to generate predictions,
 #' which then form the training data for the postprocessor.
 #'
-#' The arguments `prop` and `method` parameterize how that data is split up.
-#' `prop` determines the proportion of rows in `fit.workflow(data)` that are
-#' allotted to training the preprocessor and model, while the rest are used to
-#' train the postprocessor. `method` determines how that split occurs; since
-#' `fit.workflow()` just takes in a data frame, the function doesn't have
-#' any information on how that dataset came to be. For example, `data` could
-#' have been created as:
+#' When fitting a workflow with a postprocessor that requires training
+#' (i.e. one that returns `TRUE` in `.should_inner_split(workflow)`), users
+#' must pass two data arguments--the usual `fit.workflow(data)` will be used
+#' to train the preprocessor and model while `fit.workflow(calibration)` will
+#' be used to train the postprocessor.
 #'
-#' ```
-#' split <- rsample::initial_split(some_other_data)
-#' data <- rsample::training(split)
-#' ```
-#'
-#' ...in which case it's okay to randomly allot some rows of `data` to train the
-#' preprocessor and model and the rest to train the postprocessor. However,
-#' `data` could also have arisen as:
+#' In some situations, randomly splitting `fit.workflow(data)` (with
+#' [rsample::initial_split()], for example) is sufficient to prevent data
+#' leakage. However, `fit.workflow(data)` could also have arisen as:
 #'
 #' ```
 #' boots <- rsample::bootstraps(some_other_data)
@@ -78,8 +59,9 @@
 #' datasets, resulting in the preprocessor and model generating predictions on
 #' rows they've seen before. Similarly problematic situations could arise in the
 #' context of other resampling situations, like time-based splits.
-#' The `method` argument ensures that data is allotted properly (and is
-#' internally handled by the tune package when resampling workflows).
+#' In general, use the [rsample::inner_split()] function to prevent data
+#' leakage when resampling; when workflows with postprocessors that require
+#' training are passed to the tune package, this is handled internally.
 #'
 #' @param ... Not used.
 #'
@@ -102,14 +84,11 @@
 #' remove_tailor(workflow)
 #'
 #' update_tailor(workflow, adjust_probability_threshold(tailor, .2))
-add_tailor <- function(x, tailor, prop = NULL, method = NULL, ...) {
+add_tailor <- function(x, tailor, ...) {
   check_dots_empty()
   validate_tailor_available()
-  action <- new_action_tailor(tailor, prop = prop, method = method)
+  action <- new_action_tailor(tailor)
   res <- add_action(x, action, "tailor")
-  if (.should_inner_split(res)) {
-    validate_rsample_available()
-  }
   res
 }
 
@@ -185,7 +164,7 @@ mock_trained_workflow <- function(workflow) {
 
 # ------------------------------------------------------------------------------
 
-new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
+new_action_tailor <- function(tailor, ..., call = caller_env()) {
   check_dots_empty()
 
   if (!is_tailor(tailor)) {
@@ -196,17 +175,8 @@ new_action_tailor <- function(tailor, prop, method, ..., call = caller_env()) {
     cli_abort("Can't add a trained tailor to a workflow.", call = call)
   }
 
-  if (!is.null(prop) &&
-      (!rlang::is_double(prop, n = 1) || prop <= 0 || prop >= 1)) {
-    cli_abort("{.arg prop} must be a numeric on (0, 1).", call = call)
-  }
-
-  # todo: test method
-
   new_action_post(
     tailor = tailor,
-    prop = prop,
-    method = method,
     subclass = "action_tailor"
   )
 }

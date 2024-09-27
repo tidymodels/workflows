@@ -85,6 +85,29 @@ test_that("cannot fit without a fit stage", {
   })
 })
 
+test_that("fit.workflow confirms compatibility of object and calibration", {
+  skip_if_not_installed("tailor")
+
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars, calibration = mtcars)
+  })
+
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_numeric_calibration(tailor)
+  workflow <- add_tailor(workflow, tailor)
+
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars)
+  })
+})
+
 # ------------------------------------------------------------------------------
 # .fit_pre()
 

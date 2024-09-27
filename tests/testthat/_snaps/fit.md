@@ -32,6 +32,22 @@
       ! The workflow must have a model.
       i Provide one with `add_model()`.
 
+# fit.workflow confirms compatibility of object and calibration
+
+    Code
+      fit(workflow, mtcars, calibration = mtcars)
+    Condition
+      Error in `fit()`:
+      ! `object` does not require a `calibration` set to train but one was supplied.
+
+---
+
+    Code
+      fit(workflow, mtcars)
+    Condition
+      Error in `fit()`:
+      ! `object` requires a `calibration` set to train but none was supplied.
+
 # can `predict()` from workflow fit from individual pieces
 
     Code

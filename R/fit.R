@@ -62,23 +62,12 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
     data <- sparsevctrs::coerce_to_sparse_tibble(data)
   }
 
-  # If `calibration` is not overwritten in the following `if` statement, then the
-  # the postprocessor doesn't actually require training and the dataset
-  # passed to `.fit_post()` will have no effect.
-  calibration <- data
-  if (.should_inner_split(object)) {
-    inner_split <- make_inner_split(object, data)
-
-    data <- rsample::analysis(inner_split)
-    calibration <- rsample::assessment(inner_split)
-  }
-
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
-  if (has_postprocessor(workflow)) {
-    workflow <- .fit_post(workflow, calibration)
-  }
+  # if (has_postprocessor(workflow)) {
+  #   workflow <- .fit_post(workflow, calibration)
+  # }
   workflow <- .fit_finalize(workflow)
 
   workflow
@@ -89,29 +78,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @keywords internal
 .should_inner_split <- function(workflow) {
   has_postprocessor(workflow) &&
-  tailor::tailor_requires_fit(
-    extract_postprocessor(workflow, estimated = FALSE)
-  )
-}
-
-make_inner_split <- function(object, data) {
-  validate_rsample_available()
-
-  method <- object$post$actions$tailor$method
-  mocked_split <-
-    rsample::make_splits(
-      list(analysis = seq_len(nrow(data)), assessment = integer()),
-      data = data,
-      class = if (is.null(method)) "mc_split" else method
+    tailor::tailor_requires_fit(
+      extract_postprocessor(workflow, estimated = FALSE)
     )
-
-  # add_tailor(prop) is the proportion to train the postprocessor, while
-  # rsample::mc_cv(prop) is the proportion to train the model (#247)
-  prop <- object$post$actions$tailor$prop
-  rsample::inner_split(
-    mocked_split,
-    list(prop = if (is.null(prop)) 2/3 else 1 - prop)
-  )
 }
 
 # ------------------------------------------------------------------------------

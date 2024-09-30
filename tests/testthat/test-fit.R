@@ -197,31 +197,31 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
 
 # ------------------------------------------------------------------------------
 # .fit_post()
-test_that(".should_inner_split works", {
+test_that(".workflow_includes_calibration works", {
   skip_if_not_installed("tailor")
 
-  expect_false(.should_inner_split(workflow()))
-  expect_false(.should_inner_split(workflow() %>% add_model(parsnip::linear_reg())))
-  expect_false(.should_inner_split(workflow() %>% add_formula(mpg ~ .)))
-  expect_false(.should_inner_split(
+  expect_false(.workflow_includes_calibration(workflow()))
+  expect_false(.workflow_includes_calibration(workflow() %>% add_model(parsnip::linear_reg())))
+  expect_false(.workflow_includes_calibration(workflow() %>% add_formula(mpg ~ .)))
+  expect_false(.workflow_includes_calibration(
     workflow() %>%
     add_formula(mpg ~ .) %>%
     add_model(parsnip::linear_reg())
   ))
-  expect_false(.should_inner_split(
+  expect_false(.workflow_includes_calibration(
     workflow() %>%
     add_tailor(tailor::tailor())
   ))
-  expect_false(.should_inner_split(
+  expect_false(.workflow_includes_calibration(
     workflow() %>%
       add_tailor(tailor::tailor() %>% tailor::adjust_probability_threshold(.4))
   ))
 
-  expect_true(.should_inner_split(
+  expect_true(.workflow_includes_calibration(
     workflow() %>%
       add_tailor(tailor::tailor() %>% tailor::adjust_numeric_calibration())
   ))
-  expect_true(.should_inner_split(
+  expect_true(.workflow_includes_calibration(
     workflow() %>%
       add_tailor(
         tailor::tailor() %>%
@@ -229,7 +229,7 @@ test_that(".should_inner_split works", {
         tailor::adjust_numeric_range(lower_limit = 1)
       )
   ))
-  expect_true(.should_inner_split(
+  expect_true(.workflow_includes_calibration(
     workflow() %>%
       add_formula(mpg ~ .) %>%
       add_model(parsnip::linear_reg()) %>%

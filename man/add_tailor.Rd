@@ -46,7 +46,7 @@ users can pass all of the available data to the \code{data} argument to train th
 preprocessor and model. However, in the case where a postprocessor must be
 trained as well, allotting all of the available data to the \code{data} argument
 to train the preprocessor and model would leave no data
-left to train the postprocessor with---if that were the case, workflows
+to train the postprocessor with---if that were the case, workflows
 would need to \code{predict()} from the preprocessor and model on the same \code{data}
 that they were trained on, with the postprocessor then training on those
 predictions. Predictions on data that a model was trained on likely follow

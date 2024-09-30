@@ -137,5 +137,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
   wflow_post_preds <- predict(wf_post_fit, dat_calibration)
 
   expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
+
+  # okay if some predictions are the same, but we wouldn't expect all of them to be
   expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))
 })

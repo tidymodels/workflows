@@ -226,19 +226,18 @@ validate_has_model <- function(x, ..., call = caller_env()) {
   invisible(x)
 }
 
-validate_has_calibration <- function(x, calibration,
-                                     x_arg = caller_arg(x), call = caller_env()) {
+validate_has_calibration <- function(x, calibration, call = caller_env()) {
   if (.should_inner_split(x) && is.null(calibration)) {
     cli::cli_abort(
-      "{.arg {x_arg}} requires a {.arg calibration} set to train but none
+      "The workflow requires a {.arg calibration} set to train but none
        was supplied.",
       call = call
     )
   }
 
   if (!.should_inner_split(x) && !is.null(calibration)) {
-    cli::cli_abort(
-      "{.arg {x_arg}} does not require a {.arg calibration} set to train
+    cli::cli_warn(
+      "The workflow does not require a {.arg calibration} set to train
        but one was supplied.",
       call = call
     )

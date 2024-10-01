@@ -67,7 +67,7 @@ tailor with the new one.</p></li>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_tailor</span><span class="op">(</span><span class="va">x</span>, <span class="va">tailor</span>, prop <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_tailor</span><span class="op">(</span><span class="va">x</span>, <span class="va">tailor</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">remove_tailor</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
@@ -88,23 +88,6 @@ should not have been trained already with <code><a href="https://tailor.tidymode
 will handle training internally.</p></dd>
 
 
-<dt id="arg-prop">prop<a class="anchor" aria-label="anchor" href="#arg-prop"></a></dt>
-<dd><p>The proportion of the data in <code><a href="fit-workflow.html">fit.workflow()</a></code> that should be
-held back specifically for estimating the postprocessor. Only relevant for
-postprocessors that require estimation—see section Data Usage below to
-learn more. Defaults to 1/3.</p></dd>
-
-
-<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>The method with which to split the data in <code><a href="fit-workflow.html">fit.workflow()</a></code>,
-as a character vector. Only relevant for postprocessors that
-require estimation and not required when resampling the workflow with
-tune. If <code>fit.workflow(data)</code> arose as <code>training(split_object)</code>, this argument can
-usually be supplied as <code>class(split_object)</code>. Defaults to <code>"mc_split"</code>, which
-randomly samples <code>fit.workflow(data)</code> into two sets, similarly to
-<code><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">rsample::initial_split()</a></code>. See section Data Usage below to learn more.</p></dd>
-
-
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not used.</p></dd>
 
@@ -120,12 +103,13 @@ randomly samples <code>fit.workflow(data)</code> into two sets, similarly to
 
 <p>While preprocessors and models are trained on data in the usual sense,
 postprocessors are training on <em>predictions</em> on data. When a workflow
-is fitted, the user supplies training data with the <code>data</code> argument.
+is fitted, the user typically supplies training data with the <code>data</code> argument.
 When workflows don't contain a postprocessor that requires training,
-they can use all of the supplied <code>data</code> to train the preprocessor and model.
-However, in the case where a postprocessor must be trained as well,
-training the preprocessor and model on all of <code>data</code> would leave no data
-left to train the postprocessor with—if that were the case, workflows
+users can pass all of the available data to the <code>data</code> argument to train the
+preprocessor and model. However, in the case where a postprocessor must be
+trained as well, allotting all of the available data to the <code>data</code> argument
+to train the preprocessor and model would leave no data
+to train the postprocessor with—if that were the case, workflows
 would need to <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> from the preprocessor and model on the same <code>data</code>
 that they were trained on, with the postprocessor then training on those
 predictions. Predictions on data that a model was trained on likely follow
@@ -134,18 +118,14 @@ split up the supplied <code>data</code> into two training sets, where the first 
 train the preprocessor and model and the second, called the "calibration set,"
 is passed to that trained postprocessor and model to generate predictions,
 which then form the training data for the postprocessor.</p>
-<p>The arguments <code>prop</code> and <code>method</code> parameterize how that data is split up.
-<code>prop</code> determines the proportion of rows in <code>fit.workflow(data)</code> that are
-allotted to training the preprocessor and model, while the rest are used to
-train the postprocessor. <code>method</code> determines how that split occurs; since
-<code><a href="fit-workflow.html">fit.workflow()</a></code> just takes in a data frame, the function doesn't have
-any information on how that dataset came to be. For example, <code>data</code> could
-have been created as:</p>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>split <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(some_other_data)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">training</span>(split)</span></code></pre><p></p></div>
-<p>...in which case it's okay to randomly allot some rows of <code>data</code> to train the
-preprocessor and model and the rest to train the postprocessor. However,
-<code>data</code> could also have arisen as:</p>
+<p>When fitting a workflow with a postprocessor that requires training
+(i.e. one that returns <code>TRUE</code> in <code>.workflow_includes_calibration(workflow)</code>), users
+must pass two data arguments–the usual <code>fit.workflow(data)</code> will be used
+to train the preprocessor and model while <code>fit.workflow(calibration)</code> will
+be used to train the postprocessor.</p>
+<p>In some situations, randomly splitting <code>fit.workflow(data)</code> (with
+<code><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">rsample::initial_split()</a></code>, for example) is sufficient to prevent data
+leakage. However, <code>fit.workflow(data)</code> could also have arisen as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>boots <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">bootstraps</span>(some_other_data)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>split <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">get_rsplit</span>(boots, <span class="dv">1</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">assessment</span>(split)</span></code></pre><p></p></div>
@@ -155,8 +135,9 @@ the preprocessor would likely result in the same rows appearing in both
 datasets, resulting in the preprocessor and model generating predictions on
 rows they've seen before. Similarly problematic situations could arise in the
 context of other resampling situations, like time-based splits.
-The <code>method</code> argument ensures that data is allotted properly (and is
-internally handled by the tune package when resampling workflows).</p>
+In general, use the <code>rsample::inner_split()</code> function to prevent data
+leakage when resampling; when workflows with postprocessors that require
+training are passed to the tune package, this is handled internally.</p>
     </div>
 
     <div class="section level2">

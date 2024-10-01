@@ -16,9 +16,13 @@
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
-#'   workflow
+#'   preprocessor and model.
 #'
 #' @param ... Not used
+#'
+#' @param calibration A data frame of predictors and outcomes to use when
+#'   fitting the postprocessor. See the "Data Usage" section of [add_tailor()]
+#'   for more information.
 #'
 #' @param control A [control_workflow()] object
 #'
@@ -51,34 +55,31 @@
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
-fit.workflow <- function(object, data, ..., control = control_workflow()) {
+fit.workflow <- function(object, data, ..., calibration = NULL, control = control_workflow()) {
   check_dots_empty()
 
   if (is_missing(data)) {
     cli_abort("{.arg data} must be provided to fit a workflow.")
   }
 
+  validate_has_calibration(object, calibration)
+
   if (is_sparse_matrix(data)) {
     data <- sparsevctrs::coerce_to_sparse_tibble(data)
-  }
-
-  # If `calibration` is not overwritten in the following `if` statement, then the
-  # the postprocessor doesn't actually require training and the dataset
-  # passed to `.fit_post()` will have no effect.
-  calibration <- data
-  if (.should_inner_split(object)) {
-    inner_split <- make_inner_split(object, data)
-
-    data <- rsample::analysis(inner_split)
-    calibration <- rsample::assessment(inner_split)
   }
 
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
+
+  if (!.workflow_includes_calibration(workflow)) {
+    # in this case, training the tailor on `data` will not leak data (#262)
+    calibration <- data
+  }
   if (has_postprocessor(workflow)) {
     workflow <- .fit_post(workflow, calibration)
   }
+
   workflow <- .fit_finalize(workflow)
 
   workflow
@@ -87,31 +88,11 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @export
 #' @rdname workflows-internals
 #' @keywords internal
-.should_inner_split <- function(workflow) {
+.workflow_includes_calibration <- function(workflow) {
   has_postprocessor(workflow) &&
-  tailor::tailor_requires_fit(
-    extract_postprocessor(workflow, estimated = FALSE)
-  )
-}
-
-make_inner_split <- function(object, data) {
-  validate_rsample_available()
-
-  method <- object$post$actions$tailor$method
-  mocked_split <-
-    rsample::make_splits(
-      list(analysis = seq_len(nrow(data)), assessment = integer()),
-      data = data,
-      class = if (is.null(method)) "mc_split" else method
+    tailor::tailor_requires_fit(
+      extract_postprocessor(workflow, estimated = FALSE)
     )
-
-  # add_tailor(prop) is the proportion to train the postprocessor, while
-  # rsample::mc_cv(prop) is the proportion to train the model (#247)
-  prop <- object$post$actions$tailor$prop
-  rsample::inner_split(
-    mocked_split,
-    list(prop = if (is.null(prop)) 2/3 else 1 - prop)
-  )
 }
 
 # ------------------------------------------------------------------------------
@@ -244,6 +225,26 @@ validate_has_model <- function(x, ..., call = caller_env()) {
       i = "Provide one with {.fun add_model}."
     )
     cli_abort(message, call = call)
+  }
+
+  invisible(x)
+}
+
+validate_has_calibration <- function(x, calibration, call = caller_env()) {
+  if (.workflow_includes_calibration(x) && is.null(calibration)) {
+    cli::cli_abort(
+      "The workflow requires a {.arg calibration} set to train but none
+       was supplied.",
+      call = call
+    )
+  }
+
+  if (!.workflow_includes_calibration(x) && !is.null(calibration)) {
+    cli::cli_warn(
+      "The workflow does not require a {.arg calibration} set to train
+       but one was supplied.",
+      call = call
+    )
   }
 
   invisible(x)

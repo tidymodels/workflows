@@ -68,7 +68,7 @@ leakage. However, \code{fit.workflow(data)} could also have arisen as:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{boots <- rsample::bootstraps(some_other_data)
 split <- rsample::get_rsplit(boots, 1)
-data <- rsample::assessment(split)
+data <- rsample::analysis(split)
 }\if{html}{\out{</div>}}
 
 In this case, some of the rows in \code{data} will be duplicated. Thus, randomly

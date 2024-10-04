@@ -169,3 +169,23 @@ test_that("sparse matrix can be passed to `predict()`", {
   
   expect_no_warning(predict(wf_fit, hotel_data))
 })
+
+test_that("fit() errors if sparse matrix has no colnames", {
+  skip_if_not_installed("glmnet")
+
+  hotel_data <- sparse_hotel_rates()
+  colnames(hotel_data) <- NULL
+
+  spec <- parsnip::linear_reg(penalty = 0) %>%
+    parsnip::set_mode("regression") %>%
+    parsnip::set_engine("glmnet")
+
+  wf_spec <- workflow() %>%
+    add_variables(avg_price_per_room, everything()) %>%
+    add_model(spec)
+
+  expect_snapshot(
+    error = TRUE,
+    fit(wf_spec, hotel_data)
+  )
+})

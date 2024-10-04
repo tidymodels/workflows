@@ -28,3 +28,11 @@
     Output
       sparsevctrs: Sparse vector materialized
 
+# fit() errors if sparse matrix has no colnames
+
+    Code
+      fit(wf_spec, hotel_data)
+    Condition
+      Error in `fit()`:
+      ! `x` must have column names.
+

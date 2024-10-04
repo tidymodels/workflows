@@ -92,7 +92,7 @@ fit.action_formula <- function(object, workflow, data, ...) {
   formula <- object$formula
   blueprint <- object$blueprint
 
-  if (is_sparse_tibble(data)) {
+  if (sparsevctrs::has_sparse_elements(data)) {
     cli::cli_abort(
       "Sparse data cannot be used with the formula interface. Please use
      {.fn add_recipe} or {.fn add_variables} instead."

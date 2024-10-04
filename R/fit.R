@@ -65,7 +65,10 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
   validate_has_calibration(object, calibration)
 
   if (is_sparse_matrix(data)) {
-    data <- sparsevctrs::coerce_to_sparse_tibble(data)
+    data <- sparsevctrs::coerce_to_sparse_tibble(
+      data, 
+      call = rlang::caller_env(0)
+    )
   }
 
   workflow <- object

@@ -50,7 +50,7 @@
 #' ```
 #' boots <- rsample::bootstraps(some_other_data)
 #' split <- rsample::get_rsplit(boots, 1)
-#' data <- rsample::assessment(split)
+#' data <- rsample::analysis(split)
 #' ```
 #'
 #' In this case, some of the rows in `data` will be duplicated. Thus, randomly

@@ -128,7 +128,7 @@ be used to train the postprocessor.</p>
 leakage. However, <code>fit.workflow(data)</code> could also have arisen as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>boots <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">bootstraps</span>(some_other_data)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>split <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">get_rsplit</span>(boots, <span class="dv">1</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">assessment</span>(split)</span></code></pre><p></p></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>data <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">analysis</span>(split)</span></code></pre><p></p></div>
 <p>In this case, some of the rows in <code>data</code> will be duplicated. Thus, randomly
 allotting some of them to train the preprocessor and model and others to train
 the preprocessor would likely result in the same rows appearing in both

@@ -53,9 +53,10 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes:
+    tidymodels/dials#358,
     tidymodels/recipes,
     tidymodels/parsnip,
-    tidymodels/tailor,
+    tidymodels/tailor#51,
     r-lib/sparsevctrs
 Config/testthat/edition: 3
 Encoding: UTF-8

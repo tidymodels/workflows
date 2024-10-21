@@ -165,8 +165,7 @@ test_that("augment fails if it can't preprocess `new_data`", {
 
   wf <- fit(wf, df)
 
-  # vctrs type error
-  expect_error(augment(wf, new_data))
+  expect_error(augment(wf, new_data), class = "vctrs_error_cast")
 })
 
 test_that("augment works with matrix compositions (#148)", {

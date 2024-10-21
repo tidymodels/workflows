@@ -478,8 +478,7 @@ test_that("case weights `col` must exist in `data`", {
   wf <- add_formula(wf, mpg ~ .)
   wf <- add_case_weights(wf, foo)
 
-  # Tidyselect error
-  expect_error(fit(wf, mtcars))
+  expect_error(fit(wf, mtcars), class = "vctrs_error_subscript_oob")
 })
 
 test_that("case weights `col` can't select >1 columns in `data`", {

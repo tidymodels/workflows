@@ -168,8 +168,7 @@ test_that("`outcomes` are removed from set of possible `predictors` (#72)", {
 
   workflow2 <- add_variables(workflow, mpg, mpg)
 
-  # vctrs subscript error
-  expect_error(.fit_pre(workflow2, mtcars))
+  expect_error(.fit_pre(workflow2, mtcars), class = "vctrs_error_subscript_oob")
 })
 
 test_that("selecting no `outcomes` doesn't break selection of `predictors`", {

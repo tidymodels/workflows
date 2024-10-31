@@ -53,7 +53,7 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes:
-    tidymodels/dials#358,
+    tidymodels/dials,
     tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/tailor,

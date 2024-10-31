@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("sparse tibble can be passed to `fit() - recipe", {
   skip_if_not_installed("glmnet")
   # Make materialization of sparse vectors throw an error
@@ -140,7 +142,7 @@ test_that("sparse tibble can be passed to `predict()`", {
     add_model(spec)
 
   wf_fit <- fit(wf_spec, hotel_data)
-  
+
   expect_no_error(predict(wf_fit, hotel_data))
 })
 
@@ -166,7 +168,7 @@ test_that("sparse matrix can be passed to `predict()`", {
   suppressWarnings(
     wf_fit <- fit(wf_spec, hotel_data)
   )
-  
+
   expect_no_warning(predict(wf_fit, hotel_data))
 })
 

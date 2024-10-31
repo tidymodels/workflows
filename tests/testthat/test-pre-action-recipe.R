@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can add a recipe to a workflow", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
 

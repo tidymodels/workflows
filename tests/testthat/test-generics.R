@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can compute required packages of a workflow - formula", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")

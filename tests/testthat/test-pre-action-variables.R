@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can add variables to a workflow", {
   wf <- workflow()
   wf <- add_variables(wf, y, c(x1, x2))

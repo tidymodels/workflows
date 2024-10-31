@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can add a formula to a workflow", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)

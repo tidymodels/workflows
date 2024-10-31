@@ -2,6 +2,10 @@
 # For sparse tibble testing
 
 sparse_hotel_rates <- function(tibble = FALSE) {
+  if (!rlang::is_installed("modeldata")) {
+    return()
+  }
+
   # 99.2 sparsity
   hotel_rates <- modeldata::hotel_rates
 

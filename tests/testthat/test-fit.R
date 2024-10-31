@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 data("hardhat-example-data", package = "hardhat")
 
 test_that("can `fit()` a workflow with a recipe", {

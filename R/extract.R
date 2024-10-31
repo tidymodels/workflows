@@ -68,7 +68,7 @@
 #' section.
 #'
 #' @name extract-workflow
-#' @examples
+#' @examplesIf is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

@@ -42,7 +42,7 @@ for usage by the tuning package, \href{https://github.com/tidymodels/tune}{tune}
 and the general user should never need to worry about them.
 }
 \examples{
-\dontshow{if (is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)

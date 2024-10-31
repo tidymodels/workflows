@@ -32,7 +32,7 @@
 #'
 #' @name fit-workflow
 #' @export
-#' @examplesIf is_installed("recipes")
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -125,7 +125,7 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
 #' @name workflows-internals
 #' @keywords internal
 #' @export
-#' @examplesIf is_installed("recipes")
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

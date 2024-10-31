@@ -47,7 +47,7 @@ extracted from the mold object returned from \code{pull_workflow_mold()}.
 }
 }
 \examples{
-\dontshow{if (is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)

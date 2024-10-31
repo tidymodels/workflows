@@ -99,7 +99,7 @@ workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
 }\if{html}{\out{</div>}}
 }
 \examples{
-\dontshow{if (is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)

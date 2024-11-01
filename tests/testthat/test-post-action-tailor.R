@@ -1,3 +1,6 @@
+skip_if_not_installed("probably")
+skip_if_not_installed("tailor")
+
 test_that("can add a postprocessor to a workflow", {
   post <- tailor::tailor()
 

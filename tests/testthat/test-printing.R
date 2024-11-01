@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can print empty workflow", {
   expect_snapshot(workflow())
 })

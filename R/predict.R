@@ -25,7 +25,7 @@
 #'
 #' @name predict-workflow
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -61,7 +61,7 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
 
   if (is_sparse_matrix(new_data)) {
     new_data <- sparsevctrs::coerce_to_sparse_tibble(
-      new_data, 
+      new_data,
       call = rlang::caller_env(0)
     )
   }

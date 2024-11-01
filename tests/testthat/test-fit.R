@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 data("hardhat-example-data", package = "hardhat")
 
 test_that("can `fit()` a workflow with a recipe", {
@@ -87,6 +89,7 @@ test_that("cannot fit without a fit stage", {
 
 test_that("fit.workflow confirms compatibility of object and calibration", {
   skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
 
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
@@ -199,6 +202,7 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
 # .fit_post()
 test_that(".workflow_includes_calibration works", {
   skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
 
   expect_false(.workflow_includes_calibration(workflow()))
   expect_false(.workflow_includes_calibration(workflow() %>% add_model(parsnip::linear_reg())))

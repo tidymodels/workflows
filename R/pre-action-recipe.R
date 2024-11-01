@@ -36,7 +36,7 @@
 #' `x`, updated with either a new or removed recipe preprocessor.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(recipes)
 #' library(magrittr)
 #'

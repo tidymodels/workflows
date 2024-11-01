@@ -83,6 +83,7 @@ training are passed to the tune package, this is handled internally.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("tailor", "probably"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(tailor)
 library(magrittr)
 
@@ -97,4 +98,5 @@ workflow
 remove_tailor(workflow)
 
 update_tailor(workflow, adjust_probability_threshold(tailor, .2))
+\dontshow{\}) # examplesIf}
 }

@@ -69,7 +69,7 @@
 #' `x`, updated with either a new or removed tailor postprocessor.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed(c("tailor", "probably"))
 #' library(tailor)
 #' library(magrittr)
 #'

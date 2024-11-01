@@ -31,7 +31,7 @@
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("recipes", "modeldata"))
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -166,7 +166,7 @@ is_workflow <- function(x) {
 #' @return A single logical indicating if the workflow has been trained or not.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

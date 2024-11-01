@@ -32,7 +32,7 @@
 #'
 #' @name fit-workflow
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -66,7 +66,7 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
 
   if (is_sparse_matrix(data)) {
     data <- sparsevctrs::coerce_to_sparse_tibble(
-      data, 
+      data,
       call = rlang::caller_env(0)
     )
   }
@@ -125,7 +125,7 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
 #' @name workflows-internals
 #' @keywords internal
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

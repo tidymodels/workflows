@@ -32,7 +32,7 @@
 #'
 #' @name workflow-extractors
 #' @keywords internal
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

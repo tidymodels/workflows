@@ -19,7 +19,7 @@ the underlying parsnip model.
 \code{glance()} at.
 }
 \examples{
-if (rlang::is_installed("broom")) {
+if (rlang::is_installed(c("broom", "modeldata"))) {
 
 library(parsnip)
 library(magrittr)

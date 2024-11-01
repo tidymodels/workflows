@@ -47,6 +47,7 @@ extracted from the mold object returned from \code{pull_workflow_mold()}.
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -91,5 +92,6 @@ identical(
   pull_workflow_mold(fit_recipe_wf)$blueprint$recipe,
   pull_workflow_prepped_recipe(fit_recipe_wf)
 )
+\dontshow{\}) # examplesIf}
 }
 \keyword{internal}

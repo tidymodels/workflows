@@ -156,6 +156,7 @@ behavior from the model’s computational engine.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("recipes", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -188,4 +189,5 @@ variables <- workflow_variables(
 wf_variables <- workflow(variables, model)
 
 fit(wf_variables, attrition)
+\dontshow{\}) # examplesIf}
 }

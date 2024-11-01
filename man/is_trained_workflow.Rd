@@ -17,6 +17,7 @@ A trained workflow is one that has gone through \code{\link[=fit.workflow]{fit()
 which preprocesses the underlying data, and fits the parsnip model.
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -37,4 +38,5 @@ wf <- fit(wf, mtcars)
 
 # After all preprocessing and model fitting
 is_trained_workflow(wf)
+\dontshow{\}) # examplesIf}
 }

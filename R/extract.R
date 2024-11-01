@@ -68,7 +68,7 @@
 #' section.
 #'
 #' @name extract-workflow
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

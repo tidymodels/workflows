@@ -55,7 +55,7 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' @export
 #' @examples
-#' if (rlang::is_installed("broom")) {
+#' if (rlang::is_installed(c("broom", "modeldata"))) {
 #'
 #' library(parsnip)
 #' library(magrittr)

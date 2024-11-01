@@ -124,7 +124,7 @@ must pass two data arguments–the usual <code>fit.workflow(data)</code> will be
 to train the preprocessor and model while <code>fit.workflow(calibration)</code> will
 be used to train the postprocessor.</p>
 <p>In some situations, randomly splitting <code>fit.workflow(data)</code> (with
-<code>rsample::initial_split()</code>, for example) is sufficient to prevent data
+<code><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">rsample::initial_split()</a></code>, for example) is sufficient to prevent data
 leakage. However, <code>fit.workflow(data)</code> could also have arisen as:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>boots <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">bootstraps</span>(some_other_data)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>split <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">get_rsplit</span>(boots, <span class="dv">1</span>)</span>

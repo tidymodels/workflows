@@ -4,7 +4,7 @@
       predict(wf, df)
     Condition
       Error in `validate_column_names()`:
-      ! The following required columns are missing: 'w'.
+      ! The required column "w" is missing.
 
 # case weights + recipe requires extra roles at predict time by default
 
@@ -12,7 +12,7 @@
       predict(wf, df)
     Condition
       Error in `validate_column_names()`:
-      ! The following required columns are missing: 'w'.
+      ! The required column "w" is missing.
 
 # case weights + recipe doesn't allow the recipe to drop the case weights column
 

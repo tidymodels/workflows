@@ -17,7 +17,7 @@ test_that("can compute required packages of a workflow - recipes", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
 
-  step <- recipes::step("workflows_test")
+  step <- recipes::step("workflows_test", trained = FALSE, id = "", skip = FALSE, role = NA)
 
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
   rec <- recipes::add_step(rec, step)

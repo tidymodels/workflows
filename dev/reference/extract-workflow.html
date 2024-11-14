@@ -219,17 +219,17 @@ or silently generating incorrect predictions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Log transformation on: <span style="color: #0000BB;">disp</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">formula_wf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ cyl + log(disp)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x563cb22efb20&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x560be2155fe0&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">variable_wf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $outcomes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^mpg</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x563cb22efb20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x560be2155fe0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^c(cyl, disp)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x563cb22efb20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x560be2155fe0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "workflow_variables"</span>
@@ -299,13 +299,13 @@ or silently generating incorrect predictions.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 22 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $blueprint</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Recipe blueprint: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Predictors: 2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   # Outcomes: 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Intercept: FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Novel Levels: FALSE </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  Composition: tibble </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Recipe blueprint:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> # Predictors: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> # Outcomes: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Intercept: FALSE</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Novel Levels: FALSE</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Composition: tibble</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $extras</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $extras$roles</span>
@@ -315,7 +315,6 @@ or silently generating incorrect predictions.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A useful shortcut is to extract the fitted recipe from the workflow</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_recipe</a></span><span class="op">(</span><span class="va">fit_recipe_wf</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Recipe</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Inputs </span>

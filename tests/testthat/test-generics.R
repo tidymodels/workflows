@@ -56,7 +56,6 @@ test_that("workflow with no tunable parameters", {
   expect_equal(nrow(wflow_info), 0)
 })
 
-
 test_that("extract tuning from workflow with tunable recipe", {
   skip_if_not_installed("modeldata")
   library(modeldata)

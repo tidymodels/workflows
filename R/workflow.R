@@ -470,9 +470,6 @@ print_postprocessor <- function(x) {
 print_postprocessor_tailor <- function(x) {
   tailor <- extract_postprocessor(x)
 
-  # TODO: currently this function just captures and reprints the tailor
-  # print method. other workflows methods define their own print methods;
-  # considering doing so or refactoring.
   # TODO: this snap currently includes some NA return values and marks the
   # following output as a message rather than output.
   tailor_print <- utils::capture.output(tailor, type = "message")

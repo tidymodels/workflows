@@ -155,3 +155,21 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
   # so lm()'s predict method won't error anymore here. (tidymodels/parsnip#1033)
   expect_no_error(predict(fit_with_intercept, mtcars))
 })
+
+test_that("predict(type) is respected with a postprocessor (#251)", {
+  # create example data
+  y <- seq(0, 7, .1)
+  d <- data.frame(y = as.factor(ifelse(y > 3.5, "yes", "no")), x = y + (y-3)^2)
+  wflow <- workflow(y ~ ., parsnip::logistic_reg(), tailor::tailor())
+  wflow_fit <- fit(wflow, d)
+
+  pred_class <- predict(wflow_fit, d[1:5,], type = "class")
+  pred_prob <- predict(wflow_fit, d[1:5,], type = "prob")
+  pred_null <- predict(wflow_fit, d[1:5,])
+
+  expect_named(pred_class, ".pred_class")
+  expect_named(pred_prob, c(".pred_no", ".pred_yes"), ignore.order = TRUE)
+  expect_equal(pred_class, pred_null)
+
+  expect_snapshot(error = TRUE, predict(wflow_fit, d[1:5,], type = "boop"))
+})

@@ -198,9 +198,10 @@ test_that("case weights + recipe can optionally require case weights at predict 
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe requires extra roles at predict time by default", {
@@ -239,9 +240,10 @@ test_that("case weights + recipe requires extra roles at predict time by default
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe can optionally not require extra roles at predict time", {

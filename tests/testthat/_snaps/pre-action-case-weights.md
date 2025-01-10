@@ -1,19 +1,3 @@
-# case weights + recipe can optionally require case weights at predict time
-
-    Code
-      predict(wf, df)
-    Condition
-      Error in `validate_column_names()`:
-      ! The required column "w" is missing.
-
-# case weights + recipe requires extra roles at predict time by default
-
-    Code
-      predict(wf, df)
-    Condition
-      Error in `validate_column_names()`:
-      ! The required column "w" is missing.
-
 # case weights + recipe doesn't allow the recipe to drop the case weights column
 
     Code

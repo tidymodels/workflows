@@ -71,6 +71,8 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
     )
   }
 
+  object <- toggle_sparsity(object, data)
+
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)

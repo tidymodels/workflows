@@ -191,3 +191,153 @@ test_that("fit() errors if sparse matrix has no colnames", {
     fit(wf_spec, hotel_data)
   )
 })
+
+test_that("toggle_sparsity changes auto to yes", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+  fcts <- c(
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
+  )
+  outcome <- 72
+
+  ames <- ames[c(fcts, outcome)]
+  ames <- ames[1:100, ]
+
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors())
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "yes"
+  )
+})
+
+test_that("toggle_sparsity doesn't change no", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+  fcts <- c(
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
+  )
+  outcome <- 72
+
+  ames <- ames[c(fcts, outcome)]
+  ames <- ames[1:100, ]
+
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors(), sparse = "no")
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "no"
+  )
+})
+
+test_that("toggle_sparsity changes auto to no", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+  fcts <- c(
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
+  )
+  outcome <- 72
+
+  ames <- ames[c(fcts, outcome)]
+  ames <- ames[1:100, ]
+
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
+
+  # if we only dummy 1 variable it doesn't make the data sparse enough
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(MS_Zoning)
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "no"
+  )
+})
+
+test_that("toggle_sparsity doesn't change yes", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+  fcts <- c(
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
+  )
+  outcome <- 72
+
+  ames <- ames[c(fcts, outcome)]
+  ames <- ames[1:100, ]
+
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
+
+  # if we only dummy 1 variable it doesn't make the data sparse enough
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(MS_Zoning, sparse = "yes")
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "yes"
+  )
+})
+
+test_that("toggle_sparsity doesn't break fit", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+  fcts <- c(
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
+  )
+  outcome <- 72
+
+  ames <- ames[c(fcts, outcome)]
+  ames <- ames[1:100, ]
+
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors())
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  expect_no_error(
+    fit(wf_spec, ames)
+  )
+})
+

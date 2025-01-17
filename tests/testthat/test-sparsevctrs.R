@@ -191,3 +191,89 @@ test_that("fit() errors if sparse matrix has no colnames", {
     fit(wf_spec, hotel_data)
   )
 })
+
+test_that("toggle_sparsity changes auto to yes", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+
+  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors())
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "yes"
+  )
+})
+
+test_that("toggle_sparsity doesn't change no", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+
+  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors(), sparse = "no")
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "no"
+  )
+})
+
+test_that("toggle_sparsity changes auto to no", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+
+  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+
+  # if we only dummy 1 variable it doesn't make the data sparse enough
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(MS_Zoning)
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "no"
+  )
+})
+
+test_that("toggle_sparsity doesn't change yes", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+
+  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+
+  # if we only dummy 1 variable it doesn't make the data sparse enough
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(MS_Zoning, sparse = "yes")
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  res <- toggle_sparsity(wf_spec, ames)
+
+  expect_identical(
+    extract_preprocessor(res)$steps[[1]]$sparse,
+    "yes"
+  )
+})

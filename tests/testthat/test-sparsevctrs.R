@@ -277,3 +277,22 @@ test_that("toggle_sparsity doesn't change yes", {
     "yes"
   )
 })
+
+test_that("toggle_sparsity doesn't break fit", {
+  skip_if_not_installed("glmnet")
+  skip_if_not_installed("modeldata")
+
+  data("ames", package = "modeldata")
+
+  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+    recipes::step_dummy(recipes::all_nominal_predictors())
+
+  wf_spec <- workflow(rec_spec, tree_spec)
+
+  expect_no_error(
+    fit(wf_spec, ames)
+  )
+})
+

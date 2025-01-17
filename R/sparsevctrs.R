@@ -41,7 +41,7 @@ allow_sparse <- function(x) {
 
 pred_log_fold <- function(sparsity, model, n_rows) {
   if (is.null(model) || model == "ranger") {
-    return("no")
+    return(-Inf)
   }
 
   log_fold <- -0.599333138645995 +

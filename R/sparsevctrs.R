@@ -2,6 +2,12 @@ is_sparse_matrix <- function(x) {
   methods::is(x, "sparseMatrix")
 }
 
+# This function takes a workflow and its data. If the model supports sparse data
+# And there is a recipe, then it uses `should_use_sparsity()` to determine
+# whether all the `sparse = "auto"` should be turned to `"yes"` or `"no"` in the
+# recipe.
+#
+# Done using flow chart in https://github.com/tidymodels/workflows/issues/271
 toggle_sparsity <- function(object, data) {
   if (
     allow_sparse(object$fit$actions$model$spec) &&

@@ -197,8 +197,10 @@ test_that("toggle_sparsity changes auto to yes", {
   skip_if_not_installed("modeldata")
 
   data("ames", package = "modeldata")
+  ames <- dplyr::select(ames, Sale_Price, dplyr::where(is.factor))
+  ames <- ames[1:100, ]
 
-  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
     recipes::step_dummy(recipes::all_nominal_predictors())
@@ -218,8 +220,10 @@ test_that("toggle_sparsity doesn't change no", {
   skip_if_not_installed("modeldata")
 
   data("ames", package = "modeldata")
+  ames <- dplyr::select(ames, Sale_Price, dplyr::where(is.factor))
+  ames <- ames[1:100, ]
 
-  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
     recipes::step_dummy(recipes::all_nominal_predictors(), sparse = "no")
@@ -239,8 +243,10 @@ test_that("toggle_sparsity changes auto to no", {
   skip_if_not_installed("modeldata")
 
   data("ames", package = "modeldata")
+  ames <- dplyr::select(ames, Sale_Price, dplyr::where(is.factor))
+  ames <- ames[1:100, ]
 
-  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   # if we only dummy 1 variable it doesn't make the data sparse enough
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
@@ -261,8 +267,10 @@ test_that("toggle_sparsity doesn't change yes", {
   skip_if_not_installed("modeldata")
 
   data("ames", package = "modeldata")
+  ames <- dplyr::select(ames, Sale_Price, dplyr::where(is.factor))
+  ames <- ames[1:100, ]
 
-  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   # if we only dummy 1 variable it doesn't make the data sparse enough
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
@@ -283,8 +291,10 @@ test_that("toggle_sparsity doesn't break fit", {
   skip_if_not_installed("modeldata")
 
   data("ames", package = "modeldata")
+  ames <- dplyr::select(ames, Sale_Price, dplyr::where(is.factor))
+  ames <- ames[1:100, ]
 
-  tree_spec <- parsnip::boost_tree("regression", "xgboost")
+  tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
     recipes::step_dummy(recipes::all_nominal_predictors())

@@ -11,17 +11,11 @@ toggle_sparsity <- function(object, data) {
       extract_preprocessor(object)
     )
 
-    pred_log_fold <- pred_log_fold(
+    toggle_sparse <- should_use_sparsity(
       est_sparsity,
       extract_spec_parsnip(object)$engine,
       nrow(data)
     )
-
-    toggle_sparse <- "no"
-
-    if (pred_log_fold > 0) {
-      toggle_sparse <- "yes"
-    }
 
     object$pre$actions$recipe$recipe <- recipes::.recipes_toggle_sparse_args(
       object$pre$actions$recipe$recipe,
@@ -40,9 +34,9 @@ allow_sparse <- function(x) {
   all(res$allow_sparse_x[res$engine == x$engine])
 }
 
-pred_log_fold <- function(sparsity, model, n_rows) {
+should_use_sparsity <- function(sparsity, model, n_rows) {
   if (is.null(model) || model == "ranger") {
-    return(-Inf)
+    return("no")
   }
 
   log_fold <- -0.599333138645995 +
@@ -76,5 +70,5 @@ pred_log_fold <- function(sparsity, model, n_rows) {
         -5.39592564852111
   }
 
-  log_fold
+  ifelse(log_fold > 0, "yes", "no")
 }

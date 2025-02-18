@@ -198,8 +198,8 @@ test_that("toggle_sparsity changes auto to yes", {
 
   data("ames", package = "modeldata")
   fcts <- c(
-    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
-    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L,
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L,
     37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
   )
   outcome <- 72
@@ -210,7 +210,7 @@ test_that("toggle_sparsity changes auto to yes", {
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
-    recipes::step_dummy(recipes::all_nominal_predictors())
+    recipes::step_dummy(recipes::all_nominal_predictors(), sparse = "auto")
 
   wf_spec <- workflow(rec_spec, tree_spec)
 
@@ -228,8 +228,8 @@ test_that("toggle_sparsity doesn't change no", {
 
   data("ames", package = "modeldata")
   fcts <- c(
-    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
-    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L,
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L,
     37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
   )
   outcome <- 72
@@ -258,8 +258,8 @@ test_that("toggle_sparsity changes auto to no", {
 
   data("ames", package = "modeldata")
   fcts <- c(
-    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
-    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L,
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L,
     37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
   )
   outcome <- 72
@@ -289,8 +289,8 @@ test_that("toggle_sparsity doesn't change yes", {
 
   data("ames", package = "modeldata")
   fcts <- c(
-    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
-    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L,
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L,
     37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
   )
   outcome <- 72
@@ -320,8 +320,8 @@ test_that("toggle_sparsity doesn't break fit", {
 
   data("ames", package = "modeldata")
   fcts <- c(
-    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 
-    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L, 
+    1L, 2L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L,
+    17L, 20L, 21L, 22L, 23L, 24L, 26L, 27L, 28L, 29L, 30L, 32L, 36L,
     37L, 38L, 39L, 50L, 52L, 53L, 56L, 57L, 64L, 65L, 66L, 70L, 71L
   )
   outcome <- 72

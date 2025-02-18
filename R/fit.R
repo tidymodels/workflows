@@ -1,15 +1,16 @@
 #' Fit a workflow object
 #'
 #' @description
-#' Fitting a workflow currently involves three main steps:
+#' Fitting a workflow currently involves two main steps:
 #'
 #' - Preprocessing the data using a formula preprocessor, or by calling
 #'   [recipes::prep()] on a recipe.
 #'
 #' - Fitting the underlying parsnip model using [parsnip::fit.model_spec()].
 #'
-#' - Postprocessing predictions from the model using
-#'   [tailor::tailor()].
+#' @details
+#' In the future, there will also be _postprocessing_ steps that can be added
+#' after the model has been fit.
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'

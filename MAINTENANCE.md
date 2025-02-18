@@ -17,8 +17,10 @@ The general model of workflows is that it is split into 3 stages: `pre`, `fit`, 
 -   `fit` controls the model fit.
     There is only 1 "model" action here, and I do not anticipate any more actions in this stage of the workflow.
 
--   `post` controls the postprocessing.
-    There is only 1 "tailor" action here, though may be others in the future.
+-   `post` theoretically controls the postprocessing.
+    There is currently no support for this in tidymodels, but the hope would be to eventually add tools for this in the probably package, and that would feed through to workflows and tune.
+    You will see some references to this `post` stage.
+    I have left them in to provide a skeleton of how it will work in the future, even if it doesn't do much now.
 
 Once a workflow is specified, `fit()` is called to fit all of the "actions".
 It loops through the actions in the workflow, and calls `fit()` on each of the actions as well (there are S3 methods for `fit()` for each action).

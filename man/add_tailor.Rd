@@ -44,7 +44,7 @@ usage of a tailor.
 \item \code{remove_tailor()} removes the tailor as well as any downstream objects
 that might get created after the tailor is used for post-processing, such as
 the fitted tailor.
-\item \code{update_tailor()} first removes the tailor, then replaces the previous
+\item \code{update_tailor()} first removes the tailor, then replaces the postvious
 tailor with the new one.
 }
 }

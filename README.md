@@ -19,13 +19,16 @@ advantages are:
 
 - You don’t have to keep track of separate objects in your workspace.
 
-- The recipe prepping, model fitting, and postprocessor estimation
-  (which may include data splitting) can be executed using a single call
-  to `fit()`.
+- The recipe prepping and model fitting can be executed using a single
+  call to `fit()`.
 
 - If you have custom tuning parameter settings, these can be defined
   using a simpler interface when combined with
   [tune](https://github.com/tidymodels/tune).
+
+- In the future, workflows will be able to add post-processing
+  operations, such as modifying the probability cutoff for two-class
+  models.
 
 ## Installation
 

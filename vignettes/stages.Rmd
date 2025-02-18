@@ -39,5 +39,6 @@ When using a preprocessor, you may need an additional formula for special model 
 
 ## Post-processing
 
-`tailor` post-processors are the only option here, specified via `add_tailor()`. Some examples of post-processing model predictions could include adding a probability threshold for two-class problems, calibration of probability estimates, truncating the possible range of predictions, and so on. `add_tailor()` takes two arguments, `prop` and `method`, that control how data will be internally partitioned into two training sets, one for the preprocessor and model and one for the post-processor---see the Data Usage section in `?add_tailor()` to learn more.
+Some examples of post-processing the model predictions would be: adding a probability threshold for two-class problems, calibration of probability estimates, truncating the possible range of predictions, and so on.
 
+None of these are currently implemented but will be in coming versions.

@@ -71,7 +71,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
   if (has_postprocessor(workflow)) {
-    workflow <- .fit_post(workflow, calibration)
+    # if (is.null(calibration)), then the tailor doesn't have a calibrator
+    # and training the tailor on `data` will not leak data
+    workflow <- .fit_post(workflow, calibration %||% data)
   }
   workflow <- .fit_finalize(workflow)
 

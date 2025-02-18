@@ -54,10 +54,8 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes:
-    tidymodels/dials,
     tidymodels/recipes,
     tidymodels/parsnip,
-    tidymodels/probably,
     tidymodels/tailor,
     r-lib/sparsevctrs
 Config/testthat/edition: 3

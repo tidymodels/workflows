@@ -108,12 +108,3 @@
       Error in `extract_recipe()`:
       ! The workflow must have a recipe preprocessor.
 
-# extract parameter set from workflow with potentially conflicting ids (#266)
-
-    Code
-      extract_parameter_set_dials(wflow)
-    Condition
-      Error in `extract_parameter_set_dials()`:
-      x Element id should have unique values.
-      i Duplicates exist for item: threshold
-

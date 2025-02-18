@@ -225,13 +225,6 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
     param_data <- vctrs::vec_rbind(param_data, recipe_param_data)
   }
 
-  if (has_postprocessor_tailor(x)) {
-    tailor <- extract_postprocessor(x)
-    tailor_param_data <- extract_parameter_set_dials(tailor)
-
-    param_data <- vctrs::vec_rbind(param_data, tailor_param_data)
-  }
-
   dials::parameters_constr(
     param_data$name,
     param_data$id,

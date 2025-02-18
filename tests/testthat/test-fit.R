@@ -86,6 +86,7 @@ test_that("cannot fit without a fit stage", {
     fit(workflow, mtcars)
   })
 })
+
 # ------------------------------------------------------------------------------
 # .fit_pre()
 

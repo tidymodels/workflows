@@ -50,6 +50,9 @@
 #' which then form the training data for the postprocessor.
 #'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of d7a9797 (transition from `add_tailor(prop)` and `method` to `fit.workflow(calibration)`)
 #' The arguments `prop` and `method` parameterize how that data is split up.
 #' `prop` determines the proportion of rows in `fit.workflow(data)` that are
 #' allotted to training the preprocessor and model, while the rest are used to
@@ -57,6 +60,7 @@
 #' `fit.workflow()` just takes in a data frame, the function doesn't have
 #' any information on how that dataset came to be. For example, `data` could
 #' have been created as:
+<<<<<<< HEAD
 =======
 #' When fitting a workflow with a postprocessor that requires training
 #' (i.e. one that returns `TRUE` in `.should_inner_split(workflow)`), users
@@ -64,6 +68,8 @@
 #' to train the preprocessor and model while `fit.workflow(calibration)` will
 #' be used to train the postprocessor.
 >>>>>>> parent of b28a6c4 (rephrase "inner split")
+=======
+>>>>>>> parent of d7a9797 (transition from `add_tailor(prop)` and `method` to `fit.workflow(calibration)`)
 #'
 #' ```
 #' split <- rsample::initial_split(some_other_data)

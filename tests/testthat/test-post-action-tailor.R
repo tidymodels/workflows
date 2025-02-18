@@ -151,6 +151,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
   wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
 
   wflow_post_preds <- predict(wf_post_fit, rsample::assessment(inner_split))
+<<<<<<< HEAD
 
   expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
   expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))
@@ -197,6 +198,8 @@ test_that("postprocessor fit uses correct data (with calibration, non-default `p
   wflow_manual_preds <- predict(post_trained, wflow_simple_preds)
 
   wflow_post_preds <- predict(wf_post_fit, rsample::assessment(inner_split))
+=======
+>>>>>>> parent of d7a9797 (transition from `add_tailor(prop)` and `method` to `fit.workflow(calibration)`)
 
   expect_equal(wflow_manual_preds[".pred"], wflow_post_preds)
   expect_false(all(wflow_simple_preds[".pred"] == wflow_manual_preds[".pred"]))

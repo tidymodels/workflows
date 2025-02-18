@@ -105,7 +105,7 @@
 #' library(tailor)
 #' library(magrittr)
 #'
-#' tailor <- tailor()
+#' tailor <- tailor("binary")
 #' tailor_1 <- adjust_probability_threshold(tailor, .1)
 #'
 #' workflow <- workflow() %>%

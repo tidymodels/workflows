@@ -2,7 +2,7 @@ skip_if_not_installed("probably")
 skip_if_not_installed("tailor")
 
 test_that("can add a postprocessor to a workflow", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
 
   workflow <- workflow()
   workflow <- add_tailor(workflow, post)
@@ -15,7 +15,7 @@ test_that("postprocessor is validated", {
 })
 
 test_that("cannot add two postprocessors", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
 
   workflow <- workflow()
   workflow <- add_tailor(workflow, post)
@@ -24,7 +24,7 @@ test_that("cannot add two postprocessors", {
 })
 
 test_that("remove a postprocessor", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
 
   workflow_no_post <- workflow()
   workflow_no_post <- add_formula(workflow_no_post, mpg ~ cyl)
@@ -36,7 +36,7 @@ test_that("remove a postprocessor", {
 })
 
 test_that("remove a postprocessor after postprocessor fit", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
 
   workflow_no_post <- workflow()
   workflow_no_post <- add_formula(workflow_no_post, mpg ~ cyl)
@@ -51,7 +51,7 @@ test_that("remove a postprocessor after postprocessor fit", {
 })
 
 test_that("update a postprocessor", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
   post2 <- tailor::adjust_numeric_range(post, 0, Inf)
 
   workflow <- workflow()
@@ -62,7 +62,7 @@ test_that("update a postprocessor", {
 })
 
 test_that("update a postprocessor after postprocessor fit", {
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
   post2 <- tailor::adjust_numeric_range(post, 0, Inf)
 
   workflow_no_post <- workflow()
@@ -89,7 +89,7 @@ test_that("postprocessor fit aligns with manually fitted version (no calibration
   dat <- data.frame(y = y, x = y + (y-3)^2)
 
   # construct workflows
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
   post <- tailor::adjust_numeric_range(post, 0, 5)
 
   wflow_simple <- workflow(y ~ ., parsnip::linear_reg())
@@ -119,7 +119,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
   dat <- data.frame(y = y, x = y + (y-3)^2)
 
   # construct workflows
-  post <- tailor::tailor()
+  post <- tailor::tailor("regression")
   post <- tailor::adjust_numeric_calibration(post, "linear")
 
   wflow_simple <- workflow(y ~ ., parsnip::linear_reg())

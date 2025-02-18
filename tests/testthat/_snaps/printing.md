@@ -199,7 +199,7 @@
     Message
       
       -- tailor ----------------------------------------------------------------------
-      A regression postprocessor with 0 adjustments.
+      A regression postprocessor with 0 operations.
     Output
       NA
       NA

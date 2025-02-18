@@ -27,19 +27,6 @@ validate_recipes_available <- function(..., call = caller_env()) {
   invisible()
 }
 
-validate_tailor_available <- function(..., call = caller_env()) {
-  check_dots_empty()
-
-  if (!requireNamespace("tailor", quietly = TRUE)) {
-    cli_abort(
-      "The {.pkg tailor} package must be available to add a tailor.",
-      call = call
-    )
-  }
-
-  invisible()
-}
-
 validate_rsample_available <- function(..., call = caller_env()) {
   check_dots_empty()
 
@@ -112,14 +99,6 @@ has_spec <- function(x) {
 
 has_fit <- function(x) {
   !is.null(x$fit$fit)
-}
-
-has_postprocessor <- function(x) {
-  has_postprocessor_tailor(x)
-}
-
-has_postprocessor_tailor <- function(x) {
-  "tailor" %in% names(x$post$actions)
 }
 
 has_blueprint <- function(x) {

@@ -29,12 +29,8 @@ new_stage_fit <- function(actions = new_named_list(), fit = NULL) {
   new_stage(actions = actions, fit = fit, subclass = "stage_fit")
 }
 
-new_stage_post <- function(actions = new_named_list(), fit = NULL) {
-  if (!is.null(fit) && !is_tailor(fit)) {
-    cli_abort("{.arg fit} must be a fitted {.cls tailor}.", .internal = TRUE)
-  }
-
-  new_stage(actions, fit = fit, subclass = "stage_post")
+new_stage_post <- function(actions = new_named_list()) {
+  new_stage(actions, subclass = "stage_post")
 }
 
 # ------------------------------------------------------------------------------

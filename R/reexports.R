@@ -22,10 +22,6 @@ hardhat::extract_mold
 #' @export
 hardhat::extract_preprocessor
 #'
-#' @importFrom hardhat extract_postprocessor
-#' @export
-hardhat::extract_postprocessor
-#'
 #' @importFrom hardhat extract_parameter_set_dials
 #' @export
 hardhat::extract_parameter_set_dials

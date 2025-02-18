@@ -73,35 +73,9 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- .fit_model(workflow, control)
   workflow <- .fit_finalize(workflow)
 
+  # TODO: Post-processing before `.fit_finalize()`?
+
   workflow
-}
-
-#' @export
-#' @rdname workflows-internals
-#' @keywords internal
-.should_inner_split <- function(workflow) {
-  has_postprocessor(workflow) &&
-  tailor::tailor_requires_fit(
-    extract_postprocessor(workflow, estimated = FALSE)
-  )
-}
-
-make_inner_split <- function(object, data) {
-  validate_rsample_available()
-
-  method <- object$post$actions$tailor$method
-  mocked_split <-
-    rsample::make_splits(
-      list(analysis = seq_len(nrow(data)), assessment = integer()),
-      data = data,
-      class = if (is.null(method)) "mc_split" else method
-    )
-
-  prop <- object$post$actions$tailor$prop
-  rsample::inner_split(
-    mocked_split,
-    list(prop = if (is.null(prop)) 2/3 else prop)
-  )
 }
 
 # ------------------------------------------------------------------------------
@@ -186,13 +160,6 @@ make_inner_split <- function(object, data) {
 .fit_model <- function(workflow, control) {
   action_model <- workflow[["fit"]][["actions"]][["model"]]
   fit(action_model, workflow = workflow, control = control)
-}
-
-#' @rdname workflows-internals
-#' @export
-.fit_post <- function(workflow, data) {
-  action_post <- workflow[["post"]][["actions"]][["tailor"]]
-  fit(action_post, workflow = workflow, data = data)
 }
 
 #' @rdname workflows-internals

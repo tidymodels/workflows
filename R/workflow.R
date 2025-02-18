@@ -4,8 +4,7 @@
 #' A `workflow` is a container object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing, specified through [add_recipe()], or the model specification
-#' to fit, specified through [add_model()], or a tailor used in postprocessing,
-#' specificied through [add_tailor()].
+#' to fit, specified through [add_model()].
 #'
 #' The `preprocessor` and `spec` arguments allow you to add components to a
 #' workflow quickly, without having to go through the `add_*()` functions, such
@@ -21,10 +20,6 @@
 #'
 #' @param spec An optional parsnip model specification to add to the workflow.
 #'   Passed on to [add_model()].
-#'
-#' @param postprocessor An optional [tailor::tailor()] defining
-#'   post-processing steps to add to the workflow. Passed on to
-#'   [add_tailor()].
 #'
 #' @return
 #' A new `workflow` object.
@@ -65,7 +60,7 @@
 #'
 #' fit(wf_variables, attrition)
 #' @export
-workflow <- function(preprocessor = NULL, spec = NULL, postprocessor = NULL) {
+workflow <- function(preprocessor = NULL, spec = NULL) {
   out <- new_workflow()
 
   if (!is_null(preprocessor)) {
@@ -74,10 +69,6 @@ workflow <- function(preprocessor = NULL, spec = NULL, postprocessor = NULL) {
 
   if (!is_null(spec)) {
     out <- add_model(out, spec)
-  }
-
-  if (!is_null(postprocessor)) {
-    out <- add_postprocessor(out, postprocessor)
   }
 
   out
@@ -100,19 +91,6 @@ add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
 
   cli_abort(
     "{.arg preprocessor} must be a formula, recipe, or a set of workflow variables.",
-    call = call
-  )
-}
-
-add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
-  check_dots_empty()
-
-  if (is_tailor(postprocessor)) {
-    return(add_tailor(x, postprocessor))
-  }
-
-  cli_abort(
-    "{.arg postprocessor} must be a tailor.",
     call = call
   )
 }
@@ -210,7 +188,7 @@ print.workflow <- function(x, ...) {
   print_preprocessor(x)
   print_case_weights(x)
   print_model(x)
-  print_postprocessor(x)
+  # print_postprocessor(x)
   invisible(x)
 }
 
@@ -252,10 +230,6 @@ print_header <- function(x) {
 
   spec_msg <- glue::glue("{spec_msg} {spec}")
   cat_line(spec_msg)
-
-  if (has_postprocessor(x)) {
-    cat_line(glue::glue("{cli::style_italic('Postprocessor:')} tailor"))
-  }
 
   invisible(x)
 }
@@ -443,40 +417,6 @@ print_fit <- function(x) {
   cat_line("")
   cat_line("...")
   cat_line(extra_output_msg)
-
-  invisible(x)
-}
-
-print_postprocessor <- function(x) {
-  has_postprocessor <- has_postprocessor(x)
-
-  if (!has_postprocessor) {
-    return(invisible(x))
-  }
-
-  # Space between Model section and Postprocessor section
-  cat_line("")
-
-  header <- cli::rule("Postprocessor")
-  cat_line(header)
-
-  if (has_postprocessor_tailor(x)) {
-    print_postprocessor_tailor(x)
-  }
-
-  invisible(x)
-}
-
-print_postprocessor_tailor <- function(x) {
-  tailor <- extract_postprocessor(x)
-
-  # TODO: currently this function just captures and reprints the tailor
-  # print method. other workflows methods define their own print methods;
-  # considering doing so or refactoring.
-  # TODO: this snap currently includes some NA return values and marks the
-  # following output as a message rather than output.
-  tailor_print <- utils::capture.output(tailor, type = "message")
-  cat_line(tailor_print[3:length(tailor_print)])
 
   invisible(x)
 }

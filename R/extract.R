@@ -191,27 +191,6 @@ extract_preprocessor.workflow <- function(x, ...) {
   cli_abort("The workflow does not have a preprocessor.")
 }
 
-#' @rdname extract-workflow
-#' @export
-extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
-  if (!is_bool(estimated)) {
-    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
-  }
-
-  if (estimated) {
-    res <- x$post$fit
-    if (!is.null(res)) {
-      return(res)
-    }
-  }
-
-  if (has_postprocessor(x)) {
-    return(x$post$actions$tailor$tailor)
-  }
-
-  cli_abort("The workflow does not have a postprocessor.")
-}
-
 #' @export
 #' @rdname extract-workflow
 extract_parameter_set_dials.workflow <- function(x, ...) {

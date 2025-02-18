@@ -33,7 +33,6 @@ Imports:
     withr
 Suggests: 
     butcher (>= 0.2.0),
-    tailor (>= 0.0.0.9001),
     covr,
     dials (>= 1.0.0),
     glmnet,
@@ -55,12 +54,6 @@ Config/Needs/website:
     tidyr,
     tidyverse/tidytemplate,
     yardstick
-Remotes:
-    tidymodels/rsample,
-    tidymodels/recipes,
-    tidymodels/parsnip,
-    tidymodels/tailor,
-    r-lib/sparsevctrs
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

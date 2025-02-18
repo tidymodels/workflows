@@ -42,7 +42,6 @@ Suggests:
     methods,
     modeldata (>= 1.0.0),
     probably,
-    recipes (>= 1.0.10.9000),
     rsample,
     rmarkdown,
     testthat (>= 3.0.0)

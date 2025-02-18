@@ -40,12 +40,6 @@ tune_args.workflow <- function(object, ...) {
     param_data <- vctrs::vec_rbind(param_data, recipe_param_data)
   }
 
-  if (has_postprocessor_tailor(object)) {
-    tailor <- extract_postprocessor(object)
-    tailor_param_data <- generics::tune_args(tailor)
-    param_data <- vctrs::vec_rbind(param_data, tailor_param_data)
-  }
-
   param_data
 }
 

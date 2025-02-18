@@ -55,7 +55,6 @@ Config/Needs/website:
     yardstick
 Remotes:
     tidymodels/dials,
-    tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/probably,
     tidymodels/tailor,

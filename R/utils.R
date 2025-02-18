@@ -40,6 +40,20 @@ validate_tailor_available <- function(..., call = caller_env()) {
   invisible()
 }
 
+validate_rsample_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
+  if (!requireNamespace("rsample", quietly = TRUE)) {
+    cli_abort(
+      "The {.pkg rsample} package must be available to add a tailor that
+       requires training.",
+      call = call
+    )
+  }
+
+  invisible()
+}
+
 # ------------------------------------------------------------------------------
 
 # https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109

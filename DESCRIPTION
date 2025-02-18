@@ -43,6 +43,8 @@ Suggests:
     methods,
     modeldata (>= 1.0.0),
     probably,
+    recipes (>= 1.0.10.9000),
+    rsample,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 
@@ -54,6 +56,7 @@ Config/Needs/website:
     tidyverse/tidytemplate,
     yardstick
 Remotes:
+    tidymodels/rsample,
     tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/tailor,

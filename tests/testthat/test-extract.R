@@ -1,7 +1,6 @@
 skip_if_not_installed("recipes")
 skip_if_not_installed("modeldata")
 skip_if_not_installed("probably")
-skip_if_not_installed("tailor")
 
 data(Chicago, package = "modeldata")
 

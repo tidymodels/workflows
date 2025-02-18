@@ -163,15 +163,15 @@ both the <code>outcomes</code> and <code>predictors</code>.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">workflow1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">workflow1</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">workflow1</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes: mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors: c(cyl, disp)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stats::lm(formula = ..y ~ ., data = data)</span>
@@ -183,11 +183,11 @@ both the <code>outcomes</code> and <code>predictors</code>.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Removing the variables of a fit workflow will also remove the model</span></span></span>
 <span class="r-in"><span><span class="fu">remove_variables</span><span class="op">(</span><span class="va">workflow1</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
@@ -195,15 +195,15 @@ both the <code>outcomes</code> and <code>predictors</code>.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Variables can also be updated</span></span></span>
 <span class="r-in"><span><span class="fu">update_variables</span><span class="op">(</span><span class="va">workflow1</span>, <span class="va">mpg</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"d"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes: mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors: starts_with("d")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
@@ -235,15 +235,15 @@ both the <code>outcomes</code> and <code>predictors</code>.</p></li>
 <span class="r-in"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu">workflow_variables</span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">disp</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">workflow3</span> <span class="op">&lt;-</span> <span class="fu">add_variables</span><span class="op">(</span><span class="va">workflow</span>, variables <span class="op">=</span> <span class="va">variables</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">workflow3</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes: mpg</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors: c(cyl, disp)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stats::lm(formula = ..y ~ ., data = data)</span>

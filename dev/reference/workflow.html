@@ -224,14 +224,14 @@ behavior from the model’s computational engine.</p>
 <span class="r-in"><span><span class="va">wf_formula</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="va">formula</span>, <span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">wf_formula</span>, <span class="va">attrition</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> logistic_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -254,17 +254,17 @@ behavior from the model’s computational engine.</p>
 <span class="r-in"><span><span class="va">wf_recipe</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="va">recipe</span>, <span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">wf_recipe</span>, <span class="va">attrition</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Recipe</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> logistic_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 Recipe Steps</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> • step_dummy()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> • step_corr()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -327,15 +327,15 @@ behavior from the model’s computational engine.</p>
 <span class="r-in"><span><span class="va">wf_variables</span> <span class="op">&lt;-</span> <span class="fu">workflow</span><span class="op">(</span><span class="va">variables</span>, <span class="va">model</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">wf_variables</span>, <span class="va">attrition</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Variables</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> logistic_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Outcomes: Attrition</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Predictors: c(BusinessTravel, YearsSinceLastPromotion, OverTime)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:  stats::glm(formula = ..y ~ ., family = stats::binomial, data = data)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

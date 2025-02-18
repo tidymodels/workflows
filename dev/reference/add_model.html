@@ -222,11 +222,11 @@ behavior from the model’s computational engine.</p>
 <span class="r-in"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu"><a href="workflow.html">workflow</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu">add_model</span><span class="op">(</span><span class="va">workflow</span>, <span class="va">lm_model</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">workflow</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
@@ -234,37 +234,37 @@ behavior from the model’s computational engine.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu"><a href="add_formula.html">add_formula</a></span><span class="op">(</span><span class="va">workflow</span>, <span class="va">mpg</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">workflow</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: lm </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">remove_model</span><span class="op">(</span><span class="va">workflow</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit</a></span><span class="op">(</span><span class="va">workflow</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fitted</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow [trained] ═════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stats::lm(formula = ..y ~ ., data = data)</span>
@@ -279,43 +279,43 @@ behavior from the model’s computational engine.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">remove_model</span><span class="op">(</span><span class="va">fitted</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">remove_model</span><span class="op">(</span><span class="va">workflow</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> None</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">update_model</span><span class="op">(</span><span class="va">workflow</span>, <span class="va">regularized_model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: glmnet </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">update_model</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">regularized_model</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ═══════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> linear_reg()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ──────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Preprocessor ───────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ .</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ─────────────────────────────────────────────────────────────────</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ── Model ──────────────────────────────────────────────────────────────</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear Regression Model Specification (regression)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Computational engine: glmnet </span>

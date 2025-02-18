@@ -73,33 +73,17 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
     return(predict(fit, new_data, type = type, opts = opts, ...))
   }
 
-  # use `augment()` rather than `fit()` to get all possible prediction `type`s (#234).
+  # use `augment()` rather than `fit()` to get all possible prediction `type`s.
+  # likely, we actually want tailor to check for the existence of needed
+  # columns at predict time and just use `predict()` output here.
   fit_aug <- augment(fit, new_data, opts = opts, ...)
 
   post <- extract_postprocessor(workflow)
-  predict(post, fit_aug)[predict_type_column_names(type, post$columns)]
+  predict(post, fit_aug)[post$columns$estimate]
 }
 
 forge_predictors <- function(new_data, workflow) {
   mold <- extract_mold(workflow)
   forged <- hardhat::forge(new_data, blueprint = mold$blueprint)
   forged$predictors
-}
-
-predict_type_column_names <- function(type, tailor_columns, call = caller_env()) {
-  check_string(type, allow_null = TRUE, call = call)
-
-  if (is.null(type)) {
-    return(tailor_columns$estimate)
-  }
-
-  switch(
-    type,
-    numeric = , class = tailor_columns$estimate,
-    prob = tailor_columns$probabilities,
-    cli::cli_abort(
-      "Unsupported prediction {.arg type} {.val {type}} for a workflow with a postprocessor.",
-      call = call
-    )
-  )
 }

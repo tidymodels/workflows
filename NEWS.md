@@ -1,4 +1,4 @@
-# workflows (development version)
+# workflows 1.2.0
 
 ## New features
 

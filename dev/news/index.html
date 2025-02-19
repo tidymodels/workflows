@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">workflows</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.4.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,20 +35,33 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="workflows-development-version">workflows (development version)<a class="anchor" aria-label="anchor" href="#workflows-development-version"></a></h2>
-<ul><li><p>Package warnings and errors have been transitioned to use cli instead of rlang (<a href="https://github.com/tidymodels/workflows/issues/241" class="external-link">#241</a>).</p></li>
-<li><p><code><a href="../reference/add_variables.html">add_variables()</a></code> reference added to <code>stages</code> vignette (<a href="https://github.com/brshallo" class="external-link">@brshallo</a>, <a href="https://github.com/tidymodels/workflows/issues/190" class="external-link">#190</a>).</p></li>
-<li><p>New <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_time()</a></code> method has been added that return the time it took to train the workflow (<a href="https://github.com/tidymodels/workflows/issues/191" class="external-link">#191</a>).</p></li>
-<li><p><code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> can now take dgCMatrix and sparse tibbles as data values when <code><a href="../reference/add_recipe.html">add_recipe()</a></code> or <code><a href="../reference/add_variables.html">add_variables()</a></code> is used (<a href="https://github.com/tidymodels/workflows/issues/245" class="external-link">#245</a>, <a href="https://github.com/tidymodels/workflows/issues/258" class="external-link">#258</a>).</p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> can now take dgCMatrix and sparse tibble input for <code>new_data</code> argument (<a href="https://github.com/tidymodels/workflows/issues/261" class="external-link">#261</a>).</p></li>
+<ul><li>Implemented postprocessing. (TODO: fill this in.)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1.4" id="workflows-114">workflows 1.1.4<a class="anchor" aria-label="anchor" href="#workflows-114"></a></h2><p class="text-muted">CRAN release: 2024-02-19</p>
-<ul><li><p>While <code><a href="../reference/augment.workflow.html">augment.workflow()</a></code> previously never returned a <code>.resid</code> column, the method will now return residuals under the same conditions that <code>augment.model_fit()</code> does (<a href="https://github.com/tidymodels/workflows/issues/201" class="external-link">#201</a>).</p></li>
+<h2 class="pkg-version" data-toc-text="1.2.0" id="workflows-120">workflows 1.2.0<a class="anchor" aria-label="anchor" href="#workflows-120"></a></h2><p class="text-muted">CRAN release: 2025-02-18</p>
+<div class="section level3">
+<h3 id="new-features-1-2-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-2-0"></a></h3>
+<ul><li>Enable fitting and prediction with sparse data.
+<ul><li>
+<code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> can now take dgCMatrix and sparse tibbles as data values when <code><a href="../reference/add_recipe.html">add_recipe()</a></code> or <code><a href="../reference/add_variables.html">add_variables()</a></code> is used (<a href="https://github.com/tidymodels/workflows/issues/245" class="external-link">#245</a>, <a href="https://github.com/tidymodels/workflows/issues/258" class="external-link">#258</a>).</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> can now take dgCMatrix and sparse tibble input for <code>new_data</code> argument (<a href="https://github.com/tidymodels/workflows/issues/261" class="external-link">#261</a>).</li>
+</ul></li>
+<li>
+<code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_time()</a></code> returns the time it took to train the workflow (<a href="https://github.com/tidymodels/workflows/issues/191" class="external-link">#191</a>).</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-and-minor-improvements-1-2-0">Bug fixes and minor improvements<a class="anchor" aria-label="anchor" href="#bug-fixes-and-minor-improvements-1-2-0"></a></h3>
+<ul><li><p>Transition package warnings and errors to use cli instead of rlang (<a href="https://github.com/tidymodels/workflows/issues/241" class="external-link">#241</a>).</p></li>
+<li><p>Minimum R version bumped to 4.0.0.</p></li>
+<li><p>Added reference to <code><a href="../reference/add_variables.html">add_variables()</a></code> in <code>stages</code> vignette (<a href="https://github.com/brshallo" class="external-link">@brshallo</a>, <a href="https://github.com/tidymodels/workflows/issues/190" class="external-link">#190</a>). # workflows 1.1.4</p></li>
+<li><p>While <code><a href="../reference/augment.workflow.html">augment.workflow()</a></code> previously never returned a <code>.resid</code> column, the method will now return residuals under the same conditions that <code>augment.model_fit()</code> does (<a href="https://github.com/tidymodels/workflows/issues/201" class="external-link">#201</a>).</p></li>
 <li><p><code><a href="../reference/augment.workflow.html">augment.workflow()</a></code> gained an <code>eval_time</code> argument, enabling augmenting censored regression models (<a href="https://github.com/tidymodels/workflows/issues/200" class="external-link">#200</a>, <a href="https://github.com/tidymodels/workflows/issues/213" class="external-link">#213</a>).</p></li>
 <li><p>The prediction columns are now appended to the LHS rather than RHS of <code>new_data</code> in <code><a href="../reference/augment.workflow.html">augment.workflow()</a></code>, following analogous changes in parsnip (<a href="https://github.com/tidymodels/workflows/issues/200" class="external-link">#200</a>).</p></li>
 <li><p>Each of the <code>pull_*()</code> functions soft-deprecated in workflows v0.2.3 now warn on every usage (<a href="https://github.com/tidymodels/workflows/issues/198" class="external-link">#198</a>).</p></li>
 <li><p><code><a href="../reference/add_recipe.html">add_recipe()</a></code> will now error informatively when supplied a trained recipe (<a href="https://github.com/tidymodels/workflows/issues/179" class="external-link">#179</a>).</p></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.3" id="workflows-113">workflows 1.1.3<a class="anchor" aria-label="anchor" href="#workflows-113"></a></h2><p class="text-muted">CRAN release: 2023-02-22</p>
 <ul><li>The workflows methods for <code><a href="https://generics.r-lib.org/reference/tune_args.html" class="external-link">generics::tune_args()</a></code> and <code><a href="https://generics.r-lib.org/reference/tunable.html" class="external-link">generics::tunable()</a></code> are now registered unconditionally (<a href="https://github.com/tidymodels/workflows/issues/192" class="external-link">#192</a>).</li>

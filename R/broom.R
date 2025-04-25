@@ -35,7 +35,10 @@ tidy.workflow <- function(x, what = "model", ...) {
     return(out)
   }
 
-  cli_abort("{.arg what} must be {.val model} or {.val recipe}.", .internal = TRUE)
+  cli_abort(
+    "{.arg what} must be {.val model} or {.val recipe}.",
+    .internal = TRUE
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -63,11 +66,11 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )
@@ -123,11 +126,11 @@ glance.workflow <- function(x, ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )
@@ -148,7 +151,11 @@ augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   }
 
   # `augment.model_fit()` requires the pre-processed `new_data`
-  forged <- hardhat::forge(new_data, blueprint = mold$blueprint, outcomes = outcomes)
+  forged <- hardhat::forge(
+    new_data,
+    blueprint = mold$blueprint,
+    outcomes = outcomes
+  )
 
   if (outcomes) {
     new_data_forged <- vctrs::vec_cbind(forged$predictors, forged$outcomes)

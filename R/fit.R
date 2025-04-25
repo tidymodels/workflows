@@ -37,25 +37,31 @@
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' base_wf <- workflow() %>%
+#' base_wf <- workflow() |>
 #'   add_model(model)
 #'
-#' formula_wf <- base_wf %>%
+#' formula_wf <- base_wf |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' fit(formula_wf, mtcars)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
 #'   step_log(disp)
 #'
-#' recipe_wf <- base_wf %>%
+#' recipe_wf <- base_wf |>
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
-fit.workflow <- function(object, data, ..., calibration = NULL, control = control_workflow()) {
+fit.workflow <- function(
+  object,
+  data,
+  ...,
+  calibration = NULL,
+  control = control_workflow()
+) {
   check_dots_empty()
 
   if (is_missing(data)) {
@@ -132,11 +138,11 @@ fit.workflow <- function(object, data, ..., calibration = NULL, control = contro
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' wf_unfit <- workflow() %>%
-#'   add_model(model) %>%
+#' wf_unfit <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' wf_fit_pre <- .fit_pre(wf_unfit, mtcars)
@@ -204,8 +210,8 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
 
   has_preprocessor <-
     has_preprocessor_formula(x) ||
-      has_preprocessor_recipe(x) ||
-      has_preprocessor_variables(x)
+    has_preprocessor_recipe(x) ||
+    has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
     message <- c(

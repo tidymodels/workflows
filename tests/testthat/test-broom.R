@@ -111,7 +111,7 @@ test_that("can augment with a postprocessor (#275)", {
   skip_if_not_installed("probably")
 
   cal_post <-
-    tailor::tailor() %>%
+    tailor::tailor() |>
     tailor::adjust_numeric_calibration(method = "isotonic_boot")
 
   wflow <- workflow(mpg ~ ., parsnip::linear_reg())
@@ -119,15 +119,19 @@ test_that("can augment with a postprocessor (#275)", {
 
   # fit the postprocessor as part of the workflow
   set.seed(1)
-  fit_post <- fit(wflow_post, data = mtcars[1:20,], calibration = mtcars[20:30,])
-  pred_post <- fit_post %>% augment(mtcars[31:32,])
+  fit_post <- fit(
+    wflow_post,
+    data = mtcars[1:20, ],
+    calibration = mtcars[20:30, ]
+  )
+  pred_post <- fit_post |> augment(mtcars[31:32, ])
 
   # manually fit the model and the apply the postprocessor
   set.seed(1)
-  fit_model <- fit(wflow, mtcars[1:20,])
+  fit_model <- fit(wflow, mtcars[1:20, ])
   post_fit <- extract_postprocessor(fit_post)$adjustments[[1]]$results$fit
   pred_post_manual <- probably::cal_apply(
-    augment(fit_model, mtcars[31:32,]),
+    augment(fit_model, mtcars[31:32, ]),
     post_fit
   )
 
@@ -157,7 +161,7 @@ test_that("can augment without outcome column", {
   # at least 1 prediction specific column should be added
   expect_true(ncol(x) > ncol(df_new))
 
-  expect_named(x, c(".pred",  "x"))
+  expect_named(x, c(".pred", "x"))
 })
 
 test_that("augment returns `new_data`, not the pre-processed version of `new_data`", {

@@ -39,7 +39,7 @@
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
 #' formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
@@ -48,8 +48,8 @@
 #'
 #' fit(wf_formula, attrition)
 #'
-#' recipe <- recipe(Attrition ~ ., attrition) %>%
-#'   step_dummy(all_nominal(), -Attrition) %>%
+#' recipe <- recipe(Attrition ~ ., attrition) |>
+#'   step_dummy(all_nominal(), -Attrition) |>
 #'   step_corr(all_predictors(), threshold = 0.8)
 #'
 #' wf_recipe <- workflow(recipe, model)
@@ -119,10 +119,12 @@ add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
 
 # ------------------------------------------------------------------------------
 
-new_workflow <- function(pre = new_stage_pre(),
-                         fit = new_stage_fit(),
-                         post = new_stage_post(),
-                         trained = FALSE) {
+new_workflow <- function(
+  pre = new_stage_pre(),
+  fit = new_stage_fit(),
+  post = new_stage_post(),
+  trained = FALSE
+) {
   if (!is_stage(pre)) {
     cli_abort("{.arg pre} must be a `stage`.")
   }
@@ -176,8 +178,8 @@ is_workflow <- function(x) {
 #' mod <- linear_reg()
 #' mod <- set_engine(mod, "lm")
 #'
-#' wf <- workflow() %>%
-#'   add_recipe(rec) %>%
+#' wf <- workflow() |>
+#'   add_recipe(rec) |>
 #'   add_model(mod)
 #'
 #' # Before any preprocessing or model fitting has been done
@@ -287,8 +289,8 @@ print_preprocessor <- function(x) {
 
   no_preprocessor <-
     !has_preprocessor_formula &&
-      !has_preprocessor_recipe &&
-      !has_preprocessor_variables
+    !has_preprocessor_recipe &&
+    !has_preprocessor_variables
 
   if (no_preprocessor) {
     return(invisible(x))

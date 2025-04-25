@@ -83,6 +83,8 @@ test_that("can print workflow with case weights, preprocessor, and model", {
 })
 
 test_that("can print workflow with postprocessor", {
+  skip_if_not_installed("tailor")
+
   post <- tailor::tailor()
   workflow <- workflow()
   workflow <- add_postprocessor(workflow, post)

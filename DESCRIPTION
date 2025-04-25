@@ -5,7 +5,8 @@ Authors@R: c(
     person("Davis", "Vaughan", , "davis@posit.co", role = "aut"),
     person("Simon", "Couch", , "simon.couch@posit.co", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5676-5107")),
-    person(given = "Posit Software, PBC", role = c("cph", "fnd"))
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+           comment = c(ROR = "03wc8by49"))
   )
 Description: Managing both a 'parsnip' model and a preprocessor, such as a
     model formula or recipe from 'recipes', can often be challenging. The
@@ -16,7 +17,7 @@ URL: https://github.com/tidymodels/workflows,
     https://workflows.tidymodels.org
 BugReports: https://github.com/tidymodels/workflows/issues
 Depends: 
-    R (>= 4.0)
+    R (>= 4.1)
 Imports: 
     cli (>= 3.3.0),
     generics (>= 0.1.2),
@@ -27,13 +28,12 @@ Imports:
     parsnip (>= 1.2.1.9000),
     recipes (>= 1.0.10.9000),
     rlang (>= 1.1.0),
-    tidyselect (>= 1.2.0),
     sparsevctrs (>= 0.1.0.9003),
+    tidyselect (>= 1.2.0),
     vctrs (>= 0.4.1),
     withr
 Suggests: 
     butcher (>= 0.2.0),
-    tailor (>= 0.0.0.9001),
     covr,
     dials (>= 1.0.0),
     glmnet,
@@ -44,23 +44,21 @@ Suggests:
     modeldata (>= 1.0.0),
     probably,
     rmarkdown,
+    tailor (>= 0.0.0.9001),
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-Config/Needs/website:
-    dplyr,
-    ggplot2,
-    tidyr,
-    tidyverse/tidytemplate,
-    yardstick
 Remotes:
+    r-lib/sparsevctrs,
     tidymodels/dials,
-    tidymodels/recipes,
     tidymodels/parsnip,
     tidymodels/probably,
-    tidymodels/tailor,
-    r-lib/sparsevctrs
+    tidymodels/recipes,
+    tidymodels/tailor
+Config/Needs/website:dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
+    yardstick
 Config/testthat/edition: 3
+Config/usethis/last-upkeep: 2025-04-25
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

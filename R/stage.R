@@ -1,4 +1,8 @@
-new_stage_pre <- function(actions = new_named_list(), mold = NULL, case_weights = NULL) {
+new_stage_pre <- function(
+  actions = new_named_list(),
+  mold = NULL,
+  case_weights = NULL
+) {
   if (!is.null(mold) && !is.list(mold)) {
     cli_abort(
       "{.arg mold} must be a result of calling {.fun hardhat::mold}.",
@@ -46,9 +50,7 @@ new_stage_post <- function(actions = new_named_list(), fit = NULL) {
 # - fit
 # - post
 
-new_stage <- function(actions = new_named_list(),
-                      ...,
-                      subclass = character()) {
+new_stage <- function(actions = new_named_list(), ..., subclass = character()) {
   if (!is_list_of_actions(actions)) {
     cli_abort("{.arg actions} must be a list of actions.", .internal = TRUE)
   }

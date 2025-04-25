@@ -33,13 +33,13 @@
 #' training <- mtcars[1:20, ]
 #' testing <- mtcars[21:32, ]
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' workflow <- workflow() %>%
+#' workflow <- workflow() |>
 #'   add_model(model)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, training) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, training) |>
 #'   step_log(disp)
 #'
 #' workflow <- add_recipe(workflow, recipe)
@@ -49,7 +49,13 @@
 #' # This will automatically `bake()` the recipe on `testing`,
 #' # applying the log step to `disp`, and then fit the regression.
 #' predict(fit_workflow, testing)
-predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) {
+predict.workflow <- function(
+  object,
+  new_data,
+  type = NULL,
+  opts = list(),
+  ...
+) {
   workflow <- object
 
   if (!is_trained_workflow(workflow)) {
@@ -86,7 +92,11 @@ forge_predictors <- function(new_data, workflow) {
   forged$predictors
 }
 
-predict_type_column_names <- function(type, tailor_columns, call = caller_env()) {
+predict_type_column_names <- function(
+  type,
+  tailor_columns,
+  call = caller_env()
+) {
   check_string(type, allow_null = TRUE, call = call)
 
   if (is.null(type)) {
@@ -95,7 +105,8 @@ predict_type_column_names <- function(type, tailor_columns, call = caller_env())
 
   switch(
     type,
-    numeric = , class = tailor_columns$estimate,
+    numeric = ,
+    class = tailor_columns$estimate,
     prob = tailor_columns$probabilities,
     cli::cli_abort(
       "Unsupported prediction {.arg type} {.val {type}} for a workflow with a postprocessor.",

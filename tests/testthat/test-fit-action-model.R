@@ -23,7 +23,7 @@ test_that("model must contain a known mode (#160)", {
 })
 
 test_that("prompt on spec without a loaded implementation (#174)", {
-  mod <- parsnip::bag_tree() %>%
+  mod <- parsnip::bag_tree() |>
     parsnip::set_mode("regression")
 
   workflow <- workflow()

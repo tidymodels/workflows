@@ -29,18 +29,18 @@ library(modeldata)
 
 data("Sacramento")
 
-base_wf <- workflow() %>%
+base_wf <- workflow() |>
   add_formula(price ~ type + sqft + beds + baths)
 ```
 
 This first model does create dummy/indicator variables:
 
 ```{r}
-lm_spec <- linear_reg() %>%
+lm_spec <- linear_reg() |>
   set_engine("lm")
 
-base_wf %>%
-  add_model(lm_spec) %>%
+base_wf |>
+  add_model(lm_spec) |>
   fit(Sacramento)
 ```
 
@@ -49,12 +49,12 @@ There are **five** independent variables in the fitted model for this OLS linear
 This second model does not create dummy/indicator variables:
 
 ```{r}
-rf_spec <- rand_forest() %>%
-  set_mode("regression") %>%
+rf_spec <- rand_forest() |>
+  set_mode("regression") |>
   set_engine("ranger")
 
-base_wf %>%
-  add_model(rf_spec) %>%
+base_wf |>
+  add_model(rf_spec) |>
   fit(Sacramento)
 ```
 

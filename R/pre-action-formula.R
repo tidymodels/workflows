@@ -138,7 +138,12 @@ check_for_offset <- function(mold, ..., call = caller_env()) {
 # ------------------------------------------------------------------------------
 
 #' @export
-check_conflicts.action_formula <- function(action, x, ..., call = caller_env()) {
+check_conflicts.action_formula <- function(
+  action,
+  x,
+  ...,
+  call = caller_env()
+) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {

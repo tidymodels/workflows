@@ -53,14 +53,14 @@
 #'
 #' *Good*:
 #' ```r
-#' workflow_fit %>% predict(new_data)
+#' workflow_fit |> predict(new_data)
 #' ```
 #'
 #' *Bad*:
 #' ```r
-#' workflow_fit %>% extract_fit_engine()  %>% predict(new_data)
+#' workflow_fit |> extract_fit_engine()  |> predict(new_data)
 #' # or
-#' workflow_fit %>% extract_fit_parsnip() %>% predict(new_data)
+#' workflow_fit |> extract_fit_parsnip() |> predict(new_data)
 #' ```
 #'
 #' @return
@@ -73,13 +73,13 @@
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
 #'   step_log(disp)
 #'
-#' base_wf <- workflow() %>%
+#' base_wf <- workflow() |>
 #'   add_model(model)
 #'
 #' recipe_wf <- add_recipe(base_wf, recipe)
@@ -130,7 +130,9 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
   check_dots_empty()
   if (!is_bool(estimated)) {
-    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
   if (!has_preprocessor_recipe(x)) {
     cli_abort("The workflow must have a recipe preprocessor.")
@@ -195,7 +197,9 @@ extract_preprocessor.workflow <- function(x, ...) {
 #' @export
 extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
   if (!is_bool(estimated)) {
-    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
 
   if (estimated) {

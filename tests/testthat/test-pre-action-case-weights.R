@@ -60,7 +60,12 @@ test_that("case weights + recipe uses weights in the model", {
 })
 
 test_that("case weights are used with model formula override", {
-  df <- vctrs::data_frame(y = 1, x = 2, z = 3, w = hardhat::frequency_weights(1))
+  df <- vctrs::data_frame(
+    y = 1,
+    x = 2,
+    z = 3,
+    w = hardhat::frequency_weights(1)
+  )
 
   spec <- parsnip::linear_reg()
   spec <- parsnip::set_engine(spec, "lm")
@@ -106,7 +111,7 @@ test_that("case weights + formula doesn't need case weights at predict time", {
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -132,7 +137,7 @@ test_that("case weights + variables doesn't need case weights at predict time", 
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -160,7 +165,7 @@ test_that("case weights + recipe doesn't need case weights at predict time", {
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -193,7 +198,7 @@ test_that("case weights + recipe can optionally require case weights at predict 
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 
   df$w <- NULL
@@ -235,7 +240,7 @@ test_that("case weights + recipe requires extra roles at predict time by default
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 
   df$w <- NULL
@@ -277,7 +282,7 @@ test_that("case weights + recipe can optionally not require extra roles at predi
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 
   df$w <- NULL
@@ -285,7 +290,7 @@ test_that("case weights + recipe can optionally not require extra roles at predi
   # Works without `w`
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 })
 

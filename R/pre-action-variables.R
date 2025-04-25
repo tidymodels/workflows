@@ -96,12 +96,14 @@
 #' variables <- workflow_variables(mpg, c(cyl, disp))
 #' workflow3 <- add_variables(workflow, variables = variables)
 #' fit(workflow3, mtcars)
-add_variables <- function(x,
-                          outcomes,
-                          predictors,
-                          ...,
-                          blueprint = NULL,
-                          variables = NULL) {
+add_variables <- function(
+  x,
+  outcomes,
+  predictors,
+  ...,
+  blueprint = NULL,
+  variables = NULL
+) {
   check_dots_empty()
 
   if (is_null(variables)) {
@@ -142,12 +144,14 @@ remove_variables <- function(x) {
 
 #' @rdname add_variables
 #' @export
-update_variables <- function(x,
-                             outcomes,
-                             predictors,
-                             ...,
-                             blueprint = NULL,
-                             variables = NULL) {
+update_variables <- function(
+  x,
+  outcomes,
+  predictors,
+  ...,
+  blueprint = NULL,
+  variables = NULL
+) {
   check_dots_empty()
 
   x <- remove_variables(x)
@@ -214,7 +218,12 @@ fit.action_variables <- function(object, workflow, data, ...) {
 # ------------------------------------------------------------------------------
 
 #' @export
-check_conflicts.action_variables <- function(action, x, ..., call = caller_env()) {
+check_conflicts.action_variables <- function(
+  action,
+  x,
+  ...,
+  call = caller_env()
+) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {
@@ -235,7 +244,12 @@ check_conflicts.action_variables <- function(action, x, ..., call = caller_env()
 
 # ------------------------------------------------------------------------------
 
-new_action_variables <- function(variables, blueprint, ..., call = caller_env()) {
+new_action_variables <- function(
+  variables,
+  blueprint,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty()
 
   # `NULL` blueprints are finalized at fit time
@@ -271,10 +285,12 @@ workflow_variables <- function(outcomes, predictors) {
   )
 }
 
-new_workflow_variables <- function(outcomes,
-                                   predictors,
-                                   ...,
-                                   call = caller_env()) {
+new_workflow_variables <- function(
+  outcomes,
+  predictors,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty()
 
   if (!is_quosure(outcomes)) {

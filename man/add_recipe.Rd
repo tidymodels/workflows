@@ -53,10 +53,10 @@ To fit a workflow, exactly one of \code{\link[=add_formula]{add_formula()}}, \co
 library(recipes)
 library(magrittr)
 
-recipe <- recipe(mpg ~ cyl, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl, mtcars) |>
   step_log(cyl)
 
-workflow <- workflow() \%>\%
+workflow <- workflow() |>
   add_recipe(recipe)
 
 workflow

@@ -88,14 +88,14 @@ or silently generating incorrect predictions.
 
 \emph{Good}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% predict(new_data)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit |> predict(new_data)
 }\if{html}{\out{</div>}}
 
 \emph{Bad}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{workflow_fit |> extract_fit_engine()  |> predict(new_data)
 # or
-workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
+workflow_fit |> extract_fit_parsnip() |> predict(new_data)
 }\if{html}{\out{</div>}}
 }
 \examples{
@@ -104,13 +104,13 @@ library(parsnip)
 library(recipes)
 library(magrittr)
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
   step_log(disp)
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_model(model)
 
 recipe_wf <- add_recipe(base_wf, recipe)

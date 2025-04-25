@@ -59,17 +59,17 @@ library(modeldata)
 
 data("Sacramento")
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_formula(price ~ type + sqft + beds + baths)
 }\if{html}{\out{</div>}}
 
 This first model does create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() |>
   set_engine("lm")
 
-base_wf \%>\%
-  add_model(lm_spec) \%>\%
+base_wf |>
+  add_model(lm_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -101,12 +101,12 @@ baseline level).
 
 This second model does not create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
-  set_mode("regression") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() |>
+  set_mode("regression") |>
   set_engine("ranger")
 
-base_wf \%>\%
-  add_model(rf_spec) \%>\%
+base_wf |>
+  add_model(rf_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -158,21 +158,21 @@ library(parsnip)
 library(recipes)
 library(magrittr)
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_model(model)
 
-formula_wf <- base_wf \%>\%
+formula_wf <- base_wf |>
   add_formula(mpg ~ cyl + log(disp))
 
 fit(formula_wf, mtcars)
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
   step_log(disp)
 
-recipe_wf <- base_wf \%>\%
+recipe_wf <- base_wf |>
   add_recipe(recipe)
 
 fit(recipe_wf, mtcars)

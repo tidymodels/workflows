@@ -113,6 +113,8 @@ test_that("extract tuning from workflow with tunable model", {
 })
 
 test_that("extract tuning from workflow with tunable postprocessor", {
+  skip_if_not_installed("tailor")
+
   wflow <- workflow()
   wflow <- add_recipe(wflow, recipes::recipe(mpg ~ ., mtcars))
   wflow <- add_model(wflow, parsnip::linear_reg())
@@ -166,6 +168,8 @@ test_that("extract tuning from workflow with tunable recipe and model", {
 })
 
 test_that("extract tuning from workflow with tunable recipe, model, and tailor", {
+  skip_if_not_installed("tailor")
+
   wflow <- workflow()
   wflow <- add_recipe(
     wflow,

@@ -8,14 +8,14 @@ test_that("sparse tibble can be passed to `fit() - recipe", {
 
   hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
   rec <- recipes::recipe(avg_price_per_room ~ ., data = hotel_data)
 
-  wf_spec <- workflow() %>%
-    add_recipe(rec) %>%
+  wf_spec <- workflow() |>
+    add_recipe(rec) |>
     add_model(spec)
 
   expect_no_error(wf_fit <- fit(wf_spec, hotel_data))
@@ -29,12 +29,12 @@ test_that("sparse tibble can be passed to `fit() - formula", {
 
   hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
-  wf_spec <- workflow() %>%
-    add_formula(avg_price_per_room ~ .) %>%
+  wf_spec <- workflow() |>
+    add_formula(avg_price_per_room ~ .) |>
     add_model(spec)
 
   expect_snapshot(
@@ -51,12 +51,12 @@ test_that("sparse tibble can be passed to `fit() - xy", {
 
   hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
-  wf_spec <- workflow() %>%
-    add_variables(avg_price_per_room, everything()) %>%
+  wf_spec <- workflow() |>
+    add_variables(avg_price_per_room, everything()) |>
     add_model(spec)
 
   expect_no_error(wf_fit <- fit(wf_spec, hotel_data))
@@ -70,14 +70,14 @@ test_that("sparse matrices can be passed to `fit() - recipe", {
 
   hotel_data <- sparse_hotel_rates()
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
   rec <- recipes::recipe(avg_price_per_room ~ ., data = hotel_data)
 
-  wf_spec <- workflow() %>%
-    add_recipe(rec) %>%
+  wf_spec <- workflow() |>
+    add_recipe(rec) |>
     add_model(spec)
 
   # We expect 1 materialization - the outcome
@@ -89,12 +89,12 @@ test_that("sparse matrices can be passed to `fit() - formula", {
 
   hotel_data <- sparse_hotel_rates()
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
-  wf_spec <- workflow() %>%
-    add_formula(avg_price_per_room ~ .) %>%
+  wf_spec <- workflow() |>
+    add_formula(avg_price_per_room ~ .) |>
     add_model(spec)
 
   expect_snapshot(
@@ -111,12 +111,12 @@ test_that("sparse matrices can be passed to `fit() - xy", {
 
   hotel_data <- sparse_hotel_rates()
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
-  wf_spec <- workflow() %>%
-    add_variables(avg_price_per_room, everything()) %>%
+  wf_spec <- workflow() |>
+    add_variables(avg_price_per_room, everything()) |>
     add_model(spec)
 
   # We expect 1 materialization - the outcome
@@ -131,14 +131,14 @@ test_that("sparse tibble can be passed to `predict()`", {
 
   hotel_data <- sparse_hotel_rates(tibble = TRUE)
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
   rec <- recipes::recipe(avg_price_per_room ~ ., data = hotel_data)
 
-  wf_spec <- workflow() %>%
-    add_recipe(rec) %>%
+  wf_spec <- workflow() |>
+    add_recipe(rec) |>
     add_model(spec)
 
   wf_fit <- fit(wf_spec, hotel_data)
@@ -154,14 +154,14 @@ test_that("sparse matrix can be passed to `predict()`", {
 
   hotel_data <- sparse_hotel_rates()
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
   rec <- recipes::recipe(avg_price_per_room ~ ., data = hotel_data)
 
-  wf_spec <- workflow() %>%
-    add_recipe(rec) %>%
+  wf_spec <- workflow() |>
+    add_recipe(rec) |>
     add_model(spec)
 
   # We know that this will cause 1 warning due to the outcome
@@ -178,12 +178,12 @@ test_that("fit() errors if sparse matrix has no colnames", {
   hotel_data <- sparse_hotel_rates()
   colnames(hotel_data) <- NULL
 
-  spec <- parsnip::linear_reg(penalty = 0) %>%
-    parsnip::set_mode("regression") %>%
+  spec <- parsnip::linear_reg(penalty = 0) |>
+    parsnip::set_mode("regression") |>
     parsnip::set_engine("glmnet")
 
-  wf_spec <- workflow() %>%
-    add_variables(avg_price_per_room, everything()) %>%
+  wf_spec <- workflow() |>
+    add_variables(avg_price_per_room, everything()) |>
     add_model(spec)
 
   expect_snapshot(
@@ -246,7 +246,7 @@ test_that("toggle_sparsity changes auto to yes", {
 
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
-  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
     recipes::step_dummy(recipes::all_nominal_predictors())
 
   wf_spec <- workflow(rec_spec, tree_spec)
@@ -313,7 +313,7 @@ test_that("toggle_sparsity doesn't change no", {
 
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
-  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
     recipes::step_dummy(recipes::all_nominal_predictors(), sparse = "no")
 
   wf_spec <- workflow(rec_spec, tree_spec)
@@ -381,7 +381,7 @@ test_that("toggle_sparsity changes auto to no", {
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   # if we only dummy 1 variable it doesn't make the data sparse enough
-  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
     recipes::step_dummy(MS_Zoning)
 
   wf_spec <- workflow(rec_spec, tree_spec)
@@ -449,7 +449,7 @@ test_that("toggle_sparsity doesn't change yes", {
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
   # if we only dummy 1 variable it doesn't make the data sparse enough
-  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
     recipes::step_dummy(MS_Zoning, sparse = "yes")
 
   wf_spec <- workflow(rec_spec, tree_spec)
@@ -516,7 +516,7 @@ test_that("toggle_sparsity doesn't break fit", {
 
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
-  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) %>%
+  rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
     recipes::step_dummy(recipes::all_nominal_predictors())
 
   wf_spec <- workflow(rec_spec, tree_spec)

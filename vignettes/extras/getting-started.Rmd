@@ -56,8 +56,8 @@ Both predictors have positive values and their distributions are right-skewed. T
 ```{r plot-marginals, fig.alt = "A pair of boxplots showing the same predictors, this time one at a time. The predictors on their own do little to separate the two outcome classes."}
 library(tidyr)
 
-bivariate_train %>% 
-  pivot_longer(cols = c(A, B), names_to = "predictor") %>% 
+bivariate_train |> 
+  pivot_longer(cols = c(A, B), names_to = "predictor") |> 
   ggplot(aes(x = Class, y = value)) + 
   geom_boxplot() + 
   facet_wrap(~predictor, scales = "free_y") + 
@@ -70,7 +70,7 @@ In the first plot above, the separation appears to happen linearly, and a straig
 library(parsnip)
 
 logit_mod <-
-  logistic_reg() %>%
+  logistic_reg() |>
   set_engine("glm")
 ```
 
@@ -85,13 +85,13 @@ The obvious place to start is by adding both predictors as-is into the model:
 ```{r simple-glm}
 # Create a workflow with just the model. We will add to this as we go. 
 glm_workflow <-
-  workflow() %>%
+  workflow() |>
   add_model(logit_mod)
 
 simple_glm <-
-  glm_workflow %>%
+  glm_workflow |>
   # Add both predictors in
-  add_formula(Class ~ .) %>%
+  add_formula(Class ~ .) |>
   # Fit the model:
   fit(data = bivariate_train)
 ```
@@ -102,14 +102,14 @@ To evaluate this model, the ROC curve will be computed along with its correspond
 library(yardstick)
 
 simple_glm_probs <-
-  predict(simple_glm, bivariate_val, type = "prob") %>%
+  predict(simple_glm, bivariate_val, type = "prob") |>
   bind_cols(bivariate_val)
 
 simple_glm_roc <- 
-  simple_glm_probs %>% 
+  simple_glm_probs |> 
   roc_curve(Class, .pred_One)
 
-simple_glm_probs %>% roc_auc(Class, .pred_One)
+simple_glm_probs |> roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc)
 ```
@@ -120,19 +120,19 @@ Since there are two correlated predictors with skewed distributions and strictly
 
 ```{r ratios, fig.alt = "The same plot as before, this time with a yellow line also added to the plot. The yellow line roughly traces the solid black one, except that it's y values are slightly higher than those of the solid black line towards the left portion of the plot and vice versa for the other portion."}
 ratio_glm <-
-  glm_workflow %>%
-  add_formula(Class ~ I(A/B)) %>% 
+  glm_workflow |>
+  add_formula(Class ~ I(A/B)) |> 
   fit(data = bivariate_train)
 
 ratio_glm_probs <-
-  predict(ratio_glm, bivariate_val, type = "prob") %>%
+  predict(ratio_glm, bivariate_val, type = "prob") |>
   bind_cols(bivariate_val)
 
 ratio_glm_roc <- 
-  ratio_glm_probs %>% 
+  ratio_glm_probs |> 
   roc_curve(Class, .pred_One)
 
-ratio_glm_probs %>% roc_auc(Class, .pred_One)
+ratio_glm_probs |> roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
   geom_path(
@@ -154,7 +154,7 @@ This cannot be easily done via the formula interface, so a recipe is used. A rec
 library(recipes)
 
 trans_recipe <- 
-  recipe(Class ~ ., data = bivariate_train) %>% 
+  recipe(Class ~ ., data = bivariate_train) |> 
   step_BoxCox(all_predictors())
 ```
 
@@ -162,19 +162,19 @@ Creating the recipe only makes an object with the instructions; it does not carr
 
 ```{r rec-trans, fig.alt = "The same plot as above, but with another line, shown in green, added to the plot. Its y values are nearly always consistently higher than the existing black and yellow lines."}
 trans_glm <-
-  glm_workflow %>%
-  add_recipe(trans_recipe) %>% 
+  glm_workflow |>
+  add_recipe(trans_recipe) |> 
   fit(data = bivariate_train)
 
 trans_glm_probs <-
-  predict(trans_glm, bivariate_val, type = "prob") %>%
+  predict(trans_glm, bivariate_val, type = "prob") |>
   bind_cols(bivariate_val)
 
 trans_glm_roc <- 
-  trans_glm_probs %>% 
+  trans_glm_probs |> 
   roc_curve(Class, .pred_One)
 
-trans_glm_probs %>% roc_auc(Class, .pred_One)
+trans_glm_probs |> roc_auc(Class, .pred_One)
 
 autoplot(simple_glm_roc) + 
   geom_path(
@@ -205,24 +205,24 @@ The correlation between these is about the same as in the original data. It migh
 
 ```{r rec-pca}
 pca_recipe <- 
-  trans_recipe %>% 
-  step_normalize(A, B) %>%
+  trans_recipe |> 
+  step_normalize(A, B) |>
   step_pca(A, B, num_comp = 2)
 
 pca_glm <-
-  glm_workflow %>%
-  add_recipe(pca_recipe) %>% 
+  glm_workflow |>
+  add_recipe(pca_recipe) |> 
   fit(data = bivariate_train)
 
 pca_glm_probs <-
-  predict(pca_glm, bivariate_val, type = "prob") %>%
+  predict(pca_glm, bivariate_val, type = "prob") |>
   bind_cols(bivariate_val)
 
 pca_glm_roc <- 
-  pca_glm_probs %>% 
+  pca_glm_probs |> 
   roc_curve(Class, .pred_One)
 
-pca_glm_probs %>% roc_auc(Class, .pred_One)
+pca_glm_probs |> roc_auc(Class, .pred_One)
 ```
 
 These results are almost identical to the transformed model.
@@ -233,16 +233,15 @@ Based on these results, the model with the logistic regression model with invers
 
 ```{r test-set, fig.alt = "An ROC curve plot like before, back to showing just one solid black line, representing what had been shown as green in the previous plot. There's quite a bit of separation between this line and the identity, showing a model that's similarly as performant as it was on the training set."}
 test_probs <- 
-  predict(trans_glm, bivariate_test, type = "prob") %>%
+  predict(trans_glm, bivariate_test, type = "prob") |>
   bind_cols(bivariate_test)
 
 test_roc <- 
-  test_probs %>% 
+  test_probs |> 
   roc_curve(Class, .pred_One)
 
 # A little more optimistic than the validation set
-test_probs %>% roc_auc(Class, .pred_One)
+test_probs |> roc_auc(Class, .pred_One)
 
 autoplot(test_roc) 
 ```
-

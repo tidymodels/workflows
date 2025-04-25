@@ -40,10 +40,10 @@
 #' library(recipes)
 #' library(magrittr)
 #'
-#' recipe <- recipe(mpg ~ cyl, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl, mtcars) |>
 #'   step_log(cyl)
 #'
-#' workflow <- workflow() %>%
+#' workflow <- workflow() |>
 #'   add_recipe(recipe)
 #'
 #' workflow

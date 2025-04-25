@@ -66,11 +66,11 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )
@@ -126,11 +126,11 @@ glance.workflow <- function(x, ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )

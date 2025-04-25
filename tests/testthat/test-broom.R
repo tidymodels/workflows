@@ -111,7 +111,7 @@ test_that("can augment with a postprocessor (#275)", {
   skip_if_not_installed("probably")
 
   cal_post <-
-    tailor::tailor() %>%
+    tailor::tailor() |>
     tailor::adjust_numeric_calibration(method = "isotonic_boot")
 
   wflow <- workflow(mpg ~ ., parsnip::linear_reg())
@@ -124,7 +124,7 @@ test_that("can augment with a postprocessor (#275)", {
     data = mtcars[1:20, ],
     calibration = mtcars[20:30, ]
   )
-  pred_post <- fit_post %>% augment(mtcars[31:32, ])
+  pred_post <- fit_post |> augment(mtcars[31:32, ])
 
   # manually fit the model and the apply the postprocessor
   set.seed(1)

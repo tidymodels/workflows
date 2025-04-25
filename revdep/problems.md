@@ -21,13 +21,13 @@ Run `cloud_details(, "modeltime")` for more info
     Last 13 lines of output:
       Backtrace:
           ▆
-       1. ├─... %>% fit(data_set) at test-panel-data.R:33:0
+       1. ├─... |> fit(data_set) at test-panel-data.R:33:0
        2. ├─generics::fit(., data_set)
-       3. ├─workflows::add_recipe(., recipe_spec %>% step_rm(date))
+       3. ├─workflows::add_recipe(., recipe_spec |> step_rm(date))
        4. │ └─workflows:::add_action(x, action, "recipe")
        5. │   └─workflows:::validate_is_workflow(x, call = call)
        6. │     └─workflows:::is_workflow(x)
-       7. └─workflows::add_model(., svm_rbf() %>% set_engine("kernlab"))
+       7. └─workflows::add_model(., svm_rbf() |> set_engine("kernlab"))
        8.   └─workflows:::new_action_model(spec, formula)
        9.     └─rlang::abort(message, call = call)
       
@@ -59,13 +59,13 @@ Run `cloud_details(, "modeltime.ensemble")` for more info
     Last 13 lines of output:
       Backtrace:
           ▆
-       1. ├─... %>% fit(data_set) at test-panel-data.R:28:0
+       1. ├─... |> fit(data_set) at test-panel-data.R:28:0
        2. ├─generics::fit(., data_set)
-       3. ├─workflows::add_recipe(., recipe_spec %>% step_rm(date))
+       3. ├─workflows::add_recipe(., recipe_spec |> step_rm(date))
        4. │ └─workflows:::add_action(x, action, "recipe")
        5. │   └─workflows:::validate_is_workflow(x, call = call)
        6. │     └─workflows:::is_workflow(x)
-       7. └─workflows::add_model(., boost_tree() %>% set_engine("xgboost"))
+       7. └─workflows::add_model(., boost_tree() |> set_engine("xgboost"))
        8.   └─workflows:::new_action_model(spec, formula)
        9.     └─rlang::abort(message, call = call)
       
@@ -131,4 +131,3 @@ Run `cloud_details(, "modeltime.resample")` for more info
       ‘crayon’ ‘dials’ ‘glue’ ‘parsnip’
       All declared Imports should be used.
     ```
-

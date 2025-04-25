@@ -39,7 +39,7 @@
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
 #' formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
@@ -48,8 +48,8 @@
 #'
 #' fit(wf_formula, attrition)
 #'
-#' recipe <- recipe(Attrition ~ ., attrition) %>%
-#'   step_dummy(all_nominal(), -Attrition) %>%
+#' recipe <- recipe(Attrition ~ ., attrition) |>
+#'   step_dummy(all_nominal(), -Attrition) |>
 #'   step_corr(all_predictors(), threshold = 0.8)
 #'
 #' wf_recipe <- workflow(recipe, model)
@@ -178,8 +178,8 @@ is_workflow <- function(x) {
 #' mod <- linear_reg()
 #' mod <- set_engine(mod, "lm")
 #'
-#' wf <- workflow() %>%
-#'   add_recipe(rec) %>%
+#' wf <- workflow() |>
+#'   add_recipe(rec) |>
 #'   add_model(mod)
 #'
 #' # Before any preprocessing or model fitting has been done

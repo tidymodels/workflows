@@ -76,7 +76,7 @@
 #' tailor <- tailor()
 #' tailor_1 <- adjust_probability_threshold(tailor, .1)
 #'
-#' workflow <- workflow() %>%
+#' workflow <- workflow() |>
 #'   add_tailor(tailor_1)
 #'
 #' workflow

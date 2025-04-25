@@ -37,21 +37,21 @@
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' base_wf <- workflow() %>%
+#' base_wf <- workflow() |>
 #'   add_model(model)
 #'
-#' formula_wf <- base_wf %>%
+#' formula_wf <- base_wf |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' fit(formula_wf, mtcars)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
 #'   step_log(disp)
 #'
-#' recipe_wf <- base_wf %>%
+#' recipe_wf <- base_wf |>
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
@@ -138,11 +138,11 @@ fit.workflow <- function(
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' wf_unfit <- workflow() %>%
-#'   add_model(model) %>%
+#' wf_unfit <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' wf_fit_pre <- .fit_pre(wf_unfit, mtcars)

@@ -56,14 +56,14 @@ library(recipes)
 library(parsnip)
 library(workflows)
 
-spline_cars <- recipe(mpg ~ ., data = mtcars) %>% 
+spline_cars <- recipe(mpg ~ ., data = mtcars) |> 
   step_ns(disp, deg_free = 10)
 ```
 
 and a model object:
 
 ``` r
-bayes_lm <- linear_reg() %>% 
+bayes_lm <- linear_reg() |> 
   set_engine("stan")
 ```
 
@@ -83,8 +83,8 @@ interested in.
 workflows makes this easier by combining these objects together:
 
 ``` r
-car_wflow <- workflow() %>% 
-  add_recipe(spline_cars) %>% 
+car_wflow <- workflow() |> 
+  add_recipe(spline_cars) |> 
   add_model(bayes_lm)
 ```
 

@@ -69,13 +69,13 @@ library(magrittr)
 training <- mtcars[1:20, ]
 testing <- mtcars[21:32, ]
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-workflow <- workflow() \%>\%
+workflow <- workflow() |>
   add_model(model)
 
-recipe <- recipe(mpg ~ cyl + disp, training) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, training) |>
   step_log(disp)
 
 workflow <- add_recipe(workflow, recipe)

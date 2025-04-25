@@ -80,17 +80,17 @@ library(hardhat)
 
 data(penguins)
 
-lm_mod <- linear_reg() \%>\% 
+lm_mod <- linear_reg() |> 
   set_engine("lm")
 
-lm_wflow <- workflow() \%>\% 
+lm_wflow <- workflow() |> 
   add_model(lm_mod)
 
-pre_encoded <- lm_wflow \%>\% 
-  add_formula(body_mass_g ~ species + island + bill_depth_mm) \%>\% 
+pre_encoded <- lm_wflow |> 
+  add_formula(body_mass_g ~ species + island + bill_depth_mm) |> 
   fit(data = penguins)
 
-pre_encoded_parsnip_fit <- pre_encoded \%>\% 
+pre_encoded_parsnip_fit <- pre_encoded |> 
   extract_fit_parsnip()
 
 pre_encoded_fit <- pre_encoded_parsnip_fit$fit
@@ -138,14 +138,14 @@ like the data to be passed to a model untouched:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{minimal <- default_formula_blueprint(indicators = "none", intercept = FALSE)
 
-un_encoded <- lm_wflow \%>\% 
+un_encoded <- lm_wflow |> 
   add_formula(
     body_mass_g ~ species + island + bill_depth_mm, 
     blueprint = minimal
-  ) \%>\% 
+  ) |> 
   fit(data = penguins)
 
-un_encoded_parsnip_fit <- un_encoded \%>\% 
+un_encoded_parsnip_fit <- un_encoded |> 
   extract_fit_parsnip()
 
 un_encoded_fit <- un_encoded_parsnip_fit$fit
@@ -192,18 +192,18 @@ used. To demonstrate, a spline function will be used for the bill depth:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(splines)
 
-custom_formula <- workflow() \%>\%
+custom_formula <- workflow() |>
   add_model(
     lm_mod, 
     formula = body_mass_g ~ species + island + ns(bill_depth_mm, 3)
-  ) \%>\% 
+  ) |> 
   add_formula(
     body_mass_g ~ species + island + bill_depth_mm, 
     blueprint = minimal
-  ) \%>\% 
+  ) |> 
   fit(data = penguins)
 
-custom_parsnip_fit <- custom_formula \%>\% 
+custom_parsnip_fit <- custom_formula |> 
   extract_fit_parsnip()
 
 custom_fit <- custom_parsnip_fit$fit

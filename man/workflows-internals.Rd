@@ -47,11 +47,11 @@ library(parsnip)
 library(recipes)
 library(magrittr)
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-wf_unfit <- workflow() \%>\%
-  add_model(model) \%>\%
+wf_unfit <- workflow() |>
+  add_model(model) |>
   add_formula(mpg ~ cyl + log(disp))
 
 wf_fit_pre <- .fit_pre(wf_unfit, mtcars)

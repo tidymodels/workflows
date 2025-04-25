@@ -27,8 +27,8 @@ rec <- recipe(mpg ~ cyl, mtcars)
 mod <- linear_reg()
 mod <- set_engine(mod, "lm")
 
-wf <- workflow() \%>\%
-  add_recipe(rec) \%>\%
+wf <- workflow() |>
+  add_recipe(rec) |>
   add_model(mod)
 
 # Before any preprocessing or model fitting has been done

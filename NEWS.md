@@ -2,6 +2,8 @@
 
 * Implemented postprocessing. (TODO: fill this in.)
 
+* Increased the minimum required R version to R 4.1.
+
 # workflows 1.2.0
 
 ## New features

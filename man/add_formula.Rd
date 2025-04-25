@@ -123,9 +123,7 @@ sequential hypothesis tests, each individual term is tested:
 ## speciesChinstrap   1  18642821  18642821 141.1482 <2e-16 ***
 ## speciesGentoo      1 128221393 128221393 970.7875 <2e-16 ***
 ## islandDream        1     13399     13399   0.1014 0.7503    
-## islandTorgersen    1       255       255   0.0019 0.9650    
-## bill_depth_mm      1  28051023  28051023 212.3794 <2e-16 ***
-## Residuals        336  44378805    132080                    
+##  [ reached getOption("max.print") -- omitted 3 rows ]
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 }\if{html}{\out{</div>}}
@@ -180,7 +178,7 @@ ANOVA tests groups of parameters to get column-level p-values:
 ## bill_depth_mm   1  48840779 48840779 369.782 <2e-16 ***
 ## species         2 126067249 63033624 477.239 <2e-16 ***
 ## island          2     20864    10432   0.079 0.9241    
-## Residuals     336  44378805   132080                   
+##  [ reached getOption("max.print") -- omitted 1 row ]
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 }\if{html}{\out{</div>}}

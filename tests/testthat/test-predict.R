@@ -169,6 +169,7 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
 })
 
 test_that("predict(type) is respected with a postprocessor (#251)", {
+  skip_if_not_installed("tailor")
   # create example data
   y <- seq(0, 7, .1)
   d <- data.frame(

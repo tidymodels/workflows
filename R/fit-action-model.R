@@ -131,7 +131,13 @@ fit_from_xy <- function(spec, mold, case_weights, control_parsnip) {
   )
 }
 
-fit_from_formula <- function(spec, mold, case_weights, control_parsnip, formula) {
+fit_from_formula <- function(
+  spec,
+  mold,
+  case_weights,
+  control_parsnip,
+  formula
+) {
   data <- cbind(mold$outcomes, mold$predictors)
 
   fit(
@@ -187,8 +193,8 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
   if (is_string(mode, string = "unknown")) {
     message <-
       c(
-      "{.arg spec} must have a known mode.",
-      i = "Set the mode of `spec` by using {.fun parsnip::set_mode} or by setting
+        "{.arg spec} must have a known mode.",
+        i = "Set the mode of `spec` by using {.fun parsnip::set_mode} or by setting
            the mode directly in the parsnip specification function."
       )
 

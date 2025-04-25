@@ -130,7 +130,9 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
   check_dots_empty()
   if (!is_bool(estimated)) {
-    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
   if (!has_preprocessor_recipe(x)) {
     cli_abort("The workflow must have a recipe preprocessor.")
@@ -195,7 +197,9 @@ extract_preprocessor.workflow <- function(x, ...) {
 #' @export
 extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
   if (!is_bool(estimated)) {
-    cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
 
   if (estimated) {

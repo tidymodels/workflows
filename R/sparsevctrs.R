@@ -46,18 +46,18 @@ allow_sparse <- function(x) {
 #
 # The model was extracted using {tidypredict} and hand-tuned for speed.
 #
-# The model was fit on `sparsity`, `engine` and `n_rows` and the outcome was 
-# `log_fold` which is defined as 
+# The model was fit on `sparsity`, `engine` and `n_rows` and the outcome was
+# `log_fold` which is defined as
 # `log(time to fit with dense data / time to fit with sparse data)`.
 # Meaning that values above above 0 would reflects longer fit times for dense,
 # Hence we want to use sparse data.
 #
-# At this time the only engines that support sparse data are glmnet, LiblineaR, 
+# At this time the only engines that support sparse data are glmnet, LiblineaR,
 # ranger, and xgboost. Which is why they are the only ones listed here.
 # This is fine as this code will only run if `allow_sparse()` returns `TRUE`
 # Which only happens for these engines.
-# 
-# Ranger is hard-coded to always fail since they appear to use the same 
+#
+# Ranger is hard-coded to always fail since they appear to use the same
 # algorithm for sparse and dense data, resulting in identical times.
 should_use_sparsity <- function(sparsity, engine, n_rows) {
   if (is.null(engine) || engine == "ranger") {

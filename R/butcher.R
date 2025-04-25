@@ -58,8 +58,16 @@ axe_env.workflow <- function(x, verbose = FALSE, ...) {
   } else if (has_preprocessor_formula(x)) {
     preprocessor <- butcher::axe_env(preprocessor, verbose = verbose, ...)
   } else if (has_preprocessor_variables(x)) {
-    preprocessor$outcomes <- butcher::axe_env(preprocessor$outcomes, verbose = verbose, ...)
-    preprocessor$predictors <- butcher::axe_env(preprocessor$predictors, verbose = verbose, ...)
+    preprocessor$outcomes <- butcher::axe_env(
+      preprocessor$outcomes,
+      verbose = verbose,
+      ...
+    )
+    preprocessor$predictors <- butcher::axe_env(
+      preprocessor$predictors,
+      verbose = verbose,
+      ...
+    )
   }
 
   x <- replace_workflow_preprocessor(x, preprocessor)
@@ -167,7 +175,12 @@ replace_workflow_outcomes <- function(x, value, ..., call = caller_env()) {
   replace_workflow_mold(x, mold, call = call)
 }
 
-replace_workflow_prepped_recipe <- function(x, value, ..., call = caller_env()) {
+replace_workflow_prepped_recipe <- function(
+  x,
+  value,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty()
 
   validate_is_workflow(x, call = call)

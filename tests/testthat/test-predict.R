@@ -110,8 +110,14 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   spec <- parsnip::linear_reg()
   spec <- parsnip::set_engine(spec, "lm")
 
-  bp1 <- hardhat::default_formula_blueprint(intercept = TRUE, allow_novel_levels = FALSE)
-  bp2 <- hardhat::default_formula_blueprint(intercept = TRUE, allow_novel_levels = TRUE)
+  bp1 <- hardhat::default_formula_blueprint(
+    intercept = TRUE,
+    allow_novel_levels = FALSE
+  )
+  bp2 <- hardhat::default_formula_blueprint(
+    intercept = TRUE,
+    allow_novel_levels = TRUE
+  )
 
   workflow <- workflow()
   workflow <- add_model(workflow, spec)
@@ -145,8 +151,14 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
   workflow <- workflow()
   workflow <- add_model(workflow, mod, formula = mpg ~ .)
 
-  blueprint_with_intercept <- hardhat::default_formula_blueprint(intercept = TRUE)
-  workflow_with_intercept <- add_formula(workflow, mpg ~ hp + disp, blueprint = blueprint_with_intercept)
+  blueprint_with_intercept <- hardhat::default_formula_blueprint(
+    intercept = TRUE
+  )
+  workflow_with_intercept <- add_formula(
+    workflow,
+    mpg ~ hp + disp,
+    blueprint = blueprint_with_intercept
+  )
   fit_with_intercept <- fit(workflow_with_intercept, mtcars)
 
   # The dot expansion used to include the intercept column, added via the blueprint, as a regular predictor.
@@ -159,17 +171,20 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
 test_that("predict(type) is respected with a postprocessor (#251)", {
   # create example data
   y <- seq(0, 7, .1)
-  d <- data.frame(y = as.factor(ifelse(y > 3.5, "yes", "no")), x = y + (y-3)^2)
+  d <- data.frame(
+    y = as.factor(ifelse(y > 3.5, "yes", "no")),
+    x = y + (y - 3)^2
+  )
   wflow <- workflow(y ~ ., parsnip::logistic_reg(), tailor::tailor())
   wflow_fit <- fit(wflow, d)
 
-  pred_class <- predict(wflow_fit, d[1:5,], type = "class")
-  pred_prob <- predict(wflow_fit, d[1:5,], type = "prob")
-  pred_null <- predict(wflow_fit, d[1:5,])
+  pred_class <- predict(wflow_fit, d[1:5, ], type = "class")
+  pred_prob <- predict(wflow_fit, d[1:5, ], type = "prob")
+  pred_null <- predict(wflow_fit, d[1:5, ])
 
   expect_named(pred_class, ".pred_class")
   expect_named(pred_prob, c(".pred_no", ".pred_yes"), ignore.order = TRUE)
   expect_equal(pred_class, pred_null)
 
-  expect_snapshot(error = TRUE, predict(wflow_fit, d[1:5,], type = "boop"))
+  expect_snapshot(error = TRUE, predict(wflow_fit, d[1:5, ], type = "boop"))
 })

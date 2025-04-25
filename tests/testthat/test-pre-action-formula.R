@@ -156,5 +156,8 @@ test_that("can only use a 'formula_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_snapshot(error = TRUE, add_formula(workflow, mpg ~ cyl, blueprint = blueprint))
+  expect_snapshot(
+    error = TRUE,
+    add_formula(workflow, mpg ~ cyl, blueprint = blueprint)
+  )
 })

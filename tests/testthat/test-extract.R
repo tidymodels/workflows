@@ -171,7 +171,10 @@ test_that("can extract a prepped recipe", {
   )
 
   expect_snapshot(error = TRUE, extract_recipe(workflow, FALSE))
-  expect_snapshot(error = TRUE, extract_recipe(workflow, estimated = "yes please"))
+  expect_snapshot(
+    error = TRUE,
+    extract_recipe(workflow, estimated = "yes please")
+  )
 })
 
 test_that("error if no recipe preprocessor", {
@@ -195,18 +198,22 @@ test_that("error if not a workflow", {
 # extract_parameter_set_dials()
 
 test_that("extract parameter set from workflow with tunable recipe", {
-
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
     recipes::step_holiday(date) %>%
     recipes::step_rm(date, ends_with("away")) %>%
-    recipes::step_impute_knn(recipes::all_predictors(),
-                             neighbors = hardhat::tune("imputation")) %>%
+    recipes::step_impute_knn(
+      recipes::all_predictors(),
+      neighbors = hardhat::tune("imputation")
+    ) %>%
     recipes::step_other(recipes::all_nominal(), threshold = hardhat::tune()) %>%
     recipes::step_dummy(recipes::all_nominal()) %>%
     recipes::step_normalize(recipes::all_predictors()) %>%
-    recipes::step_bs(recipes::all_predictors(),
-                     deg_free = hardhat::tune(), degree = hardhat::tune())
+    recipes::step_bs(
+      recipes::all_predictors(),
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
+    )
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   wf_tunable_recipe <- workflow(spline_rec, lm_model)
@@ -217,11 +224,13 @@ test_that("extract parameter set from workflow with tunable recipe", {
 })
 
 test_that("extract parameter set from workflow with tunable model", {
-
   rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_rm(date, ends_with("away"))
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_tunable_model <- workflow(rm_rec, bst_model)
 
@@ -238,7 +247,7 @@ test_that("extract parameter set from workflow with tunable postprocessor", {
   wflow <- add_tailor(
     wflow,
     tailor::tailor() %>%
-    tailor::adjust_numeric_range(lower_limit = hardhat::tune())
+      tailor::adjust_numeric_range(lower_limit = hardhat::tune())
   )
 
   wflow_info <- extract_parameter_set_dials(wflow)
@@ -249,20 +258,27 @@ test_that("extract parameter set from workflow with tunable postprocessor", {
 })
 
 test_that("extract parameter set from workflow with tunable recipe and model", {
-
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
     recipes::step_holiday(date) %>%
     recipes::step_rm(date, ends_with("away")) %>%
-    recipes::step_impute_knn(recipes::all_predictors(),
-                             neighbors = hardhat::tune("imputation")) %>%
+    recipes::step_impute_knn(
+      recipes::all_predictors(),
+      neighbors = hardhat::tune("imputation")
+    ) %>%
     recipes::step_other(recipes::all_nominal(), threshold = hardhat::tune()) %>%
     recipes::step_dummy(recipes::all_nominal()) %>%
     recipes::step_normalize(recipes::all_predictors()) %>%
-    recipes::step_bs(recipes::all_predictors(),
-                     deg_free = hardhat::tune(), degree = hardhat::tune())
+    recipes::step_bs(
+      recipes::all_predictors(),
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
+    )
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_tunable <- workflow(spline_rec, bst_model)
 
@@ -279,10 +295,10 @@ test_that("extract parameter set from workflow with tunable recipe, model, and t
   wflow <- add_recipe(
     wflow,
     recipes::recipe(mpg ~ ., mtcars) %>%
-    recipes::step_impute_knn(
-      recipes::all_predictors(),
-      neighbors = hardhat::tune("imputation")
-    )
+      recipes::step_impute_knn(
+        recipes::all_predictors(),
+        neighbors = hardhat::tune("imputation")
+      )
   )
   wflow <- add_model(
     wflow,
@@ -309,7 +325,7 @@ test_that("extract parameter set from workflow with potentially conflicting ids 
   wflow <- add_recipe(
     wflow,
     recipes::recipe(mpg ~ ., mtcars) %>%
-    recipes::step_pca(recipes::all_predictors(), threshold = hardhat::tune())
+      recipes::step_pca(recipes::all_predictors(), threshold = hardhat::tune())
   )
   wflow <- add_model(wflow, parsnip::linear_reg())
   wflow <- add_tailor(
@@ -328,7 +344,9 @@ test_that("extract parameter set from workflow with potentially conflicting ids 
   wflow <- add_tailor(
     wflow,
     tailor::tailor() %>%
-      tailor::adjust_probability_threshold(threshold = hardhat::tune("unique id"))
+      tailor::adjust_probability_threshold(
+        threshold = hardhat::tune("unique id")
+      )
   )
 
   wflow_info <- extract_parameter_set_dials(wflow)
@@ -342,18 +360,22 @@ test_that("extract parameter set from workflow with potentially conflicting ids 
 # extract_parameter_dials()
 
 test_that("extract single parameter from workflow with tunable recipe", {
-
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
     recipes::step_holiday(date) %>%
     recipes::step_rm(date, ends_with("away")) %>%
-    recipes::step_impute_knn(recipes::all_predictors(),
-                             neighbors = hardhat::tune("imputation")) %>%
+    recipes::step_impute_knn(
+      recipes::all_predictors(),
+      neighbors = hardhat::tune("imputation")
+    ) %>%
     recipes::step_other(recipes::all_nominal(), threshold = hardhat::tune()) %>%
     recipes::step_dummy(recipes::all_nominal()) %>%
     recipes::step_normalize(recipes::all_predictors()) %>%
-    recipes::step_bs(recipes::all_predictors(),
-                     deg_free = hardhat::tune(), degree = hardhat::tune())
+    recipes::step_bs(
+      recipes::all_predictors(),
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
+    )
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   wf_tunable_recipe <- workflow(spline_rec, lm_model)
@@ -364,7 +386,7 @@ test_that("extract single parameter from workflow with tunable recipe", {
   )
   expect_equal(
     extract_parameter_dials(wf_tunable_recipe, "threshold"),
-    dials::threshold(c(0, 1/10))
+    dials::threshold(c(0, 1 / 10))
   )
   expect_equal(
     extract_parameter_dials(wf_tunable_recipe, "deg_free"),
@@ -377,16 +399,21 @@ test_that("extract single parameter from workflow with tunable recipe", {
 })
 
 test_that("extract single parameter from workflow with tunable model", {
-
   rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_rm(date, ends_with("away"))
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_tunable_model <- workflow(rm_rec, bst_model)
 
   expect_equal(
-    hardhat::extract_parameter_dials(wf_tunable_model, parameter = "funky name \n"),
+    hardhat::extract_parameter_dials(
+      wf_tunable_model,
+      parameter = "funky name \n"
+    ),
     dials::trees(c(1, 100))
   )
   expect_equal(
@@ -396,20 +423,27 @@ test_that("extract single parameter from workflow with tunable model", {
 })
 
 test_that("extract single parameter from workflow with tunable recipe and model", {
-
   spline_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_date(date) %>%
     recipes::step_holiday(date) %>%
     recipes::step_rm(date, ends_with("away")) %>%
-    recipes::step_impute_knn(recipes::all_predictors(),
-                             neighbors = hardhat::tune("imputation")) %>%
+    recipes::step_impute_knn(
+      recipes::all_predictors(),
+      neighbors = hardhat::tune("imputation")
+    ) %>%
     recipes::step_other(recipes::all_nominal(), threshold = hardhat::tune()) %>%
     recipes::step_dummy(recipes::all_nominal()) %>%
     recipes::step_normalize(recipes::all_predictors()) %>%
-    recipes::step_bs(recipes::all_predictors(),
-                     deg_free = hardhat::tune(), degree = hardhat::tune())
+    recipes::step_bs(
+      recipes::all_predictors(),
+      deg_free = hardhat::tune(),
+      degree = hardhat::tune()
+    )
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_tunable <- workflow(spline_rec, bst_model)
 
@@ -419,7 +453,7 @@ test_that("extract single parameter from workflow with tunable recipe and model"
   )
   expect_equal(
     extract_parameter_dials(wf_tunable, "threshold"),
-    dials::threshold(c(0, 1/10))
+    dials::threshold(c(0, 1 / 10))
   )
   expect_equal(
     extract_parameter_dials(wf_tunable, "deg_free"),

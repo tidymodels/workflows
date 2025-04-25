@@ -167,10 +167,12 @@ is_recipe_blueprint <- function(x) {
   inherits(x, "recipe_blueprint")
 }
 
-update_retained_case_weights <- function(workflow,
-                                         mold,
-                                         ...,
-                                         call = caller_env()) {
+update_retained_case_weights <- function(
+  workflow,
+  mold,
+  ...,
+  call = caller_env()
+) {
   # If the workflow was using case weights, then we retained these case weights
   # in the `$pre$case_weights` slot. However, when a recipe is used we also
   # pass the case weights on to the recipe. It is possible for the recipe to

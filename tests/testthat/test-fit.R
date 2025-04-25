@@ -205,16 +205,20 @@ test_that(".workflow_includes_calibration works", {
   skip_if_not_installed("probably")
 
   expect_false(.workflow_includes_calibration(workflow()))
-  expect_false(.workflow_includes_calibration(workflow() %>% add_model(parsnip::linear_reg())))
-  expect_false(.workflow_includes_calibration(workflow() %>% add_formula(mpg ~ .)))
   expect_false(.workflow_includes_calibration(
-    workflow() %>%
-    add_formula(mpg ~ .) %>%
-    add_model(parsnip::linear_reg())
+    workflow() %>% add_model(parsnip::linear_reg())
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() %>% add_formula(mpg ~ .)
   ))
   expect_false(.workflow_includes_calibration(
     workflow() %>%
-    add_tailor(tailor::tailor())
+      add_formula(mpg ~ .) %>%
+      add_model(parsnip::linear_reg())
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() %>%
+      add_tailor(tailor::tailor())
   ))
   expect_false(.workflow_includes_calibration(
     workflow() %>%
@@ -229,8 +233,8 @@ test_that(".workflow_includes_calibration works", {
     workflow() %>%
       add_tailor(
         tailor::tailor() %>%
-        tailor::adjust_numeric_calibration() %>%
-        tailor::adjust_numeric_range(lower_limit = 1)
+          tailor::adjust_numeric_calibration() %>%
+          tailor::adjust_numeric_range(lower_limit = 1)
       )
   ))
   expect_true(.workflow_includes_calibration(

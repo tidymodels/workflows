@@ -173,5 +173,8 @@ test_that("can only use a 'recipe_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_snapshot(error = TRUE, add_recipe(workflow, rec, blueprint = blueprint))
+  expect_snapshot(
+    error = TRUE,
+    add_recipe(workflow, rec, blueprint = blueprint)
+  )
 })

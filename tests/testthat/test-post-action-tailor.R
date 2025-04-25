@@ -74,7 +74,10 @@ test_that("update a postprocessor after postprocessor fit", {
 
   workflow_with_post_new <- update_tailor(workflow_with_post, post2)
 
-  expect_length(workflow_with_post_new$post$actions$tailor$tailor$adjustments, 1)
+  expect_length(
+    workflow_with_post_new$post$actions$tailor$tailor$adjustments,
+    1
+  )
 
   # Note that the fitted model and preprocessor can remain; the new
   # postprocessor will not affect it (#225)
@@ -86,7 +89,7 @@ test_that("postprocessor fit aligns with manually fitted version (no calibration
 
   # create example data
   y <- seq(0, 7, .1)
-  dat <- data.frame(y = y, x = y + (y-3)^2)
+  dat <- data.frame(y = y, x = y + (y - 3)^2)
 
   # construct workflows
   post <- tailor::tailor()
@@ -116,7 +119,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
 
   # create example data
   y <- seq(0, 7, .1)
-  dat <- data.frame(y = y, x = y + (y-3)^2)
+  dat <- data.frame(y = y, x = y + (y - 3)^2)
 
   dat_data <- dat[1:40, ]
   dat_calibration <- dat[41:71, ]

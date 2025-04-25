@@ -119,10 +119,12 @@ add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
 
 # ------------------------------------------------------------------------------
 
-new_workflow <- function(pre = new_stage_pre(),
-                         fit = new_stage_fit(),
-                         post = new_stage_post(),
-                         trained = FALSE) {
+new_workflow <- function(
+  pre = new_stage_pre(),
+  fit = new_stage_fit(),
+  post = new_stage_post(),
+  trained = FALSE
+) {
   if (!is_stage(pre)) {
     cli_abort("{.arg pre} must be a `stage`.")
   }
@@ -287,8 +289,8 @@ print_preprocessor <- function(x) {
 
   no_preprocessor <-
     !has_preprocessor_formula &&
-      !has_preprocessor_recipe &&
-      !has_preprocessor_variables
+    !has_preprocessor_recipe &&
+    !has_preprocessor_variables
 
   if (no_preprocessor) {
     return(invisible(x))

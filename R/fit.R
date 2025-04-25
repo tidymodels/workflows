@@ -55,7 +55,13 @@
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
-fit.workflow <- function(object, data, ..., calibration = NULL, control = control_workflow()) {
+fit.workflow <- function(
+  object,
+  data,
+  ...,
+  calibration = NULL,
+  control = control_workflow()
+) {
   check_dots_empty()
 
   if (is_missing(data)) {
@@ -204,8 +210,8 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
 
   has_preprocessor <-
     has_preprocessor_formula(x) ||
-      has_preprocessor_recipe(x) ||
-      has_preprocessor_variables(x)
+    has_preprocessor_recipe(x) ||
+    has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
     message <- c(

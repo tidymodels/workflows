@@ -7,7 +7,10 @@ test_that("can add variables to a workflow", {
   expect_s3_class(wf$pre$actions$variables, "action_variables")
   expect_s3_class(wf$pre$actions$variables$variables, "workflow_variables")
   expect_identical(wf$pre$actions$variables$variables$outcomes, quo(y))
-  expect_identical(wf$pre$actions$variables$variables$predictors, quo(c(x1, x2)))
+  expect_identical(
+    wf$pre$actions$variables$variables$predictors,
+    quo(c(x1, x2))
+  )
 })
 
 test_that("can add variables to a workflow with `variables` specification", {
@@ -17,7 +20,10 @@ test_that("can add variables to a workflow with `variables` specification", {
   expect_s3_class(wf$pre$actions$variables, "action_variables")
   expect_s3_class(wf$pre$actions$variables$variables, "workflow_variables")
   expect_identical(wf$pre$actions$variables$variables$outcomes, quo(y))
-  expect_identical(wf$pre$actions$variables$variables$predictors, quo(c(x1, x2)))
+  expect_identical(
+    wf$pre$actions$variables$variables$predictors,
+    quo(c(x1, x2))
+  )
 })
 
 test_that("cannot add variables if a recipe already exists", {
@@ -204,7 +210,10 @@ test_that("cannot add two variables", {
   workflow <- add_variables(workflow, mpg, cyl)
 
   expect_snapshot(error = TRUE, add_variables(workflow, mpg, cyl))
-  expect_snapshot(error = TRUE, add_variables(workflow, variables = workflow_variables(mpg, cyl)))
+  expect_snapshot(
+    error = TRUE,
+    add_variables(workflow, variables = workflow_variables(mpg, cyl))
+  )
 })
 
 test_that("can remove variables", {
@@ -262,7 +271,10 @@ test_that("can only use a 'xy_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_snapshot(error = TRUE, add_variables(workflow, mpg, cyl, blueprint = blueprint))
+  expect_snapshot(
+    error = TRUE,
+    add_variables(workflow, mpg, cyl, blueprint = blueprint)
+  )
 })
 
 test_that("can pass a blueprint through to hardhat::mold()", {

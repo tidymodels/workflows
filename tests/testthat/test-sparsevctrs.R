@@ -243,6 +243,7 @@ test_that("toggle_sparsity changes auto to yes", {
 
   ames <- ames[c(fcts, outcome)]
   ames <- ames[1:100, ]
+  ames$MS_SubClass <- as.factor(seq_along(ames$MS_SubClass))
 
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
@@ -380,9 +381,8 @@ test_that("toggle_sparsity changes auto to no", {
 
   tree_spec <- parsnip::linear_reg("regression", "glmnet", penalty = 0)
 
-  # if we only dummy 1 variable it doesn't make the data sparse enough
   rec_spec <- recipes::recipe(Sale_Price ~ ., data = ames) |>
-    recipes::step_dummy(MS_Zoning)
+    recipes::step_dummy(recipes::all_nominal_predictors())
 
   wf_spec <- workflow(rec_spec, tree_spec)
 

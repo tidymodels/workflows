@@ -64,35 +64,48 @@ should_use_sparsity <- function(sparsity, engine, n_rows) {
     return("no")
   }
 
-  log_fold <- -0.599333138645995 +
-    ifelse(sparsity < 0.836601307189543, 0.836601307189543 - sparsity, 0) *
-      -0.541581853008009 +
-    ifelse(n_rows < 16000, 16000 - n_rows, 0) * 3.23980908942813e-05 +
-    ifelse(n_rows > 16000, n_rows - 16000, 0) * -2.81001152147355e-06 +
-    ifelse(sparsity > 0.836601307189543, sparsity - 0.836601307189543, 0) *
-      9.82444255114058 +
-    ifelse(sparsity > 0.836601307189543, sparsity - 0.836601307189543, 0) *
-      ifelse(n_rows > 8000, n_rows - 8000, 0) *
-      7.27456967763306e-05 +
-    ifelse(sparsity > 0.836601307189543, sparsity - 0.836601307189543, 0) *
+  log_fold <- -0.104969175543923 +
+    (ifelse(sparsity < 0.864864864864865, 0.864864864864865 - sparsity, 0) *
+      -0.863987224202949) +
+    (ifelse(sparsity < 0.864864864864865, 0.864864864864865 - sparsity, 0) *
+      ifelse(n_rows < 16000, 16000 - n_rows, 0) *
+      7.24704434279721e-05) +
+    (ifelse(sparsity < 0.864864864864865, 0.864864864864865 - sparsity, 0) *
+      ifelse(n_rows > 16000, n_rows - 16000, 0) *
+      -9.34342073897278e-07) +
+    (ifelse(sparsity > 0.864864864864865, sparsity - 0.864864864864865, 0) *
+      9.28694536071564) +
+    (ifelse(sparsity > 0.864864864864865, sparsity - 0.864864864864865, 0) *
       ifelse(n_rows < 8000, 8000 - n_rows, 0) *
-      -0.000798307404212627
+      -0.000439058585009898) +
+    (ifelse(sparsity > 0.864864864864865, sparsity - 0.864864864864865, 0) *
+      ifelse(n_rows > 8000, n_rows - 8000, 0) *
+      2.66853007695264e-05)
 
   if (engine == "xgboost") {
     log_fold <- log_fold +
-      ifelse(sparsity < 0.984615384615385, 0.984615384615385 - sparsity, 0) *
-        0.113098025073806 +
-      ifelse(n_rows < 8000, 8000 - n_rows, 0) * -9.77914237255269e-05 +
-      ifelse(n_rows > 8000, n_rows - 8000, 0) * 3.22657666511869e-06 +
-      ifelse(sparsity > 0.984615384615385, sparsity - 0.984615384615385, 0) *
-        41.5180348086939 +
-      0.913457808326756
+      (ifelse(sparsity < 0.984615384615385, 0.984615384615385 - sparsity, 0) *
+        -0.558117285856414) +
+      (ifelse(n_rows < 8000, 8000 - n_rows, 0) * -0.000104996462576298) +
+      (ifelse(n_rows > 8000, n_rows - 8000, 0) * 2.36552247695297e-06) +
+      (ifelse(sparsity > 0.984615384615385, sparsity - 0.984615384615385, 0) *
+        40.8016066125263) +
+      1.02539759976548
   }
 
   if (engine == "LiblineaR") {
     log_fold <- log_fold +
-      ifelse(sparsity > 0.836601307189543, sparsity - 0.836601307189543, 0) *
-        -5.39592564852111
+      (ifelse(sparsity < 0.864864864864865, 0.864864864864865 - sparsity, 0) *
+        -0.343818313721125) +
+      (ifelse(sparsity > 0.864864864864865, sparsity - 0.864864864864865, 0) *
+        -5.25579902213519) +
+      -0.204133402827292
+  }
+
+  if (engine == "lightgbm") {
+    log_fold <- log_fold +
+      (ifelse(sparsity > 0.864864864864865, sparsity - 0.864864864864865, 0) *
+        -7.14043416548319)
   }
 
   ifelse(log_fold > 0, "yes", "no")

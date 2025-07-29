@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' alt = 'A teal-colored hexagonal logo. The word WORKFLOWS is centered inside of a diagram of circular cycle, with a magrittr pipe on the top and a directed graph on the bottom.' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -17,18 +17,15 @@ modeling, and post-processing requests. For example, if you have a
 `recipe` and `parsnip` model, these can be combined into a workflow. The
 advantages are:
 
--   You don’t have to keep track of separate objects in your workspace.
+- You don’t have to keep track of separate objects in your workspace.
 
--   The recipe prepping and model fitting can be executed using a single
-    call to `fit()`.
+- The recipe prepping, model fitting, and postprocessor estimation
+  (which may include data splitting) can be executed using a single call
+  to `fit()`.
 
--   If you have custom tuning parameter settings, these can be defined
-    using a simpler interface when combined with
-    [tune](https://github.com/tidymodels/tune).
-
--   In the future, workflows will be able to add post-processing
-    operations, such as modifying the probability cutoff for two-class
-    models.
+- If you have custom tuning parameter settings, these can be defined
+  using a simpler interface when combined with
+  [tune](https://github.com/tidymodels/tune).
 
 ## Installation
 
@@ -59,14 +56,14 @@ library(recipes)
 library(parsnip)
 library(workflows)
 
-spline_cars <- recipe(mpg ~ ., data = mtcars) %>% 
+spline_cars <- recipe(mpg ~ ., data = mtcars) |> 
   step_ns(disp, deg_free = 10)
 ```
 
 and a model object:
 
 ``` r
-bayes_lm <- linear_reg() %>% 
+bayes_lm <- linear_reg() |> 
   set_engine("stan")
 ```
 
@@ -86,8 +83,8 @@ interested in.
 workflows makes this easier by combining these objects together:
 
 ``` r
-car_wflow <- workflow() %>% 
-  add_recipe(spline_cars) %>% 
+car_wflow <- workflow() |> 
+  add_recipe(spline_cars) |> 
   add_model(bayes_lm)
 ```
 
@@ -107,18 +104,18 @@ This project is released with a [Contributor Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
--   For questions and discussions about tidymodels packages, modeling,
-    and machine learning, please [post on Posit
-    Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on Posit
+  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
 
--   If you think you have encountered a bug, please [submit an
-    issue](https://github.com/tidymodels/workflows/issues).
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/workflows/issues).
 
--   Either way, learn how to create and share a
-    [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
-    (a minimal, reproducible example), to clearly communicate about your
-    code.
+- Either way, learn how to create and share a
+  [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
 
--   Check out further details on [contributing guidelines for tidymodels
-    packages](https://www.tidymodels.org/contribute/) and [how to get
-    help](https://www.tidymodels.org/help/).
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).

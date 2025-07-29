@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("attaches the butcher class", {
   skip_if_not_installed("butcher")
 

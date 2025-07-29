@@ -19,7 +19,7 @@ the underlying parsnip model.
 \code{glance()} at.
 }
 \examples{
-if (rlang::is_installed("broom")) {
+if (rlang::is_installed(c("broom", "modeldata"))) {
 
 library(parsnip)
 library(magrittr)
@@ -27,11 +27,11 @@ library(modeldata)
 
 data("attrition")
 
-model <- logistic_reg() \%>\%
+model <- logistic_reg() |>
   set_engine("glm")
 
-wf <- workflow() \%>\%
-  add_model(model) \%>\%
+wf <- workflow() |>
+  add_model(model) |>
   add_formula(
     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
   )

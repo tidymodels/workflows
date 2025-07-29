@@ -4,7 +4,7 @@
 \alias{workflow}
 \title{Create a workflow}
 \usage{
-workflow(preprocessor = NULL, spec = NULL)
+workflow(preprocessor = NULL, spec = NULL, postprocessor = NULL)
 }
 \arguments{
 \item{preprocessor}{An optional preprocessor to add to the workflow. One of:
@@ -16,6 +16,10 @@ workflow(preprocessor = NULL, spec = NULL)
 
 \item{spec}{An optional parsnip model specification to add to the workflow.
 Passed on to \code{\link[=add_model]{add_model()}}.}
+
+\item{postprocessor}{An optional \code{\link[tailor:tailor]{tailor::tailor()}} defining
+post-processing steps to add to the workflow. Passed on to
+\code{\link[=add_tailor]{add_tailor()}}.}
 }
 \value{
 A new \code{workflow} object.
@@ -24,7 +28,8 @@ A new \code{workflow} object.
 A \code{workflow} is a container object that aggregates information required to
 fit and predict from a model. This information might be a recipe used in
 preprocessing, specified through \code{\link[=add_recipe]{add_recipe()}}, or the model specification
-to fit, specified through \code{\link[=add_model]{add_model()}}.
+to fit, specified through \code{\link[=add_model]{add_model()}}, or a tailor used in postprocessing,
+specified through \code{\link[=add_tailor]{add_tailor()}}.
 
 The \code{preprocessor} and \code{spec} arguments allow you to add components to a
 workflow quickly, without having to go through the \verb{add_*()} functions, such
@@ -57,17 +62,17 @@ library(modeldata)
 
 data("Sacramento")
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_formula(price ~ type + sqft + beds + baths)
 }\if{html}{\out{</div>}}
 
 This first model does create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() |>
   set_engine("lm")
 
-base_wf \%>\%
-  add_model(lm_spec) \%>\%
+base_wf |>
+  add_model(lm_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -99,12 +104,12 @@ baseline level).
 
 This second model does not create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
-  set_mode("regression") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() |>
+  set_mode("regression") |>
   set_engine("ranger")
 
-base_wf \%>\%
-  add_model(rf_spec) \%>\%
+base_wf |>
+  add_model(rf_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -151,6 +156,7 @@ behavior from the model’s computational engine.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("recipes", "modeldata"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -158,7 +164,7 @@ library(modeldata)
 
 data("attrition")
 
-model <- logistic_reg() \%>\%
+model <- logistic_reg() |>
   set_engine("glm")
 
 formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
@@ -167,8 +173,8 @@ wf_formula <- workflow(formula, model)
 
 fit(wf_formula, attrition)
 
-recipe <- recipe(Attrition ~ ., attrition) \%>\%
-  step_dummy(all_nominal(), -Attrition) \%>\%
+recipe <- recipe(Attrition ~ ., attrition) |>
+  step_dummy(all_nominal(), -Attrition) |>
   step_corr(all_predictors(), threshold = 0.8)
 
 wf_recipe <- workflow(recipe, model)
@@ -183,4 +189,5 @@ variables <- workflow_variables(
 wf_variables <- workflow(variables, model)
 
 fit(wf_variables, attrition)
+\dontshow{\}) # examplesIf}
 }

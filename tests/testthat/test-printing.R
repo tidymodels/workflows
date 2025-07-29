@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can print empty workflow", {
   expect_snapshot(workflow())
 })
@@ -76,6 +78,16 @@ test_that("can print workflow with case weights, preprocessor, and model", {
   workflow <- add_formula(workflow, mpg ~ .)
   workflow <- add_case_weights(workflow, disp)
   workflow <- add_model(workflow, model)
+
+  expect_snapshot(workflow)
+})
+
+test_that("can print workflow with postprocessor", {
+  skip_if_not_installed("tailor")
+
+  post <- tailor::tailor()
+  workflow <- workflow()
+  workflow <- add_postprocessor(workflow, post)
 
   expect_snapshot(workflow)
 })

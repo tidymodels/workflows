@@ -22,6 +22,10 @@ hardhat::extract_mold
 #' @export
 hardhat::extract_preprocessor
 #'
+#' @importFrom hardhat extract_postprocessor
+#' @export
+hardhat::extract_postprocessor
+#'
 #' @importFrom hardhat extract_parameter_set_dials
 #' @export
 hardhat::extract_parameter_set_dials
@@ -29,3 +33,15 @@ hardhat::extract_parameter_set_dials
 #' @importFrom hardhat extract_parameter_dials
 #' @export
 hardhat::extract_parameter_dials
+#'
+#' @importFrom hardhat extract_fit_time
+#' @export
+hardhat::extract_fit_time
+
+#' @importFrom generics required_pkgs
+#' @export
+generics::required_pkgs
+
+#' @importFrom generics fit
+#' @export
+generics::fit

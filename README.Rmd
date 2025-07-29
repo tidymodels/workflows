@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' alt = 'A teal-colored hexagonal logo. The word WORKFLOWS is centered inside of a diagram of circular cycle, with a magrittr pipe on the top and a directed graph on the bottom.' align="right" height="139" /></a>
 
 <!-- badges: start -->
 [![Codecov test coverage](https://codecov.io/gh/tidymodels/workflows/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/workflows?branch=main)
@@ -26,11 +26,9 @@ A workflow is an object that can bundle together your pre-processing, modeling, 
 
  * You don't have to keep track of separate objects in your workspace.
 
- * The recipe prepping and model fitting can be executed using a single call to `fit()`.
+ * The recipe prepping, model fitting, and postprocessor estimation (which may include data splitting) can be executed using a single call to `fit()`.
 
  * If you have custom tuning parameter settings, these can be defined using a simpler interface when combined with [tune](https://github.com/tidymodels/tune).
-
- * In the future, workflows will be able to add post-processing operations, such as modifying the probability cutoff for two-class models.
  
 ## Installation
 
@@ -57,14 +55,14 @@ library(recipes)
 library(parsnip)
 library(workflows)
 
-spline_cars <- recipe(mpg ~ ., data = mtcars) %>% 
+spline_cars <- recipe(mpg ~ ., data = mtcars) |> 
   step_ns(disp, deg_free = 10)
 ```
 
 and a model object:
 
 ```{r car-mod, eval = FALSE}
-bayes_lm <- linear_reg() %>% 
+bayes_lm <- linear_reg() |> 
   set_engine("stan")
 ```
 
@@ -80,8 +78,8 @@ You can't predict on new samples using `bayes_lm_fit` without the prepped versio
 workflows makes this easier by combining these objects together:
 
 ```{r wflow, eval = FALSE}
-car_wflow <- workflow() %>% 
-  add_recipe(spline_cars) %>% 
+car_wflow <- workflow() |> 
+  add_recipe(spline_cars) |> 
   add_model(bayes_lm)
 ```
 

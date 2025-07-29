@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can add a recipe to a workflow", {
   rec <- recipes::recipe(mpg ~ cyl, mtcars)
 
@@ -30,7 +32,7 @@ test_that("cannot add a recipe if variables already exist", {
 })
 
 test_that("cannot add a recipe if recipe is trained", {
-  rec <- recipes::recipe(mpg ~ cyl, mtcars) %>% recipes::prep()
+  rec <- recipes::recipe(mpg ~ cyl, mtcars) |> recipes::prep()
 
   workflow <- workflow()
 
@@ -171,5 +173,8 @@ test_that("can only use a 'recipe_blueprint' blueprint", {
 
   workflow <- workflow()
 
-  expect_snapshot(error = TRUE, add_recipe(workflow, rec, blueprint = blueprint))
+  expect_snapshot(
+    error = TRUE,
+    add_recipe(workflow, rec, blueprint = blueprint)
+  )
 })

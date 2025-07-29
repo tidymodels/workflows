@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 # ------------------------------------------------------------------------------
 # add_case_weights()
 
@@ -58,7 +60,12 @@ test_that("case weights + recipe uses weights in the model", {
 })
 
 test_that("case weights are used with model formula override", {
-  df <- vctrs::data_frame(y = 1, x = 2, z = 3, w = hardhat::frequency_weights(1))
+  df <- vctrs::data_frame(
+    y = 1,
+    x = 2,
+    z = 3,
+    w = hardhat::frequency_weights(1)
+  )
 
   spec <- parsnip::linear_reg()
   spec <- parsnip::set_engine(spec, "lm")
@@ -104,7 +111,7 @@ test_that("case weights + formula doesn't need case weights at predict time", {
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -130,7 +137,7 @@ test_that("case weights + variables doesn't need case weights at predict time", 
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -158,7 +165,7 @@ test_that("case weights + recipe doesn't need case weights at predict time", {
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 })
 
@@ -191,14 +198,15 @@ test_that("case weights + recipe can optionally require case weights at predict 
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/6, 2, 1/6)
+    c(1 / 6, 2, 1 / 6)
   )
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe requires extra roles at predict time by default", {
@@ -232,14 +240,15 @@ test_that("case weights + recipe requires extra roles at predict time by default
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe can optionally not require extra roles at predict time", {
@@ -273,7 +282,7 @@ test_that("case weights + recipe can optionally not require extra roles at predi
 
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 
   df$w <- NULL
@@ -281,7 +290,7 @@ test_that("case weights + recipe can optionally not require extra roles at predi
   # Works without `w`
   expect_equal(
     predict(wf, df)$.pred,
-    c(1/2, 2, 1/2)
+    c(1 / 2, 2, 1 / 2)
   )
 })
 
@@ -478,8 +487,7 @@ test_that("case weights `col` must exist in `data`", {
   wf <- add_formula(wf, mpg ~ .)
   wf <- add_case_weights(wf, foo)
 
-  # Tidyselect error
-  expect_error(fit(wf, mtcars))
+  expect_error(fit(wf, mtcars), class = "vctrs_error_subscript_oob")
 })
 
 test_that("case weights `col` can't select >1 columns in `data`", {

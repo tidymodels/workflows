@@ -8,8 +8,8 @@
   vctrs::s3_register("butcher::axe_data", "workflow")
   vctrs::s3_register("butcher::axe_env", "workflow")
   vctrs::s3_register("butcher::axe_fitted", "workflow")
-
-  vctrs::s3_register("generics::required_pkgs", "workflow")
 }
+
+dummy_withr <- function() withr::defer
 
 # nocov end

@@ -63,7 +63,7 @@ remove_formula <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_formula(x)) {
-    rlang::warn("The workflow has no formula preprocessor to remove.")
+    cli_warn("The workflow has no formula preprocessor to remove.")
   }
 
   actions <- x$pre$actions
@@ -87,9 +87,17 @@ update_formula <- function(x, formula, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_formula <- function(object, workflow, data) {
+#' @export
+fit.action_formula <- function(object, workflow, data, ...) {
   formula <- object$formula
   blueprint <- object$blueprint
+
+  if (sparsevctrs::has_sparse_elements(data)) {
+    cli::cli_abort(
+      "Sparse data cannot be used with the formula interface. Please use
+     {.fn add_recipe} or {.fn add_variables} instead."
+    )
+  }
 
   # TODO - Strip out the formula environment at some time?
   mold <- hardhat::mold(formula, data, blueprint = blueprint)
@@ -118,24 +126,37 @@ check_for_offset <- function(mold, ..., call = caller_env()) {
 
   if (!is.null(offset)) {
     message <- c(
-      "Can't use an offset in the formula supplied to `add_formula()`.",
-      i = "Instead, specify offsets through a model formula in `add_model(formula = )`."
+      "Can't use an offset in the formula supplied to {.fun add_formula}.",
+      "i" = "Instead, specify offsets through a model formula
+             in {.code add_model(formula = )}."
     )
 
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 }
 
 # ------------------------------------------------------------------------------
 
-check_conflicts.action_formula <- function(action, x, ..., call = caller_env()) {
+#' @export
+check_conflicts.action_formula <- function(
+  action,
+  x,
+  ...,
+  call = caller_env()
+) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {
-    abort("A formula cannot be added when a recipe already exists.", call = call)
+    cli_abort(
+      "A formula cannot be added when a recipe already exists.",
+      call = call
+    )
   }
   if (has_action(pre, "variables")) {
-    abort("A formula cannot be added when variables already exist.", call = call)
+    cli_abort(
+      "A formula cannot be added when variables already exist.",
+      call = call
+    )
   }
 
   invisible(action)
@@ -147,12 +168,15 @@ new_action_formula <- function(formula, blueprint, ..., call = caller_env()) {
   check_dots_empty()
 
   if (!is_formula(formula)) {
-    abort("`formula` must be a formula.", call = call)
+    cli_abort("{.arg formula} must be a formula.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_formula_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'formula_blueprint'.", call = call)
+    cli_abort(
+      "{.arg blueprint} must be a hardhat {.cls formula_blueprint}.",
+      call = call
+    )
   }
 
   new_action_pre(

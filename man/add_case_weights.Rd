@@ -54,12 +54,12 @@ library(hardhat)
 mtcars2 <- mtcars
 mtcars2$gear <- frequency_weights(mtcars2$gear)
 
-spec <- linear_reg() \%>\%
+spec <- linear_reg() |>
   set_engine("lm")
 
-wf <- workflow() \%>\%
-  add_case_weights(gear) \%>\%
-  add_formula(mpg ~ .) \%>\%
+wf <- workflow() |>
+  add_case_weights(gear) |>
+  add_formula(mpg ~ .) |>
   add_model(spec)
 
 wf <- fit(wf, mtcars2)

@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 data("hardhat-example-data", package = "hardhat")
 
 test_that("can `fit()` a workflow with a recipe", {
@@ -79,6 +81,30 @@ test_that("cannot fit without a pre stage", {
 test_that("cannot fit without a fit stage", {
   workflow <- workflow()
   workflow <- add_formula(workflow, mpg ~ cyl)
+
+  expect_snapshot(error = TRUE, {
+    fit(workflow, mtcars)
+  })
+})
+
+test_that("fit.workflow confirms compatibility of object and calibration", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  expect_snapshot(
+    res <- fit(workflow, mtcars, calibration = mtcars)
+  )
+
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_numeric_calibration(tailor)
+  workflow <- add_tailor(workflow, tailor)
 
   expect_snapshot(error = TRUE, {
     fit(workflow, mtcars)
@@ -170,6 +196,57 @@ test_that("`.fit_pre()` doesn't modify user supplied recipe blueprint", {
 
   expect_true("fac_1" %in% names(result$pre$mold$predictors))
   expect_identical(result$pre$actions$recipe$blueprint, blueprint)
+})
+
+# ------------------------------------------------------------------------------
+# .fit_post()
+test_that(".workflow_includes_calibration works", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  expect_false(.workflow_includes_calibration(workflow()))
+  expect_false(.workflow_includes_calibration(
+    workflow() |> add_model(parsnip::linear_reg())
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() |> add_formula(mpg ~ .)
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() |>
+      add_formula(mpg ~ .) |>
+      add_model(parsnip::linear_reg())
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() |>
+      add_tailor(tailor::tailor())
+  ))
+  expect_false(.workflow_includes_calibration(
+    workflow() |>
+      add_tailor(tailor::tailor() |> tailor::adjust_probability_threshold(.4))
+  ))
+
+  expect_true(.workflow_includes_calibration(
+    workflow() |>
+      add_tailor(tailor::tailor() |> tailor::adjust_numeric_calibration())
+  ))
+  expect_true(.workflow_includes_calibration(
+    workflow() |>
+      add_tailor(
+        tailor::tailor() |>
+          tailor::adjust_numeric_calibration() |>
+          tailor::adjust_numeric_range(lower_limit = 1)
+      )
+  ))
+  expect_true(.workflow_includes_calibration(
+    workflow() |>
+      add_formula(mpg ~ .) |>
+      add_model(parsnip::linear_reg()) |>
+      add_tailor(
+        tailor::tailor() |>
+          tailor::adjust_numeric_calibration() |>
+          tailor::adjust_numeric_range(lower_limit = 1)
+      )
+  ))
 })
 
 # ------------------------------------------------------------------------------

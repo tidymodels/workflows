@@ -45,5 +45,5 @@
       add_formula(workflow, mpg ~ cyl, blueprint = blueprint)
     Condition
       Error in `add_formula()`:
-      ! `blueprint` must be a hardhat 'formula_blueprint'.
+      ! `blueprint` must be a hardhat <formula_blueprint>.
 

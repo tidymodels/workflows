@@ -4,7 +4,8 @@
 #' A `workflow` is a container object that aggregates information required to
 #' fit and predict from a model. This information might be a recipe used in
 #' preprocessing, specified through [add_recipe()], or the model specification
-#' to fit, specified through [add_model()].
+#' to fit, specified through [add_model()], or a tailor used in postprocessing,
+#' specified through [add_tailor()].
 #'
 #' The `preprocessor` and `spec` arguments allow you to add components to a
 #' workflow quickly, without having to go through the `add_*()` functions, such
@@ -21,12 +22,16 @@
 #' @param spec An optional parsnip model specification to add to the workflow.
 #'   Passed on to [add_model()].
 #'
+#' @param postprocessor An optional [tailor::tailor()] defining
+#'   post-processing steps to add to the workflow. Passed on to
+#'   [add_tailor()].
+#'
 #' @return
 #' A new `workflow` object.
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("recipes", "modeldata"))
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -34,7 +39,7 @@
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
 #' formula <- Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
@@ -43,8 +48,8 @@
 #'
 #' fit(wf_formula, attrition)
 #'
-#' recipe <- recipe(Attrition ~ ., attrition) %>%
-#'   step_dummy(all_nominal(), -Attrition) %>%
+#' recipe <- recipe(Attrition ~ ., attrition) |>
+#'   step_dummy(all_nominal(), -Attrition) |>
 #'   step_corr(all_predictors(), threshold = 0.8)
 #'
 #' wf_recipe <- workflow(recipe, model)
@@ -60,7 +65,7 @@
 #'
 #' fit(wf_variables, attrition)
 #' @export
-workflow <- function(preprocessor = NULL, spec = NULL) {
+workflow <- function(preprocessor = NULL, spec = NULL, postprocessor = NULL) {
   out <- new_workflow()
 
   if (!is_null(preprocessor)) {
@@ -69,6 +74,10 @@ workflow <- function(preprocessor = NULL, spec = NULL) {
 
   if (!is_null(spec)) {
     out <- add_model(out, spec)
+  }
+
+  if (!is_null(postprocessor)) {
+    out <- add_postprocessor(out, postprocessor)
   }
 
   out
@@ -89,32 +98,47 @@ add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
     return(add_variables(x, variables = preprocessor))
   }
 
-  abort(
-    "`preprocessor` must be a formula, recipe, or a set of workflow variables.",
+  cli_abort(
+    "{.arg preprocessor} must be a formula, recipe, or a set of workflow variables.",
+    call = call
+  )
+}
+
+add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
+  check_dots_empty()
+
+  if (is_tailor(postprocessor)) {
+    return(add_tailor(x, postprocessor))
+  }
+
+  cli_abort(
+    "{.arg postprocessor} must be a tailor.",
     call = call
   )
 }
 
 # ------------------------------------------------------------------------------
 
-new_workflow <- function(pre = new_stage_pre(),
-                         fit = new_stage_fit(),
-                         post = new_stage_post(),
-                         trained = FALSE) {
+new_workflow <- function(
+  pre = new_stage_pre(),
+  fit = new_stage_fit(),
+  post = new_stage_post(),
+  trained = FALSE
+) {
   if (!is_stage(pre)) {
-    abort("`pre` must be a `stage`.")
+    cli_abort("{.arg pre} must be a `stage`.")
   }
 
   if (!is_stage(fit)) {
-    abort("`fit` must be a `stage`.")
+    cli_abort("{.arg fit} must be a `stage`.")
   }
 
   if (!is_stage(post)) {
-    abort("`post` must be a `stage`.")
+    cli_abort("{.arg post} must be a `stage`.")
   }
 
   if (!is_scalar_logical(trained)) {
-    abort("`trained` must be a single logical value.")
+    cli_abort("{.arg trained} must be a single logical value.")
   }
 
   data <- list(
@@ -144,7 +168,7 @@ is_workflow <- function(x) {
 #' @return A single logical indicating if the workflow has been trained or not.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -154,8 +178,8 @@ is_workflow <- function(x) {
 #' mod <- linear_reg()
 #' mod <- set_engine(mod, "lm")
 #'
-#' wf <- workflow() %>%
-#'   add_recipe(rec) %>%
+#' wf <- workflow() |>
+#'   add_recipe(rec) |>
 #'   add_model(mod)
 #'
 #' # Before any preprocessing or model fitting has been done
@@ -188,7 +212,7 @@ print.workflow <- function(x, ...) {
   print_preprocessor(x)
   print_case_weights(x)
   print_model(x)
-  # print_postprocessor(x)
+  print_postprocessor(x)
   invisible(x)
 }
 
@@ -231,6 +255,10 @@ print_header <- function(x) {
   spec_msg <- glue::glue("{spec_msg} {spec}")
   cat_line(spec_msg)
 
+  if (has_postprocessor(x)) {
+    cat_line(glue::glue("{cli::style_italic('Postprocessor:')} tailor"))
+  }
+
   invisible(x)
 }
 
@@ -261,8 +289,8 @@ print_preprocessor <- function(x) {
 
   no_preprocessor <-
     !has_preprocessor_formula &&
-      !has_preprocessor_recipe &&
-      !has_preprocessor_variables
+    !has_preprocessor_recipe &&
+    !has_preprocessor_variables
 
   if (no_preprocessor) {
     return(invisible(x))
@@ -417,6 +445,37 @@ print_fit <- function(x) {
   cat_line("")
   cat_line("...")
   cat_line(extra_output_msg)
+
+  invisible(x)
+}
+
+print_postprocessor <- function(x) {
+  has_postprocessor <- has_postprocessor(x)
+
+  if (!has_postprocessor) {
+    return(invisible(x))
+  }
+
+  # Space between Model section and Postprocessor section
+  cat_line("")
+
+  header <- cli::rule("Postprocessor")
+  cat_line(header)
+
+  if (has_postprocessor_tailor(x)) {
+    print_postprocessor_tailor(x)
+  }
+
+  invisible(x)
+}
+
+print_postprocessor_tailor <- function(x) {
+  tailor <- extract_postprocessor(x)
+
+  # TODO: this snap currently includes some NA return values and marks the
+  # following output as a message rather than output.
+  tailor_print <- utils::capture.output(tailor, type = "message")
+  cat_line(tailor_print[3:length(tailor_print)])
 
   invisible(x)
 }

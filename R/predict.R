@@ -25,7 +25,7 @@
 #'
 #' @name predict-workflow
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -33,13 +33,13 @@
 #' training <- mtcars[1:20, ]
 #' testing <- mtcars[21:32, ]
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' workflow <- workflow() %>%
+#' workflow <- workflow() |>
 #'   add_model(model)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, training) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, training) |>
 #'   step_log(disp)
 #'
 #' workflow <- add_recipe(workflow, recipe)
@@ -49,24 +49,68 @@
 #' # This will automatically `bake()` the recipe on `testing`,
 #' # applying the log step to `disp`, and then fit the regression.
 #' predict(fit_workflow, testing)
-predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) {
+predict.workflow <- function(
+  object,
+  new_data,
+  type = NULL,
+  opts = list(),
+  ...
+) {
   workflow <- object
 
   if (!is_trained_workflow(workflow)) {
-    abort(c(
+    cli_abort(c(
       "Can't predict on an untrained workflow.",
-      i = "Do you need to call `fit()`?"
+      "i" = "Do you need to call {.fun fit}?"
     ))
+  }
+
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(
+      new_data,
+      call = rlang::caller_env(0)
+    )
   }
 
   fit <- extract_fit_parsnip(workflow)
   new_data <- forge_predictors(new_data, workflow)
 
-  predict(fit, new_data, type = type, opts = opts, ...)
+  if (!has_postprocessor(workflow)) {
+    return(predict(fit, new_data, type = type, opts = opts, ...))
+  }
+
+  # use `augment()` rather than `fit()` to get all possible prediction `type`s (#234).
+  fit_aug <- augment(fit, new_data, opts = opts, ...)
+
+  post <- extract_postprocessor(workflow)
+  predict(post, fit_aug)[predict_type_column_names(type, post$columns)]
 }
 
 forge_predictors <- function(new_data, workflow) {
   mold <- extract_mold(workflow)
   forged <- hardhat::forge(new_data, blueprint = mold$blueprint)
   forged$predictors
+}
+
+predict_type_column_names <- function(
+  type,
+  tailor_columns,
+  call = caller_env()
+) {
+  check_string(type, allow_null = TRUE, call = call)
+
+  if (is.null(type)) {
+    return(tailor_columns$estimate)
+  }
+
+  switch(
+    type,
+    numeric = ,
+    class = tailor_columns$estimate,
+    prob = tailor_columns$probabilities,
+    cli::cli_abort(
+      "Unsupported prediction {.arg type} {.val {type}} for a workflow with a postprocessor.",
+      call = call
+    )
+  )
 }

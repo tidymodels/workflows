@@ -36,14 +36,14 @@
 #' `x`, updated with either a new or removed recipe preprocessor.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(recipes)
 #' library(magrittr)
 #'
-#' recipe <- recipe(mpg ~ cyl, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl, mtcars) |>
 #'   step_log(cyl)
 #'
-#' workflow <- workflow() %>%
+#' workflow <- workflow() |>
 #'   add_recipe(recipe)
 #'
 #' workflow
@@ -64,7 +64,7 @@ remove_recipe <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_recipe(x)) {
-    rlang::warn("The workflow has no recipe preprocessor to remove.")
+    cli_warn("The workflow has no recipe preprocessor to remove.")
   }
 
   actions <- x$pre$actions
@@ -88,7 +88,8 @@ update_recipe <- function(x, recipe, ..., blueprint = NULL) {
 
 # ------------------------------------------------------------------------------
 
-fit.action_recipe <- function(object, workflow, data) {
+#' @export
+fit.action_recipe <- function(object, workflow, data, ...) {
   recipe <- object$recipe
   blueprint <- object$blueprint
 
@@ -110,14 +111,21 @@ fit.action_recipe <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
 check_conflicts.action_recipe <- function(action, x, ..., call = caller_env()) {
   pre <- x$pre
 
   if (has_action(pre, "formula")) {
-    abort("A recipe cannot be added when a formula already exists.", call = call)
+    cli_abort(
+      "A recipe cannot be added when a formula already exists.",
+      call = call
+    )
   }
   if (has_action(pre, "variables")) {
-    abort("A recipe cannot be added when variables already exist.", call = call)
+    cli_abort(
+      "A recipe cannot be added when variables already exist.",
+      call = call
+    )
   }
 
   invisible(action)
@@ -129,16 +137,19 @@ new_action_recipe <- function(recipe, blueprint, ..., call = caller_env()) {
   check_dots_empty()
 
   if (!is_recipe(recipe)) {
-    abort("`recipe` must be a recipe.", call = call)
+    cli_abort("{.arg recipe} must be a recipe.", call = call)
   }
 
   if (recipes::fully_trained(recipe)) {
-    abort("Can't add a trained recipe to a workflow.", call = call)
+    cli_abort("Can't add a trained recipe to a workflow.", call = call)
   }
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_recipe_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'recipe_blueprint'.", call = call)
+    cli_abort(
+      "{.arg blueprint} must be a hardhat {.cls recipe_blueprint}.",
+      call = call
+    )
   }
 
   new_action_pre(
@@ -156,10 +167,12 @@ is_recipe_blueprint <- function(x) {
   inherits(x, "recipe_blueprint")
 }
 
-update_retained_case_weights <- function(workflow,
-                                         mold,
-                                         ...,
-                                         call = caller_env()) {
+update_retained_case_weights <- function(
+  workflow,
+  mold,
+  ...,
+  call = caller_env()
+) {
   # If the workflow was using case weights, then we retained these case weights
   # in the `$pre$case_weights` slot. However, when a recipe is used we also
   # pass the case weights on to the recipe. It is possible for the recipe to
@@ -171,8 +184,8 @@ update_retained_case_weights <- function(workflow,
   col <- extract_case_weights_col(workflow)
 
   if (!is_quosure(col)) {
-    abort(
-      "`col` must be a quosure selecting the case weights column.",
+    cli_abort(
+      "{.arg col} must be a quosure selecting the case weights column.",
       .internal = TRUE,
       call = call
     )
@@ -182,10 +195,10 @@ update_retained_case_weights <- function(workflow,
 
   if (!is.data.frame(case_weights_roles)) {
     message <- c(
-      'No columns with a `"case_weights"` role exist in the data after processing the recipe.',
-      i = "Did you remove or modify the case weights while processing the recipe?"
+      "No columns with a {.val case_weights} role exist in the data after processing the recipe.",
+      "i" = "Did you remove or modify the case weights while processing the recipe?"
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   loc <- eval_select_case_weights(col, case_weights_roles, call = call)
@@ -195,13 +208,13 @@ update_retained_case_weights <- function(workflow,
   if (!hardhat::is_case_weights(case_weights)) {
     message <- c(
       paste0(
-        'The column with a recipes role of `"case_weights"` must be a ',
-        "classed case weights column, as determined by ",
-        "`hardhat::is_case_weights()`."
+        "The column with a recipes role of {.val case_weights} must be a
+         classed case weights column, as determined by
+         {.fun hardhat::is_case_weights}."
       ),
-      i = "Did you modify the case weights while processing the recipe?"
+      "i" = "Did you modify the case weights while processing the recipe?"
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   workflow$pre$case_weights <- case_weights

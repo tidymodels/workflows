@@ -5,15 +5,19 @@
 \alias{fit.workflow}
 \title{Fit a workflow object}
 \usage{
-\method{fit}{workflow}(object, data, ..., control = control_workflow())
+\method{fit}{workflow}(object, data, ..., calibration = NULL, control = control_workflow())
 }
 \arguments{
 \item{object}{A workflow}
 
 \item{data}{A data frame of predictors and outcomes to use when fitting the
-workflow}
+preprocessor and model.}
 
 \item{...}{Not used}
+
+\item{calibration}{A data frame of predictors and outcomes to use when
+fitting the postprocessor. See the "Data Usage" section of \code{\link[=add_tailor]{add_tailor()}}
+for more information.}
 
 \item{control}{A \code{\link[=control_workflow]{control_workflow()}} object}
 }
@@ -22,16 +26,14 @@ The workflow \code{object}, updated with a fit parsnip model in the
 \code{object$fit$fit} slot.
 }
 \description{
-Fitting a workflow currently involves two main steps:
+Fitting a workflow currently involves three main steps:
 \itemize{
 \item Preprocessing the data using a formula preprocessor, or by calling
 \code{\link[recipes:prep]{recipes::prep()}} on a recipe.
 \item Fitting the underlying parsnip model using \code{\link[parsnip:fit]{parsnip::fit.model_spec()}}.
+\item Postprocessing predictions from the model using
+\code{\link[tailor:tailor]{tailor::tailor()}}.
 }
-}
-\details{
-In the future, there will also be \emph{postprocessing} steps that can be added
-after the model has been fit.
 }
 \section{Indicator Variable Details}{
 Some modeling functions in R create indicator/dummy variables from
@@ -57,17 +59,17 @@ library(modeldata)
 
 data("Sacramento")
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_formula(price ~ type + sqft + beds + baths)
 }\if{html}{\out{</div>}}
 
 This first model does create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() |>
   set_engine("lm")
 
-base_wf \%>\%
-  add_model(lm_spec) \%>\%
+base_wf |>
+  add_model(lm_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -99,12 +101,12 @@ baseline level).
 
 This second model does not create dummy/indicator variables:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
-  set_mode("regression") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() |>
+  set_mode("regression") |>
   set_engine("ranger")
 
-base_wf \%>\%
-  add_model(rf_spec) \%>\%
+base_wf |>
+  add_model(rf_spec) |>
   fit(Sacramento)
 }\if{html}{\out{</div>}}
 
@@ -151,26 +153,28 @@ behavior from the model’s computational engine.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_model(model)
 
-formula_wf <- base_wf \%>\%
+formula_wf <- base_wf |>
   add_formula(mpg ~ cyl + log(disp))
 
 fit(formula_wf, mtcars)
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
   step_log(disp)
 
-recipe_wf <- base_wf \%>\%
+recipe_wf <- base_wf |>
   add_recipe(recipe)
 
 fit(recipe_wf, mtcars)
+\dontshow{\}) # examplesIf}
 }

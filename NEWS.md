@@ -5,17 +5,48 @@ names of the predictors in the original data given to `fit()`.
 
 * Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
 
-* `add_recipe()` will now error informatively when supplied a trained recipe (#179).
+* Implemented postprocessing. (TODO: fill this in.)
 
-* `augment.workflow()` gained an `eval_time` argument, enabling augmenting
-  censored regression models (#200).
 
-* The prediction columns are now appended to the LHS rather than RHS of 
-  `new_data` in `augment.workflow()`, following analogous changes in parsnip (#200).
+* Increased the minimum required R version to R 4.1.
+
+# workflows 1.2.0
+
+## New features
+
+* Enable fitting and prediction with sparse data.
+     - `fit()` can now take dgCMatrix and sparse tibbles as data values when 
+       `add_recipe()` or `add_variables()` is used (#245, #258).
+     - `predict()` can now take dgCMatrix and sparse tibble input for `new_data` 
+       argument (#261).
+
+* `extract_fit_time()` returns the time it took to train the workflow (#191).
+
+## Bug fixes and minor improvements
+
+* Transition package warnings and errors to use cli instead of rlang (#241).
+
+* Minimum R version bumped to 4.0.0.
+
+* Added reference to `add_variables()` in `stages` vignette (@brshallo, #190).
+# workflows 1.1.4
 
 * While `augment.workflow()` previously never returned a `.resid` column, the 
   method will now return residuals under the same conditions that
-  `augment.model_fit()` does.
+  `augment.model_fit()` does (#201).
+
+* `augment.workflow()` gained an `eval_time` argument, enabling augmenting
+  censored regression models (#200, #213).
+
+* The prediction columns are now appended to the LHS rather than RHS of 
+  `new_data` in `augment.workflow()`, following analogous changes in 
+   parsnip (#200).
+
+* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 
+  now warn on every usage (#198). 
+  
+* `add_recipe()` will now error informatively when supplied a trained recipe
+  (#179).
 
 # workflows 1.1.3
 

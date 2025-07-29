@@ -4,7 +4,7 @@
       add_model(workflow(), 1)
     Condition
       Error in `add_model()`:
-      ! `spec` must be a `model_spec`.
+      ! `spec` must be a <model_spec>.
 
 # model must contain a known mode (#160)
 

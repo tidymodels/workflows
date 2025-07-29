@@ -61,6 +61,7 @@ parsnip model.
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -68,13 +69,13 @@ library(magrittr)
 training <- mtcars[1:20, ]
 testing <- mtcars[21:32, ]
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-workflow <- workflow() \%>\%
+workflow <- workflow() |>
   add_model(model)
 
-recipe <- recipe(mpg ~ cyl + disp, training) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, training) |>
   step_log(disp)
 
 workflow <- add_recipe(workflow, recipe)
@@ -84,4 +85,5 @@ fit_workflow <- fit(workflow, training)
 # This will automatically `bake()` the recipe on `testing`,
 # applying the log step to `disp`, and then fit the regression.
 predict(fit_workflow, testing)
+\dontshow{\}) # examplesIf}
 }

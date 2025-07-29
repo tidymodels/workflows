@@ -96,12 +96,14 @@
 #' variables <- workflow_variables(mpg, c(cyl, disp))
 #' workflow3 <- add_variables(workflow, variables = variables)
 #' fit(workflow3, mtcars)
-add_variables <- function(x,
-                          outcomes,
-                          predictors,
-                          ...,
-                          blueprint = NULL,
-                          variables = NULL) {
+add_variables <- function(
+  x,
+  outcomes,
+  predictors,
+  ...,
+  blueprint = NULL,
+  variables = NULL
+) {
   check_dots_empty()
 
   if (is_null(variables)) {
@@ -109,9 +111,9 @@ add_variables <- function(x,
   }
 
   if (!is_workflow_variables(variables)) {
-    glubort(
-      "`variables` must be a 'workflow_variables' object ",
-      "created from `workflow_variables()`."
+    cli_abort(
+      "{.arg variables} must be a {.cls workflow_variables} object
+       created from {.fun workflow_variables}."
     )
   }
 
@@ -126,7 +128,7 @@ remove_variables <- function(x) {
   validate_is_workflow(x)
 
   if (!has_preprocessor_variables(x)) {
-    rlang::warn("The workflow has no variables preprocessor to remove.")
+    cli_warn("The workflow has no variables preprocessor to remove.")
   }
 
   actions <- x$pre$actions
@@ -142,12 +144,14 @@ remove_variables <- function(x) {
 
 #' @rdname add_variables
 #' @export
-update_variables <- function(x,
-                             outcomes,
-                             predictors,
-                             ...,
-                             blueprint = NULL,
-                             variables = NULL) {
+update_variables <- function(
+  x,
+  outcomes,
+  predictors,
+  ...,
+  blueprint = NULL,
+  variables = NULL
+) {
   check_dots_empty()
 
   x <- remove_variables(x)
@@ -165,7 +169,8 @@ update_variables <- function(x,
 
 # ------------------------------------------------------------------------------
 
-fit.action_variables <- function(object, workflow, data) {
+#' @export
+fit.action_variables <- function(object, workflow, data, ...) {
   variables <- object$variables
   outcomes <- variables$outcomes
   predictors <- variables$predictors
@@ -212,14 +217,26 @@ fit.action_variables <- function(object, workflow, data) {
 
 # ------------------------------------------------------------------------------
 
-check_conflicts.action_variables <- function(action, x, ..., call = caller_env()) {
+#' @export
+check_conflicts.action_variables <- function(
+  action,
+  x,
+  ...,
+  call = caller_env()
+) {
   pre <- x$pre
 
   if (has_action(pre, "recipe")) {
-    abort("Variables cannot be added when a recipe already exists.", call = call)
+    cli_abort(
+      "Variables cannot be added when a recipe already exists.",
+      call = call
+    )
   }
   if (has_action(pre, "formula")) {
-    abort("Variables cannot be added when a formula already exists.", call = call)
+    cli_abort(
+      "Variables cannot be added when a formula already exists.",
+      call = call
+    )
   }
 
   invisible(action)
@@ -227,12 +244,20 @@ check_conflicts.action_variables <- function(action, x, ..., call = caller_env()
 
 # ------------------------------------------------------------------------------
 
-new_action_variables <- function(variables, blueprint, ..., call = caller_env()) {
+new_action_variables <- function(
+  variables,
+  blueprint,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty()
 
   # `NULL` blueprints are finalized at fit time
   if (!is_null(blueprint) && !is_xy_blueprint(blueprint)) {
-    abort("`blueprint` must be a hardhat 'xy_blueprint'.", call = call)
+    cli_abort(
+      "{.arg blueprint} must be a hardhat {.cls xy_blueprint}.",
+      call = call
+    )
   }
 
   new_action_pre(
@@ -260,23 +285,25 @@ workflow_variables <- function(outcomes, predictors) {
   )
 }
 
-new_workflow_variables <- function(outcomes,
-                                   predictors,
-                                   ...,
-                                   call = caller_env()) {
+new_workflow_variables <- function(
+  outcomes,
+  predictors,
+  ...,
+  call = caller_env()
+) {
   check_dots_empty()
 
   if (!is_quosure(outcomes)) {
-    abort("`outcomes` must be a quosure.", .internal = TRUE)
+    cli_abort("{.arg outcomes} must be a quosure.", .internal = TRUE)
   }
   if (!is_quosure(predictors)) {
-    abort("`predictors` must be a quosure.", .internal = TRUE)
+    cli_abort("{.arg predictors} must be a quosure.", .internal = TRUE)
   }
   if (quo_is_missing(outcomes)) {
-    abort("`outcomes` can't be missing.", call = call)
+    cli_abort("{.arg outcomes} can't be missing.", call = call)
   }
   if (quo_is_missing(predictors)) {
-    abort("`predictors` can't be missing.", call = call)
+    cli_abort("{.arg predictors} can't be missing.", call = call)
   }
 
   data <- list(

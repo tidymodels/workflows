@@ -1,25 +1,28 @@
 #' Fit a workflow object
 #'
 #' @description
-#' Fitting a workflow currently involves two main steps:
+#' Fitting a workflow currently involves three main steps:
 #'
 #' - Preprocessing the data using a formula preprocessor, or by calling
 #'   [recipes::prep()] on a recipe.
 #'
 #' - Fitting the underlying parsnip model using [parsnip::fit.model_spec()].
 #'
-#' @details
-#' In the future, there will also be _postprocessing_ steps that can be added
-#' after the model has been fit.
+#' - Postprocessing predictions from the model using
+#'   [tailor::tailor()].
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
-#'   workflow
+#'   preprocessor and model.
 #'
 #' @param ... Not used
+#'
+#' @param calibration A data frame of predictors and outcomes to use when
+#'   fitting the postprocessor. See the "Data Usage" section of [add_tailor()]
+#'   for more information.
 #'
 #' @param control A [control_workflow()] object
 #'
@@ -29,44 +32,78 @@
 #'
 #' @name fit-workflow
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' base_wf <- workflow() %>%
+#' base_wf <- workflow() |>
 #'   add_model(model)
 #'
-#' formula_wf <- base_wf %>%
+#' formula_wf <- base_wf |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' fit(formula_wf, mtcars)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
 #'   step_log(disp)
 #'
-#' recipe_wf <- base_wf %>%
+#' recipe_wf <- base_wf |>
 #'   add_recipe(recipe)
 #'
 #' fit(recipe_wf, mtcars)
-fit.workflow <- function(object, data, ..., control = control_workflow()) {
+fit.workflow <- function(
+  object,
+  data,
+  ...,
+  calibration = NULL,
+  control = control_workflow()
+) {
   check_dots_empty()
 
   if (is_missing(data)) {
-    abort("`data` must be provided to fit a workflow.")
+    cli_abort("{.arg data} must be provided to fit a workflow.")
   }
+
+  validate_has_calibration(object, calibration)
+
+  if (is_sparse_matrix(data)) {
+    data <- sparsevctrs::coerce_to_sparse_tibble(
+      data,
+      call = rlang::caller_env(0)
+    )
+  }
+
+  object <- toggle_sparsity(object, data)
 
   workflow <- object
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
+
+  if (!.workflow_includes_calibration(workflow)) {
+    # in this case, training the tailor on `data` will not leak data (#262)
+    calibration <- data
+  }
+  if (has_postprocessor(workflow)) {
+    workflow <- .fit_post(workflow, calibration)
+  }
+
   workflow <- .fit_finalize(workflow)
 
-  # TODO: Post-processing before `.fit_finalize()`?
-
   workflow
+}
+
+#' @export
+#' @rdname workflows-internals
+#' @keywords internal
+.workflow_includes_calibration <- function(workflow) {
+  has_postprocessor(workflow) &&
+    tailor::tailor_requires_fit(
+      extract_postprocessor(workflow, estimated = FALSE)
+    )
 }
 
 # ------------------------------------------------------------------------------
@@ -96,16 +133,16 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @name workflows-internals
 #' @keywords internal
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' wf_unfit <- workflow() %>%
-#'   add_model(model) %>%
+#' wf_unfit <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(mpg ~ cyl + log(disp))
 #'
 #' wf_fit_pre <- .fit_pre(wf_unfit, mtcars)
@@ -155,6 +192,13 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 
 #' @rdname workflows-internals
 #' @export
+.fit_post <- function(workflow, data) {
+  action_post <- workflow[["post"]][["actions"]][["tailor"]]
+  fit(action_post, workflow = workflow, data = data)
+}
+
+#' @rdname workflows-internals
+#' @export
 .fit_finalize <- function(workflow) {
   set_trained(workflow, TRUE)
 }
@@ -166,15 +210,16 @@ validate_has_preprocessor <- function(x, ..., call = caller_env()) {
 
   has_preprocessor <-
     has_preprocessor_formula(x) ||
-      has_preprocessor_recipe(x) ||
-      has_preprocessor_variables(x)
+    has_preprocessor_recipe(x) ||
+    has_preprocessor_variables(x)
 
   if (!has_preprocessor) {
     message <- c(
       "The workflow must have a formula, recipe, or variables preprocessor.",
-      i = "Provide one with `add_formula()`, `add_recipe()`, or `add_variables()`."
+      i = "Provide one with {.fun add_formula}, {.fun add_recipe},
+           or {.fun add_variables}."
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
   }
 
   invisible(x)
@@ -188,9 +233,29 @@ validate_has_model <- function(x, ..., call = caller_env()) {
   if (!has_model) {
     message <- c(
       "The workflow must have a model.",
-      i = "Provide one with `add_model()`."
+      i = "Provide one with {.fun add_model}."
     )
-    abort(message, call = call)
+    cli_abort(message, call = call)
+  }
+
+  invisible(x)
+}
+
+validate_has_calibration <- function(x, calibration, call = caller_env()) {
+  if (.workflow_includes_calibration(x) && is.null(calibration)) {
+    cli::cli_abort(
+      "The workflow requires a {.arg calibration} set to train but none
+       was supplied.",
+      call = call
+    )
+  }
+
+  if (!.workflow_includes_calibration(x) && !is.null(calibration)) {
+    cli::cli_warn(
+      "The workflow does not require a {.arg calibration} set to train
+       but one was supplied.",
+      call = call
+    )
   }
 
   invisible(x)
@@ -211,7 +276,10 @@ finalize_blueprint <- function(workflow) {
   } else if (has_preprocessor_variables(workflow)) {
     finalize_blueprint_variables(workflow)
   } else {
-    abort("`workflow` should have a preprocessor at this point.", .internal = TRUE)
+    cli_abort(
+      "{.arg workflow} should have a preprocessor at this point.",
+      .internal = TRUE
+    )
   }
 }
 
@@ -231,10 +299,16 @@ finalize_blueprint_formula <- function(workflow) {
   intercept <- tbl_encodings$compute_intercept
 
   if (!is_string(indicators)) {
-    abort("`indicators` encoding from parsnip should be a string.", .internal = TRUE)
+    cli_abort(
+      "`indicators` encoding from parsnip should be a string.",
+      .internal = TRUE
+    )
   }
   if (!is_bool(intercept)) {
-    abort("`intercept` encoding from parsnip should be a bool.", .internal = TRUE)
+    cli_abort(
+      "`intercept` encoding from parsnip should be a bool.",
+      .internal = TRUE
+    )
   }
 
   # Use model specific information to construct the blueprint
@@ -265,7 +339,10 @@ pull_workflow_spec_encoding_tbl <- function(workflow) {
   out <- tbl_encodings[indicator_spec, , drop = FALSE]
 
   if (nrow(out) != 1L) {
-    abort("Exactly 1 model/engine/mode combination must be located.", .internal = TRUE)
+    cli_abort(
+      "Exactly 1 model/engine/mode combination must be located.",
+      .internal = TRUE
+    )
   }
 
   out

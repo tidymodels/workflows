@@ -47,17 +47,18 @@ extracted from the mold object returned from \code{pull_workflow_mold()}.
 }
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
 
-model <- linear_reg() \%>\%
+model <- linear_reg() |>
   set_engine("lm")
 
-recipe <- recipe(mpg ~ cyl + disp, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
   step_log(disp)
 
-base_wf <- workflow() \%>\%
+base_wf <- workflow() |>
   add_model(model)
 
 recipe_wf <- add_recipe(base_wf, recipe)
@@ -91,5 +92,6 @@ identical(
   pull_workflow_mold(fit_recipe_wf)$blueprint$recipe,
   pull_workflow_prepped_recipe(fit_recipe_wf)
 )
+\dontshow{\}) # examplesIf}
 }
 \keyword{internal}

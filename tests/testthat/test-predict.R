@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can predict from a workflow", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
@@ -108,8 +110,14 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   spec <- parsnip::linear_reg()
   spec <- parsnip::set_engine(spec, "lm")
 
-  bp1 <- hardhat::default_formula_blueprint(intercept = TRUE, allow_novel_levels = FALSE)
-  bp2 <- hardhat::default_formula_blueprint(intercept = TRUE, allow_novel_levels = TRUE)
+  bp1 <- hardhat::default_formula_blueprint(
+    intercept = TRUE,
+    allow_novel_levels = FALSE
+  )
+  bp2 <- hardhat::default_formula_blueprint(
+    intercept = TRUE,
+    allow_novel_levels = TRUE
+  )
 
   workflow <- workflow()
   workflow <- add_model(workflow, spec)
@@ -120,8 +128,9 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   mod1 <- fit(workflow1, train)
   mod2 <- fit(workflow2, train)
 
+  # Warning from hardhat, so we don't snapshot it
   expect_warning(pred1 <- predict(mod1, test))
-  expect_warning(pred2 <- predict(mod2, test), NA)
+  expect_no_warning(pred2 <- predict(mod2, test))
 
   expect_identical(
     pred1[[".pred"]],
@@ -142,8 +151,14 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
   workflow <- workflow()
   workflow <- add_model(workflow, mod, formula = mpg ~ .)
 
-  blueprint_with_intercept <- hardhat::default_formula_blueprint(intercept = TRUE)
-  workflow_with_intercept <- add_formula(workflow, mpg ~ hp + disp, blueprint = blueprint_with_intercept)
+  blueprint_with_intercept <- hardhat::default_formula_blueprint(
+    intercept = TRUE
+  )
+  workflow_with_intercept <- add_formula(
+    workflow,
+    mpg ~ hp + disp,
+    blueprint = blueprint_with_intercept
+  )
   fit_with_intercept <- fit(workflow_with_intercept, mtcars)
 
   # The dot expansion used to include the intercept column, added via the blueprint, as a regular predictor.
@@ -151,4 +166,26 @@ test_that("monitoring: no double intercept due to dot expansion in model formula
   # Now it gets removed before fitting (lm will handle the intercept itself),
   # so lm()'s predict method won't error anymore here. (tidymodels/parsnip#1033)
   expect_no_error(predict(fit_with_intercept, mtcars))
+})
+
+test_that("predict(type) is respected with a postprocessor (#251)", {
+  skip_if_not_installed("tailor")
+  # create example data
+  y <- seq(0, 7, .1)
+  d <- data.frame(
+    y = as.factor(ifelse(y > 3.5, "yes", "no")),
+    x = y + (y - 3)^2
+  )
+  wflow <- workflow(y ~ ., parsnip::logistic_reg(), tailor::tailor())
+  wflow_fit <- fit(wflow, d)
+
+  pred_class <- predict(wflow_fit, d[1:5, ], type = "class")
+  pred_prob <- predict(wflow_fit, d[1:5, ], type = "prob")
+  pred_null <- predict(wflow_fit, d[1:5, ])
+
+  expect_named(pred_class, ".pred_class")
+  expect_named(pred_prob, c(".pred_no", ".pred_yes"), ignore.order = TRUE)
+  expect_equal(pred_class, pred_null)
+
+  expect_snapshot(error = TRUE, predict(wflow_fit, d[1:5, ], type = "boop"))
 })

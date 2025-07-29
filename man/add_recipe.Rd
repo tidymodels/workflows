@@ -49,13 +49,14 @@ To fit a workflow, exactly one of \code{\link[=add_formula]{add_formula()}}, \co
 \code{\link[=add_variables]{add_variables()}} \emph{must} be specified.
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(recipes)
 library(magrittr)
 
-recipe <- recipe(mpg ~ cyl, mtcars) \%>\%
+recipe <- recipe(mpg ~ cyl, mtcars) |>
   step_log(cyl)
 
-workflow <- workflow() \%>\%
+workflow <- workflow() |>
   add_recipe(recipe)
 
 workflow
@@ -63,4 +64,5 @@ workflow
 remove_recipe(workflow)
 
 update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
+\dontshow{\}) # examplesIf}
 }

@@ -27,11 +27,18 @@
 #'
 #' - `extract_parameter_set_dials()` returns a set of dials parameter objects.
 #'
+#' - `extract_fit_time()` returns a tibble with elapsed fit times. The fit
+#'   times correspond to the time for the parsnip engine or recipe steps to fit
+#'   (or their sum if `summarize = TRUE`) and do not include other portions of
+#'   the elapsed time in [workflows::fit.workflow()].
+#'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned. This argument should be named.
 #' @param parameter A single string for the parameter ID.
+#' @param summarize A logical for whether the elapsed fit time should be returned as a
+#' single row or multiple rows.
 #' @param ... Not currently used.
 #'
 #' @details
@@ -46,14 +53,14 @@
 #'
 #' *Good*:
 #' ```r
-#' workflow_fit %>% predict(new_data)
+#' workflow_fit |> predict(new_data)
 #' ```
 #'
 #' *Bad*:
 #' ```r
-#' workflow_fit %>% extract_fit_engine()  %>% predict(new_data)
+#' workflow_fit |> extract_fit_engine()  |> predict(new_data)
 #' # or
-#' workflow_fit %>% extract_fit_parsnip() %>% predict(new_data)
+#' workflow_fit |> extract_fit_parsnip() |> predict(new_data)
 #' ```
 #'
 #' @return
@@ -61,18 +68,18 @@
 #' section.
 #'
 #' @name extract-workflow
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
 #'
-#' model <- linear_reg() %>%
+#' model <- linear_reg() |>
 #'   set_engine("lm")
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) |>
 #'   step_log(disp)
 #'
-#' base_wf <- workflow() %>%
+#' base_wf <- workflow() |>
 #'   add_model(model)
 #'
 #' recipe_wf <- add_recipe(base_wf, recipe)
@@ -115,7 +122,7 @@ extract_spec_parsnip.workflow <- function(x, ...) {
   if (has_spec(x)) {
     return(x$fit$actions$model$spec)
   }
-  abort("The workflow does not have a model spec.")
+  cli_abort("The workflow does not have a model spec.")
 }
 
 #' @export
@@ -123,10 +130,12 @@ extract_spec_parsnip.workflow <- function(x, ...) {
 extract_recipe.workflow <- function(x, ..., estimated = TRUE) {
   check_dots_empty()
   if (!is_bool(estimated)) {
-    abort("`estimated` must be a single `TRUE` or `FALSE`.")
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
   if (!has_preprocessor_recipe(x)) {
-    abort("The workflow must have a recipe preprocessor.")
+    cli_abort("The workflow must have a recipe preprocessor.")
   }
 
   if (estimated) {
@@ -145,9 +154,9 @@ extract_fit_parsnip.workflow <- function(x, ...) {
   if (has_fit(x)) {
     return(x$fit$fit)
   }
-  abort(c(
+  cli_abort(c(
     "Can't extract a model fit from an untrained workflow.",
-    i = "Do you need to call `fit()`?"
+    i = "Do you need to call {.fun fit}?"
   ))
 }
 
@@ -163,9 +172,9 @@ extract_mold.workflow <- function(x, ...) {
   if (has_mold(x)) {
     return(x$pre$mold)
   }
-  abort(c(
+  cli_abort(c(
     "Can't extract a mold from an untrained workflow.",
-    i = "Do you need to call `fit()`?"
+    i = "Do you need to call {.fun fit}?"
   ))
 }
 
@@ -181,7 +190,30 @@ extract_preprocessor.workflow <- function(x, ...) {
   if (has_preprocessor_variables(x)) {
     return(x$pre$actions$variables$variables)
   }
-  abort("The workflow does not have a preprocessor.")
+  cli_abort("The workflow does not have a preprocessor.")
+}
+
+#' @rdname extract-workflow
+#' @export
+extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
+  if (!is_bool(estimated)) {
+    cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
+  }
+
+  if (estimated) {
+    res <- x$post$fit
+    if (!is.null(res)) {
+      return(res)
+    }
+  }
+
+  if (has_postprocessor(x)) {
+    return(x$post$actions$tailor$tailor)
+  }
+
+  cli_abort("The workflow does not have a postprocessor.")
 }
 
 #' @export
@@ -195,6 +227,13 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
     recipe_param_data <- extract_parameter_set_dials(recipe)
 
     param_data <- vctrs::vec_rbind(param_data, recipe_param_data)
+  }
+
+  if (has_postprocessor_tailor(x)) {
+    tailor <- extract_postprocessor(x)
+    tailor_param_data <- extract_parameter_set_dials(tailor)
+
+    param_data <- vctrs::vec_rbind(param_data, tailor_param_data)
   }
 
   dials::parameters_constr(
@@ -211,4 +250,29 @@ extract_parameter_set_dials.workflow <- function(x, ...) {
 #' @rdname extract-workflow
 extract_parameter_dials.workflow <- function(x, parameter, ...) {
   extract_parameter_dials(extract_parameter_set_dials(x), parameter)
+}
+
+#' @export
+#' @rdname extract-workflow
+extract_fit_time.workflow <- function(x, summarize = TRUE, ...) {
+  if (has_preprocessor_recipe(x)) {
+    preprocessor <- extract_fit_time(extract_recipe(x), summarize = summarize)
+    preprocessor <- vctrs::vec_cbind(stage = "preprocess", preprocessor)
+  }
+
+  res <- extract_fit_time(extract_fit_parsnip(x))
+  res <- vctrs::vec_cbind(stage = "model", res)
+
+  if (has_preprocessor_recipe(x)) {
+    res <- vctrs::vec_rbind(preprocessor, res)
+  }
+
+  if (summarize) {
+    res$stage <- "workflow"
+    res$stage_id <- "workflow"
+    res$elapsed <- sum(res$elapsed)
+    res <- res[1, ]
+  }
+
+  res
 }

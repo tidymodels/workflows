@@ -35,7 +35,10 @@ tidy.workflow <- function(x, what = "model", ...) {
     return(out)
   }
 
-  abort("`what` must be 'model' or 'recipe'.", .internal = TRUE)
+  cli_abort(
+    "{.arg what} must be {.val model} or {.val recipe}.",
+    .internal = TRUE
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -55,7 +58,7 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' @export
 #' @examples
-#' if (rlang::is_installed("broom")) {
+#' if (rlang::is_installed(c("broom", "modeldata"))) {
 #'
 #' library(parsnip)
 #' library(magrittr)
@@ -63,11 +66,11 @@ tidy.workflow <- function(x, what = "model", ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )
@@ -123,11 +126,11 @@ glance.workflow <- function(x, ...) {
 #'
 #' data("attrition")
 #'
-#' model <- logistic_reg() %>%
+#' model <- logistic_reg() |>
 #'   set_engine("glm")
 #'
-#' wf <- workflow() %>%
-#'   add_model(model) %>%
+#' wf <- workflow() |>
+#'   add_model(model) |>
 #'   add_formula(
 #'     Attrition ~ BusinessTravel + YearsSinceLastPromotion + OverTime
 #'   )
@@ -148,7 +151,11 @@ augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   }
 
   # `augment.model_fit()` requires the pre-processed `new_data`
-  forged <- hardhat::forge(new_data, blueprint = mold$blueprint, outcomes = outcomes)
+  forged <- hardhat::forge(
+    new_data,
+    blueprint = mold$blueprint,
+    outcomes = outcomes
+  )
 
   if (outcomes) {
     new_data_forged <- vctrs::vec_cbind(forged$predictors, forged$outcomes)
@@ -158,6 +165,11 @@ augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
 
   new_data_forged <- prepare_augment_new_data(new_data_forged)
   out <- augment(fit, new_data_forged, eval_time = eval_time, ...)
+
+  if (has_postprocessor_tailor(x)) {
+    post <- extract_postprocessor(x)
+    out <- predict(post, new_data = out)
+  }
 
   augment_columns <- setdiff(
     names(out),
@@ -184,6 +196,9 @@ prepare_augment_new_data <- function(x) {
     x <- as.matrix(x)
     as.data.frame(x)
   } else {
-    abort("Unknown predictor type returned by `forge_predictors()`.", .internal = TRUE)
+    cli_abort(
+      "Unknown predictor type returned by {.fun forge_predictors}.",
+      .internal = TRUE
+    )
   }
 }

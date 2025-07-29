@@ -49,11 +49,6 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    r-lib/sparsevctrs,
-    tidymodels/dials,
-    tidymodels/parsnip,
-    tidymodels/probably,
-    tidymodels/recipes,
     tidymodels/tailor
 Config/Needs/website:dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
     yardstick

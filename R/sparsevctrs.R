@@ -53,7 +53,7 @@ allow_sparse <- function(x) {
 # Hence we want to use sparse data.
 #
 # At this time the only engines that support sparse data are glmnet, LiblineaR,
-# ranger, and xgboost. Which is why they are the only ones listed here.
+# lightgbm, ranger, and xgboost. Which is why they are the only ones listed here.
 # This is fine as this code will only run if `allow_sparse()` returns `TRUE`
 # Which only happens for these engines.
 #

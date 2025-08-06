@@ -97,7 +97,7 @@ add_tailor <- function(x, tailor, ...) {
 remove_tailor <- function(x) {
   validate_is_workflow(x)
 
-  if (!has_postprocessor(x)) {
+  if (!has_postprocessor_tailor(x)) {
     cli_warn("The workflow has no tailor postprocessor to remove.")
   }
 

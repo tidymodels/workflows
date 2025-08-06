@@ -57,7 +57,7 @@ is passed to that trained postprocessor and model to generate predictions,
 which then form the training data for the postprocessor.
 
 When fitting a workflow with a postprocessor that requires training
-(i.e. one that returns \code{TRUE} in \code{.workflow_includes_calibration(workflow)}), users
+(i.e. one that returns \code{TRUE} in \code{.workflow_postprocessor_requires_fit(workflow)}), users
 must pass two data arguments--the usual \code{fit.workflow(data)} will be used
 to train the preprocessor and model while \code{fit.workflow(calibration)} will
 be used to train the postprocessor.

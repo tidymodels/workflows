@@ -38,7 +38,7 @@
 #' which then form the training data for the postprocessor.
 #'
 #' When fitting a workflow with a postprocessor that requires training
-#' (i.e. one that returns `TRUE` in `.workflow_includes_calibration(workflow)`), users
+#' (i.e. one that returns `TRUE` in `.workflow_postprocessor_requires_fit(workflow)`), users
 #' must pass two data arguments--the usual `fit.workflow(data)` will be used
 #' to train the preprocessor and model while `fit.workflow(calibration)` will
 #' be used to train the postprocessor.

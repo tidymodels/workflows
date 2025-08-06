@@ -83,7 +83,7 @@ fit.workflow <- function(
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
 
-  if (!.workflow_includes_calibration(workflow)) {
+  if (!.workflow_postprocessor_requires_fit(workflow)) {
     # in this case, training the tailor on `data` will not leak data (#262)
     calibration <- data
   }
@@ -99,11 +99,15 @@ fit.workflow <- function(
 #' @export
 #' @rdname workflows-internals
 #' @keywords internal
-.workflow_includes_calibration <- function(workflow) {
-  has_postprocessor(workflow) &&
+.workflow_postprocessor_requires_fit <- function(workflow) {
+  if (!has_postprocessor(workflow)) {
+    return(FALSE)
+  }
+  if (has_postprocessor_tailor(workflow)) {
     tailor::tailor_requires_fit(
       extract_postprocessor(workflow, estimated = FALSE)
     )
+  }
 }
 
 # ------------------------------------------------------------------------------
@@ -242,7 +246,7 @@ validate_has_model <- function(x, ..., call = caller_env()) {
 }
 
 validate_has_calibration <- function(x, calibration, call = caller_env()) {
-  if (.workflow_includes_calibration(x) && is.null(calibration)) {
+  if (.workflow_postprocessor_requires_fit(x) && is.null(calibration)) {
     cli::cli_abort(
       "The workflow requires a {.arg calibration} set to train but none
        was supplied.",
@@ -250,7 +254,7 @@ validate_has_calibration <- function(x, calibration, call = caller_env()) {
     )
   }
 
-  if (!.workflow_includes_calibration(x) && !is.null(calibration)) {
+  if (!.workflow_postprocessor_requires_fit(x) && !is.null(calibration)) {
     cli::cli_warn(
       "The workflow does not require a {.arg calibration} set to train
        but one was supplied.",

@@ -193,7 +193,7 @@ fit.workflow <- function(
 #' @rdname workflows-internals
 #' @export
 .fit_post <- function(workflow, data) {
-  action_post <- workflow[["post"]][["actions"]][["tailor"]]
+  action_post <- workflow[["post"]][["actions"]][[1]]
   fit(action_post, workflow = workflow, data = data)
 }
 

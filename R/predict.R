@@ -82,7 +82,7 @@ predict.workflow <- function(
   # use `augment()` rather than `fit()` to get all possible prediction `type`s (#234).
   fit_aug <- augment(fit, new_data, opts = opts, ...)
 
-  post <- extract_postprocessor(workflow)
+  post <- extract_postprocessor(workflow, estimated = TRUE)
   predict(post, fit_aug)[predict_type_column_names(type, post$columns)]
 }
 

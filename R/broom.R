@@ -167,7 +167,7 @@ augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   out <- augment(fit, new_data_forged, eval_time = eval_time, ...)
 
   if (has_postprocessor(x)) {
-    post <- extract_postprocessor(x)
+    post <- extract_postprocessor(x, estimated = TRUE)
     out <- predict(post, new_data = out)
   }
 

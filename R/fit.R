@@ -104,10 +104,13 @@ fit.workflow <- function(
     return(FALSE)
   }
   if (has_postprocessor_tailor(workflow)) {
-    tailor::tailor_requires_fit(
+    requires_fit <- tailor::tailor_requires_fit(
       extract_postprocessor(workflow, estimated = FALSE)
     )
+  } else {
+    requires_fit <- FALSE
   }
+  requires_fit
 }
 
 # ------------------------------------------------------------------------------

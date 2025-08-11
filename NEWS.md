@@ -4,6 +4,8 @@
 
 * Increased the minimum required R version to R 4.1.
 
+* Updated auto toggle sparsity to handle lightgbm engine (#290). 
+
 # workflows 1.2.0
 
 ## New features

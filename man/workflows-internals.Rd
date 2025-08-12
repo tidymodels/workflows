@@ -27,8 +27,12 @@ For \code{.fit_pre()}, this should be a fresh workflow.
 For \code{.fit_model()}, this should be a workflow that has already been trained
 through \code{.fit_pre()}.
 
+For \code{.fit_post()}, this should be a workflow that has already been trained
+through \code{.fit_pre()} and \code{.fit_model()}.
+
 For \code{.fit_finalize()}, this should be a workflow that has been through
-both \code{.fit_pre()} and \code{.fit_model()}.}
+both \code{.fit_pre()} and \code{.fit_model()}. If the workflow contains an optional
+postprocessor, it should also have been trained through \code{.fit_post()}.}
 
 \item{data}{A data frame of predictors and outcomes to use when fitting the
 workflow}
@@ -36,7 +40,7 @@ workflow}
 \item{control}{A \code{\link[=control_workflow]{control_workflow()}} object}
 }
 \description{
-\code{.fit_pre()}, \code{.fit_model()}, and \code{.fit_finalize()} are internal workflow
+\code{.fit_pre()}, \code{.fit_model()}, \code{.fit_post()} and \code{.fit_finalize()} are internal workflow
 functions for \emph{partially} fitting a workflow object. They are only exported
 for usage by the tuning package, \href{https://github.com/tidymodels/tune}{tune},
 and the general user should never need to worry about them.

@@ -117,7 +117,7 @@ fit.workflow <- function(
 
 #' Internal workflow functions
 #'
-#' `.fit_pre()`, `.fit_model()`, and `.fit_finalize()` are internal workflow
+#' `.fit_pre()`, `.fit_model()`, `.fit_post()` and `.fit_finalize()` are internal workflow
 #' functions for _partially_ fitting a workflow object. They are only exported
 #' for usage by the tuning package, [tune](https://github.com/tidymodels/tune),
 #' and the general user should never need to worry about them.
@@ -129,8 +129,12 @@ fit.workflow <- function(
 #'   For `.fit_model()`, this should be a workflow that has already been trained
 #'   through `.fit_pre()`.
 #'
+#'   For `.fit_post()`, this should be a workflow that has already been trained
+#'   through `.fit_pre()` and `.fit_model()`.
+#'
 #'   For `.fit_finalize()`, this should be a workflow that has been through
-#'   both `.fit_pre()` and `.fit_model()`.
+#'   both `.fit_pre()` and `.fit_model()`. If the workflow contains an optional
+#'   postprocessor, it should also have been trained through `.fit_post()`.
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
 #'   workflow

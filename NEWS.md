@@ -1,6 +1,7 @@
 # workflows (development version)
 
 * Implemented postprocessing. (TODO: fill this in.)
+    - `extract_tailor()` extracts the tailor from a workflow (#301).
 
 * Increased the minimum required R version to R 4.1.
 

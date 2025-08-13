@@ -44,6 +44,25 @@ test_that("can compute required packages of a workflow - recipes", {
   expect_true("pkg" %in% generics::required_pkgs(workflow))
 })
 
+test_that("can compute required packages of a workflow - tailor", {
+  skip_if_not_installed("tailor")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, parsnip::linear_reg())
+
+  tlr <- tailor::tailor()
+  workflow_tailor <- add_tailor(workflow, tlr)
+
+  expect_true("tailor" %in% generics::required_pkgs(workflow_tailor))
+
+  tlr_adj <- tailor::adjust_numeric_range(tlr, lower_limit = 0)
+  workflow_tailor_adj <- add_tailor(workflow, tlr_adj)
+
+  expect_true("tailor" %in% generics::required_pkgs(workflow_tailor_adj))
+  expect_true("probably" %in% generics::required_pkgs(workflow_tailor_adj))
+})
+
 # ------------------------------------------------------------------------------
 # tunable()
 

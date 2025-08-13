@@ -27,7 +27,7 @@ tailor with the new one.
 
     <a class="navbar-brand me-2" href="../index.html">workflows</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,7 +119,7 @@ train the preprocessor and model and the second, called the "calibration set,"
 is passed to that trained postprocessor and model to generate predictions,
 which then form the training data for the postprocessor.</p>
 <p>When fitting a workflow with a postprocessor that requires training
-(i.e. one that returns <code>TRUE</code> in <code>.workflow_includes_calibration(workflow)</code>), users
+(i.e. one that returns <code>TRUE</code> in <code>.workflow_postprocessor_requires_fit(workflow)</code>), users
 must pass two data arguments–the usual <code>fit.workflow(data)</code> will be used
 to train the preprocessor and model while <code>fit.workflow(calibration)</code> will
 be used to train the postprocessor.</p>

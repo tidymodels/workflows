@@ -20,6 +20,7 @@ extract_fit_time() returns a tibble with elapsed fit times. The fit
 times correspond to the time for the parsnip engine or recipe steps to fit
 (or their sum if summarize = TRUE) and do not include other portions of
 the elapsed time in fit.workflow().
+extract_postprocessor() returns the postprocessor object.
 
 '><meta property="og:description" content='These functions extract various elements from a workflow object. If they do
 not exist yet, an error is thrown.
@@ -42,6 +43,7 @@ extract_fit_time() returns a tibble with elapsed fit times. The fit
 times correspond to the time for the parsnip engine or recipe steps to fit
 (or their sum if summarize = TRUE) and do not include other portions of
 the elapsed time in fit.workflow().
+extract_postprocessor() returns the postprocessor object.
 
 '><meta property="og:image" content="https://workflows.tidymodels.org/logo.png"><meta name="robots" content="noindex"><script defer data-domain="workflows.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script></head><body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -51,7 +53,7 @@ the elapsed time in fit.workflow().
 
     <a class="navbar-brand me-2" href="../index.html">workflows</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.2.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,6 +101,7 @@ whether the fitted or original recipe is returned.</p></li>
 times correspond to the time for the parsnip engine or recipe steps to fit
 (or their sum if <code>summarize = TRUE</code>) and do not include other portions of
 the elapsed time in <code><a href="fit-workflow.html">fit.workflow()</a></code>.</p></li>
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_postprocessor()</a></code> returns the postprocessor object.</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -122,7 +125,7 @@ the elapsed time in <code><a href="fit-workflow.html">fit.workflow()</a></code>.
 <span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'workflow'</span></span>
-<span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_postprocessor</a></span><span class="op">(</span><span class="va">x</span>, estimated <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_postprocessor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, estimated <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'workflow'</span></span>
 <span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_set_dials</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -219,17 +222,17 @@ or silently generating incorrect predictions.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> Log transformation on: <span style="color: #0000BB;">disp</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">formula_wf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg ~ cyl + log(disp)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x556929b11c20&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55faf2d35808&gt;</span>
 <span class="r-in"><span><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">variable_wf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $outcomes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^mpg</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x556929b11c20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55faf2d35808</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $predictors</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">&lt;quosure&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expr: <span style="color: #0000BB;">^c(cyl, disp)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x556929b11c20</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> env:  <span style="color: #0000BB;">0x55faf2d35808</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "workflow_variables"</span>

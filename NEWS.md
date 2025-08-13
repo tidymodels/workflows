@@ -1,6 +1,12 @@
 # workflows (development version)
 
+* Added a standalone file `standalone-input-names.R` with APIs for returning the
+names of the predictors in the original data given to `fit()`. 
+
+* Each of the `pull_*()` functions soft-deprecated in workflows v0.2.3 now warn on every usage. 
+
 * Implemented postprocessing. (TODO: fill this in.)
+
 
 * Increased the minimum required R version to R 4.1.
 

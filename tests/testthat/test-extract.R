@@ -474,7 +474,7 @@ test_that("extract single parameter from workflow with tunable recipe and model"
 })
 
 # ------------------------------------------------------------------------------
-# extract_recipe()
+# extract_fit_time()
 
 test_that("extract_fit_time() works", {
   skip_if_not_installed("recipes")
@@ -509,4 +509,83 @@ test_that("extract_fit_time() works", {
   )
   expect_true(is.double(res$elapsed))
   expect_true(all(res$elapsed >= 0))
+})
+
+# ------------------------------------------------------------------------------
+# extract_tailor()
+
+test_that("`extract_tailor()` errors if no tailor preprocessor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  model <- parsnip::linear_reg()
+  tlr <- tailor::tailor() |>
+    tailor::adjust_numeric_range(lower_limit = 0)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+
+  expect_snapshot(error = TRUE, extract_tailor(workflow))
+})
+
+test_that("`extract_tailor()` can extract a trained tailor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  model <- parsnip::linear_reg()
+  tlr <- tailor::tailor() |>
+    tailor::adjust_numeric_range(lower_limit = 0)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, model)
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_tailor(workflow, tlr)
+
+  expect_snapshot(error = TRUE, extract_tailor(workflow))
+
+  workflow_fit <- fit(workflow, mtcars)
+  tlr_extracted <- extract_tailor(workflow_fit)
+
+  expect_s3_class(tlr_extracted, "tailor")
+  expect_equal(
+    tlr_extracted,
+    workflow_fit$post$fit
+  )
+
+  expect_snapshot(
+    error = TRUE,
+    extract_tailor(workflow, estimated = "yes please")
+  )
+})
+
+
+test_that("`extract_tailor()` can extract an untrained tailor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  tlr <- tailor::tailor() |>
+    tailor::adjust_numeric_range(lower_limit = 0)
+
+  workflow <- workflow()
+  workflow <- add_model(workflow, parsnip::linear_reg())
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_tailor(workflow, tlr)
+
+  tlr_extracted <- extract_tailor(workflow, estimated = FALSE)
+
+  expect_s3_class(tlr_extracted, "tailor")
+  expect_equal(
+    tlr_extracted,
+    tlr
+  )
+
+  workflow_fit <- fit(workflow, mtcars)
+  tlr_extracted <- extract_tailor(workflow_fit, estimated = FALSE)
+
+  expect_s3_class(tlr_extracted, "tailor")
+  expect_equal(
+    tlr_extracted,
+    tlr
+  )
 })

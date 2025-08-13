@@ -199,14 +199,15 @@ extract_preprocessor.workflow <- function(x, ...) {
 #' @export
 extract_postprocessor.workflow <- function(x, ..., estimated = FALSE) {
   if (has_postprocessor_tailor(x)) {
-    return(extract_tailor_workflow(x, estimated = estimated))
+    return(extract_tailor(x, estimated = estimated))
   }
 
   cli_abort("The workflow does not have a postprocessor.")
 }
 
-# TODO this still needs a generic in hardat
-extract_tailor_workflow <- function(x, ..., estimated = TRUE) {
+#' @export
+#' @rdname extract-workflow
+extract_tailor.workflow <- function(x, ..., estimated = TRUE) {
   check_dots_empty()
 
   if (!is_bool(estimated)) {

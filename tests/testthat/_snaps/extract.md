@@ -117,3 +117,28 @@
       x Element id should have unique values.
       i Duplicates exist for item: threshold
 
+# `extract_tailor()` errors if no tailor preprocessor
+
+    Code
+      extract_tailor(workflow)
+    Condition
+      Error in `extract_tailor()`:
+      ! The workflow must have a tailor postprocessor.
+
+# `extract_tailor()` can extract a trained tailor
+
+    Code
+      extract_tailor(workflow)
+    Condition
+      Error in `extract_tailor()`:
+      ! The workflow has a tailor postprocessor, but it has not been fit yet.
+      i Do you need to call `fit()`?
+
+---
+
+    Code
+      extract_tailor(workflow, estimated = "yes please")
+    Condition
+      Error in `extract_tailor()`:
+      ! `estimated` must be a single `TRUE` or `FALSE`.
+

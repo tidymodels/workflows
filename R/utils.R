@@ -14,6 +14,10 @@ is_model_spec <- function(x) {
   inherits(x, "model_spec") || modelenv::is_unsupervised_spec(x)
 }
 
+is_postprocessor <- function(x) {
+  is_tailor(x)
+}
+
 validate_recipes_available <- function(..., call = caller_env()) {
   check_dots_empty()
 

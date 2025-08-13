@@ -32,6 +32,8 @@
 #'   (or their sum if `summarize = TRUE`) and do not include other portions of
 #'   the elapsed time in [workflows::fit.workflow()].
 #'
+#' - `extract_postprocessor()` returns the postprocessor object.
+#'
 #' @param x A workflow
 #'
 #' @param estimated A logical for whether the original (unfit) recipe or the
@@ -195,25 +197,40 @@ extract_preprocessor.workflow <- function(x, ...) {
 
 #' @rdname extract-workflow
 #' @export
-extract_postprocessor.workflow <- function(x, estimated = TRUE, ...) {
+extract_postprocessor.workflow <- function(x, ..., estimated = FALSE) {
+  if (has_postprocessor_tailor(x)) {
+    return(extract_tailor_workflow(x, estimated = estimated))
+  }
+
+  cli_abort("The workflow does not have a postprocessor.")
+}
+
+# TODO this still needs a generic in hardat
+extract_tailor_workflow <- function(x, ..., estimated = TRUE) {
+  check_dots_empty()
+
   if (!is_bool(estimated)) {
     cli_abort(
       "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
     )
   }
+  if (!has_postprocessor_tailor(x)) {
+    cli_abort("The workflow must have a tailor postprocessor.")
+  }
 
   if (estimated) {
     res <- x$post$fit
-    if (!is.null(res)) {
-      return(res)
+    if (is.null(res)) {
+      cli_abort(c(
+        "The workflow has a tailor postprocessor, but it has not been fit yet.",
+        i = "Do you need to call {.fun fit}?"
+      ))
     }
+  } else {
+    res <- x$post$actions$tailor$tailor
   }
 
-  if (has_postprocessor(x)) {
-    return(x$post$actions$tailor$tailor)
-  }
-
-  cli_abort("The workflow does not have a postprocessor.")
+  res
 }
 
 #' @export

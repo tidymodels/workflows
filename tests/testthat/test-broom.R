@@ -129,7 +129,8 @@ test_that("can augment with a postprocessor (#275)", {
   # manually fit the model and the apply the postprocessor
   set.seed(1)
   fit_model <- fit(wflow, mtcars[1:20, ])
-  post_fit <- extract_postprocessor(fit_post)$adjustments[[1]]$results$fit
+  post_fit <- extract_postprocessor(fit_post, estimated = TRUE)
+  post_fit <- post_fit$adjustments[[1]]$results$fit
   pred_post_manual <- probably::cal_apply(
     augment(fit_model, mtcars[31:32, ]),
     post_fit

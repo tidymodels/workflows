@@ -79,11 +79,11 @@ predict.workflow <- function(
     return(predict(fit, new_data, type = type, opts = opts, ...))
   }
 
-  # use `augment()` rather than `fit()` to get all possible prediction `type`s (#234).
-  fit_aug <- augment(fit, new_data, opts = opts, ...)
+  # use `augment()` rather than `predict()` to get all possible prediction `type`s (#234).
+  pred_model <- augment(fit, new_data, opts = opts, ...)
 
-  post <- extract_postprocessor(workflow)
-  predict(post, fit_aug)[predict_type_column_names(type, post$columns)]
+  post <- extract_postprocessor(workflow, estimated = TRUE)
+  predict(post, pred_model)[predict_type_column_names(type, post$columns)]
 }
 
 forge_predictors <- function(new_data, workflow) {

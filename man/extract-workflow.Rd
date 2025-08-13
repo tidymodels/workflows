@@ -26,7 +26,7 @@
 
 \method{extract_preprocessor}{workflow}(x, ...)
 
-\method{extract_postprocessor}{workflow}(x, estimated = TRUE, ...)
+\method{extract_postprocessor}{workflow}(x, ..., estimated = FALSE)
 
 \method{extract_parameter_set_dials}{workflow}(x, ...)
 
@@ -74,6 +74,7 @@ whether the fitted or original recipe is returned.
 times correspond to the time for the parsnip engine or recipe steps to fit
 (or their sum if \code{summarize = TRUE}) and do not include other portions of
 the elapsed time in \code{\link[=fit.workflow]{fit.workflow()}}.
+\item \code{extract_postprocessor()} returns the postprocessor object.
 }
 }
 \details{

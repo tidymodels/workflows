@@ -83,7 +83,7 @@ fit.workflow <- function(
   workflow <- .fit_pre(workflow, data)
   workflow <- .fit_model(workflow, control)
 
-  if (!.workflow_includes_calibration(workflow)) {
+  if (!.workflow_postprocessor_requires_fit(workflow)) {
     # in this case, training the tailor on `data` will not leak data (#262)
     calibration <- data
   }
@@ -99,18 +99,25 @@ fit.workflow <- function(
 #' @export
 #' @rdname workflows-internals
 #' @keywords internal
-.workflow_includes_calibration <- function(workflow) {
-  has_postprocessor(workflow) &&
-    tailor::tailor_requires_fit(
+.workflow_postprocessor_requires_fit <- function(workflow) {
+  if (!has_postprocessor(workflow)) {
+    return(FALSE)
+  }
+  if (has_postprocessor_tailor(workflow)) {
+    requires_fit <- tailor::tailor_requires_fit(
       extract_postprocessor(workflow, estimated = FALSE)
     )
+  } else {
+    requires_fit <- FALSE
+  }
+  requires_fit
 }
 
 # ------------------------------------------------------------------------------
 
 #' Internal workflow functions
 #'
-#' `.fit_pre()`, `.fit_model()`, and `.fit_finalize()` are internal workflow
+#' `.fit_pre()`, `.fit_model()`, `.fit_post()` and `.fit_finalize()` are internal workflow
 #' functions for _partially_ fitting a workflow object. They are only exported
 #' for usage by the tuning package, [tune](https://github.com/tidymodels/tune),
 #' and the general user should never need to worry about them.
@@ -122,8 +129,12 @@ fit.workflow <- function(
 #'   For `.fit_model()`, this should be a workflow that has already been trained
 #'   through `.fit_pre()`.
 #'
+#'   For `.fit_post()`, this should be a workflow that has already been trained
+#'   through `.fit_pre()` and `.fit_model()`.
+#'
 #'   For `.fit_finalize()`, this should be a workflow that has been through
-#'   both `.fit_pre()` and `.fit_model()`.
+#'   both `.fit_pre()` and `.fit_model()`. If the workflow contains an optional
+#'   postprocessor, it should also have been trained through `.fit_post()`.
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
 #'   workflow
@@ -193,7 +204,7 @@ fit.workflow <- function(
 #' @rdname workflows-internals
 #' @export
 .fit_post <- function(workflow, data) {
-  action_post <- workflow[["post"]][["actions"]][["tailor"]]
+  action_post <- workflow[["post"]][["actions"]][[1]]
   fit(action_post, workflow = workflow, data = data)
 }
 
@@ -242,7 +253,7 @@ validate_has_model <- function(x, ..., call = caller_env()) {
 }
 
 validate_has_calibration <- function(x, calibration, call = caller_env()) {
-  if (.workflow_includes_calibration(x) && is.null(calibration)) {
+  if (.workflow_postprocessor_requires_fit(x) && is.null(calibration)) {
     cli::cli_abort(
       "The workflow requires a {.arg calibration} set to train but none
        was supplied.",
@@ -250,7 +261,7 @@ validate_has_calibration <- function(x, calibration, call = caller_env()) {
     )
   }
 
-  if (!.workflow_includes_calibration(x) && !is.null(calibration)) {
+  if (!.workflow_postprocessor_requires_fit(x) && !is.null(calibration)) {
     cli::cli_warn(
       "The workflow does not require a {.arg calibration} set to train
        but one was supplied.",

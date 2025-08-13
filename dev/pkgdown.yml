@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   extras/getting-started: extras/getting-started.html
   stages: stages.html
-last_built: 2025-08-13T09:12Z
+last_built: 2025-08-13T13:47Z
 urls:
   reference: https://workflows.tidymodels.org/reference
   article: https://workflows.tidymodels.org/articles

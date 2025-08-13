@@ -25,6 +25,7 @@
 <url><loc>https://workflows.tidymodels.org/dev/reference/is_trained_workflow.html</loc></url>
 <url><loc>https://workflows.tidymodels.org/dev/reference/predict-workflow.html</loc></url>
 <url><loc>https://workflows.tidymodels.org/dev/reference/reexports.html</loc></url>
+<url><loc>https://workflows.tidymodels.org/dev/reference/required_pkgs.workflow.html</loc></url>
 <url><loc>https://workflows.tidymodels.org/dev/reference/tidy.workflow.html</loc></url>
 <url><loc>https://workflows.tidymodels.org/dev/reference/workflow-butcher.html</loc></url>
 <url><loc>https://workflows.tidymodels.org/dev/reference/workflow-extractors.html</loc></url>

@@ -49,6 +49,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
+    tidymodels/hardhat,
     tidymodels/tailor
 Config/Needs/website:dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
     yardstick

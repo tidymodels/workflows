@@ -220,9 +220,7 @@ extract_tailor_workflow <- function(x, ..., estimated = TRUE) {
 
   if (estimated) {
     res <- x$post$fit
-    if (!is.null(res)) {
-      return(res)
-    } else {
+    if (is.null(res)) {
       cli_abort(c(
         "The workflow has a tailor postprocessor, but it has not been fit yet.",
         i = "Do you need to call {.fun fit}?"

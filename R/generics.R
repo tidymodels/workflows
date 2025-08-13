@@ -1,10 +1,11 @@
-#' S3 methods for tracking which additional packages are needed for steps.
+#' Determine required packages for a workflow
 #'
-#' @param x A recipe or recipe step
+#' @param x A `workflow` object.
 #' @param infra Should the core packages themselves be included in the result?
-#' Those are workflows and parsnip, as well as recipes if the workflow includes
-#' a recipes preprocessor and tailor if it includes a tailor post-processor.
-#' @return A character vector
+#' Those are workflows and parsnip (for the model), as well as recipes if the
+#' workflow includes a recipes preprocessor and tailor if it includes a tailor
+#' post-processor.
+#' @return A character vector.
 #' @keywords internal
 #' @export
 required_pkgs.workflow <- function(x, infra = TRUE, ...) {

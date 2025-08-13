@@ -2,21 +2,22 @@
 % Please edit documentation in R/generics.R
 \name{required_pkgs.workflow}
 \alias{required_pkgs.workflow}
-\title{S3 methods for tracking which additional packages are needed for steps.}
+\title{Determine required packages for a workflow}
 \usage{
 \method{required_pkgs}{workflow}(x, infra = TRUE, ...)
 }
 \arguments{
-\item{x}{A recipe or recipe step}
+\item{x}{A \code{workflow} object.}
 
 \item{infra}{Should the core packages themselves be included in the result?
-Those are workflows and parsnip, as well as recipes if the workflow includes
-a recipes preprocessor and tailor if it includes a tailor post-processor.}
+Those are workflows and parsnip (for the model), as well as recipes if the
+workflow includes a recipes preprocessor and tailor if it includes a tailor
+post-processor.}
 }
 \value{
-A character vector
+A character vector.
 }
 \description{
-S3 methods for tracking which additional packages are needed for steps.
+Determine required packages for a workflow
 }
 \keyword{internal}

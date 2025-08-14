@@ -26,6 +26,10 @@ hardhat::extract_preprocessor
 #' @export
 hardhat::extract_postprocessor
 #'
+#' @importFrom hardhat extract_tailor
+#' @export
+hardhat::extract_tailor
+#'
 #' @importFrom hardhat extract_parameter_set_dials
 #' @export
 hardhat::extract_parameter_set_dials

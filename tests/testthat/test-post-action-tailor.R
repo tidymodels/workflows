@@ -133,7 +133,7 @@ test_that("postprocessor fit aligns with manually fitted version (with calibrati
 
   # train workflows
   wf_simple_fit <- fit(wflow_simple, dat_data)
-  wf_post_fit <- fit(wflow_post, dat_data, calibration = dat_calibration)
+  wf_post_fit <- fit(wflow_post, dat_data, data_calibration = dat_calibration)
 
   # ...verify predictions are the same as training the post-proc separately.
   # note that this test naughtily re-predicts on the calibration set.

@@ -35,10 +35,10 @@
 # fit.workflow confirms compatibility of object and calibration
 
     Code
-      res <- fit(workflow, mtcars, calibration = mtcars)
+      res <- fit(workflow, mtcars, data_calibration = mtcars)
     Condition
       Warning in `fit()`:
-      The workflow does not require a `calibration` set to train but one was supplied.
+      The workflow does not require `data_calibration` to train but it was supplied.
 
 ---
 
@@ -46,7 +46,7 @@
       fit(workflow, mtcars)
     Condition
       Error in `fit()`:
-      ! The workflow requires a `calibration` set to train but none was supplied.
+      ! The workflow requires `data_calibration` to train but none was supplied.
 
 # can `predict()` from workflow fit from individual pieces
 

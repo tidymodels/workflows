@@ -122,7 +122,7 @@ test_that("can augment with a postprocessor (#275)", {
   fit_post <- fit(
     wflow_post,
     data = mtcars[1:20, ],
-    calibration = mtcars[20:30, ]
+    data_calibration = mtcars[20:30, ]
   )
   pred_post <- fit_post |> augment(mtcars[31:32, ])
 

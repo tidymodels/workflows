@@ -99,7 +99,7 @@ test_that("fit.workflow confirms compatibility of object and calibration", {
   workflow <- add_model(workflow, mod)
 
   expect_snapshot(
-    res <- fit(workflow, mtcars, calibration = mtcars)
+    res <- fit(workflow, mtcars, data_calibration = mtcars)
   )
 
   tailor <- tailor::tailor()

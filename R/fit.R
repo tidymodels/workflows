@@ -20,7 +20,7 @@
 #'
 #' @param ... Not used
 #'
-#' @param calibration A data frame of predictors and outcomes to use when
+#' @param data_calibration A data frame of predictors and outcomes to use when
 #'   fitting the postprocessor. See the "Data Usage" section of [add_tailor()]
 #'   for more information.
 #'
@@ -59,7 +59,7 @@ fit.workflow <- function(
   object,
   data,
   ...,
-  calibration = NULL,
+  data_calibration = NULL,
   control = control_workflow()
 ) {
   check_dots_empty()
@@ -68,7 +68,7 @@ fit.workflow <- function(
     cli_abort("{.arg data} must be provided to fit a workflow.")
   }
 
-  validate_has_calibration(object, calibration)
+  validate_has_data_calibration(object, data_calibration)
 
   if (is_sparse_matrix(data)) {
     data <- sparsevctrs::coerce_to_sparse_tibble(
@@ -85,10 +85,10 @@ fit.workflow <- function(
 
   if (!.workflow_postprocessor_requires_fit(workflow)) {
     # in this case, training the tailor on `data` will not leak data (#262)
-    calibration <- data
+    data_calibration <- data
   }
   if (has_postprocessor(workflow)) {
-    workflow <- .fit_post(workflow, calibration)
+    workflow <- .fit_post(workflow, data_calibration)
   }
 
   workflow <- .fit_finalize(workflow)
@@ -252,19 +252,23 @@ validate_has_model <- function(x, ..., call = caller_env()) {
   invisible(x)
 }
 
-validate_has_calibration <- function(x, calibration, call = caller_env()) {
-  if (.workflow_postprocessor_requires_fit(x) && is.null(calibration)) {
+validate_has_data_calibration <- function(
+  x,
+  data_calibration,
+  call = caller_env()
+) {
+  if (.workflow_postprocessor_requires_fit(x) && is.null(data_calibration)) {
     cli::cli_abort(
-      "The workflow requires a {.arg calibration} set to train but none
+      "The workflow requires {.arg data_calibration} to train but none
        was supplied.",
       call = call
     )
   }
 
-  if (!.workflow_postprocessor_requires_fit(x) && !is.null(calibration)) {
+  if (!.workflow_postprocessor_requires_fit(x) && !is.null(data_calibration)) {
     cli::cli_warn(
-      "The workflow does not require a {.arg calibration} set to train
-       but one was supplied.",
+      "The workflow does not require {.arg data_calibration} to train
+       but it was supplied.",
       call = call
     )
   }

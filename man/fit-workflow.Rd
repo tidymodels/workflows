@@ -5,7 +5,7 @@
 \alias{fit.workflow}
 \title{Fit a workflow object}
 \usage{
-\method{fit}{workflow}(object, data, ..., calibration = NULL, control = control_workflow())
+\method{fit}{workflow}(object, data, ..., data_calibration = NULL, control = control_workflow())
 }
 \arguments{
 \item{object}{A workflow}
@@ -15,7 +15,7 @@ preprocessor and model.}
 
 \item{...}{Not used}
 
-\item{calibration}{A data frame of predictors and outcomes to use when
+\item{data_calibration}{A data frame of predictors and outcomes to use when
 fitting the postprocessor. See the "Data Usage" section of \code{\link[=add_tailor]{add_tailor()}}
 for more information.}
 

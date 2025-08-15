@@ -39,7 +39,7 @@ tailor with the new one.
 
 
 While preprocessors and models are trained on data in the usual sense,
-postprocessors are training on \emph{predictions} on data. When a workflow
+postprocessors are trained on \emph{predictions} on data. When a workflow
 is fitted, the user typically supplies training data with the \code{data} argument.
 When workflows don't contain a postprocessor that requires training,
 users can pass all of the available data to the \code{data} argument to train the
@@ -57,10 +57,10 @@ is passed to that trained postprocessor and model to generate predictions,
 which then form the training data for the postprocessor.
 
 When fitting a workflow with a postprocessor that requires training
-(i.e. one that returns \code{TRUE} in \code{.workflow_postprocessor_requires_fit(workflow)}), users
-must pass two data arguments--the usual \code{fit.workflow(data)} will be used
-to train the preprocessor and model while \code{fit.workflow(calibration)} will
-be used to train the postprocessor.
+(i.e. one that returns \code{TRUE} in \code{.workflow_postprocessor_requires_fit(workflow)}),
+users must pass two data arguments--the usual \code{fit.workflow(data)} will be
+used to train the preprocessor and model while \code{fit.workflow(data_calibration)}
+will be used to train the postprocessor.
 
 In some situations, randomly splitting \code{fit.workflow(data)} (with
 \code{rsample::initial_split()}, for example) is sufficient to prevent data
@@ -77,8 +77,8 @@ the preprocessor would likely result in the same rows appearing in both
 datasets, resulting in the preprocessor and model generating predictions on
 rows they've seen before. Similarly problematic situations could arise in the
 context of other resampling situations, like time-based splits.
-In general, use the \code{rsample::inner_split()} function to prevent data
-leakage when resampling; when workflows with postprocessors that require
+In general, \code{rsample::internal_calibration_split()} offers a way to prevent data
+leakage when resampling. When workflows with postprocessors that require
 training are passed to the tune package, this is handled internally.
 }
 

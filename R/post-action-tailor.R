@@ -20,7 +20,7 @@
 #' @section Data Usage:
 #'
 #' While preprocessors and models are trained on data in the usual sense,
-#' postprocessors are training on _predictions_ on data. When a workflow
+#' postprocessors are trained on _predictions_ on data. When a workflow
 #' is fitted, the user typically supplies training data with the `data` argument.
 #' When workflows don't contain a postprocessor that requires training,
 #' users can pass all of the available data to the `data` argument to train the
@@ -38,10 +38,10 @@
 #' which then form the training data for the postprocessor.
 #'
 #' When fitting a workflow with a postprocessor that requires training
-#' (i.e. one that returns `TRUE` in `.workflow_postprocessor_requires_fit(workflow)`), users
-#' must pass two data arguments--the usual `fit.workflow(data)` will be used
-#' to train the preprocessor and model while `fit.workflow(calibration)` will
-#' be used to train the postprocessor.
+#' (i.e. one that returns `TRUE` in `.workflow_postprocessor_requires_fit(workflow)`),
+#' users must pass two data arguments--the usual `fit.workflow(data)` will be
+#' used to train the preprocessor and model while `fit.workflow(data_calibration)`
+#' will be used to train the postprocessor.
 #'
 #' In some situations, randomly splitting `fit.workflow(data)` (with
 #' `rsample::initial_split()`, for example) is sufficient to prevent data
@@ -59,8 +59,8 @@
 #' datasets, resulting in the preprocessor and model generating predictions on
 #' rows they've seen before. Similarly problematic situations could arise in the
 #' context of other resampling situations, like time-based splits.
-#' In general, use the `rsample::inner_split()` function to prevent data
-#' leakage when resampling; when workflows with postprocessors that require
+#' In general, `rsample::internal_calibration_split()` offers a way to prevent data
+#' leakage when resampling. When workflows with postprocessors that require
 #' training are passed to the tune package, this is handled internally.
 #'
 #' @param ... Not used.

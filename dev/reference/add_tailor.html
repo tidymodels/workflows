@@ -102,7 +102,7 @@ will handle training internally.</p></dd>
 
 
 <p>While preprocessors and models are trained on data in the usual sense,
-postprocessors are training on <em>predictions</em> on data. When a workflow
+postprocessors are trained on <em>predictions</em> on data. When a workflow
 is fitted, the user typically supplies training data with the <code>data</code> argument.
 When workflows don't contain a postprocessor that requires training,
 users can pass all of the available data to the <code>data</code> argument to train the
@@ -119,10 +119,10 @@ train the preprocessor and model and the second, called the "calibration set,"
 is passed to that trained postprocessor and model to generate predictions,
 which then form the training data for the postprocessor.</p>
 <p>When fitting a workflow with a postprocessor that requires training
-(i.e. one that returns <code>TRUE</code> in <code>.workflow_postprocessor_requires_fit(workflow)</code>), users
-must pass two data arguments–the usual <code>fit.workflow(data)</code> will be used
-to train the preprocessor and model while <code>fit.workflow(calibration)</code> will
-be used to train the postprocessor.</p>
+(i.e. one that returns <code>TRUE</code> in <code>.workflow_postprocessor_requires_fit(workflow)</code>),
+users must pass two data arguments–the usual <code>fit.workflow(data)</code> will be
+used to train the preprocessor and model while <code>fit.workflow(data_calibration)</code>
+will be used to train the postprocessor.</p>
 <p>In some situations, randomly splitting <code>fit.workflow(data)</code> (with
 <code><a href="https://rsample.tidymodels.org/reference/initial_split.html" class="external-link">rsample::initial_split()</a></code>, for example) is sufficient to prevent data
 leakage. However, <code>fit.workflow(data)</code> could also have arisen as:</p>
@@ -135,8 +135,8 @@ the preprocessor would likely result in the same rows appearing in both
 datasets, resulting in the preprocessor and model generating predictions on
 rows they've seen before. Similarly problematic situations could arise in the
 context of other resampling situations, like time-based splits.
-In general, use the <code>rsample::inner_split()</code> function to prevent data
-leakage when resampling; when workflows with postprocessors that require
+In general, <code><a href="https://rsample.tidymodels.org/reference/internal_calibration_split.html" class="external-link">rsample::internal_calibration_split()</a></code> offers a way to prevent data
+leakage when resampling. When workflows with postprocessors that require
 training are passed to the tune package, this is handled internally.</p>
     </div>
 

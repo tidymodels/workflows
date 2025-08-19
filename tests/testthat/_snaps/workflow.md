@@ -46,6 +46,14 @@
       Error in `workflow()`:
       ! `preprocessor` must be a formula, recipe, or a set of workflow variables.
 
+# postprocessor is validated
+
+    Code
+      workflow(postprocessor = 1)
+    Condition
+      Error in `workflow()`:
+      ! `postprocessor` must be a <tailor>.
+
 # constructor validates input
 
     Code

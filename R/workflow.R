@@ -114,7 +114,7 @@ add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
   }
 
   cli_abort(
-    "{.arg postprocessor} must be a tailor.",
+    "{.arg postprocessor} must be a {.cls tailor}.",
     call = call
   )
 }

@@ -95,6 +95,10 @@ test_that("preprocessor is validated", {
   expect_snapshot(error = TRUE, workflow(preprocessor = 1))
 })
 
+test_that("postprocessor is validated", {
+  expect_snapshot(error = TRUE, workflow(postprocessor = 1))
+})
+
 # ------------------------------------------------------------------------------
 # new_workflow()
 

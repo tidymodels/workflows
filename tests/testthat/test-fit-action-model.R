@@ -85,6 +85,32 @@ test_that("model formula override can contain `offset()` (#162)", {
   expect_identical(attr(lm_result$terms, "offset"), 3L)
 })
 
+test_that("confirms compatibility of model spec and tailor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_probability_threshold(tailor, threshold = .1)
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_tailor(workflow, tailor)
+
+  expect_snapshot(error = TRUE, {
+    add_model(workflow, parsnip::linear_reg())
+  })
+
+  # unknown tailor type
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_predictions_custom(tailor, hello = "world")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_tailor(workflow, tailor)
+
+  expect_no_error(add_model(workflow, parsnip::linear_reg()))
+})
+
 test_that("remove a model", {
   lm_model <- parsnip::linear_reg()
   lm_model <- parsnip::set_engine(lm_model, "lm")

@@ -205,9 +205,9 @@ validate_compatibility_model_tailor <- function(
     incompatible_tailor_classification
 
   # check the model mode against the tailor type
-  if (model_mode == "censored regression") {
+  if (model_mode %in% c("censored regression", "quantile regression")) {
     cli_abort(
-      "Post-processing is not available for censored regression models.",
+      "Post-processing is not available for {model_mode} models.",
       call = call
     )
   }

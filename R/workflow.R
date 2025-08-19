@@ -108,6 +108,8 @@ add_postprocessor <- function(x, postprocessor, ..., call = caller_env()) {
   check_dots_empty()
 
   if (is_tailor(postprocessor)) {
+    # check compatibility here for the right call in the error
+    validate_compatibility_tailor(x, postprocessor, call = call)
     return(add_tailor(x, postprocessor))
   }
 

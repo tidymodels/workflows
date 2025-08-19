@@ -51,6 +51,42 @@ test_that("can add a preprocessor directly to a workflow", {
   expect_identical(workflow$pre$actions$variables$variables, preprocessor)
 })
 
+test_that("can add a postprocessor directly to a workflow", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  tlr <- tailor::tailor()
+  workflow <- workflow(postprocessor = tlr)
+  expect_identical(workflow$post$actions$tailor$tailor, tlr)
+})
+
+test_that("confirms compatibility of model and tailor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_probability_threshold(tailor, threshold = .1)
+
+  expect_snapshot(error = TRUE, {
+    workflow(
+      preprocessor = mpg ~ cyl,
+      spec = parsnip::linear_reg(),
+      postprocessor = tailor
+    )
+  })
+
+  # unknown tailor type
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_predictions_custom(tailor, hello = "world")
+  expect_no_error(
+    workflow(
+      preprocessor = mpg ~ cyl,
+      spec = parsnip::linear_reg(),
+      postprocessor = tailor
+    )
+  )
+})
+
 test_that("model spec is validated", {
   expect_snapshot(error = TRUE, workflow(spec = 1))
 })

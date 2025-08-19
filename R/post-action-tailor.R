@@ -87,6 +87,8 @@
 add_tailor <- function(x, tailor, ...) {
   check_dots_empty()
   validate_tailor_available()
+  validate_compatibility_tailor(x, tailor)
+
   action <- new_action_tailor(tailor)
   res <- add_action(x, action, "tailor")
   res
@@ -184,3 +186,61 @@ new_action_tailor <- function(tailor, ..., call = caller_env()) {
 is_tailor <- function(x) {
   inherits(x, "tailor")
 }
+
+validate_compatiblity_model_tailor <- function(
+  model_spec,
+  tailor,
+  call = caller_env()
+) {
+  model_mode <- model_spec$mode
+  tailor_type <- tailor$type
+
+  # check the tailor type against the model mode
+  incompatible_tailor_regression <- tailor_type == "regression" &&
+    model_mode != "regression"
+  incompatible_tailor_classification <- tailor_type %in%
+    c("binary", "multiclass") &&
+    model_mode != "classification"
+  incompatible_tailor <- incompatible_tailor_regression ||
+    incompatible_tailor_classification
+
+  # check the model mode against the tailor type
+  incompatible_model_censored_regression <- model_mode ==
+    "censored regression" &&
+    tailor_type != "unknown"
+  incompatible_model_regression <- model_mode == "regression" &&
+    !tailor_type %in% c("regression", "unknown")
+  incompatible_model_classification <- model_mode == "classification" &&
+    !tailor_type %in% c("binary", "multiclass", "unknown")
+  incompatible_model <- incompatible_model_censored_regression ||
+    incompatible_model_regression ||
+    incompatible_model_classification
+
+  incompatible <- incompatible_tailor || incompatible_model
+
+  if (incompatible) {
+    cli_abort(
+      "The model mode {.val {model_mode}} and the tailor type {.val {tailor_type}} are incompatible.",
+      call = call
+    )
+  }
+
+  invisible(NULL)
+}
+
+validate_compatibility_tailor <- function(x, tailor, call = caller_env()) {
+  validate_is_workflow(x, call = call)
+
+  if (!has_action(x$fit, "model")) {
+    return(invisible(x))
+  }
+
+  validate_compatiblity_model_tailor(
+    extract_spec_parsnip(x),
+    tailor,
+    call = call
+  )
+
+  invisible(x)
+}
+

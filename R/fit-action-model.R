@@ -229,7 +229,7 @@ validate_compatibility_model <- function(x, spec, call = caller_env()) {
   post <- extract_postprocessor(x)
 
   if (is_tailor(post)) {
-    validate_compatiblity_model_tailor(
+    validate_compatibility_model_tailor(
       spec,
       post,
       call = call

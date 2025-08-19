@@ -187,7 +187,7 @@ is_tailor <- function(x) {
   inherits(x, "tailor")
 }
 
-validate_compatiblity_model_tailor <- function(
+validate_compatibility_model_tailor <- function(
   model_spec,
   tailor,
   call = caller_env()
@@ -238,7 +238,7 @@ validate_compatibility_tailor <- function(x, tailor, call = caller_env()) {
     return(invisible(x))
   }
 
-  validate_compatiblity_model_tailor(
+  validate_compatibility_model_tailor(
     extract_spec_parsnip(x),
     tailor,
     call = call

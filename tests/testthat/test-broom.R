@@ -44,6 +44,26 @@ test_that("can tidy workflow model or recipe", {
   expect_identical(x$number, 1L)
 })
 
+test_that("can tidy workflow tailor", {
+  skip_if_not_installed("broom")
+  skip_if_not_installed("tailor")
+
+  df <- data.frame(y = c(2, 3, 4), x = c(1, 5, 3))
+
+  tlr <- tailor::tailor()
+  tlr <- tailor::adjust_numeric_range(tlr, 0, 5)
+
+  wf <- workflow()
+  wf <- add_formula(wf, y ~ x)
+  wf <- add_model(wf, parsnip::linear_reg())
+  wf <- add_tailor(wf, tlr)
+
+  wf <- fit(wf, df)
+
+  x <- tidy(wf, what = "tailor")
+  expect_identical(x$number, 1L)
+})
+
 # ------------------------------------------------------------------------------
 # glance()
 

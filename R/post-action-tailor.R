@@ -205,15 +205,18 @@ validate_compatiblity_model_tailor <- function(
     incompatible_tailor_classification
 
   # check the model mode against the tailor type
-  incompatible_model_censored_regression <- model_mode ==
-    "censored regression" &&
-    tailor_type != "unknown"
+  if (model_mode == "censored regression") {
+    cli_abort(
+      "Post-processing is not available for censored regression models.",
+      call = call
+    )
+  }
+
   incompatible_model_regression <- model_mode == "regression" &&
     !tailor_type %in% c("regression", "unknown")
   incompatible_model_classification <- model_mode == "classification" &&
     !tailor_type %in% c("binary", "multiclass", "unknown")
-  incompatible_model <- incompatible_model_censored_regression ||
-    incompatible_model_regression ||
+  incompatible_model <- incompatible_model_regression ||
     incompatible_model_classification
 
   incompatible <- incompatible_tailor || incompatible_model
@@ -243,4 +246,3 @@ validate_compatibility_tailor <- function(x, tailor, call = caller_env()) {
 
   invisible(x)
 }
-

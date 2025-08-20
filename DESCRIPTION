@@ -22,7 +22,7 @@ Imports:
     cli (>= 3.3.0),
     generics (>= 0.1.2),
     glue (>= 1.6.2),
-    hardhat (>= 1.3.1.9000),
+    hardhat (>= 1.4.2),
     lifecycle (>= 1.0.3),
     modelenv (>= 0.1.0),
     parsnip (>= 1.2.1.9000),
@@ -49,7 +49,6 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes:
-    tidymodels/hardhat,
     tidymodels/tailor
 Config/Needs/website:dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
     yardstick

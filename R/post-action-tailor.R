@@ -234,7 +234,7 @@ validate_compatibility_model_tailor <- function(
 validate_compatibility_tailor <- function(x, tailor, call = caller_env()) {
   validate_is_workflow(x, call = call)
 
-  if (!has_spec()) {
+  if (!has_spec(x)) {
     return(invisible(x))
   }
 

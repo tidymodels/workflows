@@ -43,3 +43,11 @@
       Error in `add_model()`:
       ! A `model` action has already been added to this workflow.
 
+# confirms compatibility of model spec and tailor
+
+    Code
+      add_model(workflow, parsnip::linear_reg())
+    Condition
+      Error in `add_model()`:
+      ! The model mode "regression" and the tailor type "binary" are incompatible.
+

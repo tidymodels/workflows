@@ -22,6 +22,14 @@
       Error in `add_model()`:
       ! `x` must be a workflow, not a <numeric>.
 
+# confirms compatibility of model and tailor
+
+    Code
+      workflow(preprocessor = mpg ~ cyl, spec = parsnip::linear_reg(), postprocessor = tailor)
+    Condition
+      Error in `workflow()`:
+      ! The model mode "regression" and the tailor type "binary" are incompatible.
+
 # model spec is validated
 
     Code
@@ -37,6 +45,14 @@
     Condition
       Error in `workflow()`:
       ! `preprocessor` must be a formula, recipe, or a set of workflow variables.
+
+# postprocessor is validated
+
+    Code
+      workflow(postprocessor = 1)
+    Condition
+      Error in `workflow()`:
+      ! `postprocessor` must be a <tailor>.
 
 # constructor validates input
 

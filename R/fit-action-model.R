@@ -60,7 +60,10 @@
 #' update_model(fitted, regularized_model)
 add_model <- function(x, spec, ..., formula = NULL) {
   check_dots_empty()
+
   action <- new_action_model(spec, formula)
+  validate_compatibility_model(x, spec)
+
   add_action(x, action, "model")
 }
 
@@ -214,4 +217,23 @@ new_action_model <- function(spec, formula, ..., call = caller_env()) {
   }
 
   new_action_fit(spec = spec, formula = formula, subclass = "action_model")
+}
+
+validate_compatibility_model <- function(x, spec, call = caller_env()) {
+  validate_is_workflow(x, call = call)
+
+  if (!has_postprocessor(x)) {
+    return(invisible(x))
+  }
+
+  post <- extract_postprocessor(x)
+
+  if (is_tailor(post)) {
+    validate_compatibility_model_tailor(
+      spec,
+      post,
+      call = call
+    )
+  }
+  invisible(x)
 }

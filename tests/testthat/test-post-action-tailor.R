@@ -14,6 +14,27 @@ test_that("postprocessor is validated", {
   expect_snapshot(error = TRUE, add_tailor(workflow(), 1))
 })
 
+test_that("add_tailor() confirms compatibility of model and tailor", {
+  skip_if_not_installed("tailor")
+  skip_if_not_installed("probably")
+
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_probability_threshold(tailor, threshold = .1)
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, parsnip::linear_reg())
+
+  expect_snapshot(error = TRUE, {
+    add_tailor(workflow, tailor)
+  })
+
+  # unknown tailor type
+  tailor <- tailor::tailor()
+  tailor <- tailor::adjust_predictions_custom(tailor, hello = "world")
+  expect_no_error(add_tailor(workflow, tailor))
+})
+
 test_that("cannot add two postprocessors", {
   post <- tailor::tailor()
 

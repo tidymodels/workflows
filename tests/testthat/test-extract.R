@@ -327,7 +327,7 @@ test_that("extract parameter set from workflow with potentially conflicting ids 
     recipes::recipe(mpg ~ ., mtcars) |>
       recipes::step_pca(recipes::all_predictors(), threshold = hardhat::tune())
   )
-  wflow <- add_model(wflow, parsnip::linear_reg())
+  wflow <- add_model(wflow, parsnip::logistic_reg())
   wflow <- add_tailor(
     wflow,
     tailor::tailor() |>

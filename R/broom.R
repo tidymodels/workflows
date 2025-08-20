@@ -2,43 +2,36 @@
 #'
 #' @description
 #' This is a [generics::tidy()] method for a workflow that calls `tidy()` on
-#' either the underlying parsnip model or the recipe, depending on the value
+#' either the underlying parsnip model, recipe, or tailor, depending on the value
 #' of `what`.
 #'
-#' `x` must be a fitted workflow, resulting in fitted parsnip model or prepped
-#' recipe that you want to tidy.
+#' `x` must be a fitted workflow, resulting in fitted parsnip model, prepped
+#' recipe or fitted tailor that you want to tidy.
 #'
 #' @details
 #' To tidy the unprepped recipe, use [extract_preprocessor()] and `tidy()`
-#' that directly.
+#' that directly. To tidy the untrained tailor, use [extract_postprocessor()]
+#' and `tidy()` that directly.
 #'
 #' @param x A workflow
 #'
-#' @param what A single string. Either `"model"` or `"recipe"` to select
-#'   which part of the workflow to tidy. Defaults to tidying the model.
+#' @param what A single string. Either `"model"`, `"recipe"` or `"tailor"` to
+#' select which part of the workflow to tidy. Defaults to tidying the model.
 #'
 #' @param ... Arguments passed on to methods
 #'
 #' @export
 tidy.workflow <- function(x, what = "model", ...) {
-  what <- arg_match(what, values = c("model", "recipe"))
+  what <- arg_match(what, values = c("model", "recipe", "tailor"))
 
-  if (identical(what, "model")) {
-    x <- extract_fit_parsnip(x)
-    out <- tidy(x, ...)
-    return(out)
-  }
-
-  if (identical(what, "recipe")) {
-    x <- extract_recipe(x)
-    out <- tidy(x, ...)
-    return(out)
-  }
-
-  cli_abort(
-    "{.arg what} must be {.val model} or {.val recipe}.",
-    .internal = TRUE
+  to_tidy <- switch(
+    what,
+    model = extract_fit_parsnip(x),
+    recipe = extract_recipe(x),
+    tailor = extract_tailor(x)
   )
+
+  tidy(to_tidy, ...)
 }
 
 # ------------------------------------------------------------------------------

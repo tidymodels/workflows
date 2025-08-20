@@ -45,7 +45,7 @@ pak::pak("tidymodels/workflows")
 
 ## Example
 
-Suppose you were modeling data on cars. Say…the fuel efficiency of 32
+Suppose you were modeling data on cars. Say… the fuel efficiency of 32
 cars. You know that the relationship between engine displacement and
 miles-per-gallon is nonlinear, and you would like to model that as a
 spline before adding it to a Bayesian linear regression model. You might
@@ -56,14 +56,14 @@ library(recipes)
 library(parsnip)
 library(workflows)
 
-spline_cars <- recipe(mpg ~ ., data = mtcars) |> 
+spline_cars <- recipe(mpg ~ ., data = mtcars) |>
   step_ns(disp, deg_free = 10)
 ```
 
 and a model object:
 
 ``` r
-bayes_lm <- linear_reg() |> 
+bayes_lm <- linear_reg() |>
   set_engine("stan")
 ```
 
@@ -71,7 +71,11 @@ To use these, you would generally run:
 
 ``` r
 spline_cars_prepped <- prep(spline_cars, mtcars)
-bayes_lm_fit <- fit(bayes_lm, mpg ~ ., data = juice(spline_cars_prepped))
+bayes_lm_fit <- fit(
+  bayes_lm,
+  mpg ~ .,
+  data = bake(spline_cars_prepped, new_data = NULL)
+)
 ```
 
 You can’t predict on new samples using `bayes_lm_fit` without the
@@ -83,8 +87,8 @@ interested in.
 workflows makes this easier by combining these objects together:
 
 ``` r
-car_wflow <- workflow() |> 
-  add_recipe(spline_cars) |> 
+car_wflow <- workflow() |>
+  add_recipe(spline_cars) |>
   add_model(bayes_lm)
 ```
 

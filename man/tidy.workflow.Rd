@@ -9,20 +9,21 @@
 \arguments{
 \item{x}{A workflow}
 
-\item{what}{A single string. Either \code{"model"} or \code{"recipe"} to select
-which part of the workflow to tidy. Defaults to tidying the model.}
+\item{what}{A single string. Either \code{"model"}, \code{"recipe"} or \code{"tailor"} to
+select which part of the workflow to tidy. Defaults to tidying the model.}
 
 \item{...}{Arguments passed on to methods}
 }
 \description{
 This is a \code{\link[generics:tidy]{generics::tidy()}} method for a workflow that calls \code{tidy()} on
-either the underlying parsnip model or the recipe, depending on the value
+either the underlying parsnip model, recipe, or tailor, depending on the value
 of \code{what}.
 
-\code{x} must be a fitted workflow, resulting in fitted parsnip model or prepped
-recipe that you want to tidy.
+\code{x} must be a fitted workflow, resulting in fitted parsnip model, prepped
+recipe or fitted tailor that you want to tidy.
 }
 \details{
 To tidy the unprepped recipe, use \code{\link[=extract_preprocessor]{extract_preprocessor()}} and \code{tidy()}
-that directly.
+that directly. To tidy the untrained tailor, use \code{\link[=extract_postprocessor]{extract_postprocessor()}}
+and \code{tidy()} that directly.
 }

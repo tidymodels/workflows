@@ -1,6 +1,8 @@
 # workflows (development version)
 
-* Implemented postprocessing. (TODO: fill this in.)
+* Implemented postprocessing
+    - Include a post stage and integrate post-processors from the tailor package via `add_tailor()`, `remove_tailor()`, `update_tailor()`, `extract_postprocessor()`, and `.fit_post()` (#225).
+    - Include post-processing in the workflow methods for `augment()` (#276), `extract_parameter_set_dials()` (#266), `tidy()` (#305), `required_pkgs()` (#299), `tunable()` (#272), and `tune_args()` (#270).
     - `extract_tailor()` extracts the tailor from a workflow (#301).
 
 * Increased the minimum required R version to R 4.1.

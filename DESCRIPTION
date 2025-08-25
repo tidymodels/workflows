@@ -46,12 +46,10 @@ Suggests:
     modeldata (>= 1.0.0),
     probably,
     rmarkdown,
-    tailor (>= 0.0.0.9001),
+    tailor (>= 0.1.0),
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-Remotes:
-    tidymodels/tailor
 Config/Needs/website:dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
     yardstick
 Config/testthat/edition: 3

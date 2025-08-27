@@ -1,4 +1,4 @@
-# workflows (development version)
+# workflows 1.3.0
 
 * Implemented postprocessing
     - Include a post stage and integrate post-processors from the tailor package via `add_tailor()`, `remove_tailor()`, `update_tailor()`, `extract_postprocessor()`, and `.fit_post()` (#225).

@@ -1,0 +1,194 @@
+# workflows
+
+## What is a workflow?
+
+A workflow is an object that can bundle together your pre-processing,
+modeling, and post-processing requests. For example, if you have a
+`recipe` and `parsnip` model, these can be combined into a workflow. The
+advantages are:
+
+- You don’t have to keep track of separate objects in your workspace.
+
+- The recipe prepping, model fitting, and postprocessor estimation
+  (which may include data splitting) can be executed using a single call
+  to [`fit()`](https://generics.r-lib.org/reference/fit.html).
+
+- If you have custom tuning parameter settings, these can be defined
+  using a simpler interface when combined with
+  [tune](https://github.com/tidymodels/tune).
+
+## Installation
+
+You can install workflows from CRAN with:
+
+``` r
+install.packages("workflows")
+```
+
+You can install the development version from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("tidymodels/workflows")
+```
+
+## Example
+
+Suppose you were modeling data on cars. Say… the fuel efficiency of 32
+cars. You know that the relationship between engine displacement and
+miles-per-gallon is nonlinear, and you would like to model that as a
+spline before adding it to a Bayesian linear regression model. You might
+have a recipe to specify the spline:
+
+``` r
+library(recipes)
+library(parsnip)
+library(workflows)
+
+spline_cars <- recipe(mpg ~ ., data = mtcars) |>
+  step_ns(disp, deg_free = 10)
+```
+
+and a model object:
+
+``` r
+bayes_lm <- linear_reg() |>
+  set_engine("stan")
+```
+
+To use these, you would generally run:
+
+``` r
+spline_cars_prepped <- prep(spline_cars, mtcars)
+bayes_lm_fit <- fit(
+  bayes_lm,
+  mpg ~ .,
+  data = bake(spline_cars_prepped, new_data = NULL)
+)
+```
+
+You can’t predict on new samples using `bayes_lm_fit` without the
+prepped version of `spline_cars` around. You also might have other
+models and recipes in your workspace. This might lead to getting them
+mixed-up or forgetting to save the model/recipe pair that you are most
+interested in.
+
+workflows makes this easier by combining these objects together:
+
+``` r
+car_wflow <- workflow() |>
+  add_recipe(spline_cars) |>
+  add_model(bayes_lm)
+```
+
+Now you can prepare the recipe and estimate the model via a single call
+to [`fit()`](https://generics.r-lib.org/reference/fit.html):
+
+``` r
+car_wflow_fit <- fit(car_wflow, data = mtcars)
+```
+
+You can alter existing workflows using
+[`update_recipe()`](https://workflows.tidymodels.org/dev/reference/add_recipe.md)
+/
+[`update_model()`](https://workflows.tidymodels.org/dev/reference/add_model.md)
+and
+[`remove_recipe()`](https://workflows.tidymodels.org/dev/reference/add_recipe.md)
+/
+[`remove_model()`](https://workflows.tidymodels.org/dev/reference/add_model.md).
+
+## Contributing
+
+This project is released with a [Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+- For questions and discussions about tidymodels packages, modeling, and
+  machine learning, please [post on Posit
+  Community](https://forum.posit.co/new-topic?category_id=15&tags=tidymodels,question).
+
+- If you think you have encountered a bug, please [submit an
+  issue](https://github.com/tidymodels/workflows/issues).
+
+- Either way, learn how to create and share a
+  [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html)
+  (a minimal, reproducible example), to clearly communicate about your
+  code.
+
+- Check out further details on [contributing guidelines for tidymodels
+  packages](https://www.tidymodels.org/contribute/) and [how to get
+  help](https://www.tidymodels.org/help/).
+
+# Package index
+
+## All functions
+
+- [`add_case_weights()`](https://workflows.tidymodels.org/dev/reference/add_case_weights.md)
+  [`remove_case_weights()`](https://workflows.tidymodels.org/dev/reference/add_case_weights.md)
+  [`update_case_weights()`](https://workflows.tidymodels.org/dev/reference/add_case_weights.md)
+  : Add case weights to a workflow
+- [`add_formula()`](https://workflows.tidymodels.org/dev/reference/add_formula.md)
+  [`remove_formula()`](https://workflows.tidymodels.org/dev/reference/add_formula.md)
+  [`update_formula()`](https://workflows.tidymodels.org/dev/reference/add_formula.md)
+  : Add formula terms to a workflow
+- [`add_model()`](https://workflows.tidymodels.org/dev/reference/add_model.md)
+  [`remove_model()`](https://workflows.tidymodels.org/dev/reference/add_model.md)
+  [`update_model()`](https://workflows.tidymodels.org/dev/reference/add_model.md)
+  : Add a model to a workflow
+- [`add_recipe()`](https://workflows.tidymodels.org/dev/reference/add_recipe.md)
+  [`remove_recipe()`](https://workflows.tidymodels.org/dev/reference/add_recipe.md)
+  [`update_recipe()`](https://workflows.tidymodels.org/dev/reference/add_recipe.md)
+  : Add a recipe to a workflow
+- [`add_tailor()`](https://workflows.tidymodels.org/dev/reference/add_tailor.md)
+  [`remove_tailor()`](https://workflows.tidymodels.org/dev/reference/add_tailor.md)
+  [`update_tailor()`](https://workflows.tidymodels.org/dev/reference/add_tailor.md)
+  : Add a tailor to a workflow
+- [`add_variables()`](https://workflows.tidymodels.org/dev/reference/add_variables.md)
+  [`remove_variables()`](https://workflows.tidymodels.org/dev/reference/add_variables.md)
+  [`update_variables()`](https://workflows.tidymodels.org/dev/reference/add_variables.md)
+  [`workflow_variables()`](https://workflows.tidymodels.org/dev/reference/add_variables.md)
+  : Add variables to a workflow
+- [`augment(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/augment.workflow.md)
+  : Augment data with predictions
+- [`control_workflow()`](https://workflows.tidymodels.org/dev/reference/control_workflow.md)
+  : Control object for a workflow
+- [`extract_spec_parsnip(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_recipe(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_fit_parsnip(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_fit_engine(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_mold(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_preprocessor(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_postprocessor(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_tailor(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_parameter_set_dials(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_parameter_dials(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  [`extract_fit_time(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/extract-workflow.md)
+  : Extract elements of a workflow
+- [`fit(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/fit-workflow.md)
+  : Fit a workflow object
+- [`glance(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/glance.workflow.md)
+  : Glance at a workflow model
+- [`is_trained_workflow()`](https://workflows.tidymodels.org/dev/reference/is_trained_workflow.md)
+  : Determine if a workflow has been trained
+- [`predict(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/predict-workflow.md)
+  : Predict from a workflow
+- [`tidy(`*`<workflow>`*`)`](https://workflows.tidymodels.org/dev/reference/tidy.workflow.md)
+  : Tidy a workflow
+- [`axe_call.workflow()`](https://workflows.tidymodels.org/dev/reference/workflow-butcher.md)
+  [`axe_ctrl.workflow()`](https://workflows.tidymodels.org/dev/reference/workflow-butcher.md)
+  [`axe_data.workflow()`](https://workflows.tidymodels.org/dev/reference/workflow-butcher.md)
+  [`axe_env.workflow()`](https://workflows.tidymodels.org/dev/reference/workflow-butcher.md)
+  [`axe_fitted.workflow()`](https://workflows.tidymodels.org/dev/reference/workflow-butcher.md)
+  : Butcher methods for a workflow
+- [`workflow()`](https://workflows.tidymodels.org/dev/reference/workflow.md)
+  : Create a workflow
+
+# Articles
+
+### All vignettes
+
+- [Getting
+  Started](https://workflows.tidymodels.org/dev/articles/extras/getting-started.md):
+- [Workflow
+  Stages](https://workflows.tidymodels.org/dev/articles/stages.md):

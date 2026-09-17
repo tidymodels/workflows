@@ -173,17 +173,17 @@ extract_preprocessor(recipe_wf)
 #> • Log transformation on: disp
 extract_preprocessor(formula_wf)
 #> mpg ~ cyl + log(disp)
-#> <environment: 0x556a622fea38>
+#> <environment: 0x55bd2e7d2bd0>
 extract_preprocessor(variable_wf)
 #> $outcomes
 #> <quosure>
 #> expr: ^mpg
-#> env:  0x556a622fea38
+#> env:  0x55bd2e7d2bd0
 #> 
 #> $predictors
 #> <quosure>
 #> expr: ^c(cyl, disp)
-#> env:  0x556a622fea38
+#> env:  0x55bd2e7d2bd0
 #> 
 #> attr(,"class")
 #> [1] "workflow_variables"

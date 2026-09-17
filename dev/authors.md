@@ -18,13 +18,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/tidymodels/workflows/blob/main/DESCRIPTION)
 
-Vaughan D, Couch S, Frick H (2025). *workflows: Modeling Workflows*. R
+Vaughan D, Couch S, Frick H (2026). *workflows: Modeling Workflows*. R
 package version 1.3.0.9000, <https://github.com/tidymodels/workflows>.
 
     @Manual{,
       title = {workflows: Modeling Workflows},
       author = {Davis Vaughan and Simon Couch and Hannah Frick},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.3.0.9000},
       url = {https://github.com/tidymodels/workflows},
     }

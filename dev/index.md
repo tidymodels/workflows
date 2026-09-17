@@ -22,6 +22,7 @@ advantages are:
 You can install workflows from CRAN with:
 
 ``` r
+
 install.packages("workflows")
 ```
 
@@ -29,6 +30,7 @@ You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("tidymodels/workflows")
 ```
@@ -42,6 +44,7 @@ spline before adding it to a Bayesian linear regression model. You might
 have a recipe to specify the spline:
 
 ``` r
+
 library(recipes)
 library(parsnip)
 library(workflows)
@@ -53,6 +56,7 @@ spline_cars <- recipe(mpg ~ ., data = mtcars) |>
 and a model object:
 
 ``` r
+
 bayes_lm <- linear_reg() |>
   set_engine("stan")
 ```
@@ -60,6 +64,7 @@ bayes_lm <- linear_reg() |>
 To use these, you would generally run:
 
 ``` r
+
 spline_cars_prepped <- prep(spline_cars, mtcars)
 bayes_lm_fit <- fit(
   bayes_lm,
@@ -77,6 +82,7 @@ interested in.
 workflows makes this easier by combining these objects together:
 
 ``` r
+
 car_wflow <- workflow() |>
   add_recipe(spline_cars) |>
   add_model(bayes_lm)
@@ -86,6 +92,7 @@ Now you can prepare the recipe and estimate the model via a single call
 to [`fit()`](https://generics.r-lib.org/reference/fit.html):
 
 ``` r
+
 car_wflow_fit <- fit(car_wflow, data = mtcars)
 ```
 

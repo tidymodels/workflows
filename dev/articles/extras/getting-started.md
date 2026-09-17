@@ -15,6 +15,7 @@ the development process, and then use the test set once we think that we
 have a good algorithm for making predictions.
 
 ``` r
+
 library(modeldata)
 #> 
 #> Attaching package: 'modeldata'
@@ -32,6 +33,7 @@ data("bivariate")
 Here is the training set:
 
 ``` r
+
 library(workflows)
 library(ggplot2)
 library(dplyr)
@@ -55,6 +57,7 @@ are visualized individually, there is little evidence in separation of
 the classes.
 
 ``` r
+
 library(tidyr)
 
 bivariate_train |> 
@@ -76,6 +79,7 @@ logistic regression, but we will use the `tidymodels` infrastructure and
 start by making a `parsnip` model object.
 
 ``` r
+
 library(parsnip)
 
 logit_mod <-
@@ -103,6 +107,7 @@ The obvious place to start is by adding both predictors as-is into the
 model:
 
 ``` r
+
 # Create a workflow with just the model. We will add to this as we go. 
 glm_workflow <-
   workflow() |>
@@ -120,6 +125,7 @@ To evaluate this model, the ROC curve will be computed along with its
 corresponding AUC.
 
 ``` r
+
 library(yardstick)
 
 simple_glm_probs <-
@@ -155,6 +161,7 @@ instead of the pair. We’ll try that next by recycling the initial
 workflow and just adding a different formula:
 
 ``` r
+
 ratio_glm <-
   glm_workflow |>
   add_formula(Class ~ I(A/B)) |> 
@@ -207,6 +214,7 @@ conducted before the data are used in a model. For example, to use the
 Box-Cox method, a simple recipe would be:
 
 ``` r
+
 library(recipes)
 
 trans_recipe <- 
@@ -223,6 +231,7 @@ and then call [`fit()`](https://generics.r-lib.org/reference/fit.html).
 Fitting the workflow evaluates both the model and the recipe.
 
 ``` r
+
 trans_glm <-
   glm_workflow |>
   add_recipe(trans_recipe) |> 
@@ -268,6 +277,7 @@ to the inverse.
 The model above creates a class boundary for these data:
 
 ``` r
+
 ggplot(bivariate_train, aes(x = 1/A, y = 1/B, col = Class)) + 
   geom_point(alpha = .3) + 
   coord_equal(ratio = 1/12)
@@ -290,6 +300,7 @@ and scaled. For this reason, a step is used prior to PCA that normalizes
 the two predictors.
 
 ``` r
+
 pca_recipe <- 
   trans_recipe |> 
   step_normalize(A, B) |>
@@ -323,6 +334,7 @@ Based on these results, the model with the logistic regression model
 with inverse terms is probably our best bet. Using the test set:
 
 ``` r
+
 test_probs <- 
   predict(trans_glm, bivariate_test, type = "prob") |>
   bind_cols(bivariate_test)

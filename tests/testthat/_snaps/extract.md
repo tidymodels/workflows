@@ -114,8 +114,8 @@
       extract_parameter_set_dials(wflow)
     Condition
       Error in `extract_parameter_set_dials()`:
-      x Element id should have unique values.
-      i Duplicates exist for item: threshold
+      x `id` must have unique values.
+      i Duplicates: "threshold"
 
 # `extract_tailor()` errors if no tailor preprocessor
 
